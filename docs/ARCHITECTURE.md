@@ -31,7 +31,7 @@ A new play is a data addition. A new *kind of movement* is one entry in `primiti
 | `src/config.js` | URL options (`?mode=`, `?motion=`, `?speed=` …) and motion-profile resolution. |
 | `src/stage.js` | Persistent SVG: defs, field, play layer, coalesced resize handling. |
 | `src/hud.js` | Typographic layer (HTML). CSS transitions, toggled by timeline events. |
-| `src/playlist.js` | Sequential / seeded shuffle, no immediate repeats. |
+| `src/playlist.js` | `mix` (default): seeded shuffle re-ordered to alternate run / pass / screen and avoid concept or formation repeats. `?list=<tag>` filters. |
 | `src/layout/coordinates.js` | The coordinate convention. The only file that knows data units and axes. |
 | `src/layout/responsive.js` | Fits the yard-based world into the window; sets stroke weights. |
 | `src/renderer/svg.js` | `el()` helper, number formatting, unique ids. |
@@ -58,7 +58,9 @@ Plash can load a page from a local file. Browsers (including WKWebView) block ES
 
 ## Coordinates and responsiveness
 
-SVG space is measured in **yards**. The viewBox decides how many pixels a yard gets, so artwork never contains pixel values. On resize, only the viewBox and a few `--sw-*` stroke-width custom properties change; no geometry is rebuilt. Every play is framed by the same fixed camera (`Coords.DEFAULT_FRAME`) so the scale doesn't jump between plays. `responsive.js` reserves screen-space insets for the typography and fits that frame into the rest.
+SVG space is measured in **yards**. The viewBox decides how many pixels a yard gets, so artwork never contains pixel values. On resize, only the viewBox and a few `--sw-*` stroke-width custom properties change; no geometry is rebuilt.
+
+There are exactly two canonical cameras: `Coords.DEFAULT_FRAME` (wide, for anything that goes deep) and `Coords.TIGHT_FRAME` (about 1.4× larger, chosen automatically when no path goes past 10 yd, so runs, screens and quick game are legible). Two fixed scales keep the wallpaper from "zooming" arbitrarily. When the scale changes between plays, the field grid is hidden and fades back in with the new play, so the grid never visibly jumps. `responsive.js` reserves screen-space insets for the typography and fits that frame into the rest.
 
 Stroke widths are specified as intended CSS-pixel weights and converted to yards per resize, so a route is ~1.7px on a laptop and grows slightly (max 1.35×) on large displays.
 
@@ -99,7 +101,16 @@ An assignment can override its timing in data with `timing: { phase, delay, dura
 - **New kind of drawable** (e.g. a zone shape): add a renderer that exposes a `setProgress`/`setAppear` control, return it from the scene, and schedule it in `choreography.js`.
 - **Different data convention**: `FD.Coords.setConvention({ units: 'ft', ... })`, or adapt `fromData()`.
 
+## Run game
+
+A handoff is a two-player event, not a path: `play.handoff = { to, at }`. The ball travels from the QB to the exchange point on the carrier's `run` track when that point is drawn, then rides the track as it draws (or with the runner in simulation). Blocking primitives take absolute landmarks (`at`, `target`, `through`, `hole`), because blocks are authored against defenders' spots, not against the blocker. Gap-scheme timing is relational, not hand-tuned: the `pull` / `kickout` relationships delay the whole backfield action until the pullers reach the line first.
+
 ## Dev aids
+
+- `node tools/validate.mjs`: headless data validation (exit 1 on fatal).
+- `tools/shoot.sh` / `tools/contact.sh`: headless-Chrome screenshots and 2×2 contact sheets.
+- `node tools/concepts-doc.mjs`: regenerates `docs/football/CONCEPTS.md`.
+- `?soak=1`: logs DOM node counts per play (and records them on `<html data-soak>`).
 
 - `?t=5.5` freezes at a time, for design review and screenshots. `?play=dagger` starts at a play.
 - `?debug=1` draws the camera frame and logs animator stats.

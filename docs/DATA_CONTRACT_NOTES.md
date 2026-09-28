@@ -1,6 +1,8 @@
 # Data contract notes
 
-**Status:** v0.2, first canonical milestone. Coordinate rules and the QB rule are **locked**. Formation alignments, vocabulary geometry defaults, relationship type names, and ball targets are **provisional** (marked in the files). Run-game vocabulary is mapped but not validated until the run-game handoff.
+**Status:** v0.3. The repo now owns football content as well as rendering, so the
+v0.2 "gaps for the football side" are decided (see §7). Coordinate rules and the QB
+rule are locked.
 
 ## 1. Locked rules
 
@@ -10,114 +12,128 @@
 | Origin | Ball / center at `x = 0`, line of scrimmage at `y = 0` |
 | Axes | `+x` offense's right, `-x` offense's left, `+y` downfield, `-y` backfield |
 | Route depth | Measured **from the LOS**. A 5-yard route breaks ~5 yards past the LOS regardless of the receiver's initial depth. |
-| Lateral movement | Relative to the player's starting position (`across`, `width`, `length`). |
-| QB alignment | `QB.x === C.x` unless the play or formation sets `"qbOffset": true`. Enforced as a **fatal** validation error (the play is skipped; the wallpaper keeps running). |
+| Lateral route movement | Relative to the player's start (`across`, `width`, `length`). |
+| Run landmarks | `at`, `target`, `through`, `via` (with `at`), `hole` are **absolute**, ball-relative points. Blocks and carries are authored against the line, not the player. |
+| QB alignment | `QB.x === C.x` unless the play or formation sets `"qbOffset": true`. **Fatal.** |
+| Formation | Exactly 11 players, unique ids, personnel digits match position groups (**fatal**); 7 players on the line (**warning**). |
 
 ## 2. Files
 
 ```
 src/data/
-  manifest.json                 playlist order + formation list
-  formations/gun_doubles_11.json
-  formations/gun_trips_11.json
-  plays/mesh.json, four_verticals.json, stick.json, curl_flat.json, dagger.json
-  vocabulary.js                 canonical names → geometric primitives (the adapter)
-  resolve.js                    formation + play → render-ready play, validation
+  manifest.json                     formations + plays (playlist pool)
+  formations/<id>.json              gun_doubles_11, gun_trips_11, pistol_strong_11,
+                                    singleback_tight_12, i_form_21
+  plays/<concept>_<formation>.json  one presentation per file
+  vocabulary.js                     canonical football words → primitives (+ aliases)
+  resolve.js                        formation + play → render-ready play, validation
+docs/football/CONCEPTS.md           generated reference (tools/concepts-doc.mjs)
 ```
 
-## 3. Formation shape
+## 3. Formation
 
 ```jsonc
 {
-  "id": "gun_doubles_11",
-  "name": "Gun Doubles",
-  "personnel": "11",
-  "players": [ { "id": "QB", "role": "QB", "at": [0, -5] }, ... ]   // all 11
+  "id": "pistol_strong_11", "name": "Pistol Strong", "personnel": "11",
+  "players": [ { "id": "QB", "role": "QB", "at": [0, -4] }, ... ],   // all 11
+  // optional per player: "pos": "TE" (position group for personnel checks;
+  //   default by role: X/Z/H/W = WR, Y/U = TE, RB/F/FB = RB)
   // optional: "qbOffset": true, "ball": { "hash": "left" }
 }
 ```
 
-## 4. Play shape
+Players with `y > -0.9` count as on the line. Under-center QBs sit at `y = -1.7` so the
+marker clears the center.
+
+## 4. Play
 
 ```jsonc
 {
-  "id": "mesh",
-  "name": "Mesh",
-  "family": "dropback_pass",                 // selects defaults for unmentioned OL / QB
-  "personnel": "11",
-  "formation": "gun_doubles_11",
-  "alignment": { "RB": [-1.6, -5] },         // optional per-play overrides, not a full list
-  "copy": { "title", "meta", "formation", "situation", "description" },  // wallpaper text, verbatim
-  "situation": { "coverage", "down", "distance", "distanceLabel" },     // numeric distance draws sideline chain marks
-  "intent": [ "..." ],                       // carried, not yet displayed
+  "id": "counter_gt_gun_trips_11",   // <conceptId>_<formation>
+  "conceptId": "counter_gt",         // concept vs presentation: variants share the conceptId
+  "name": "Counter GT",
+  "family": "run",                   // dropback_pass | quick_pass | play_action | screen | run | rpo
+  "subfamily": "gap",                // zone | gap | quick | high_low | flood | perimeter…  (playlist tags)
+  "tags": ["perimeter"],             // optional extra playlist tags
+  "side": "right",                   // play side: resolves dir "play" / "back" (runs)
+  "personnel": "11", "formation": "gun_trips_11",
+  "alignment": { "RB": [-1.6, -5] }, // optional per-play overrides
+  "copy": { "title", "meta", "formation", "situation", "description" },  // wallpaper text, ≤72-char description
+  "situation": { "down": 3, "distance": 2 },   // numeric distance draws the sideline line-to-gain marks
   "assignments": {
-    "H":  { "type": "cross", "depth": 5, "dir": "right" },
-    "RB": { "type": "pass_set_then_release", "release": { "type": "flat", "dir": "right" } },
-    "OL": { "type": "pass_set" }             // optional group key
-    // a value may also be an ARRAY: an explicit sequence of steps
+    "LG": { "type": "kickout", "at": [4.9, 0.2], "turn": 2.0 },
+    "RB": [ { "type": "counter_step", "through": [[-2.5, -5.15]] },          // array = sequence
+            { "type": "carry", "delay": 0.05, "through": [[0.3, -4.3], [3.7, -0.8], [4.1, 5.5]] } ],
+    "OL": { "type": "pass_set" }     // optional group key
   },
-  "relationships": [ { "type": "mesh", "participants": ["H", "Y"], "separation": 1 } ],
-  "ball": { "to": "H", "at": 0.7 },          // "at" = fraction along the receiver's route; or { "to": { "point": [x, y] } }
-  "reads": ["H", "Y"]                        // optional progression numerals
+  // an assignment step with "alt": true is an ALTERNATE path (cutback, bounce, option
+  // break): starts from the player, drawn quiet and dashed, never carries the ball.
+  "relationships": [ { "type": "pull", "puller": "LG", "wrap": "LT", "runner": "RB" } ],
+  "ball":    { "to": "H", "at": 0.7 },          // pass: fraction along the receiver's route
+  "handoff": { "to": "RB", "at": [0.3, -4.3] }, // run: exchange landmark (or a fraction); ball then rides the carry
+  "primary": "RB",                   // optional: full-strength path (defaults to handoff target / first read)
+  "reads": ["H", "Y", "Z"],          // progression numerals (pass plays)
+  "frame": "tight",                  // optional camera override; normally automatic
+  "football": { "front", "rules", "rb", "read" },   // concise football notes → CONCEPTS.md
+  "sources": ["…"]                   // provenance → CONCEPTS.md
 }
 ```
 
-Family defaults (provisional): `dropback_pass` and `quick_pass` give OL `pass_set` and QB `qb_drop` (2 yd and 1 yd). Anything the play doesn't mention and no family default covers is drawn **idle** (dimmed, no path), rather than invented.
+Family defaults: `dropback_pass` / `quick_pass` / `screen` protect with the OL and drop
+the QB (2 / 1 / 3 yd). `run` and `play_action` have no defaults: every assignment is
+explicit. Anything unassigned is drawn idle (dimmed), never invented.
 
-## 5. Vocabulary
+## 5. Vocabulary (`vocabulary.js`)
 
-Canonical names map to a small set of geometric primitives in `vocabulary.js`. Parameters in the play override the defaults.
+| Group | Canonical words | Primitive |
+| --- | --- | --- |
+| Routes | go, seam, fade, slant, quick_in, quick_out, in, out, dig, post, skinny_post, corner, hitch, curl, comeback, stick, sit, spot, drag, cross, flat, arrow, swing, bubble, wheel, double_move | vertical, angle, horizontal, cross, settle, flat, swing, path, doubleMove |
+| Aliases | shallow→drag, hook→sit, stop→hitch, whip/speed_out→quick_out, vertical/streak→go, flag→corner | — |
+| Protection | pass_set, pass_set_then_release, delayed_release, qb_drop | block, qbDrop |
+| Zone blocking | zone_step, reach, scoop, base, combo (`target`, `climb`) | step, doubleTeam → lead |
+| Gap blocking | down, back, hinge, pull (`at`, `hole`), kickout, wrap, lead, crack, stalk | step, pull, lead |
+| Backfield | carry, counter_step, fake, handoff (QB track) | run, qbPath |
+| Screens | screen_release (pass-set, then release to `at`) | block → lead |
 
-| Canonical | Primitive | Defaults | Status |
+Settle routes (stick, sit, curl, hitch, spot) end in an open ring; everything that keeps
+going ends in an arrow; blocks end in a T-bar.
+
+## 6. Relationships (`relationships.js`)
+
+A relationship names a concept; the renderer only knows generic constraints. Every
+participant is emphasized (full-strength strokes; other assignments recede).
+
+| Type | Fields | Constraint | Effect |
 | --- | --- | --- | --- |
-| `go` | vertical | depth 18 | validated |
-| `seam` | vertical | depth 18, slight inside release | validated |
-| `drag` | cross | depth 2.5, across 14 | validated |
-| `cross` | cross | depth 8, across 22 | validated |
-| `stick`, `sit` | settle | depth 6, turn in, **settle ring** | validated |
-| `curl` | settle | depth 12, back 1.5, **settle ring** | validated |
-| `flat` | flat | depth 2, width 7 (backs bow outside first) | validated |
-| `dig` | horizontal | depth 14, length 10, in | validated |
-| `pass_set` | block | set back, fanned by alignment | validated |
-| `pass_set_then_release` | sequence: check step → `release` route | release delay 0.45 s | validated |
-| `delayed_release` | `release` route with start delay | 0.7 s | validated |
-| `qb_drop` | qbDrop | 2 yd | validated |
-| `zone_step`, `reach`, `down`, `climb`, `combo`, `pull`, `wrap`, `kickout`, `lead`, `release`, `runner_path` | block / pull / lead / path | placeholders | **provisional** |
-| `handoff`, ball path | `ball` / `events` | — | see gaps |
+| `mesh` | participants, separation | separation | warns if crossers come within 80% of `separation` |
+| `lanes` | participants (left→right), minGap | lanes | warns if lateral order/spacing breaks at 8 and 14 yd |
+| `levels` | participants (deep→shallow) | levels | warns unless each ends ≥ 2 yd shallower |
+| `high_low` | high, low | levels (3 yd) | same, two routes |
+| `clear` | clear, into, margin | clears | **timing:** delays `into` until `clear` is past its break depth |
+| `combo` | participants | converge | warns if the double-team points are > 1.2 yd apart |
+| `zone` | participants | flow (play) | warns if a zone blocker's first step isn't play-side |
+| `wall` | participants | flow (back) | warns if a down block isn't back-side |
+| `pull` | puller, wrap?, runner | follows, order | **timing:** runner hits the LOS after the puller(s); wrap starts after the kicker |
+| `kickout` | blocker, runner | follows | **timing:** runner hits the LOS after the kick-out |
+| `convoy`, `feature` | blockers / participants | — | emphasis only |
 
-Routes that **end and settle in space** (stick, sit, curl) end in an open ring instead of an arrowhead. That is the renderer's visual distinction between "stops here" and "keeps going".
+## 7. v0.2 gaps — decisions
 
-**Sequences.** Any assignment can be an array of steps, and some vocabulary entries expand to several steps. Each step starts where the previous one ended, after it finishes plus its `delay` (default 0.35 s). This covers check-then-release now, and combo-then-climb for the run game.
+1. **Throw targets / reads**: every pass play has `ball` + `reads`, chosen to match the concept's primary read.
+2. **Unassigned players**: every play assigns all 11 (backside routes, protection, stalk blocks).
+3. **Concept side / numbering**: explicit player ids; `side` for runs. Trips are always to the right in `gun_trips_11` (Z #1, H #2, Y #3).
+4. **Formation alignments**: owned here; documented in each formation's `_note`.
+5. **Option routes**: expressible as `alt` paths (not yet used for pass options).
+6. **Landmarks** (hash / numbers): still approximated in yards. Open.
+7. **Timing semantics**: quick vs dropback differs by QB drop; screens and gap runs use real sequencing (pass-set→release, pullers→runner). Per-family throw timing is still global. Open.
+8. **Situation**: numeric `distance` where the copy implies one.
+9. **Handoff**: `handoff` field; the ball rides the carrier's track from the exchange.
+10. **Relationship names**: kept and extended (§6).
+11. **Copy lines**: every play has title / meta / formation / situation / description.
 
-## 6. Relationships
+## 8. Known limits and next concepts
 
-The renderer understands four generic constraints, and a relationship type is a list of them. It never draws a concept by name.
-
-| Type | Participants | Constraint | Effect |
-| --- | --- | --- | --- |
-| `mesh` | `participants: [a, b]`, `separation` | separation | Warns if the paths come within 80% of `separation` anywhere |
-| `lanes` | `participants` left → right, `minGap` | lanes | Warns if lateral order or spacing breaks at 8 and 14 yd |
-| `levels` | `participants` deep → shallow | levels | Warns unless each route ends ≥ 2 yd shallower than the one before |
-| `high_low` | `high`, `low` | levels (3 yd) | Same, two routes |
-| `clear` | `clear`, `into`, `margin` | clears | **Timing:** delays `into` until `clear` is `margin` yd past `into`'s break depth |
-| `combo` | — | none yet | Reserved for blocking |
-
-All participants get concept emphasis: full-strength strokes, while other routes drop to half strength. The throw waits for its target spot to be drawn, which is how Dagger's delayed dig still gets its ball on time.
-
-The validator has already paid for itself. The first Mesh render warned that the crossers came within 0.78 yd, because each crosser's *end* ran into the other receiver's stem. The concept was fine; the unspecified crossing length wasn't. It's now 20 yd.
-
-## 7. What the renderer cannot cleanly express yet
-
-These are gaps in the contract that I want the football side to decide, not things I should guess.
-
-1. **Throw target and progression.** The handoff gives no ball target or read order for any play. The five throws are renderer-chosen presentation placeholders, each marked `_provisional`. Read numerals are off. Needed: `ball.to` (and where along the route), and `reads`, per play.
-2. **Unassigned players.** Stick's X and RB, and the backsides and RBs of Curl-Flat and Dagger, have no assignments, so they're drawn idle. Needed: either assignments, or an explicit `"idle"` / `"backside": "not shown"` so it's intentional.
-3. **Concept side and receiver numbering.** Curl-Flat and Dagger don't say which side; I drew Curl-Flat right and Dagger left. For Stick from trips, I read "inside receiver" as #2 (H) and "third receiver" as #3 (Y). Needed: explicit player ids, or a `side` plus #1/#2/#3 numbering convention the resolver can map.
-4. **Formation alignments.** The split widths and depths in both formation files are mine. Needed: canonical alignment coordinates (or landmark rules; see 6).
-5. **Option routes.** Stick and sit routes often convert (sit vs. zone, break out vs. man). There's no way to express branches. A proposed shape is `"options": [{ "vs": "man", ... }]`, drawn as a faint secondary path.
-6. **Landmarks.** Seams and verticals are defined by field landmarks (hash, top of the numbers), not yards from the player. The renderer only knows relative yards, so seams are approximated with a slight inside release. A landmark vocabulary (`"lane": "hash"`) would make seams exact on any hash.
-7. **Timing semantics.** Quick game vs. dropback currently changes only QB drop depth, and release timing is presentational. If football timing should show (e.g. Stick throwing earlier than Dagger), I need per-family or per-play timing hints.
-8. **Situation.** "3rd & Medium" has no number, so the sideline chain marks (which need a numeric `distance`) don't draw. Provide `distance` if you want them.
-9. **Handoff.** A handoff involves two players and the ball at one point, so it doesn't fit the "one player, one path" model. The renderer has `ball` and `events` (mesh-point marker) that can express it, but the contract should define it before the run-game handoff.
-10. **Relationship type names.** `mesh`, `lanes`, `levels`, `high_low` and `clear` are my names. Please confirm or replace them; only the TYPES table needs to change.
-11. **Copy lines.** Only Mesh supplied a formation line and a situation line. The others show the formation from the formation definition, and no situation line.
+- **Cameras.** Two canonical scales only: wide (`DEFAULT_FRAME`) and tight (`TIGHT_FRAME`, chosen automatically when nothing goes deeper than 10 yd). The field grid fades back in whenever the scale changes.
+- **No RPO primitive yet.** An RPO needs a run and a route drawn as simultaneous *options* with one ball. `alt` paths plus a `ball.options` list is the likely shape.
+- **Motion** is supported by the renderer (`motion` primitive) but no play uses it yet. Jet/orbit motion is the natural next test.
+- **Next concepts (Phase F):** Spacing, Flood (3x1), Hank, Choice, Texas/Angle, Post-Wheel, Switch Verticals, Scissors, PA Cross, Yankee; Counter GH/Trey, Trap, Wham, Draw, Buck Sweep, Stretch; Smoke, Now, Middle Screen, TE Screen; Glance / Bubble / Stick RPO (after the RPO shape exists). Then Phase G variants (Mesh from Bunch/Empty, IZ from Pistol/Singleback, Power from Gun/Singleback, 4 Verts from Trips/Empty), which needs Bunch, Empty and Gun Trey formations.
