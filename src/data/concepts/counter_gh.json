@@ -1,0 +1,130 @@
+{
+ "conceptId": "counter_gh",
+ "name": "Counter GH",
+ "family": "run",
+ "subfamily": "gap",
+ "side": "weak",
+ "copy": {
+  "title": "COUNTER GH",
+  "situation": "MISDIRECTION \u00b7 GAP RUN",
+  "description": "The guard kicks out and the H-back wraps back across the formation."
+ },
+ "assignments": {
+  "PST": {
+   "type": "down"
+  },
+  "PSG": {
+   "type": "down"
+  },
+  "C": {
+   "type": "back"
+  },
+  "BST": {
+   "type": "hinge"
+  },
+  "BSG": {
+   "type": "kickout",
+   "at": [
+    "d+0.3",
+    0.2
+   ],
+   "turn": 2.0
+  },
+  "WRAP": {
+   "type": "lead",
+   "through": [
+    [
+     "c-0.1",
+     -2.1
+    ],
+    [
+     "c-0.1",
+     0.4
+    ]
+   ],
+   "at": [
+    "c-0.6",
+    4.0
+   ]
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    "mesh",
+    [
+     -1.4,
+     -5.6
+    ]
+   ]
+  },
+  "RB": [
+   {
+    "type": "counter_step",
+    "through": [
+     [
+      -0.8,
+      -7.1
+     ]
+    ]
+   },
+   {
+    "type": "carry",
+    "delay": 0.05,
+    "through": [
+     "mesh",
+     [
+      "c+0.2",
+      -1.9
+     ],
+     [
+      "c+0.2",
+      0.4
+     ],
+     [
+      "c+0.6",
+      5.5
+     ]
+    ]
+   }
+  ]
+ },
+ "presentations": [
+  {
+   "formation": "pistol_strong_11",
+   "roles": {
+    "WRAP": "Y"
+   }
+  }
+ ],
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "handoff": {
+  "to": "RB",
+  "at": "mesh"
+ },
+ "relationships": [
+  {
+   "type": "wall",
+   "participants": [
+    "PST",
+    "PSG",
+    "C"
+   ]
+  },
+  {
+   "type": "pull",
+   "puller": "BSG",
+   "wrap": "WRAP",
+   "runner": "RB"
+  }
+ ],
+ "football": {
+  "rules": "PST, PSG down, C back. The backside guard kicks out the end man; the H-back crosses behind the line and wraps through the hole to the play-side LB. Counter step sells the backfield flow the other way."
+ },
+ "sources": [
+  "Counter GH: guard kick-out, H-back wrap (the 11-personnel counter)"
+ ]
+}

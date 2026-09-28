@@ -1,0 +1,72 @@
+{
+ "conceptId": "texas",
+ "name": "Texas",
+ "family": "dropback_pass",
+ "subfamily": "rb_option",
+ "side": "to_back",
+ "copy": {
+  "title": "TEXAS",
+  "situation": "MAN BEATER",
+  "description": "The back breaks inside into space the slot's out route empties."
+ },
+ "assignments": {
+  "#1": {
+   "type": "go"
+  },
+  "#2": {
+   "type": "out",
+   "depth": 10,
+   "length": 6
+  },
+  "RB": {
+   "type": "path",
+   "through": [
+    [
+     "c+0.5",
+     -1.2
+    ],
+    [
+     "c+0.9",
+     1.5
+    ],
+    [
+     "a",
+     4.5
+    ]
+   ]
+  },
+  "bs#1": {
+   "type": "curl"
+  },
+  "bs#2?": {
+   "type": "seam"
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  }
+ ],
+ "ball": {
+  "to": "RB",
+  "at": 1
+ },
+ "reads": [
+  "RB",
+  "#2",
+  "bs#1"
+ ],
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "#2",
+   "low": "RB"
+  }
+ ],
+ "football": {
+  "read": "The back's angle route: out to the flat, then snap back inside against the linebacker's leverage. The slot's out clears the flat defender."
+ },
+ "sources": [
+  "Texas / Angle: RB angle route under a clearing #2 route"
+ ]
+}

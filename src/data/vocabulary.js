@@ -74,7 +74,14 @@ window.FD = window.FD || {};
     arrow: prim('angle', { stem: 0, angle: 65, length: 7, dir: 'out' }),
     swing: prim('swing', { width: 6, depth: 0.5 }),
     bubble: prim('swing', { width: 4.5, depth: -0.3, dip: 1.2 }),
-    wheel: prim('path', { points: [[4, 1.5], [6, 6], [6, 16]] }),
+    wheel: {
+      // Out, then up the sideline outside #1. Always toward the player's own sideline.
+      status: 'validated',
+      expand(spec, player) {
+        const o = player.at[0] >= 0 ? 1 : -1;
+        return [Object.assign({ type: 'path', points: [[3.5 * o, 1.5], [8.5 * o, 6], [9.5 * o, 16]] }, params(spec, {}))];
+      },
+    },
     double_move: prim('doubleMove', {}),
 
     // ── Protection ──────────────────────────────────────────────────────

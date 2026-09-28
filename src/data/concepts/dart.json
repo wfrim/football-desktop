@@ -1,0 +1,121 @@
+{
+ "conceptId": "dart",
+ "name": "Dart",
+ "family": "run",
+ "subfamily": "zone",
+ "side": "away_from_back",
+ "copy": {
+  "title": "DART",
+  "situation": "ZONE \u00b7 BACKSIDE PULL",
+  "description": "Zone up front while the backside tackle pulls for the linebacker."
+ },
+ "assignments": {
+  "PST": {
+   "type": "zone_step"
+  },
+  "PSG": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ],
+   "climb": [
+    "PST+0.3",
+    4.6
+   ]
+  },
+  "C": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ]
+  },
+  "BSG": {
+   "type": "back"
+  },
+  "BST": {
+   "type": "pull",
+   "dip": -1.6,
+   "hole": "a",
+   "at": [
+    "b",
+    4.3
+   ]
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    "mesh",
+    [
+     -2.4,
+     -6.3
+    ]
+   ]
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    "mesh",
+    [
+     "a+0.25",
+     -1.6
+    ],
+    [
+     "a",
+     -0.2
+    ],
+    [
+     "a+0.15",
+     5.5
+    ]
+   ]
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "handoff": {
+  "to": "RB",
+  "at": "mesh"
+ },
+ "relationships": [
+  {
+   "type": "zone",
+   "participants": [
+    "PST",
+    "PSG",
+    "C"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "C",
+    "PSG"
+   ]
+  },
+  {
+   "type": "pull",
+   "puller": "BST",
+   "runner": "RB"
+  }
+ ],
+ "football": {
+  "rules": "Front side blocks inside zone; the backside guard fills back and the backside tackle pulls through the A gap for the play-side LB. Backside end is the QB's read.",
+  "rb": "Inside the pulling tackle."
+ },
+ "sources": [
+  "Dart: zone front side, backside tackle pull (gun run game)"
+ ]
+}

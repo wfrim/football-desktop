@@ -1,0 +1,75 @@
+{
+ "conceptId": "spacing",
+ "name": "Spacing",
+ "family": "quick_pass",
+ "subfamily": "spacing",
+ "side": "strength",
+ "copy": {
+  "title": "SPACING",
+  "situation": "ZONE BEATER \u00b7 QUICK",
+  "description": "Receivers settle in every underneath window at five yards."
+ },
+ "assignments": {
+  "#1": {
+   "type": "hitch"
+  },
+  "#2": {
+   "type": "sit",
+   "depth": 5
+  },
+  "bs#1": {
+   "type": "hitch"
+  },
+  "bs#2": {
+   "type": "sit",
+   "depth": 5
+  },
+  "#3?": {
+   "type": "flat",
+   "dir": "right",
+   "width": 7
+  },
+  "RB?": {
+   "type": "flat",
+   "width": 6
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  }
+ ],
+ "tags": [
+  "quick"
+ ],
+ "ball": {
+  "to": "#2",
+  "at": 1
+ },
+ "reads": [
+  "#2",
+  "#1",
+  "RB",
+  "#3"
+ ],
+ "relationships": [
+  {
+   "type": "feature",
+   "participants": [
+    "#1",
+    "#2",
+    "bs#1",
+    "bs#2"
+   ]
+  }
+ ],
+ "football": {
+  "read": "Five receivers spread across the field at one depth: the QB throws to the window the underneath zone leaves open."
+ },
+ "sources": [
+  "Spacing (Air Raid / West Coast): horizontal stretch of underneath zones at 5-6 yd"
+ ]
+}

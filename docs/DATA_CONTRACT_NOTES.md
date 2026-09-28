@@ -1,6 +1,6 @@
 # Data contract notes
 
-**Status:** v0.3. The repo now owns football content as well as rendering, so the
+**Status:** v0.4 (concept templates). v0.3: The repo now owns football content as well as rendering, so the
 v0.2 "gaps for the football side" are decided (see §7). Coordinate rules and the QB
 rule are locked.
 
@@ -83,6 +83,43 @@ Family defaults: `dropback_pass` / `quick_pass` / `screen` protect with the OL a
 the QB (2 / 1 / 3 yd). `run` and `play_action` have no defaults: every assignment is
 explicit. Anything unassigned is drawn idle (dimmed), never invented.
 
+## 4b. Concept templates (`src/data/concepts/*.json`, `src/data/concepts.js`)
+
+Preferred format for new work. A concept is written once, by ROLE, as if it goes to the
+offense's right; each presentation maps it onto one formation.
+
+```jsonc
+{
+  "conceptId": "power", "name": "Power", "family": "run", "subfamily": "gap",
+  "side": "strength",                       // right | left | strength | weak | away_from_back | to_back
+  "copy": { "title", "situation", "description" },   // meta + formation lines are automatic
+  "assignments": {
+    "PST": { "type": "down" }, "C": { "type": "back" },
+    "BSG": { "type": "pull", "hole": "c", "at": ["c-0.8", 3.8] },   // gap landmark tokens
+    "KICK": { "type": "lead", "at": ["d+0.4", 0.25] },              // custom role, bound per presentation
+    "TE?": { "type": "down" },                                      // "?" = optional role
+    "RB": { "type": "carry", "through": ["mesh", ["c", -1.9], ["c", 0.4], ["c+0.4", 5.5]] }
+  },
+  "defaults": { "receivers": { "type": "stalk" } },
+  "relationships": [ { "type": "pull", "puller": "BSG", "runner": "RB" } ],
+  "handoff": { "to": "RB", "at": "mesh" },
+  "presentations": [
+    { "formation": "pistol_strong_11", "roles": { "KICK": "Y" } },
+    { "formation": "i_form_21", "roles": { "KICK": "F" }, "tweaks": { "BSG": { "dip": -1.0 } } }
+  ]
+}
+```
+
+- **Roles:** `#1 #2 #3` concept-side receivers outside-in; `bs#1…` backside; `PST PSG C BSG BST`;
+  `QB RB FB`; `TE` = inline play-side TE; anything else is bound with `roles` (to a role or an id).
+- **Landmarks** (play-side positive, mirrored automatically): gaps `a b c d` / `-a…` computed
+  from the formation's real line and inline TE; any role's x (`PST`, `#2`); offsets (`b+0.3`);
+  `mesh` = QB–back exchange (gun, pistol and under-center rules).
+- **Presentation fields:** `formation`, `side`, `roles`, `assignments` (override; `null` removes
+  a template key), `tweaks` (merge params into a role's spec), `copy`, `situation`, `alignment`, `id`.
+- A concept can only be presented on formations that have its required roles. Missing roles
+  are a fatal validation error, which keeps variants honest.
+
 ## 5. Vocabulary (`vocabulary.js`)
 
 | Group | Canonical words | Primitive |
@@ -136,4 +173,5 @@ participant is emphasized (full-strength strokes; other assignments recede).
 - **Cameras.** Two canonical scales only: wide (`DEFAULT_FRAME`) and tight (`TIGHT_FRAME`, chosen automatically when nothing goes deeper than 10 yd). The field grid fades back in whenever the scale changes.
 - **No RPO primitive yet.** An RPO needs a run and a route drawn as simultaneous *options* with one ball. `alt` paths plus a `ball.options` list is the likely shape.
 - **Motion** is supported by the renderer (`motion` primitive) but no play uses it yet. Jet/orbit motion is the natural next test.
-- **Next concepts (Phase F):** Spacing, Flood (3x1), Hank, Choice, Texas/Angle, Post-Wheel, Switch Verticals, Scissors, PA Cross, Yankee; Counter GH/Trey, Trap, Wham, Draw, Buck Sweep, Stretch; Smoke, Now, Middle Screen, TE Screen; Glance / Bubble / Stick RPO (after the RPO shape exists). Then Phase G variants (Mesh from Bunch/Empty, IZ from Pistol/Singleback, Power from Gun/Singleback, 4 Verts from Trips/Empty), which needs Bunch, Empty and Gun Trey formations.
+- **Collision QA** (`tools/check.sh`) flags paths through markers and carries through blocks. Path–path crossings are allowed (football paths cross; timing separates them).
+- **Next concepts:** Hank, Choice, Flood (3x1), PA Cross, Drive variants; Counter Trey (from 12), Wham, Lead/Iso variants, Stretch; Middle Screen, TE Screen, Jailbreak variants; RPOs (after the RPO shape). **Next variants:** Dagger/Drive/Levels/Y-Cross into templates; Stick/Snag from Bunch; Four Verts from Empty; Counter GT from Pistol; Boot from I-form. **Formations to add:** Gun Trey (3x1 with TE), Pistol Twins, Singleback Doubles 11, Ace 12 (2x2 TEs).

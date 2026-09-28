@@ -1,0 +1,73 @@
+{
+ "conceptId": "scissors",
+ "name": "Scissors",
+ "family": "dropback_pass",
+ "subfamily": "shot",
+ "side": "strength",
+ "copy": {
+  "title": "SCISSORS",
+  "situation": "COVER 2 / QUARTERS",
+  "description": "A post and a corner cross to split the safety."
+ },
+ "assignments": {
+  "#1": {
+   "type": "post"
+  },
+  "#2": {
+   "type": "corner"
+  },
+  "bs#1": {
+   "type": "dig",
+   "depth": 14
+  },
+  "bs#2?": {
+   "type": "sit",
+   "depth": 6
+  },
+  "#3?": {
+   "type": "seam"
+  },
+  "RB?": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "flat",
+    "width": 7
+   }
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  }
+ ],
+ "tags": [
+  "deep"
+ ],
+ "ball": {
+  "to": "#2",
+  "at": 0.93
+ },
+ "reads": [
+  "#2",
+  "#1",
+  "bs#1"
+ ],
+ "relationships": [
+  {
+   "type": "feature",
+   "participants": [
+    "#1",
+    "#2"
+   ]
+  }
+ ],
+ "football": {
+  "read": "Read the safety: he drives on the post \u2192 corner behind him; he widens with the corner \u2192 post."
+ },
+ "sources": [
+  "Scissors: #1 post, #2 corner crossing under it"
+ ]
+}

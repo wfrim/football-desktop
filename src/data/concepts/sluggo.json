@@ -1,0 +1,79 @@
+{
+ "conceptId": "sluggo",
+ "name": "Sluggo",
+ "family": "dropback_pass",
+ "subfamily": "shot",
+ "side": "strength",
+ "copy": {
+  "title": "SLUGGO",
+  "situation": "SHOT PLAY",
+  "description": "Sell the slant, then go."
+ },
+ "assignments": {
+  "#1": {
+   "type": "double_move",
+   "stem": 2,
+   "fake": {
+    "dir": "in",
+    "length": 2.2,
+    "angle": 55
+   },
+   "then": {
+    "angle": 0,
+    "length": 14
+   }
+  },
+  "#2": {
+   "type": "seam"
+  },
+  "bs#1": {
+   "type": "slant"
+  },
+  "bs#2?": {
+   "type": "flat",
+   "dir": "left",
+   "width": 6
+  },
+  "#3?": {
+   "type": "flat",
+   "dir": "right",
+   "width": 6
+  },
+  "RB?": {
+   "type": "pass_set"
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "tags": [
+  "deep"
+ ],
+ "ball": {
+  "to": "#1",
+  "at": 0.92
+ },
+ "reads": [
+  "#1",
+  "#2"
+ ],
+ "relationships": [
+  {
+   "type": "feature",
+   "participants": [
+    "#1"
+   ]
+  }
+ ],
+ "football": {
+  "read": "Double move off the quick game: the corner jumps the slant, the go runs by him. The seam holds the safety."
+ },
+ "sources": [
+  "Slant-and-go (sluggo) double move"
+ ]
+}

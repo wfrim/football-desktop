@@ -1,0 +1,107 @@
+{
+ "conceptId": "buck_sweep",
+ "name": "Buck Sweep",
+ "family": "run",
+ "subfamily": "gap",
+ "side": "to_back",
+ "copy": {
+  "title": "BUCK SWEEP",
+  "situation": "PERIMETER \u00b7 GAP RUN",
+  "description": "Both guards pull: one kicks out the edge, one leads up the alley."
+ },
+ "assignments": {
+  "PSG": {
+   "type": "kickout",
+   "at": [
+    "d+1.0",
+    0.5
+   ],
+   "turn": 1.8
+  },
+  "BSG": {
+   "type": "wrap",
+   "hole": "d-0.2",
+   "at": [
+    "d-0.6",
+    4.0
+   ]
+  },
+  "PST": {
+   "type": "down"
+  },
+  "C": {
+   "type": "back"
+  },
+  "BST": {
+   "type": "hinge"
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    [
+     0.7,
+     -4.8
+    ]
+   ]
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    [
+     2.8,
+     -3.9
+    ],
+    [
+     "d+0.3",
+     -1.4
+    ],
+    [
+     "d+0.3",
+     0.4
+    ],
+    [
+     "d+0.6",
+     5.5
+    ]
+   ]
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  }
+ ],
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "handoff": {
+  "to": "RB",
+  "at": [
+   2.3,
+   -4.2
+  ]
+ },
+ "relationships": [
+  {
+   "type": "wall",
+   "participants": [
+    "PST",
+    "C"
+   ]
+  },
+  {
+   "type": "pull",
+   "puller": "PSG",
+   "wrap": "BSG",
+   "runner": "RB"
+  }
+ ],
+ "football": {
+  "rules": "Wing-T's signature play, drawn from the gun: PST blocks down, C blocks back; the play-side guard kicks out the edge, the backside guard pulls deeper and turns up inside him to the alley. The back takes it to his side."
+ },
+ "sources": [
+  "Buck sweep (Wing-T): double guard pull, kick-out and wrap"
+ ]
+}

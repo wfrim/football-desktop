@@ -1,0 +1,106 @@
+{
+ "conceptId": "yankee",
+ "name": "Yankee",
+ "family": "play_action",
+ "subfamily": "shot",
+ "side": "strength",
+ "copy": {
+  "title": "YANKEE",
+  "situation": "PLAY-ACTION \u00b7 SHOT",
+  "description": "A deep over and a post off a hard run fake."
+ },
+ "assignments": {
+  "PST": {
+   "type": "base"
+  },
+  "PSG": {
+   "type": "base"
+  },
+  "C": {
+   "type": "base"
+  },
+  "BSG": {
+   "type": "base"
+  },
+  "BST": {
+   "type": "base"
+  },
+  "TE?": {
+   "type": "pass_set"
+  },
+  "CUTOFF?": {
+   "type": "pass_set"
+  },
+  "FB?": {
+   "type": "pass_set"
+  },
+  "RB": {
+   "type": "fake",
+   "through": [
+    "mesh",
+    [
+     "a",
+     -1.0
+    ]
+   ]
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    "mesh",
+    [
+     0.2,
+     -6.3
+    ]
+   ],
+   "timing": {
+    "duration": 1.4
+   }
+  },
+  "#1": {
+   "type": "post"
+  },
+  "bs#1": {
+   "type": "cross",
+   "depth": 18,
+   "across": 28
+  }
+ },
+ "presentations": [
+  {
+   "formation": "singleback_tight_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
+  },
+  {
+   "formation": "i_form_21"
+  }
+ ],
+ "tags": [
+  "deep"
+ ],
+ "ball": {
+  "to": "bs#1",
+  "at": 0.82
+ },
+ "reads": [
+  "bs#1",
+  "#1"
+ ],
+ "relationships": [
+  {
+   "type": "feature",
+   "participants": [
+    "#1",
+    "bs#1"
+   ]
+  }
+ ],
+ "football": {
+  "rules": "Two-man route off inside-zone action; everyone else protects (max protect). The post occupies the middle safety, the deep over runs behind the linebackers who bit on the fake."
+ },
+ "sources": [
+  "Yankee: post + deep over, max-protect play-action"
+ ]
+}

@@ -28,7 +28,15 @@ unrecognizable, football correctness wins.
 - 11 players, personnel must match position groups, 7 on the line (warning).
 
 ## Where things go
-- New play → JSON in `src/data/plays/<concept>_<formation>.json`, add to manifest
+- New concept → `src/data/concepts/<conceptId>.json`: written ONCE by role
+  (#1/#2/#3, bs#1, PST/PSG/C/BSG/BST, QB/RB/FB/TE, custom roles), authored as
+  if the play goes right, with gap landmarks ("b", "-a", "c+0.3", "PST", "mesh")
+  instead of coordinates. Each `presentations[]` entry = one wallpaper play on
+  one formation (mirroring and landmarks are automatic). Add to manifest.
+  Syntax reference: header of `src/data/concepts.js`.
+- New variant of a concept → one line in its `presentations` (plus `roles` /
+  `tweaks` if the formation needs them). Only add variants that make football sense.
+- One-off play with literal coordinates → `src/data/plays/` (legacy format, still valid)
 - New formation → `src/data/formations/`, add to manifest
 - New football term → one row in `src/data/vocabulary.js`
 - New relationship → one row in TYPES in `src/renderer/relationships.js`
@@ -46,11 +54,12 @@ unrecognizable, football correctness wins.
 - No concept-specific drawing code, ever.
 
 ## Verifying changes (cheapest first)
-1. `node tools/validate.mjs` — headless: every play resolves, 11 players,
-   personnel, QB rule, vocabulary, references, copy. Exit 1 on fatal.
-2. In-page geometry: serve (`python3 -m http.server 8765`), open any play, run in
-   the console: build every scene and read `scene.warnings` (relationship
-   constraints: separations, lanes, levels, double-team convergence, zone flow).
+1. `node tools/validate.mjs` — headless: every concept expands, every play
+   resolves, 11 players, personnel, QB rule, vocabulary, roles. Exit 1 on fatal.
+2. `tools/check.sh` (serve first: `python3 -m http.server 8765`) — headless
+   geometry for every play: relationship constraints (separation, lanes, levels,
+   double-team convergence, zone/wall flow) and COLLISIONS (a path through a
+   player marker, a carry through a block). Must print only the summary line.
 3. Visual: `tools/contact.sh <outdir> 7.8 <play-id>...` → 2x2 contact sheets
    (headless Chrome). `tools/shoot.sh` for single frames.
    `index.html?play=<id>&t=<seconds>` freezes a play; `?debug=1` draws the camera.
@@ -60,7 +69,7 @@ unrecognizable, football correctness wins.
 5. `node tools/concepts-doc.mjs` after changing any play's football/sources.
 
 ## Status (see git log for detail)
-- 25 plays / 25 concepts / 5 formations: 8 dropback, 5 quick, 1 play-action,
-  8 runs (zone, gap, iso, toss), 3 screens.
-- Next: Phase F (50+ concepts), then G (legitimate formation variants), H polish.
-  Recommended next concepts are listed in docs/DATA_CONTRACT_NOTES.md §8.
+- 60 plays / 38 concepts / 7 formations (23 concepts are templates with
+  1-4 presentations; 15 older plays are single-presentation files).
+- Next: more concepts + variants (§8 of the contract notes), an RPO shape,
+  pre-snap motion, then polish (pacing, typography, battery behaviour).

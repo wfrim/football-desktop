@@ -1,0 +1,73 @@
+{
+ "conceptId": "post_wheel",
+ "name": "Post-Wheel",
+ "family": "dropback_pass",
+ "subfamily": "shot",
+ "side": "strength",
+ "copy": {
+  "title": "POST-WHEEL",
+  "situation": "SHOT PLAY \u00b7 COVER 3",
+  "description": "The post holds the corner; the wheel climbs the sideline behind him."
+ },
+ "assignments": {
+  "#1": {
+   "type": "post"
+  },
+  "#2": {
+   "type": "wheel"
+  },
+  "bs#1": {
+   "type": "dig",
+   "depth": 14
+  },
+  "bs#2?": {
+   "type": "sit",
+   "depth": 6
+  },
+  "#3?": {
+   "type": "seam"
+  },
+  "RB?": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "flat",
+    "width": 7
+   }
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "tags": [
+  "deep"
+ ],
+ "ball": {
+  "to": "#2",
+  "at": 0.85
+ },
+ "reads": [
+  "#2",
+  "#1",
+  "bs#1"
+ ],
+ "relationships": [
+  {
+   "type": "feature",
+   "participants": [
+    "#1",
+    "#2"
+   ]
+  }
+ ],
+ "football": {
+  "read": "Corner must respect the post inside; the wheel wins over the top of the flat defender."
+ },
+ "sources": [
+  "Post-wheel: #1 post, #2 wheel up the sideline"
+ ]
+}

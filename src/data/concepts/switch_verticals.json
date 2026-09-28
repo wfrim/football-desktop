@@ -1,0 +1,101 @@
+{
+ "conceptId": "switch_verticals",
+ "name": "Switch Verticals",
+ "family": "dropback_pass",
+ "subfamily": "verticals",
+ "side": "strength",
+ "copy": {
+  "title": "SWITCH VERTICALS",
+  "situation": "MAN / MATCH",
+  "description": "Two receivers cross at the snap and swap vertical lanes."
+ },
+ "assignments": {
+  "#1": {
+   "type": "path",
+   "points": [
+    [
+     0,
+     3
+    ],
+    [
+     -5,
+     9
+    ],
+    [
+     -5,
+     18
+    ]
+   ]
+  },
+  "#2": {
+   "type": "path",
+   "points": [
+    [
+     0,
+     2
+    ],
+    [
+     5.5,
+     8
+    ],
+    [
+     6,
+     18
+    ]
+   ]
+  },
+  "bs#1": {
+   "type": "go"
+  },
+  "bs#2?": {
+   "type": "seam"
+  },
+  "#3?": {
+   "type": "flat",
+   "dir": "right",
+   "width": 6
+  },
+  "RB?": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "flat",
+    "width": 7
+   }
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "tags": [
+  "deep"
+ ],
+ "ball": {
+  "to": "#2",
+  "at": 0.9
+ },
+ "reads": [
+  "#2",
+  "#1",
+  "bs#2"
+ ],
+ "relationships": [
+  {
+   "type": "feature",
+   "participants": [
+    "#1",
+    "#2"
+   ]
+  }
+ ],
+ "football": {
+  "read": "The switch release stresses match coverage: whoever passes off the other vertical opens a window."
+ },
+ "sources": [
+  "Switch verticals: #1 and #2 exchange vertical lanes"
+ ]
+}

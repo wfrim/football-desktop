@@ -36,6 +36,19 @@
     "concepts/hb_screen.json",
     "concepts/inside_zone.json",
     "concepts/outside_zone.json",
-    "concepts/power.json"
+    "concepts/power.json",
+    "concepts/spacing.json",
+    "concepts/texas.json",
+    "concepts/post_wheel.json",
+    "concepts/switch_verticals.json",
+    "concepts/scissors.json",
+    "concepts/sluggo.json",
+    "concepts/yankee.json",
+    "concepts/counter_gh.json",
+    "concepts/trap.json",
+    "concepts/draw.json",
+    "concepts/buck_sweep.json",
+    "concepts/dart.json",
+    "concepts/smoke.json"
   ]
 }

@@ -8,7 +8,7 @@ Where coaching systems differ, one presentation is chosen and the choice is writ
 concept's `football` block. Assumed defensive fronts are noted where blocking depends on
 them; defenders are never drawn.
 
-38 plays · 25 concepts · 7 formations
+60 plays · 38 concepts · 7 formations
 
 ## Dropback pass
 
@@ -60,6 +60,14 @@ them; defenders are never drawn.
 - **Read:** The safety over the dig: he drives on the dig → post over him; he stays deep → dig.
 - **Sources:** Mills (post-dig): #1 post over #2 dig; backside curl-flat
 
+### Post-Wheel
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** SHOT PLAY · COVER 3 — "The post holds the corner; the wheel climbs the sideline behind him."
+- **Defining relationship:** feature
+- **Read:** Corner must respect the post inside; the wheel wins over the top of the flat defender.
+- **Sources:** Post-wheel: #1 post, #2 wheel up the sideline
+
 ### Sail
 
 - **Presentations:** Gun Trips (11)
@@ -67,6 +75,38 @@ them; defenders are never drawn.
 - **Defining relationship:** levels
 - **Read:** Deep third is carried by the go; read the flat defender between the sail (out at 11) and the flat.
 - **Sources:** Flood / Sail: #1 clear, #2 deep out, #3 flat — three-level sideline stretch
+
+### Scissors
+
+- **Presentations:** Gun Doubles (11, right) · Gun Empty (11, right)
+- **Wallpaper:** COVER 2 / QUARTERS — "A post and a corner cross to split the safety."
+- **Defining relationship:** feature
+- **Read:** Read the safety: he drives on the post → corner behind him; he widens with the corner → post.
+- **Sources:** Scissors: #1 post, #2 corner crossing under it
+
+### Sluggo
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** SHOT PLAY — "Sell the slant, then go."
+- **Defining relationship:** feature
+- **Read:** Double move off the quick game: the corner jumps the slant, the go runs by him. The seam holds the safety.
+- **Sources:** Slant-and-go (sluggo) double move
+
+### Switch Verticals
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** MAN / MATCH — "Two receivers cross at the snap and swap vertical lanes."
+- **Defining relationship:** feature
+- **Read:** The switch release stresses match coverage: whoever passes off the other vertical opens a window.
+- **Sources:** Switch verticals: #1 and #2 exchange vertical lanes
+
+### Texas
+
+- **Presentations:** Gun Doubles (11, right)
+- **Wallpaper:** MAN BEATER — "The back breaks inside into space the slot's out route empties."
+- **Defining relationship:** high_low
+- **Read:** The back's angle route: out to the flat, then snap back inside against the linebacker's leverage. The slot's out clears the flat defender.
+- **Sources:** Texas / Angle: RB angle route under a clearing #2 route
 
 ### Y-Cross
 
@@ -110,6 +150,14 @@ them; defenders are never drawn.
 - **Read:** Triangle stretch: corner (high) and flat (low) on the flat defender, snag/spot settling inside between them.
 - **Sources:** Snag / Spot: #1 snag at 5-6 settling inside, #2 corner, #3 flat
 
+### Spacing
+
+- **Presentations:** Gun Doubles (11, right) · Gun Empty (11, right)
+- **Wallpaper:** ZONE BEATER · QUICK — "Receivers settle in every underneath window at five yards."
+- **Defining relationship:** feature
+- **Read:** Five receivers spread across the field at one depth: the QB throws to the window the underneath zone leaves open.
+- **Sources:** Spacing (Air Raid / West Coast): horizontal stretch of underneath zones at 5-6 yd
+
 ### Stick
 
 - **Presentations:** Gun Trips (11, right) · Gun Empty (11, right)
@@ -127,6 +175,14 @@ them; defenders are never drawn.
 - **Defining relationship:** levels
 - **Rules:** Line and RB sell outside zone right; QB fakes and boots left (naked). X clears, Z deep over, Y drag, U flat: a three-level flood in front of the QB.
 - **Sources:** Outside zone boot: over / drag / flat flood off wide-zone action
+
+### Yankee
+
+- **Presentations:** Singleback Tight (12, right) · I-Formation (21, right)
+- **Wallpaper:** PLAY-ACTION · SHOT — "A deep over and a post off a hard run fake."
+- **Defining relationship:** feature
+- **Rules:** Two-man route off inside-zone action; everyone else protects (max protect). The post occupies the middle safety, the deep over runs behind the linebackers who bit on the fake.
+- **Sources:** Yankee: post + deep over, max-protect play-action
 
 ## Screens
 
@@ -147,6 +203,14 @@ them; defenders are never drawn.
 - **Rb:** Check-block, slip out behind the LOS, catch, get behind the convoy.
 - **Sources:** OpenPlay Football — Halfback Screen (pass-rush manipulation); Standard slow-screen timing: OL sell pass for ~1 count, then release
 
+### Smoke Screen
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** QUICK SCREEN · OFF COVERAGE — "Punish soft corners: catch it at the line and go."
+- **Defining relationship:** convoy
+- **Rules:** Vs off coverage: the outside receiver takes one step back and catches it immediately; #2 blocks the corner, #3 the next defender inside.
+- **Sources:** Smoke / now screen: quick throw to #1, #2 blocks the corner
+
 ### Tunnel Screen
 
 - **Presentations:** Gun Doubles (11)
@@ -157,6 +221,22 @@ them; defenders are never drawn.
 
 ## Run game
 
+### Buck Sweep
+
+- **Presentations:** Gun Doubles (11, right)
+- **Wallpaper:** PERIMETER · GAP RUN — "Both guards pull: one kicks out the edge, one leads up the alley."
+- **Defining relationship:** wall, pull
+- **Rules:** Wing-T's signature play, drawn from the gun: PST blocks down, C blocks back; the play-side guard kicks out the edge, the backside guard pulls deeper and turns up inside him to the alley. The back takes it to his side.
+- **Sources:** Buck sweep (Wing-T): double guard pull, kick-out and wrap
+
+### Counter GH
+
+- **Presentations:** Pistol Strong (11, left)
+- **Wallpaper:** MISDIRECTION · GAP RUN — "The guard kicks out and the H-back wraps back across the formation."
+- **Defining relationship:** wall, pull
+- **Rules:** PST, PSG down, C back. The backside guard kicks out the end man; the H-back crosses behind the line and wraps through the hole to the play-side LB. Counter step sells the backfield flow the other way.
+- **Sources:** Counter GH: guard kick-out, H-back wrap (the 11-personnel counter)
+
 ### Counter GT
 
 - **Presentations:** Gun Trips (11, right)
@@ -165,6 +245,23 @@ them; defenders are never drawn.
 - **Rules:** RT, RG down; C back. LG pulls flat and kicks out the end man; LT pulls deeper behind him and wraps through the hole to the play-side LB. Backside DE is left: the QB's carry-out holds him.
 - **Rb:** Counter step away, then cross the QB's face and follow the pullers.
 - **Sources:** Wikipedia — Counter run (GT: guard kicks out, tackle wraps); Throw Deep Publishing — The Complete Guide to the Counter Play; vIQtory Sports — How to install the Counter play
+
+### Dart
+
+- **Presentations:** Gun Doubles (11, left) · Gun Trips (11, right)
+- **Wallpaper:** ZONE · BACKSIDE PULL — "Zone up front while the backside tackle pulls for the linebacker."
+- **Defining relationship:** zone, combo, pull
+- **Rules:** Front side blocks inside zone; the backside guard fills back and the backside tackle pulls through the A gap for the play-side LB. Backside end is the QB's read.
+- **Rb:** Inside the pulling tackle.
+- **Sources:** Dart: zone front side, backside tackle pull (gun run game)
+
+### Draw
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, left)
+- **Wallpaper:** PASS-RUSH ANSWER · RUN — "Show pass, then hand it off behind the rush."
+- **Defining relationship:** feature
+- **Rules:** Line pass-sets and lets rushers run upfield; receivers release vertically to clear the secondary. The QB drops, the back shows protection, then takes the late handoff up the middle.
+- **Sources:** Draw: pass-protection look, delayed handoff
 
 ### Duo
 
@@ -231,3 +328,13 @@ them; defenders are never drawn.
 - **Defining relationship:** zone, combo, feature
 - **Rules:** Inside zone right; the H-back crosses behind the line ('split' flow) and kicks out the backside end so the cutback is sealed.
 - **Sources:** Split zone: inside zone with the H-back sifting across to the backside end
+
+### Trap
+
+- **Presentations:** I-Formation (21, right)
+- **Wallpaper:** QUICK HITTER · GAP RUN — "The 3-technique is left unblocked, then trapped from the backside."
+- **Defining relationship:** kickout, feature
+- **Front:** 4-3: 3-tech outside the play-side guard.
+- **Rules:** The 3-tech is left alone and invited upfield; the backside guard traps him. PSG releases inside to the Mike, PST climbs, C blocks back. The FB seals the backside end.
+- **Rb:** Straight downhill inside the trap block.
+- **Sources:** Trap: influence the 3-technique, trap with the backside guard

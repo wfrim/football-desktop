@@ -1,0 +1,108 @@
+{
+ "conceptId": "draw",
+ "name": "Draw",
+ "family": "run",
+ "subfamily": "draw",
+ "side": "to_back",
+ "copy": {
+  "title": "DRAW",
+  "situation": "PASS-RUSH ANSWER \u00b7 RUN",
+  "description": "Show pass, then hand it off behind the rush."
+ },
+ "assignments": {
+  "PST": {
+   "type": "pass_set"
+  },
+  "PSG": {
+   "type": "pass_set"
+  },
+  "C": {
+   "type": "pass_set"
+  },
+  "BSG": {
+   "type": "pass_set"
+  },
+  "BST": {
+   "type": "pass_set"
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    [
+     0,
+     -6.6
+    ]
+   ],
+   "timing": {
+    "duration": 0.9
+   }
+  },
+  "RB": [
+   {
+    "type": "block",
+    "to": [
+     -0.9,
+     -0.6
+    ],
+    "end": "none"
+   },
+   {
+    "type": "carry",
+    "delay": 0.55,
+    "through": [
+     [
+      0.5,
+      -5.8
+     ],
+     [
+      "a+0.25",
+      -1.6
+     ],
+     [
+      "a",
+      -0.2
+     ],
+     [
+      "a",
+      5.5
+     ]
+    ]
+   }
+  ]
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "defaults": {
+  "receivers": {
+   "type": "go",
+   "depth": 9
+  }
+ },
+ "handoff": {
+  "to": "RB",
+  "at": [
+   0.5,
+   -5.8
+  ]
+ },
+ "relationships": [
+  {
+   "type": "feature",
+   "participants": [
+    "RB"
+   ]
+  }
+ ],
+ "football": {
+  "rules": "Line pass-sets and lets rushers run upfield; receivers release vertically to clear the secondary. The QB drops, the back shows protection, then takes the late handoff up the middle."
+ },
+ "sources": [
+  "Draw: pass-protection look, delayed handoff"
+ ]
+}
