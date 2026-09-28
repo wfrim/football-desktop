@@ -1,0 +1,25 @@
+{
+  "id": "stick",
+  "name": "Stick",
+  "family": "quick_pass",
+  "personnel": "11",
+  "formation": "gun_trips_11",
+  "copy": {
+    "title": "STICK",
+    "meta": "QUICK GAME · 11 PERSONNEL",
+    "description": "A simple three-level stretch of the underneath defender."
+  },
+  "_interpretation": "Trips to the right. 'Outside receiver' = Z (#1), 'inside receiver' = H (#2), 'third receiver' = Y (#3). X and RB are unassigned in the handoff and are left idle.",
+  "assignments": {
+    "Z": { "type": "go" },
+    "H": { "type": "stick", "depth": 5.5 },
+    "Y": { "type": "flat", "dir": "right", "width": 9 }
+  },
+  "relationships": [
+    { "type": "levels", "participants": ["Z", "H", "Y"] }
+  ],
+  "ball": {
+    "to": "H", "at": 1,
+    "_provisional": "Presentation-only throw target chosen by the renderer; the handoff did not specify one."
+  }
+}

@@ -1,0 +1,226 @@
+/*
+ * play.css — SVG styling. All stroke widths come from --sw-* custom
+ * properties, set in yard units by responsive.js so lines stay a consistent
+ * on-screen weight at every window size.
+ */
+
+/* ── Field ───────────────────────────────────────────────────────────── */
+
+.field-surface {
+  fill: var(--ink);
+  fill-opacity: 0.011;
+}
+
+.field-line {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: var(--sw-field);
+  shape-rendering: geometricPrecision;
+}
+
+.field-yard { stroke-opacity: 0.055; }
+.field-hash { stroke-opacity: 0.075; }
+.field-side { stroke-opacity: 0.12; }
+
+.field-cross {
+  fill: none;
+  stroke: var(--ink);
+  stroke-opacity: 0.09;
+  stroke-width: var(--sw-field);
+}
+
+.field-label {
+  font-family: var(--font-mono);
+  fill: var(--ink);
+  fill-opacity: 0.2;
+  letter-spacing: 0.04em;
+}
+
+/* ── Scrimmage ───────────────────────────────────────────────────────── */
+
+.los {
+  fill: none;
+  stroke: var(--ink);
+  stroke-opacity: 0.24;
+  stroke-width: var(--sw-los);
+}
+
+.ltg {
+  fill: none;
+  stroke: var(--accent);
+  stroke-opacity: 0.85;
+  stroke-width: var(--sw-route);
+  stroke-linecap: butt;
+}
+
+/* ── Assignments ─────────────────────────────────────────────────────── */
+
+.a {
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.a-route {
+  stroke-width: var(--sw-route);
+  stroke-opacity: 0.8;
+}
+
+/* Concept emphasis: when a play declares relationships, their participants
+   carry the drawing; supporting routes recede. */
+.has-concept .a-route { stroke-opacity: 0.5; }
+.has-concept .a-head { fill-opacity: 0.5; }
+.has-concept .a-wrap.is-concept .a-route { stroke-opacity: 0.96; }
+.has-concept .a-wrap.is-concept .a-head { fill-opacity: 0.96; }
+
+.a-wrap.is-primary .a-route {
+  stroke-opacity: 1;
+}
+
+.a-settle {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: var(--sw-route);
+  stroke-opacity: 0.8;
+}
+.has-concept .a-settle { stroke-opacity: 0.5; }
+.has-concept .a-wrap.is-concept .a-settle { stroke-opacity: 0.96; }
+
+.a-pull,
+.a-lead {
+  stroke-width: var(--sw-route);
+  stroke-opacity: 0.8;
+}
+
+.a-block {
+  stroke-width: var(--sw-block);
+  stroke-opacity: 0.34;
+}
+
+.a-qb {
+  stroke-width: var(--sw-block);
+  stroke-opacity: 0.5;
+}
+
+.a-motion {
+  stroke-width: var(--sw-block);
+  stroke-opacity: 0.6;
+}
+
+.a.is-dashed {
+  stroke-dasharray: 0.34 0.3;
+  stroke-linecap: butt;
+}
+
+.a.is-dotted {
+  stroke-dasharray: 0.02 0.36;
+  stroke-width: calc(var(--sw-block) * 1.6);
+}
+
+.a-head {
+  fill: var(--ink);
+  fill-opacity: 0.8;
+}
+
+.a-wrap.is-primary .a-head {
+  fill-opacity: 1;
+}
+
+.a-tbar {
+  stroke: var(--ink);
+  stroke-width: var(--sw-block);
+  stroke-linecap: round;
+  stroke-opacity: 0.34;
+}
+
+.a-tbar-pull,
+.a-tbar-lead {
+  stroke-width: var(--sw-route);
+  stroke-opacity: 0.8;
+}
+
+.a-dot { fill: var(--ink); }
+
+/* ── Players ─────────────────────────────────────────────────────────── */
+
+.pm-shape {
+  fill: var(--bg);
+  stroke: var(--ink);
+  stroke-width: var(--sw-marker);
+}
+
+.pm-ol .pm-shape { stroke-opacity: 0.62; }
+
+/* Players with no assignment in this play. */
+.pm.is-idle .pm-shape,
+.pm.is-idle .pm-label { stroke-opacity: 0.4; fill-opacity: 1; }
+.pm.is-idle .pm-label { fill-opacity: 0.45; }
+
+.pm-tick {
+  stroke: var(--ink);
+  stroke-opacity: 0.62;
+  stroke-width: var(--sw-marker);
+  stroke-linecap: round;
+}
+
+.pm-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  fill: var(--ink);
+  text-anchor: middle;
+  dominant-baseline: central;
+  letter-spacing: 0.02em;
+}
+
+.pm-dot { fill: var(--ink); transition: fill 0.25s ease; }
+.pm.has-ball .pm-dot { fill: var(--accent); }
+
+/* ── Ball / pass ─────────────────────────────────────────────────────── */
+
+.ball { fill: var(--accent); }
+
+.ball-trail {
+  fill: none;
+  stroke: var(--accent);
+  stroke-opacity: 0.5;
+  stroke-width: var(--sw-ball);
+  stroke-linecap: round;
+}
+
+.catch-ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: var(--sw-ball);
+}
+
+/* ── Notation ────────────────────────────────────────────────────────── */
+
+.read-num {
+  font-family: var(--font-mono);
+  fill: var(--ink);
+  fill-opacity: 0.5;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.read-num.is-first {
+  fill: var(--accent);
+  fill-opacity: 1;
+}
+
+.evt-ring {
+  fill: none;
+  stroke: var(--ink);
+  stroke-opacity: 0.6;
+  stroke-width: var(--sw-block);
+  stroke-dasharray: 0.2 0.18;
+}
+
+.debug-frame {
+  fill: none;
+  stroke: #f0f;
+  stroke-opacity: 0.5;
+  stroke-width: var(--sw-field);
+  stroke-dasharray: 0.5 0.5;
+}

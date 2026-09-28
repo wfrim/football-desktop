@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Playbook — desktop</title>
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/play.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <svg id="stage" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated football play diagram"></svg>
+
+  <div class="vignette" aria-hidden="true"></div>
+
+  <div id="hud" class="hud">
+    <header class="hud-title">
+      <h1 class="hud-concept" data-part="concept"></h1>
+      <p class="hud-meta" data-part="meta"></p>
+      <p class="hud-formation" data-part="formation"></p>
+    </header>
+    <footer class="hud-notes">
+      <p class="hud-situation" data-part="situation"></p>
+      <p class="hud-description" data-part="description"></p>
+    </footer>
+    <div class="hud-corner">
+      <p class="hud-flag" data-part="flag" hidden></p>
+      <p class="hud-counter" data-part="counter"></p>
+    </div>
+  </div>
+
+  <!--
+    Classic scripts (not ES modules) on purpose: they run from file://, which
+    is how Plash loads a local page. Order matters: each file extends window.FD.
+  -->
+  <script src="src/renderer/svg.js"></script>
+  <script src="src/renderer/geometry.js"></script>
+  <script src="src/layout/coordinates.js"></script>
+  <script src="src/layout/responsive.js"></script>
+  <script src="src/animation/timeline.js"></script>
+  <script src="src/animation/animator.js"></script>
+  <script src="src/renderer/primitives.js"></script>
+  <script src="src/renderer/routeRenderer.js"></script>
+  <script src="src/renderer/formationRenderer.js"></script>
+  <script src="src/renderer/fieldRenderer.js"></script>
+  <script src="src/renderer/relationships.js"></script>
+  <script src="src/renderer/playRenderer.js"></script>
+  <script src="src/animation/choreography.js"></script>
+  <script src="src/data/vocabulary.js"></script>
+  <script src="src/data/resolve.js"></script>
+  <script src="src/data/loader.js"></script>
+  <script src="src/data/plays.bundle.js"></script>
+  <script src="src/playlist.js"></script>
+  <script src="src/config.js"></script>
+  <script src="src/hud.js"></script>
+  <script src="src/stage.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>

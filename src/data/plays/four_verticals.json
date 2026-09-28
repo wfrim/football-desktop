@@ -1,0 +1,26 @@
+{
+  "id": "four_verticals",
+  "name": "Four Verticals",
+  "family": "dropback_pass",
+  "personnel": "11",
+  "formation": "gun_doubles_11",
+  "copy": {
+    "title": "FOUR VERTICALS",
+    "meta": "DEEP PASS · 11 PERSONNEL",
+    "description": "Stretches the defense across all four deep lanes."
+  },
+  "assignments": {
+    "X": { "type": "go" },
+    "H": { "type": "seam" },
+    "Y": { "type": "seam" },
+    "Z": { "type": "go" },
+    "RB": { "type": "pass_set_then_release", "release": { "type": "sit", "depth": 3.5 } }
+  },
+  "relationships": [
+    { "type": "lanes", "participants": ["X", "H", "Y", "Z"], "minGap": 4 }
+  ],
+  "ball": {
+    "to": "H", "at": 0.85,
+    "_provisional": "Presentation-only throw target chosen by the renderer; the handoff did not specify one."
+  }
+}

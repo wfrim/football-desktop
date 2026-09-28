@@ -1,0 +1,14 @@
+{
+  "_note": "Formations and plays, in playlist order. Run `node tools/bundle-data.mjs` after editing so file:// loading picks up changes.",
+  "formations": [
+    "formations/gun_doubles_11.json",
+    "formations/gun_trips_11.json"
+  ],
+  "plays": [
+    "plays/mesh.json",
+    "plays/four_verticals.json",
+    "plays/stick.json",
+    "plays/curl_flat.json",
+    "plays/dagger.json"
+  ]
+}
