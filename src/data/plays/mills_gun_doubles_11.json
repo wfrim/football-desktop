@@ -1,0 +1,66 @@
+{
+ "id": "mills_gun_doubles_11",
+ "conceptId": "mills",
+ "name": "Mills",
+ "family": "dropback_pass",
+ "personnel": "11",
+ "formation": "gun_doubles_11",
+ "copy": {
+  "title": "MILLS",
+  "meta": "PASS \u00b7 11 PERSONNEL",
+  "formation": "GUN DOUBLES",
+  "situation": "SHOT PLAY \u00b7 MOFC",
+  "description": "A post over a dig puts the safety in conflict."
+ },
+ "assignments": {
+  "X": {
+   "type": "post"
+  },
+  "H": {
+   "type": "dig",
+   "depth": 12,
+   "length": 10
+  },
+  "Z": {
+   "type": "curl"
+  },
+  "Y": {
+   "type": "flat",
+   "dir": "right",
+   "width": 7
+  },
+  "RB": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "sit",
+    "depth": 3.5
+   }
+  }
+ },
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "X",
+   "low": "H"
+  }
+ ],
+ "subfamily": "shot",
+ "ball": {
+  "to": "X",
+  "at": 0.9
+ },
+ "reads": [
+  "X",
+  "H",
+  "RB"
+ ],
+ "tags": [
+  "deep"
+ ],
+ "football": {
+  "read": "The safety over the dig: he drives on the dig \u2192 post over him; he stays deep \u2192 dig."
+ },
+ "sources": [
+  "Mills (post-dig): #1 post over #2 dig; backside curl-flat"
+ ]
+}

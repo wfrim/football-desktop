@@ -1,0 +1,132 @@
+{
+ "id": "pin_pull_singleback_tight_12",
+ "conceptId": "pin_pull",
+ "name": "Pin and Pull",
+ "family": "run",
+ "personnel": "12",
+ "formation": "singleback_tight_12",
+ "copy": {
+  "title": "PIN AND PULL",
+  "meta": "RUN \u00b7 12 PERSONNEL",
+  "formation": "SINGLEBACK TIGHT",
+  "situation": "PERIMETER \u00b7 TOSS",
+  "description": "Covered linemen pin inside; uncovered linemen pull and lead the toss."
+ },
+ "assignments": {
+  "Y": {
+   "type": "down"
+  },
+  "RT": {
+   "type": "pull",
+   "at": [
+    12.6,
+    3.0
+   ]
+  },
+  "RG": {
+   "type": "down"
+  },
+  "C": {
+   "type": "pull",
+   "dip": -1.9,
+   "hole": 5.2,
+   "at": [
+    6.0,
+    3.8
+   ]
+  },
+  "LG": {
+   "type": "scoop"
+  },
+  "LT": {
+   "type": "scoop"
+  },
+  "U": {
+   "type": "block",
+   "to": [
+    1.0,
+    1.8
+   ]
+  },
+  "Z": {
+   "type": "crack",
+   "at": [
+    9.0,
+    3.5
+   ]
+  },
+  "X": {
+   "type": "stalk"
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    [
+     0.9,
+     -2.6
+    ]
+   ]
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    [
+     2.2,
+     -4.0
+    ],
+    [
+     8.3,
+     -2.3
+    ],
+    [
+     10.3,
+     0.4
+    ],
+    [
+     10.8,
+     5.5
+    ]
+   ]
+  }
+ },
+ "relationships": [
+  {
+   "type": "wall",
+   "participants": [
+    "Y",
+    "RG"
+   ]
+  },
+  {
+   "type": "pull",
+   "puller": "RT",
+   "wrap": "C",
+   "runner": "RB"
+  },
+  {
+   "type": "feature",
+   "participants": [
+    "Z"
+   ]
+  }
+ ],
+ "subfamily": "gap",
+ "side": "right",
+ "handoff": {
+  "to": "RB",
+  "at": [
+   2.2,
+   -4.0
+  ]
+ },
+ "tags": [
+  "perimeter"
+ ],
+ "football": {
+  "rules": "Covered players (Y, RG) pin the defender inside; uncovered RT and C pull \u2014 RT to the force/corner, C up the alley. Z cracks the support defender. Toss to the back.",
+  "rb": "Catch the pitch, stay on the pullers' outside hip."
+ },
+ "sources": [
+  "Pin-and-pull: covered linemen down, uncovered pull (wide-zone alternative to the perimeter)"
+ ]
+}

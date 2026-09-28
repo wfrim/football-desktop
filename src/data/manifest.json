@@ -4,7 +4,8 @@
     "formations/gun_doubles_11.json",
     "formations/gun_trips_11.json",
     "formations/pistol_strong_11.json",
-    "formations/singleback_tight_12.json"
+    "formations/singleback_tight_12.json",
+    "formations/i_form_21.json"
   ],
   "plays": [
     "plays/mesh_gun_doubles_11.json",
@@ -16,6 +17,21 @@
     "plays/curl_flat_gun_doubles_11.json",
     "plays/outside_zone_singleback_tight_12.json",
     "plays/dagger_gun_doubles_11.json",
-    "plays/counter_gt_gun_trips_11.json"
+    "plays/counter_gt_gun_trips_11.json",
+    "plays/smash_gun_doubles_11.json",
+    "plays/sail_gun_trips_11.json",
+    "plays/drive_gun_doubles_11.json",
+    "plays/levels_gun_trips_11.json",
+    "plays/y_cross_gun_doubles_11.json",
+    "plays/slant_flat_gun_doubles_11.json",
+    "plays/snag_gun_trips_11.json",
+    "plays/mills_gun_doubles_11.json",
+    "plays/boot_singleback_tight_12.json",
+    "plays/duo_singleback_tight_12.json",
+    "plays/split_zone_pistol_strong_11.json",
+    "plays/iso_i_form_21.json",
+    "plays/pin_pull_singleback_tight_12.json",
+    "plays/bubble_gun_trips_11.json",
+    "plays/tunnel_gun_doubles_11.json"
   ]
 }

@@ -1,0 +1,64 @@
+{
+ "id": "drive_gun_doubles_11",
+ "conceptId": "drive",
+ "name": "Drive",
+ "family": "dropback_pass",
+ "personnel": "11",
+ "formation": "gun_doubles_11",
+ "copy": {
+  "title": "DRIVE",
+  "meta": "PASS \u00b7 11 PERSONNEL",
+  "formation": "GUN DOUBLES",
+  "situation": "MIDDLE OF THE FIELD",
+  "description": "A shallow cross runs under a dig: high-low on the hook defender."
+ },
+ "assignments": {
+  "H": {
+   "type": "drag",
+   "dir": "right",
+   "across": 18
+  },
+  "X": {
+   "type": "dig",
+   "depth": 12,
+   "length": 16
+  },
+  "Y": {
+   "type": "seam"
+  },
+  "Z": {
+   "type": "go"
+  },
+  "RB": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "flat",
+    "dir": "right",
+    "width": 7
+   }
+  }
+ },
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "X",
+   "low": "H"
+  }
+ ],
+ "subfamily": "high_low",
+ "ball": {
+  "to": "H",
+  "at": 0.75
+ },
+ "reads": [
+  "H",
+  "X",
+  "RB"
+ ],
+ "football": {
+  "read": "Hook/curl defender: he jumps the shallow \u2192 dig behind him; he sinks \u2192 shallow."
+ },
+ "sources": [
+  "Drive: shallow (2-3 yd) under a 12-yd dig from the same side; seam/go hold the safeties"
+ ]
+}

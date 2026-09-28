@@ -83,16 +83,20 @@
    }
   ],
   "X": {
-   "type": "go"
+   "type": "go",
+   "depth": 9
   },
   "Y": {
-   "type": "go"
+   "type": "go",
+   "depth": 9
   },
   "H": {
-   "type": "go"
+   "type": "go",
+   "depth": 9
   },
   "Z": {
-   "type": "go"
+   "type": "go",
+   "depth": 9
   }
  },
  "relationships": [

@@ -1,0 +1,130 @@
+{
+ "id": "iso_i_form_21",
+ "conceptId": "iso",
+ "name": "Iso",
+ "family": "run",
+ "personnel": "21",
+ "formation": "i_form_21",
+ "copy": {
+  "title": "ISO",
+  "meta": "RUN \u00b7 21 PERSONNEL",
+  "formation": "I-FORMATION",
+  "situation": "SHORT YARDAGE",
+  "description": "The fullback isolates the linebacker in the bubble."
+ },
+ "assignments": {
+  "Y": {
+   "type": "step",
+   "lateral": 0.4,
+   "up": 1.0,
+   "dir": "play"
+  },
+  "RT": {
+   "type": "step",
+   "lateral": 0.4,
+   "up": 1.0,
+   "dir": "play"
+  },
+  "RG": {
+   "type": "step",
+   "lateral": 0.5,
+   "up": 1.0,
+   "dir": "back"
+  },
+  "C": {
+   "type": "base"
+  },
+  "LG": {
+   "type": "step",
+   "lateral": 0.4,
+   "up": 1.0,
+   "dir": "back"
+  },
+  "LT": {
+   "type": "step",
+   "lateral": 0.4,
+   "up": 1.0,
+   "dir": "back"
+  },
+  "F": {
+   "type": "lead",
+   "via": [
+    1.85,
+    0.2
+   ],
+   "at": [
+    1.4,
+    4.6
+   ]
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    [
+     0.5,
+     -3.2
+    ],
+    [
+     -1.2,
+     -4.2
+    ]
+   ]
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    [
+     0.5,
+     -3.9
+    ],
+    [
+     2.0,
+     -1.1
+    ],
+    [
+     2.1,
+     0.6
+    ],
+    [
+     2.9,
+     5.5
+    ]
+   ]
+  },
+  "X": {
+   "type": "stalk"
+  },
+  "Z": {
+   "type": "stalk"
+  }
+ },
+ "relationships": [
+  {
+   "type": "kickout",
+   "blocker": "F",
+   "runner": "RB",
+   "margin": 0.2
+  }
+ ],
+ "subfamily": "gap",
+ "side": "right",
+ "situation": {
+  "down": 4,
+  "distance": 1
+ },
+ "handoff": {
+  "to": "RB",
+  "at": [
+   0.5,
+   -3.9
+  ]
+ },
+ "football": {
+  "front": "4-3 under: B-gap 'bubble' to the right with the Mike over it.",
+  "rules": "Man blocking: every lineman drives the defender on him away from the B gap; FB leads through the bubble onto the Mike. TB reads the FB's block.",
+  "rb": "Downhill to the B gap, cut off the fullback."
+ },
+ "sources": [
+  "Iso: man/base blocking, FB isolates the playside ILB in the bubble"
+ ]
+}

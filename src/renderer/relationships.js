@@ -39,6 +39,8 @@ window.FD = window.FD || {};
     kickout:  (r) => [['follows', [r.blocker, r.runner], r.margin !== undefined ? r.margin : 0.15]],
     // Screen: `blockers` form up before the `runner` gets the ball. Emphasis only.
     convoy:   () => [],
+    // Emphasis only: players who carry the concept without a geometric rule (sift, crack, lead).
+    feature:  () => [],
     // Zone: every participant's first step goes play-side. Wall: down blocks go back-side.
     zone:     (r) => [['flow', ids(r), 'play']],
     wall:     (r) => [['flow', ids(r), 'back']],

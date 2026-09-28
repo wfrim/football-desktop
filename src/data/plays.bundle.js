@@ -384,6 +384,102 @@ FD.Data.register({
           ]
         }
       ]
+    },
+    {
+      "_note": "I-formation: QB under center, FB at 4.5 yd, TB at 7 yd. Y inline right; X on the line left, Z off the line right.",
+      "id": "i_form_21",
+      "name": "I-Formation",
+      "personnel": "21",
+      "players": [
+        {
+          "id": "LT",
+          "role": "LT",
+          "at": [
+            -2.6,
+            -0.55
+          ]
+        },
+        {
+          "id": "LG",
+          "role": "LG",
+          "at": [
+            -1.3,
+            -0.55
+          ]
+        },
+        {
+          "id": "C",
+          "role": "C",
+          "at": [
+            0,
+            -0.55
+          ]
+        },
+        {
+          "id": "RG",
+          "role": "RG",
+          "at": [
+            1.3,
+            -0.55
+          ]
+        },
+        {
+          "id": "RT",
+          "role": "RT",
+          "at": [
+            2.6,
+            -0.55
+          ]
+        },
+        {
+          "id": "QB",
+          "role": "QB",
+          "at": [
+            0,
+            -1.7
+          ]
+        },
+        {
+          "id": "F",
+          "role": "F",
+          "at": [
+            0,
+            -4.3
+          ]
+        },
+        {
+          "id": "RB",
+          "role": "RB",
+          "at": [
+            0,
+            -7
+          ]
+        },
+        {
+          "id": "Y",
+          "role": "Y",
+          "at": [
+            3.9,
+            -0.6
+          ]
+        },
+        {
+          "id": "X",
+          "role": "X",
+          "at": [
+            -17,
+            -0.6
+          ]
+        },
+        {
+          "id": "Z",
+          "role": "Z",
+          "at": [
+            15,
+            -1.3
+          ]
+        }
+      ]
     }
   ],
   "plays": [
@@ -974,16 +1070,20 @@ FD.Data.register({
           }
         ],
         "X": {
-          "type": "go"
+          "type": "go",
+          "depth": 9
         },
         "Y": {
-          "type": "go"
+          "type": "go",
+          "depth": 9
         },
         "H": {
-          "type": "go"
+          "type": "go",
+          "depth": 9
         },
         "Z": {
-          "type": "go"
+          "type": "go",
+          "depth": 9
         }
       },
       "relationships": [
@@ -1424,6 +1524,1381 @@ FD.Data.register({
         "Wikipedia — Counter run (GT: guard kicks out, tackle wraps)",
         "Throw Deep Publishing — The Complete Guide to the Counter Play",
         "vIQtory Sports — How to install the Counter play"
+      ]
+    },
+    {
+      "id": "smash_gun_doubles_11",
+      "conceptId": "smash",
+      "name": "Smash",
+      "family": "quick_pass",
+      "personnel": "11",
+      "formation": "gun_doubles_11",
+      "copy": {
+        "title": "SMASH",
+        "meta": "PASS · 11 PERSONNEL",
+        "formation": "GUN DOUBLES",
+        "situation": "COVER 2 BEATER",
+        "description": "A hitch and a corner high-low the cornerback."
+      },
+      "assignments": {
+        "Z": {
+          "type": "hitch"
+        },
+        "Y": {
+          "type": "corner"
+        },
+        "X": {
+          "type": "hitch"
+        },
+        "H": {
+          "type": "corner"
+        },
+        "RB": {
+          "type": "pass_set"
+        }
+      },
+      "relationships": [
+        {
+          "type": "high_low",
+          "high": "Y",
+          "low": "Z"
+        },
+        {
+          "type": "high_low",
+          "high": "H",
+          "low": "X"
+        }
+      ],
+      "subfamily": "high_low",
+      "ball": {
+        "to": "Y",
+        "at": 0.93
+      },
+      "reads": [
+        "Y",
+        "Z",
+        "H",
+        "X"
+      ],
+      "football": {
+        "read": "Read the cornerback: he squats on the hitch → corner behind him; he bails → hitch."
+      },
+      "sources": [
+        "Smash: #1 hitch at 5, #2 corner at 10-12 (Cover 2 corner/safety void); mirrored 2x2"
+      ]
+    },
+    {
+      "id": "sail_gun_trips_11",
+      "conceptId": "sail",
+      "name": "Sail",
+      "family": "dropback_pass",
+      "personnel": "11",
+      "formation": "gun_trips_11",
+      "copy": {
+        "title": "SAIL",
+        "meta": "PASS · 11 PERSONNEL",
+        "formation": "GUN TRIPS",
+        "situation": "FLOOD · COVER 3 BEATER",
+        "description": "Three levels flood one sideline."
+      },
+      "assignments": {
+        "Z": {
+          "type": "go"
+        },
+        "H": {
+          "type": "out",
+          "depth": 11,
+          "length": 6
+        },
+        "Y": {
+          "type": "flat",
+          "dir": "right",
+          "width": 8
+        },
+        "X": {
+          "type": "dig",
+          "depth": 14,
+          "length": 10
+        },
+        "RB": {
+          "type": "pass_set"
+        }
+      },
+      "relationships": [
+        {
+          "type": "levels",
+          "participants": [
+            "Z",
+            "H",
+            "Y"
+          ]
+        }
+      ],
+      "subfamily": "flood",
+      "ball": {
+        "to": "H",
+        "at": 1
+      },
+      "reads": [
+        "H",
+        "Y",
+        "X"
+      ],
+      "football": {
+        "read": "Deep third is carried by the go; read the flat defender between the sail (out at 11) and the flat."
+      },
+      "sources": [
+        "Flood / Sail: #1 clear, #2 deep out, #3 flat — three-level sideline stretch"
+      ]
+    },
+    {
+      "id": "drive_gun_doubles_11",
+      "conceptId": "drive",
+      "name": "Drive",
+      "family": "dropback_pass",
+      "personnel": "11",
+      "formation": "gun_doubles_11",
+      "copy": {
+        "title": "DRIVE",
+        "meta": "PASS · 11 PERSONNEL",
+        "formation": "GUN DOUBLES",
+        "situation": "MIDDLE OF THE FIELD",
+        "description": "A shallow cross runs under a dig: high-low on the hook defender."
+      },
+      "assignments": {
+        "H": {
+          "type": "drag",
+          "dir": "right",
+          "across": 18
+        },
+        "X": {
+          "type": "dig",
+          "depth": 12,
+          "length": 16
+        },
+        "Y": {
+          "type": "seam"
+        },
+        "Z": {
+          "type": "go"
+        },
+        "RB": {
+          "type": "pass_set_then_release",
+          "release": {
+            "type": "flat",
+            "dir": "right",
+            "width": 7
+          }
+        }
+      },
+      "relationships": [
+        {
+          "type": "high_low",
+          "high": "X",
+          "low": "H"
+        }
+      ],
+      "subfamily": "high_low",
+      "ball": {
+        "to": "H",
+        "at": 0.75
+      },
+      "reads": [
+        "H",
+        "X",
+        "RB"
+      ],
+      "football": {
+        "read": "Hook/curl defender: he jumps the shallow → dig behind him; he sinks → shallow."
+      },
+      "sources": [
+        "Drive: shallow (2-3 yd) under a 12-yd dig from the same side; seam/go hold the safeties"
+      ]
+    },
+    {
+      "id": "levels_gun_trips_11",
+      "conceptId": "levels",
+      "name": "Levels",
+      "family": "dropback_pass",
+      "personnel": "11",
+      "formation": "gun_trips_11",
+      "copy": {
+        "title": "LEVELS",
+        "meta": "PASS · 11 PERSONNEL",
+        "formation": "GUN TRIPS",
+        "situation": "ZONE BEATER",
+        "description": "Two in-breakers at different depths stretch the underneath zone."
+      },
+      "assignments": {
+        "H": {
+          "type": "in",
+          "depth": 10,
+          "length": 9
+        },
+        "Y": {
+          "type": "quick_in",
+          "depth": 5,
+          "length": 5
+        },
+        "Z": {
+          "type": "go"
+        },
+        "X": {
+          "type": "curl"
+        },
+        "RB": {
+          "type": "pass_set"
+        }
+      },
+      "relationships": [
+        {
+          "type": "levels",
+          "participants": [
+            "H",
+            "Y"
+          ]
+        }
+      ],
+      "subfamily": "high_low",
+      "ball": {
+        "to": "H",
+        "at": 0.9
+      },
+      "reads": [
+        "H",
+        "Y",
+        "X"
+      ],
+      "football": {
+        "read": "Vertical stretch of the hook defender: in at 10 over quick in at 5; Z clears the corner."
+      },
+      "sources": [
+        "Levels: #2 in at 10-12 over #3 in at 5 from trips; #1 clears"
+      ]
+    },
+    {
+      "id": "y_cross_gun_doubles_11",
+      "conceptId": "y_cross",
+      "name": "Y-Cross",
+      "family": "dropback_pass",
+      "personnel": "11",
+      "formation": "gun_doubles_11",
+      "copy": {
+        "title": "Y-CROSS",
+        "meta": "PASS · 11 PERSONNEL",
+        "formation": "GUN DOUBLES",
+        "situation": "3RD & LONG",
+        "description": "The Y crosses deep into space the go route vacates."
+      },
+      "assignments": {
+        "X": {
+          "type": "go"
+        },
+        "Y": {
+          "type": "cross",
+          "depth": 15,
+          "across": 26,
+          "dir": "left"
+        },
+        "Z": {
+          "type": "post"
+        },
+        "H": {
+          "type": "sit",
+          "depth": 6
+        },
+        "RB": {
+          "type": "pass_set_then_release",
+          "release": {
+            "type": "swing",
+            "dir": "right"
+          }
+        }
+      },
+      "relationships": [
+        {
+          "type": "clear",
+          "clear": "X",
+          "into": "Y",
+          "margin": 2
+        }
+      ],
+      "subfamily": "crossers",
+      "situation": {
+        "down": 3,
+        "distance": 12
+      },
+      "ball": {
+        "to": "Y",
+        "at": 0.82
+      },
+      "reads": [
+        "Y",
+        "H",
+        "RB"
+      ],
+      "football": {
+        "read": "Post holds the middle safety; X clears the boundary corner; Y settles in the void past the hash. Checkdowns: H sit, RB swing."
+      },
+      "sources": [
+        "Air Raid Y-Cross: Y deep cross (15+) behind the go, post holds the safety"
+      ]
+    },
+    {
+      "id": "slant_flat_gun_doubles_11",
+      "conceptId": "slant_flat",
+      "name": "Slant-Flat",
+      "family": "quick_pass",
+      "personnel": "11",
+      "formation": "gun_doubles_11",
+      "copy": {
+        "title": "SLANT-FLAT",
+        "meta": "QUICK GAME · 11 PERSONNEL",
+        "formation": "GUN DOUBLES",
+        "situation": "QUICK THROW",
+        "description": "An in-out stretch on the flat defender, out on rhythm."
+      },
+      "assignments": {
+        "Z": {
+          "type": "slant"
+        },
+        "Y": {
+          "type": "flat",
+          "dir": "right",
+          "width": 7
+        },
+        "X": {
+          "type": "slant"
+        },
+        "H": {
+          "type": "flat",
+          "dir": "left",
+          "width": 7
+        },
+        "RB": {
+          "type": "pass_set"
+        }
+      },
+      "relationships": [
+        {
+          "type": "high_low",
+          "high": "Z",
+          "low": "Y"
+        },
+        {
+          "type": "high_low",
+          "high": "X",
+          "low": "H"
+        }
+      ],
+      "subfamily": "quick",
+      "ball": {
+        "to": "Z",
+        "at": 0.7
+      },
+      "reads": [
+        "Z",
+        "Y",
+        "X",
+        "H"
+      ],
+      "tags": [
+        "quick"
+      ],
+      "football": {
+        "read": "Flat defender: he widens with the flat → slant inside him; he walls the slant → flat."
+      },
+      "sources": [
+        "Slant-flat: #1 3-step slant, #2 flat; mirrored quick game"
+      ]
+    },
+    {
+      "id": "snag_gun_trips_11",
+      "conceptId": "snag",
+      "name": "Snag",
+      "family": "quick_pass",
+      "personnel": "11",
+      "formation": "gun_trips_11",
+      "copy": {
+        "title": "SNAG",
+        "meta": "PASS · 11 PERSONNEL",
+        "formation": "GUN TRIPS",
+        "situation": "RED ZONE · ZONE BEATER",
+        "description": "A triangle of corner, snag and flat."
+      },
+      "assignments": {
+        "Z": {
+          "type": "spot"
+        },
+        "H": {
+          "type": "corner"
+        },
+        "Y": {
+          "type": "flat",
+          "dir": "right",
+          "width": 9
+        },
+        "X": {
+          "type": "slant"
+        },
+        "RB": {
+          "type": "pass_set"
+        }
+      },
+      "relationships": [
+        {
+          "type": "levels",
+          "participants": [
+            "H",
+            "Z",
+            "Y"
+          ]
+        }
+      ],
+      "subfamily": "triangle",
+      "ball": {
+        "to": "Z",
+        "at": 1
+      },
+      "reads": [
+        "H",
+        "Z",
+        "Y"
+      ],
+      "football": {
+        "read": "Triangle stretch: corner (high) and flat (low) on the flat defender, snag/spot settling inside between them."
+      },
+      "sources": [
+        "Snag / Spot: #1 snag at 5-6 settling inside, #2 corner, #3 flat"
+      ]
+    },
+    {
+      "id": "mills_gun_doubles_11",
+      "conceptId": "mills",
+      "name": "Mills",
+      "family": "dropback_pass",
+      "personnel": "11",
+      "formation": "gun_doubles_11",
+      "copy": {
+        "title": "MILLS",
+        "meta": "PASS · 11 PERSONNEL",
+        "formation": "GUN DOUBLES",
+        "situation": "SHOT PLAY · MOFC",
+        "description": "A post over a dig puts the safety in conflict."
+      },
+      "assignments": {
+        "X": {
+          "type": "post"
+        },
+        "H": {
+          "type": "dig",
+          "depth": 12,
+          "length": 10
+        },
+        "Z": {
+          "type": "curl"
+        },
+        "Y": {
+          "type": "flat",
+          "dir": "right",
+          "width": 7
+        },
+        "RB": {
+          "type": "pass_set_then_release",
+          "release": {
+            "type": "sit",
+            "depth": 3.5
+          }
+        }
+      },
+      "relationships": [
+        {
+          "type": "high_low",
+          "high": "X",
+          "low": "H"
+        }
+      ],
+      "subfamily": "shot",
+      "ball": {
+        "to": "X",
+        "at": 0.9
+      },
+      "reads": [
+        "X",
+        "H",
+        "RB"
+      ],
+      "tags": [
+        "deep"
+      ],
+      "football": {
+        "read": "The safety over the dig: he drives on the dig → post over him; he stays deep → dig."
+      },
+      "sources": [
+        "Mills (post-dig): #1 post over #2 dig; backside curl-flat"
+      ]
+    },
+    {
+      "id": "boot_singleback_tight_12",
+      "conceptId": "boot",
+      "name": "Boot",
+      "family": "play_action",
+      "personnel": "12",
+      "formation": "singleback_tight_12",
+      "copy": {
+        "title": "BOOT",
+        "meta": "PLAY-ACTION · 12 PERSONNEL",
+        "formation": "SINGLEBACK TIGHT",
+        "situation": "OUTSIDE ZONE ACTION",
+        "description": "Sell outside zone one way, flood the other."
+      },
+      "assignments": {
+        "LT": {
+          "type": "reach"
+        },
+        "LG": {
+          "type": "reach"
+        },
+        "C": {
+          "type": "reach"
+        },
+        "RG": {
+          "type": "reach"
+        },
+        "RT": {
+          "type": "reach"
+        },
+        "Y": {
+          "type": "cross",
+          "depth": 7,
+          "across": 16,
+          "dir": "left"
+        },
+        "RB": {
+          "type": "fake",
+          "through": [
+            [
+              1.1,
+              -3.4
+            ],
+            [
+              5,
+              -1.2
+            ]
+          ]
+        },
+        "QB": {
+          "type": "qbPath",
+          "through": [
+            [
+              0.9,
+              -3
+            ],
+            [
+              -3.5,
+              -5.3
+            ],
+            [
+              -6.5,
+              -5
+            ]
+          ],
+          "timing": {
+            "duration": 1.6
+          }
+        },
+        "U": {
+          "type": "flat",
+          "dir": "left",
+          "width": 6
+        },
+        "X": {
+          "type": "go"
+        },
+        "Z": {
+          "type": "cross",
+          "depth": 16,
+          "across": 26,
+          "dir": "left"
+        }
+      },
+      "relationships": [
+        {
+          "type": "levels",
+          "participants": [
+            "Z",
+            "Y",
+            "U"
+          ]
+        }
+      ],
+      "subfamily": "boot",
+      "side": "right",
+      "ball": {
+        "to": "Z",
+        "at": 0.8
+      },
+      "reads": [
+        "Z",
+        "Y",
+        "U"
+      ],
+      "football": {
+        "rules": "Line and RB sell outside zone right; QB fakes and boots left (naked). X clears, Z deep over, Y drag, U flat: a three-level flood in front of the QB."
+      },
+      "sources": [
+        "Outside zone boot: over / drag / flat flood off wide-zone action"
+      ]
+    },
+    {
+      "id": "duo_singleback_tight_12",
+      "conceptId": "duo",
+      "name": "Duo",
+      "family": "run",
+      "personnel": "12",
+      "formation": "singleback_tight_12",
+      "copy": {
+        "title": "DUO",
+        "meta": "RUN · 12 PERSONNEL",
+        "formation": "SINGLEBACK TIGHT",
+        "situation": "DOWNHILL · NO PULLERS",
+        "description": "Two double teams drive the front; the back reads the Mike."
+      },
+      "assignments": {
+        "Y": {
+          "type": "base"
+        },
+        "RT": {
+          "type": "combo",
+          "target": [
+            1.85,
+            0.8
+          ]
+        },
+        "RG": {
+          "type": "combo",
+          "target": [
+            1.85,
+            0.8
+          ],
+          "climb": [
+            1.3,
+            5
+          ],
+          "delay": 0.35
+        },
+        "C": {
+          "type": "combo",
+          "target": [
+            -0.65,
+            0.8
+          ],
+          "climb": [
+            -0.4,
+            5
+          ],
+          "delay": 0.35
+        },
+        "LG": {
+          "type": "combo",
+          "target": [
+            -0.65,
+            0.8
+          ]
+        },
+        "LT": {
+          "type": "base"
+        },
+        "U": {
+          "type": "block",
+          "to": [
+            1,
+            1.8
+          ]
+        },
+        "QB": {
+          "type": "handoff",
+          "through": [
+            [
+              0.4,
+              -3.2
+            ],
+            [
+              -1.5,
+              -4.6
+            ]
+          ]
+        },
+        "RB": {
+          "type": "carry",
+          "through": [
+            [
+              0.5,
+              -3.7
+            ],
+            [
+              2.2,
+              -1.4
+            ],
+            [
+              3.4,
+              5.5
+            ]
+          ]
+        },
+        "X": {
+          "type": "stalk"
+        },
+        "Z": {
+          "type": "stalk"
+        }
+      },
+      "relationships": [
+        {
+          "type": "combo",
+          "participants": [
+            "RT",
+            "RG"
+          ]
+        },
+        {
+          "type": "combo",
+          "participants": [
+            "LG",
+            "C"
+          ]
+        }
+      ],
+      "subfamily": "gap",
+      "side": "right",
+      "handoff": {
+        "to": "RB",
+        "at": [
+          0.5,
+          -3.7
+        ]
+      },
+      "football": {
+        "front": "4-3 over: 3-tech outside RG, 1-tech backside shade of C.",
+        "rules": "Vertical double teams on both down linemen, coming off late to the linebackers; Y and LT base the ends. RB presses the B gap and reads the Mike.",
+        "rb": "Downhill to the B gap; bounce or bang off the Mike's fit."
+      },
+      "sources": [
+        "Duo: 'power without a puller' — two vertical double teams, RB reads Mike"
+      ]
+    },
+    {
+      "id": "split_zone_pistol_strong_11",
+      "conceptId": "split_zone",
+      "name": "Split Zone",
+      "family": "run",
+      "personnel": "11",
+      "formation": "pistol_strong_11",
+      "copy": {
+        "title": "SPLIT ZONE",
+        "meta": "RUN · 11 PERSONNEL",
+        "formation": "PISTOL STRONG",
+        "situation": "ZONE · BACKSIDE KICK",
+        "description": "Zone one way while the H-back splits back to seal the end."
+      },
+      "assignments": {
+        "RT": {
+          "type": "zone_step"
+        },
+        "RG": {
+          "type": "combo",
+          "target": [
+            1.8,
+            0.75
+          ],
+          "climb": [
+            2.9,
+            4.6
+          ]
+        },
+        "C": {
+          "type": "combo",
+          "target": [
+            1.8,
+            0.75
+          ]
+        },
+        "LG": {
+          "type": "combo",
+          "target": [
+            -0.55,
+            0.7
+          ]
+        },
+        "LT": {
+          "type": "combo",
+          "target": [
+            -0.55,
+            0.7
+          ],
+          "climb": [
+            -1.4,
+            4.6
+          ]
+        },
+        "Y": {
+          "type": "lead",
+          "via": [
+            0.2,
+            -1.7
+          ],
+          "at": [
+            -3.9,
+            0.1
+          ]
+        },
+        "QB": {
+          "type": "handoff",
+          "through": [
+            [
+              0.3,
+              -4.4
+            ],
+            [
+              -1.4,
+              -5.6
+            ]
+          ]
+        },
+        "RB": {
+          "type": "carry",
+          "through": [
+            [
+              0.5,
+              -4.6
+            ],
+            [
+              1.95,
+              -1.2
+            ],
+            [
+              2.05,
+              5.5
+            ]
+          ]
+        },
+        "X": {
+          "type": "stalk"
+        },
+        "H": {
+          "type": "stalk"
+        },
+        "Z": {
+          "type": "stalk"
+        }
+      },
+      "relationships": [
+        {
+          "type": "zone",
+          "participants": [
+            "RT",
+            "RG",
+            "C",
+            "LG",
+            "LT"
+          ]
+        },
+        {
+          "type": "combo",
+          "participants": [
+            "C",
+            "RG"
+          ]
+        },
+        {
+          "type": "combo",
+          "participants": [
+            "LG",
+            "LT"
+          ]
+        },
+        {
+          "type": "feature",
+          "participants": [
+            "Y"
+          ]
+        }
+      ],
+      "subfamily": "zone",
+      "side": "right",
+      "handoff": {
+        "to": "RB",
+        "at": [
+          0.5,
+          -4.6
+        ]
+      },
+      "football": {
+        "rules": "Inside zone right; the H-back crosses behind the line ('split' flow) and kicks out the backside end so the cutback is sealed."
+      },
+      "sources": [
+        "Split zone: inside zone with the H-back sifting across to the backside end"
+      ]
+    },
+    {
+      "id": "iso_i_form_21",
+      "conceptId": "iso",
+      "name": "Iso",
+      "family": "run",
+      "personnel": "21",
+      "formation": "i_form_21",
+      "copy": {
+        "title": "ISO",
+        "meta": "RUN · 21 PERSONNEL",
+        "formation": "I-FORMATION",
+        "situation": "SHORT YARDAGE",
+        "description": "The fullback isolates the linebacker in the bubble."
+      },
+      "assignments": {
+        "Y": {
+          "type": "step",
+          "lateral": 0.4,
+          "up": 1,
+          "dir": "play"
+        },
+        "RT": {
+          "type": "step",
+          "lateral": 0.4,
+          "up": 1,
+          "dir": "play"
+        },
+        "RG": {
+          "type": "step",
+          "lateral": 0.5,
+          "up": 1,
+          "dir": "back"
+        },
+        "C": {
+          "type": "base"
+        },
+        "LG": {
+          "type": "step",
+          "lateral": 0.4,
+          "up": 1,
+          "dir": "back"
+        },
+        "LT": {
+          "type": "step",
+          "lateral": 0.4,
+          "up": 1,
+          "dir": "back"
+        },
+        "F": {
+          "type": "lead",
+          "via": [
+            1.85,
+            0.2
+          ],
+          "at": [
+            1.4,
+            4.6
+          ]
+        },
+        "QB": {
+          "type": "handoff",
+          "through": [
+            [
+              0.5,
+              -3.2
+            ],
+            [
+              -1.2,
+              -4.2
+            ]
+          ]
+        },
+        "RB": {
+          "type": "carry",
+          "through": [
+            [
+              0.5,
+              -3.9
+            ],
+            [
+              2,
+              -1.1
+            ],
+            [
+              2.1,
+              0.6
+            ],
+            [
+              2.9,
+              5.5
+            ]
+          ]
+        },
+        "X": {
+          "type": "stalk"
+        },
+        "Z": {
+          "type": "stalk"
+        }
+      },
+      "relationships": [
+        {
+          "type": "kickout",
+          "blocker": "F",
+          "runner": "RB",
+          "margin": 0.2
+        }
+      ],
+      "subfamily": "gap",
+      "side": "right",
+      "situation": {
+        "down": 4,
+        "distance": 1
+      },
+      "handoff": {
+        "to": "RB",
+        "at": [
+          0.5,
+          -3.9
+        ]
+      },
+      "football": {
+        "front": "4-3 under: B-gap 'bubble' to the right with the Mike over it.",
+        "rules": "Man blocking: every lineman drives the defender on him away from the B gap; FB leads through the bubble onto the Mike. TB reads the FB's block.",
+        "rb": "Downhill to the B gap, cut off the fullback."
+      },
+      "sources": [
+        "Iso: man/base blocking, FB isolates the playside ILB in the bubble"
+      ]
+    },
+    {
+      "id": "pin_pull_singleback_tight_12",
+      "conceptId": "pin_pull",
+      "name": "Pin and Pull",
+      "family": "run",
+      "personnel": "12",
+      "formation": "singleback_tight_12",
+      "copy": {
+        "title": "PIN AND PULL",
+        "meta": "RUN · 12 PERSONNEL",
+        "formation": "SINGLEBACK TIGHT",
+        "situation": "PERIMETER · TOSS",
+        "description": "Covered linemen pin inside; uncovered linemen pull and lead the toss."
+      },
+      "assignments": {
+        "Y": {
+          "type": "down"
+        },
+        "RT": {
+          "type": "pull",
+          "at": [
+            12.6,
+            3
+          ]
+        },
+        "RG": {
+          "type": "down"
+        },
+        "C": {
+          "type": "pull",
+          "dip": -1.9,
+          "hole": 5.2,
+          "at": [
+            6,
+            3.8
+          ]
+        },
+        "LG": {
+          "type": "scoop"
+        },
+        "LT": {
+          "type": "scoop"
+        },
+        "U": {
+          "type": "block",
+          "to": [
+            1,
+            1.8
+          ]
+        },
+        "Z": {
+          "type": "crack",
+          "at": [
+            9,
+            3.5
+          ]
+        },
+        "X": {
+          "type": "stalk"
+        },
+        "QB": {
+          "type": "handoff",
+          "through": [
+            [
+              0.9,
+              -2.6
+            ]
+          ]
+        },
+        "RB": {
+          "type": "carry",
+          "through": [
+            [
+              2.2,
+              -4
+            ],
+            [
+              8.3,
+              -2.3
+            ],
+            [
+              10.3,
+              0.4
+            ],
+            [
+              10.8,
+              5.5
+            ]
+          ]
+        }
+      },
+      "relationships": [
+        {
+          "type": "wall",
+          "participants": [
+            "Y",
+            "RG"
+          ]
+        },
+        {
+          "type": "pull",
+          "puller": "RT",
+          "wrap": "C",
+          "runner": "RB"
+        },
+        {
+          "type": "feature",
+          "participants": [
+            "Z"
+          ]
+        }
+      ],
+      "subfamily": "gap",
+      "side": "right",
+      "handoff": {
+        "to": "RB",
+        "at": [
+          2.2,
+          -4
+        ]
+      },
+      "tags": [
+        "perimeter"
+      ],
+      "football": {
+        "rules": "Covered players (Y, RG) pin the defender inside; uncovered RT and C pull — RT to the force/corner, C up the alley. Z cracks the support defender. Toss to the back.",
+        "rb": "Catch the pitch, stay on the pullers' outside hip."
+      },
+      "sources": [
+        "Pin-and-pull: covered linemen down, uncovered pull (wide-zone alternative to the perimeter)"
+      ]
+    },
+    {
+      "id": "bubble_gun_trips_11",
+      "conceptId": "bubble",
+      "name": "Bubble Screen",
+      "family": "screen",
+      "personnel": "11",
+      "formation": "gun_trips_11",
+      "copy": {
+        "title": "BUBBLE",
+        "meta": "SCREEN · 11 PERSONNEL",
+        "formation": "GUN TRIPS",
+        "situation": "PERIMETER · NUMBERS",
+        "description": "Throw it wide when the offense has the numbers outside."
+      },
+      "assignments": {
+        "Y": [
+          {
+            "type": "bubble",
+            "width": 7
+          },
+          {
+            "type": "carry",
+            "delay": 0.5,
+            "through": [
+              [
+                14.3,
+                1
+              ],
+              [
+                15.6,
+                6
+              ]
+            ]
+          }
+        ],
+        "H": {
+          "type": "lead",
+          "at": [
+            12.4,
+            3.2
+          ]
+        },
+        "Z": {
+          "type": "lead",
+          "at": [
+            18.4,
+            4.2
+          ]
+        },
+        "X": {
+          "type": "hitch"
+        },
+        "QB": {
+          "type": "qb_drop",
+          "drop": 0.6
+        },
+        "RB": {
+          "type": "pass_set"
+        }
+      },
+      "relationships": [
+        {
+          "type": "convoy",
+          "blockers": [
+            "H",
+            "Z"
+          ],
+          "runner": "Y"
+        }
+      ],
+      "subfamily": "perimeter",
+      "primary": "Y",
+      "ball": {
+        "to": "Y",
+        "at": 1
+      },
+      "tags": [
+        "quick"
+      ],
+      "football": {
+        "rules": "Count the box vs trips: if the offense has 3-on-2 outside, #3 bubbles behind the LOS, #2 and #1 block the two perimeter defenders. Backside hitch."
+      },
+      "sources": [
+        "Bubble screen: #3 bubble, #1/#2 stalk the flat and corner defenders"
+      ]
+    },
+    {
+      "id": "tunnel_gun_doubles_11",
+      "conceptId": "tunnel",
+      "name": "Tunnel Screen",
+      "family": "screen",
+      "personnel": "11",
+      "formation": "gun_doubles_11",
+      "copy": {
+        "title": "TUNNEL SCREEN",
+        "meta": "SCREEN · 11 PERSONNEL",
+        "formation": "GUN DOUBLES",
+        "situation": "PRESSURE ANSWER",
+        "description": "The receiver comes back inside behind a wall of linemen."
+      },
+      "assignments": {
+        "X": [
+          {
+            "type": "path",
+            "through": [
+              [
+                -18,
+                0.8
+              ],
+              [
+                -14.5,
+                -2.4
+              ],
+              [
+                -9.5,
+                -2.2
+              ]
+            ],
+            "end": "settle"
+          },
+          {
+            "type": "carry",
+            "delay": 0.45,
+            "through": [
+              [
+                -9.3,
+                1
+              ],
+              [
+                -8.9,
+                6.5
+              ]
+            ]
+          }
+        ],
+        "H": {
+          "type": "lead",
+          "at": [
+            -16.5,
+            2.6
+          ]
+        },
+        "LT": {
+          "type": "screen_release",
+          "at": [
+            -12.4,
+            2.2
+          ],
+          "delay": 0.35
+        },
+        "LG": {
+          "type": "screen_release",
+          "at": [
+            -6.9,
+            3.1
+          ],
+          "delay": 0.35
+        },
+        "QB": {
+          "type": "qb_drop",
+          "drop": 1
+        },
+        "Y": {
+          "type": "hitch"
+        },
+        "Z": {
+          "type": "hitch"
+        },
+        "RB": {
+          "type": "pass_set"
+        }
+      },
+      "relationships": [
+        {
+          "type": "convoy",
+          "blockers": [
+            "H",
+            "LT",
+            "LG"
+          ],
+          "runner": "X"
+        }
+      ],
+      "subfamily": "perimeter",
+      "primary": "X",
+      "ball": {
+        "to": "X",
+        "at": 1
+      },
+      "tags": [
+        "quick"
+      ],
+      "football": {
+        "rules": "X sells two steps upfield and comes back under the slot, behind the LOS; H kicks out the corner; LT releases outside and LG inside to build the tunnel. C, RG, RT hold protection."
+      },
+      "sources": [
+        "Tunnel (jailbreak) screen: WR comes inside behind releasing OL; slot blocks the corner"
       ]
     }
   ]

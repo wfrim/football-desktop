@@ -1,0 +1,113 @@
+{
+ "id": "tunnel_gun_doubles_11",
+ "conceptId": "tunnel",
+ "name": "Tunnel Screen",
+ "family": "screen",
+ "personnel": "11",
+ "formation": "gun_doubles_11",
+ "copy": {
+  "title": "TUNNEL SCREEN",
+  "meta": "SCREEN \u00b7 11 PERSONNEL",
+  "formation": "GUN DOUBLES",
+  "situation": "PRESSURE ANSWER",
+  "description": "The receiver comes back inside behind a wall of linemen."
+ },
+ "assignments": {
+  "X": [
+   {
+    "type": "path",
+    "through": [
+     [
+      -18,
+      0.8
+     ],
+     [
+      -14.5,
+      -2.4
+     ],
+     [
+      -9.5,
+      -2.2
+     ]
+    ],
+    "end": "settle"
+   },
+   {
+    "type": "carry",
+    "delay": 0.45,
+    "through": [
+     [
+      -9.3,
+      1.0
+     ],
+     [
+      -8.9,
+      6.5
+     ]
+    ]
+   }
+  ],
+  "H": {
+   "type": "lead",
+   "at": [
+    -16.5,
+    2.6
+   ]
+  },
+  "LT": {
+   "type": "screen_release",
+   "at": [
+    -12.4,
+    2.2
+   ],
+   "delay": 0.35
+  },
+  "LG": {
+   "type": "screen_release",
+   "at": [
+    -6.9,
+    3.1
+   ],
+   "delay": 0.35
+  },
+  "QB": {
+   "type": "qb_drop",
+   "drop": 1
+  },
+  "Y": {
+   "type": "hitch"
+  },
+  "Z": {
+   "type": "hitch"
+  },
+  "RB": {
+   "type": "pass_set"
+  }
+ },
+ "relationships": [
+  {
+   "type": "convoy",
+   "blockers": [
+    "H",
+    "LT",
+    "LG"
+   ],
+   "runner": "X"
+  }
+ ],
+ "subfamily": "perimeter",
+ "primary": "X",
+ "ball": {
+  "to": "X",
+  "at": 1
+ },
+ "tags": [
+  "quick"
+ ],
+ "football": {
+  "rules": "X sells two steps upfield and comes back under the slot, behind the LOS; H kicks out the corner; LT releases outside and LG inside to build the tunnel. C, RG, RT hold protection."
+ },
+ "sources": [
+  "Tunnel (jailbreak) screen: WR comes inside behind releasing OL; slot blocks the corner"
+ ]
+}

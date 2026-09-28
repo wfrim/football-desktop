@@ -21,7 +21,7 @@ window.FD = window.FD || {};
       return;
     }
 
-    const playlist = new FD.Playlist(plays, { order: cfg.order, seed: cfg.seed, start: cfg.start });
+    const playlist = new FD.Playlist(plays, { order: cfg.order, seed: cfg.seed, start: cfg.start, list: cfg.list });
     const animator = new FD.Animator({ timeScale: cfg.speed, maxFps: cfg.fps });
     FD.app = { cfg, stage, animator, playlist }; // handy from the console
 

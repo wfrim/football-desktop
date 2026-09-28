@@ -144,7 +144,9 @@ window.FD = window.FD || {};
         ];
       },
     },
-    carry:        prim('run', {}),                                     // ball carrier: `through` landmarks
+    carry:        prim('run', {}),
+    fake:         prim('run', {}, { style: 'dashed' }),               // play-action / misdirection fake, no ball
+    crack:        prim('lead', {}),                                   // receiver blocks back inside                                     // ball carrier: `through` landmarks
     counter_step: prim('run', {}, { end: 'none' }),                    // jab away from the play before the carry
     handoff:      prim('qbPath', {}),                                  // QB to the mesh point (+ carry-out fake)
     runner_path:  prim('run', {}),
@@ -179,6 +181,7 @@ window.FD = window.FD || {};
       quick_pass: { ol: { type: 'pass_set' }, qb: { type: 'qb_drop', drop: 1 } },
       screen: { ol: { type: 'pass_set' }, qb: { type: 'qb_drop', drop: 3 } },
       run: {},                                  // every run assignment is explicit
+      play_action: {},                          // run-action blocking is explicit
     },
   };
 

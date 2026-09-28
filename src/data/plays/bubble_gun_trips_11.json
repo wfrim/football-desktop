@@ -1,0 +1,86 @@
+{
+ "id": "bubble_gun_trips_11",
+ "conceptId": "bubble",
+ "name": "Bubble Screen",
+ "family": "screen",
+ "personnel": "11",
+ "formation": "gun_trips_11",
+ "copy": {
+  "title": "BUBBLE",
+  "meta": "SCREEN \u00b7 11 PERSONNEL",
+  "formation": "GUN TRIPS",
+  "situation": "PERIMETER \u00b7 NUMBERS",
+  "description": "Throw it wide when the offense has the numbers outside."
+ },
+ "assignments": {
+  "Y": [
+   {
+    "type": "bubble",
+    "width": 7
+   },
+   {
+    "type": "carry",
+    "delay": 0.5,
+    "through": [
+     [
+      14.3,
+      1.0
+     ],
+     [
+      15.6,
+      6.0
+     ]
+    ]
+   }
+  ],
+  "H": {
+   "type": "lead",
+   "at": [
+    12.4,
+    3.2
+   ]
+  },
+  "Z": {
+   "type": "lead",
+   "at": [
+    18.4,
+    4.2
+   ]
+  },
+  "X": {
+   "type": "hitch"
+  },
+  "QB": {
+   "type": "qb_drop",
+   "drop": 0.6
+  },
+  "RB": {
+   "type": "pass_set"
+  }
+ },
+ "relationships": [
+  {
+   "type": "convoy",
+   "blockers": [
+    "H",
+    "Z"
+   ],
+   "runner": "Y"
+  }
+ ],
+ "subfamily": "perimeter",
+ "primary": "Y",
+ "ball": {
+  "to": "Y",
+  "at": 1
+ },
+ "tags": [
+  "quick"
+ ],
+ "football": {
+  "rules": "Count the box vs trips: if the offense has 3-on-2 outside, #3 bubbles behind the LOS, #2 and #1 block the two perimeter defenders. Backside hitch."
+ },
+ "sources": [
+  "Bubble screen: #3 bubble, #1/#2 stalk the flat and corner defenders"
+ ]
+}

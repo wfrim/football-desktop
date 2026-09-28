@@ -1,0 +1,96 @@
+{
+ "_note": "I-formation: QB under center, FB at 4.5 yd, TB at 7 yd. Y inline right; X on the line left, Z off the line right.",
+ "id": "i_form_21",
+ "name": "I-Formation",
+ "personnel": "21",
+ "players": [
+  {
+   "id": "LT",
+   "role": "LT",
+   "at": [
+    -2.6,
+    -0.55
+   ]
+  },
+  {
+   "id": "LG",
+   "role": "LG",
+   "at": [
+    -1.3,
+    -0.55
+   ]
+  },
+  {
+   "id": "C",
+   "role": "C",
+   "at": [
+    0,
+    -0.55
+   ]
+  },
+  {
+   "id": "RG",
+   "role": "RG",
+   "at": [
+    1.3,
+    -0.55
+   ]
+  },
+  {
+   "id": "RT",
+   "role": "RT",
+   "at": [
+    2.6,
+    -0.55
+   ]
+  },
+  {
+   "id": "QB",
+   "role": "QB",
+   "at": [
+    0,
+    -1.7
+   ]
+  },
+  {
+   "id": "F",
+   "role": "F",
+   "at": [
+    0,
+    -4.3
+   ]
+  },
+  {
+   "id": "RB",
+   "role": "RB",
+   "at": [
+    0,
+    -7
+   ]
+  },
+  {
+   "id": "Y",
+   "role": "Y",
+   "at": [
+    3.9,
+    -0.6
+   ]
+  },
+  {
+   "id": "X",
+   "role": "X",
+   "at": [
+    -17,
+    -0.6
+   ]
+  },
+  {
+   "id": "Z",
+   "role": "Z",
+   "at": [
+    15,
+    -1.3
+   ]
+  }
+ ]
+}
