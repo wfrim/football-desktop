@@ -59,6 +59,8 @@ window.FD = window.FD || {};
       const out = [];
       const hist = this.history.slice(-3);
       const pool = idx.slice();
+      const left = {};
+      for (const i of pool) left[category(this.items[i])] = (left[category(this.items[i])] || 0) + 1;
       while (pool.length) {
         let best = 0;
         let bestScore = Infinity;
@@ -66,13 +68,15 @@ window.FD = window.FD || {};
           const p = this.items[i];
           const recent = hist.map((j) => this.items[j]);
           const last = recent[recent.length - 1];
-          let score = 0;
+          // Spread categories evenly through the cycle: favour the one with most left.
+          let score = -3 * left[category(p)] / pool.length;
           if (last && category(last) === category(p)) score += 2;
           if (recent.some((q) => q.conceptId === p.conceptId)) score += 5;
           if (recent.length >= 2 && recent.slice(-2).every((q) => q.formation.id === p.formation.id)) score += 3;
           if (score < bestScore) { bestScore = score; best = k; }
         });
         const [i] = pool.splice(best, 1);
+        left[category(this.items[i])] -= 1;
         out.push(i);
         hist.push(i);
         if (hist.length > 3) hist.shift();
