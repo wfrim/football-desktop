@@ -66,6 +66,7 @@ window.FD = window.FD || {};
     slant: prim('angle', { stem: 1.5, angle: 55, length: 8, dir: 'in' }),
     post:  prim('angle', { stem: 11, angle: 40, length: 10, dir: 'in' }),
     skinny_post: prim('angle', { stem: 10, angle: 20, length: 10, dir: 'in' }),
+    glance: prim('angle', { stem: 5, angle: 22, length: 9, dir: 'in' }),     // RPO skinny post behind the conflict LB
     corner: prim('angle', { stem: 11, angle: 45, length: 8, dir: 'out' }),
     fade:  prim('vertical', { depth: 18, release: 'outside', releaseWidth: 1.5 }),
     hitch: prim('settle', { depth: 5, back: 0.8, width: 0.4, dir: 'in' }, { end: 'settle' }),
@@ -152,6 +153,7 @@ window.FD = window.FD || {};
       },
     },
     carry:        prim('run', {}),
+    jet_motion:   prim('motion', {}, { timing: { phase: 'motion', delay: -0.55, duration: 1.05 } }), // at full speed at the snap
     fake:         prim('run', {}, { style: 'dashed' }),               // play-action / misdirection fake, no ball
     crack:        prim('lead', {}),                                   // receiver blocks back inside                                     // ball carrier: `through` landmarks
     counter_step: prim('run', {}, { end: 'none' }),                    // jab away from the play before the carry
@@ -189,6 +191,7 @@ window.FD = window.FD || {};
       screen: { ol: { type: 'pass_set' }, qb: { type: 'qb_drop', drop: 3 } },
       run: {},                                  // every run assignment is explicit
       play_action: {},                          // run-action blocking is explicit
+      rpo: {},                                  // run blocking + a throw: explicit
     },
   };
 

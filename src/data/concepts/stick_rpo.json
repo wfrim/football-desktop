@@ -1,0 +1,158 @@
+{
+ "conceptId": "stick_rpo",
+ "name": "Stick RPO",
+ "family": "rpo",
+ "subfamily": "rpo",
+ "side": "weak",
+ "tags": [
+  "quick"
+ ],
+ "copy": {
+  "title": "STICK RPO",
+  "situation": "RUN-PASS OPTION",
+  "description": "Zone one way, stick and flat the other."
+ },
+ "assignments": {
+  "PST": {
+   "type": "zone_step"
+  },
+  "PSG": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ]
+  },
+  "C": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ]
+  },
+  "BSG": {
+   "type": "combo",
+   "target": [
+    "-a+0.1",
+    0.7
+   ]
+  },
+  "BST": {
+   "type": "combo",
+   "target": [
+    "-a+0.1",
+    0.7
+   ]
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    "mesh"
+   ]
+  },
+  "RB": {
+   "type": "fake",
+   "through": [
+    "mesh",
+    [
+     "a+0.25",
+     -1.6
+    ],
+    [
+     "a",
+     -0.2
+    ],
+    [
+     "a",
+     4.5
+    ]
+   ]
+  },
+  "bs#1": {
+   "type": "go"
+  },
+  "bs#2": {
+   "type": "stick",
+   "depth": 5.5
+  },
+  "bs#3": {
+   "type": "flat",
+   "dir": "left",
+   "width": 8
+  }
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "relationships": [
+  {
+   "type": "zone",
+   "participants": [
+    "PST",
+    "PSG",
+    "C",
+    "BSG",
+    "BST"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "C",
+    "PSG"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "BSG",
+    "BST"
+   ]
+  },
+  {
+   "type": "levels",
+   "participants": [
+    "bs#1",
+    "bs#2",
+    "bs#3"
+   ]
+  }
+ ],
+ "events": [
+  {
+   "type": "mesh",
+   "at": "mesh",
+   "timing": {
+    "phase": "snap",
+    "delay": 0.45
+   }
+  }
+ ],
+ "ball": {
+  "to": "bs#2",
+  "at": 1,
+  "timing": {
+   "arrive": 3.5
+  }
+ },
+ "football": {
+  "read": "Apex / overhang defender: he fits the run \u2192 stick behind him; he sits on the stick \u2192 give.",
+  "rules": "Run-pass option: the line blocks inside zone (double teams stay at the line: no linemen downfield on a throw). The QB reads the conflict defender at the mesh; the dashed track is the give."
+ },
+ "sources": [
+  "Stick RPO: zone paired with the stick concept to trips"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_trey_11",
+   "copy": {
+    "situation": "RUN-PASS OPTION \u00b7 TREY"
+   }
+  }
+ ]
+}

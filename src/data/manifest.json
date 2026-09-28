@@ -7,7 +7,9 @@
     "formations/singleback_tight_12.json",
     "formations/i_form_21.json",
     "formations/gun_bunch_11.json",
-    "formations/gun_empty_11.json"
+    "formations/gun_empty_11.json",
+    "formations/gun_trey_11.json",
+    "formations/ace_12.json"
   ],
   "plays": [
     "plays/curl_flat_gun_doubles_11.json",
@@ -49,6 +51,10 @@
     "concepts/draw.json",
     "concepts/buck_sweep.json",
     "concepts/dart.json",
-    "concepts/smoke.json"
+    "concepts/smoke.json",
+    "concepts/glance_rpo.json",
+    "concepts/bubble_rpo.json",
+    "concepts/stick_rpo.json",
+    "concepts/jet_sweep.json"
   ]
 }

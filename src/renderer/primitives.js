@@ -278,6 +278,7 @@ window.FD = window.FD || {};
   Primitives.register('motion', {
     kind: 'motion', end: 'none', style: 'dotted', radius: 1.2,
     build(p, ctx) {
+      if (p.through) return waypoints(p, ctx);
       if (p.points) return [[0, 0]].concat(p.points.map((q) => ctx.v(q)));
       return [[0, 0], ctx.v(p.to || [4, 0])];
     },

@@ -38,8 +38,8 @@ window.FD = window.FD || {};
   function passTiming(scene, sim) {
     const P = T.phases;
     const flight = P.arrive - P.release;
-    let arrive = P.arrive;
     const pass = scene.pass;
+    let arrive = pass && typeof pass.timing.arrive === 'number' ? pass.timing.arrive : P.arrive;
     if (pass && pass.route && !pass.point && !sim) {
       const drawnAt = FD.Relationships.timeAt(pass.route, pass.at);
       arrive = Math.max(arrive, drawnAt + 0.15);

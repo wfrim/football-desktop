@@ -183,6 +183,12 @@
    "roles": {
     "CUTOFF": "U"
    }
+  },
+  {
+   "formation": "ace_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
   }
  ]
 }

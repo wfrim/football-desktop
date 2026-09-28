@@ -128,7 +128,7 @@ window.FD = window.FD || {};
     const bs = gaps(BST, BSG, -1);
     const X = (tok) => {
       if (typeof tok === 'number') return tok;
-      const m = /^(-?)([a-d]|[A-Z#][A-Za-z#0-9]*)([+-]\d*\.?\d+)?$/.exec(tok);
+      const m = /^(-?)(bs#\d|[a-d]|[A-Z#][A-Za-z#0-9]*)([+-]\d*\.?\d+)?$/.exec(tok);
       if (!m) throw new Error(`bad landmark "${tok}"`);
       let v;
       if (/^[a-d]$/.test(m[2])) v = (m[1] ? bs : ps)[m[2]];
@@ -245,6 +245,7 @@ window.FD = window.FD || {};
     }
     if (c.reads) play.reads = Array.from(new Set(c.reads.filter((r) => bind(r)).map(idOf)));
     if (c.primary) play.primary = idOf(c.primary);
+    if (c.events) play.events = c.events.map((e) => Object.assign({}, e, { at: L.point(e.at) }));
     return play;
   }
 

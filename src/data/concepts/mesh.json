@@ -111,6 +111,15 @@
      "type": "go"
     }
    }
+  },
+  {
+   "formation": "gun_trey_11",
+   "roles": {
+    "UNDER": "bs#1",
+    "OVER": "#3",
+    "CLEAR": "#1",
+    "SIT": "#2"
+   }
   }
  ]
 }

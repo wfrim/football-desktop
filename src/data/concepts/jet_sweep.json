@@ -1,0 +1,147 @@
+{
+ "conceptId": "jet_sweep",
+ "name": "Jet Sweep",
+ "family": "run",
+ "subfamily": "perimeter",
+ "side": "strength",
+ "tags": [
+  "perimeter",
+  "motion"
+ ],
+ "copy": {
+  "title": "JET SWEEP",
+  "situation": "MOTION \u00b7 PERIMETER RUN",
+  "description": "Full-speed motion takes the handoff and outruns the pursuit to the edge."
+ },
+ "assignments": {
+  "PST": {
+   "type": "reach"
+  },
+  "PSG": {
+   "type": "reach"
+  },
+  "C": {
+   "type": "reach"
+  },
+  "BSG": {
+   "type": "scoop"
+  },
+  "BST": {
+   "type": "scoop"
+  },
+  "JET": [
+   {
+    "type": "jet_motion",
+    "through": [
+     [
+      -0.9,
+      -3.9
+     ]
+    ]
+   },
+   {
+    "type": "carry",
+    "delay": 0.0,
+    "through": [
+     [
+      1.3,
+      -3.85
+     ],
+     [
+      "d+1.2",
+      -1.5
+     ],
+     [
+      "d+2.6",
+      1.0
+     ],
+     [
+      "d+3.2",
+      5.5
+     ]
+    ]
+   }
+  ],
+  "#2": {
+   "type": "lead",
+   "at": [
+    "#2-2.4",
+    2.8
+   ]
+  },
+  "#1": {
+   "type": "stalk"
+  },
+  "RB": {
+   "type": "fake",
+   "through": [
+    [
+     0.6,
+     -5.9
+    ],
+    [
+     -1.2,
+     -5.6
+    ],
+    [
+     "-b-0.4",
+     -1.6
+    ]
+   ]
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    [
+     0.05,
+     -4.3
+    ]
+   ]
+  }
+ },
+ "roles": {
+  "JET": "bs#2"
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "relationships": [
+  {
+   "type": "zone",
+   "participants": [
+    "PST",
+    "PSG",
+    "C",
+    "BSG",
+    "BST"
+   ]
+  },
+  {
+   "type": "feature",
+   "participants": [
+    "#2"
+   ]
+  }
+ ],
+ "handoff": {
+  "to": "JET",
+  "at": [
+   0.2,
+   -3.85
+  ]
+ },
+ "primary": "JET",
+ "football": {
+  "rules": "The slot comes in jet motion and is at full speed at the snap; the line reach-blocks to the sweep side and #2 arcs to the force defender. The back fakes inside zone the other way to hold the linebackers."
+ },
+ "sources": [
+  "Jet sweep: motion-based perimeter run with reach blocking and an arc block"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  }
+ ]
+}

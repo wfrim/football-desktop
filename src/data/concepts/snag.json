@@ -63,6 +63,9 @@
     "CORNER": "#3",
     "FLAT": "#2"
    }
+  },
+  {
+   "formation": "gun_trey_11"
   }
  ],
  "roles": {

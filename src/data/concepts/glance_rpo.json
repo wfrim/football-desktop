@@ -1,0 +1,144 @@
+{
+ "conceptId": "glance_rpo",
+ "name": "Glance RPO",
+ "family": "rpo",
+ "subfamily": "rpo",
+ "side": "away_from_back",
+ "tags": [
+  "quick"
+ ],
+ "copy": {
+  "title": "GLANCE RPO",
+  "situation": "RUN-PASS OPTION",
+  "description": "Hand it off or throw the glance behind the linebacker who fits the run."
+ },
+ "assignments": {
+  "PST": {
+   "type": "zone_step"
+  },
+  "PSG": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ]
+  },
+  "C": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ]
+  },
+  "BSG": {
+   "type": "combo",
+   "target": [
+    "-a+0.1",
+    0.7
+   ]
+  },
+  "BST": {
+   "type": "combo",
+   "target": [
+    "-a+0.1",
+    0.7
+   ]
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    "mesh"
+   ]
+  },
+  "RB": {
+   "type": "fake",
+   "through": [
+    "mesh",
+    [
+     "a+0.25",
+     -1.6
+    ],
+    [
+     "a",
+     -0.2
+    ],
+    [
+     "a",
+     4.5
+    ]
+   ]
+  },
+  "#1": {
+   "type": "glance"
+  }
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "relationships": [
+  {
+   "type": "zone",
+   "participants": [
+    "PST",
+    "PSG",
+    "C",
+    "BSG",
+    "BST"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "C",
+    "PSG"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "BSG",
+    "BST"
+   ]
+  },
+  {
+   "type": "feature",
+   "participants": [
+    "#1"
+   ]
+  }
+ ],
+ "events": [
+  {
+   "type": "mesh",
+   "at": "mesh",
+   "timing": {
+    "phase": "snap",
+    "delay": 0.45
+   }
+  }
+ ],
+ "ball": {
+  "to": "#1",
+  "at": 0.78,
+  "timing": {
+   "arrive": 3.35
+  }
+ },
+ "football": {
+  "read": "Read the play-side linebacker / overhang: he triggers on the run \u2192 glance (skinny post) behind him; he drops \u2192 give.",
+  "rules": "Run-pass option: the line blocks inside zone (double teams stay at the line: no linemen downfield on a throw). The QB reads the conflict defender at the mesh; the dashed track is the give."
+ },
+ "sources": [
+  "Glance RPO: inside zone paired with a #1 skinny post behind the conflict defender"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ]
+}

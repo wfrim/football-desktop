@@ -168,6 +168,12 @@
    "copy": {
     "situation": "PERIMETER RUN \u00b7 FB ON THE EDGE"
    }
+  },
+  {
+   "formation": "ace_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
   }
  ]
 }
