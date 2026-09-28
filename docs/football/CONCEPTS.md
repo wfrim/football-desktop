@@ -8,13 +8,13 @@ Where coaching systems differ, one presentation is chosen and the choice is writ
 concept's `football` block. Assumed defensive fronts are noted where blocking depends on
 them; defenders are never drawn.
 
-60 plays · 38 concepts · 7 formations
+91 plays · 42 concepts · 9 formations
 
 ## Dropback pass
 
 ### Dagger
 
-- **Presentations:** Gun Doubles (11)
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Gun Empty (11, right)
 - **Wallpaper:** "The seam clears space for a deep dig underneath."
 - **Defining relationship:** clear
 - **Read:** Seam first vs a hole in the middle of the field; otherwise the dig behind the vacated hook defender; backside sit / RB as the check-down.
@@ -22,7 +22,7 @@ them; defenders are never drawn.
 
 ### Drive
 
-- **Presentations:** Gun Doubles (11)
+- **Presentations:** Gun Doubles (11, left) · Gun Trips (11, right)
 - **Wallpaper:** MIDDLE OF THE FIELD — "A shallow cross runs under a dig: high-low on the hook defender."
 - **Defining relationship:** high_low
 - **Read:** Hook/curl defender: he jumps the shallow → dig behind him; he sinks → shallow.
@@ -30,7 +30,7 @@ them; defenders are never drawn.
 
 ### Four Verticals
 
-- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Gun Trey (11, right)
 - **Wallpaper:** "Stretches the defense across all four deep lanes."
 - **Defining relationship:** lanes
 - **Read:** Read the middle safety: throw the seam he doesn't take; outside go vs off-leverage corners; RB check-down.
@@ -38,7 +38,7 @@ them; defenders are never drawn.
 
 ### Levels
 
-- **Presentations:** Gun Trips (11)
+- **Presentations:** Gun Trips (11, right) · Gun Trey (11, right) · Gun Bunch (11, right)
 - **Wallpaper:** ZONE BEATER — "Two in-breakers at different depths stretch the underneath zone."
 - **Defining relationship:** levels
 - **Read:** Vertical stretch of the hook defender: in at 10 over quick in at 5; Z clears the corner.
@@ -46,7 +46,7 @@ them; defenders are never drawn.
 
 ### Mesh
 
-- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Gun Bunch (11, right) · Gun Empty (11, right)
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Gun Bunch (11, right) · Gun Empty (11, right) · Gun Trey (11, right)
 - **Wallpaper:** MAN / MATCH · 3RD & MEDIUM — "Crossing routes create traffic underneath."
 - **Defining relationship:** mesh
 - **Read:** Vs man: the crossers rub each other; throw the first one that clears. Vs zone: sit/curl over the underneath defenders, RB outlet.
@@ -54,7 +54,7 @@ them; defenders are never drawn.
 
 ### Mills
 
-- **Presentations:** Gun Doubles (11)
+- **Presentations:** Gun Doubles (11, left) · Gun Trips (11, right)
 - **Wallpaper:** SHOT PLAY · MOFC — "A post over a dig puts the safety in conflict."
 - **Defining relationship:** high_low
 - **Read:** The safety over the dig: he drives on the dig → post over him; he stays deep → dig.
@@ -70,7 +70,7 @@ them; defenders are never drawn.
 
 ### Sail
 
-- **Presentations:** Gun Trips (11)
+- **Presentations:** Gun Trips (11, right) · Gun Trey (11, right) · Gun Empty (11, right)
 - **Wallpaper:** FLOOD · COVER 3 BEATER — "Three levels flood one sideline."
 - **Defining relationship:** levels
 - **Read:** Deep third is carried by the go; read the flat defender between the sail (out at 11) and the flat.
@@ -110,7 +110,7 @@ them; defenders are never drawn.
 
 ### Y-Cross
 
-- **Presentations:** Gun Doubles (11)
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
 - **Wallpaper:** 3RD & LONG — "The Y crosses deep into space the go route vacates."
 - **Defining relationship:** clear
 - **Read:** Post holds the middle safety; X clears the boundary corner; Y settles in the void past the hash. Checkdowns: H sit, RB swing.
@@ -120,7 +120,7 @@ them; defenders are never drawn.
 
 ### Curl-Flat
 
-- **Presentations:** Gun Doubles (11)
+- **Presentations:** Gun Doubles (11, right) · Gun Empty (11, right)
 - **Wallpaper:** "Creates a high-low read on the flat defender."
 - **Defining relationship:** high_low
 - **Read:** High-low the flat defender: he sinks under the curl → flat; he widens to the flat → curl. Mirrored so the QB picks the better side pre-snap.
@@ -128,7 +128,7 @@ them; defenders are never drawn.
 
 ### Slant-Flat
 
-- **Presentations:** Gun Doubles (11)
+- **Presentations:** Gun Doubles (11, right) · Gun Empty (11, right)
 - **Wallpaper:** QUICK THROW — "An in-out stretch on the flat defender, out on rhythm."
 - **Defining relationship:** high_low
 - **Read:** Flat defender: he widens with the flat → slant inside him; he walls the slant → flat.
@@ -144,7 +144,7 @@ them; defenders are never drawn.
 
 ### Snag
 
-- **Presentations:** Gun Trips (11, right) · Gun Bunch (11, right)
+- **Presentations:** Gun Trips (11, right) · Gun Bunch (11, right) · Gun Trey (11, right)
 - **Wallpaper:** RED ZONE · ZONE BEATER — "A triangle of corner, snag and flat."
 - **Defining relationship:** levels
 - **Read:** Triangle stretch: corner (high) and flat (low) on the flat defender, snag/spot settling inside between them.
@@ -160,7 +160,7 @@ them; defenders are never drawn.
 
 ### Stick
 
-- **Presentations:** Gun Trips (11, right) · Gun Empty (11, right)
+- **Presentations:** Gun Trips (11, right) · Gun Empty (11, right) · Gun Trey (11, right)
 - **Wallpaper:** "A simple three-level stretch of the underneath defender."
 - **Defining relationship:** levels
 - **Read:** Read the flat defender: if he widens with the flat, throw the stick; if he sits on the stick, throw the flat. Backside slant vs pressure.
@@ -170,7 +170,7 @@ them; defenders are never drawn.
 
 ### Boot
 
-- **Presentations:** Singleback Tight (12, right)
+- **Presentations:** Singleback Tight (12, right) · Ace (12, right) · I-Formation (21, right)
 - **Wallpaper:** OUTSIDE ZONE ACTION — "Sell outside zone one way, flood the other."
 - **Defining relationship:** levels
 - **Rules:** Line and RB sell outside zone right; QB fakes and boots left (naked). X clears, Z deep over, Y drag, U flat: a three-level flood in front of the QB.
@@ -183,6 +183,35 @@ them; defenders are never drawn.
 - **Defining relationship:** feature
 - **Rules:** Two-man route off inside-zone action; everyone else protects (max protect). The post occupies the middle safety, the deep over runs behind the linebackers who bit on the fake.
 - **Sources:** Yankee: post + deep over, max-protect play-action
+
+## RPO
+
+### Bubble RPO
+
+- **Presentations:** Gun Trips (11, left)
+- **Wallpaper:** RUN-PASS OPTION · NUMBERS — "Run to the boundary unless the trips side hands the offense numbers."
+- **Defining relationship:** zone, combo, convoy
+- **Read:** Count the trips side: if the offense has 3-on-2 (the apex defender plays the run), throw the bubble; otherwise give the zone to the boundary.
+- **Rules:** Run-pass option: the line blocks inside zone (double teams stay at the line: no linemen downfield on a throw). The QB reads the conflict defender at the mesh; the dashed track is the give.
+- **Sources:** Bubble RPO: zone away, #3 bubble to trips with #1/#2 blocking
+
+### Glance RPO
+
+- **Presentations:** Gun Doubles (11, left) · Gun Trips (11, right)
+- **Wallpaper:** RUN-PASS OPTION — "Hand it off or throw the glance behind the linebacker who fits the run."
+- **Defining relationship:** zone, combo, feature
+- **Read:** Read the play-side linebacker / overhang: he triggers on the run → glance (skinny post) behind him; he drops → give.
+- **Rules:** Run-pass option: the line blocks inside zone (double teams stay at the line: no linemen downfield on a throw). The QB reads the conflict defender at the mesh; the dashed track is the give.
+- **Sources:** Glance RPO: inside zone paired with a #1 skinny post behind the conflict defender
+
+### Stick RPO
+
+- **Presentations:** Gun Trips (11, left) · Gun Trey (11, left)
+- **Wallpaper:** RUN-PASS OPTION — "Zone one way, stick and flat the other."
+- **Defining relationship:** zone, combo, levels
+- **Read:** Apex / overhang defender: he fits the run → stick behind him; he sits on the stick → give.
+- **Rules:** Run-pass option: the line blocks inside zone (double teams stay at the line: no linemen downfield on a throw). The QB reads the conflict defender at the mesh; the dashed track is the give.
+- **Sources:** Stick RPO: zone paired with the stick concept to trips
 
 ## Screens
 
@@ -213,7 +242,7 @@ them; defenders are never drawn.
 
 ### Tunnel Screen
 
-- **Presentations:** Gun Doubles (11)
+- **Presentations:** Gun Doubles (11, left) · Gun Trips (11, right)
 - **Wallpaper:** PRESSURE ANSWER — "The receiver comes back inside behind a wall of linemen."
 - **Defining relationship:** convoy
 - **Rules:** X sells two steps upfield and comes back under the slot, behind the LOS; H kicks out the corner; LT releases outside and LG inside to build the tunnel. C, RG, RT hold protection.
@@ -239,7 +268,7 @@ them; defenders are never drawn.
 
 ### Counter GT
 
-- **Presentations:** Gun Trips (11, right)
+- **Presentations:** Gun Trips (11, right) · Gun Doubles (11, left)
 - **Wallpaper:** MISDIRECTION · GAP RUN — "Backfield action flows one way before two pullers lead the run back."
 - **Defining relationship:** wall, pull
 - **Rules:** RT, RG down; C back. LG pulls flat and kicks out the end man; LT pulls deeper behind him and wraps through the hole to the play-side LB. Backside DE is left: the QB's carry-out holds him.
@@ -265,7 +294,7 @@ them; defenders are never drawn.
 
 ### Duo
 
-- **Presentations:** Singleback Tight (12, right)
+- **Presentations:** Singleback Tight (12, right) · Ace (12, right) · I-Formation (21, right)
 - **Wallpaper:** DOWNHILL · NO PULLERS — "Two double teams drive the front; the back reads the Mike."
 - **Defining relationship:** combo
 - **Front:** 4-3 over: 3-tech outside RG, 1-tech backside shade of C.
@@ -275,7 +304,7 @@ them; defenders are never drawn.
 
 ### Inside Zone
 
-- **Presentations:** Gun Doubles (11, left) · Pistol Strong (11, right) · Singleback Tight (12, right)
+- **Presentations:** Gun Doubles (11, left) · Pistol Strong (11, right) · Singleback Tight (12, right) · Ace (12, right)
 - **Wallpaper:** EARLY DOWN · INTERIOR RUN — "Press the interior and hit the first clean crease."
 - **Defining relationship:** zone, combo
 - **Front:** 4-2 under: 3-tech outside the play-side guard, 1-tech shaded backside of C, 5-tech on the play-side tackle. Backside DE unblocked (gun: QB read).
@@ -293,9 +322,17 @@ them; defenders are never drawn.
 - **Rb:** Downhill to the B gap, cut off the fullback.
 - **Sources:** Iso: man/base blocking, FB isolates the playside ILB in the bubble
 
+### Jet Sweep
+
+- **Presentations:** Gun Doubles (11, right)
+- **Wallpaper:** MOTION · PERIMETER RUN — "Full-speed motion takes the handoff and outruns the pursuit to the edge."
+- **Defining relationship:** zone, feature
+- **Rules:** The slot comes in jet motion and is at full speed at the snap; the line reach-blocks to the sweep side and #2 arcs to the force defender. The back fakes inside zone the other way to hold the linebackers.
+- **Sources:** Jet sweep: motion-based perimeter run with reach blocking and an arc block
+
 ### Outside Zone
 
-- **Presentations:** Singleback Tight (12, right) · I-Formation (21, right)
+- **Presentations:** Singleback Tight (12, right) · I-Formation (21, right) · Ace (12, right)
 - **Wallpaper:** PERIMETER RUN — "Stretch the front horizontally, then make one decisive cut."
 - **Defining relationship:** zone, combo
 - **Front:** 4-3 under: 9-tech on Y, 5-tech on RT, 1-tech on C's play-side shade, 3-tech outside LG; backside end handled by U.
@@ -305,7 +342,7 @@ them; defenders are never drawn.
 
 ### Pin and Pull
 
-- **Presentations:** Singleback Tight (12, right)
+- **Presentations:** Singleback Tight (12, right) · Ace (12, right)
 - **Wallpaper:** PERIMETER · TOSS — "Covered linemen pin inside; uncovered linemen pull and lead the toss."
 - **Defining relationship:** wall, pull, feature
 - **Rules:** Front: 6-tech on Y, 1-tech on C's play-side shade. Covered players (Y, C) pin inside; uncovered RT and RG pull — RT to the force/corner, RG up the alley. Z cracks the support defender. Toss to the back.
@@ -323,7 +360,7 @@ them; defenders are never drawn.
 
 ### Split Zone
 
-- **Presentations:** Pistol Strong (11, right)
+- **Presentations:** Pistol Strong (11, right) · Gun Trey (11, right)
 - **Wallpaper:** ZONE · BACKSIDE KICK — "Zone one way while the H-back splits back to seal the end."
 - **Defining relationship:** zone, combo, feature
 - **Rules:** Inside zone right; the H-back crosses behind the line ('split' flow) and kicks out the backside end so the cutback is sealed.

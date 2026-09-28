@@ -1,0 +1,78 @@
+{
+ "conceptId": "mills",
+ "name": "Mills",
+ "family": "dropback_pass",
+ "subfamily": "shot",
+ "tags": [
+  "deep"
+ ],
+ "copy": {
+  "title": "MILLS",
+  "situation": "SHOT PLAY \u00b7 MOFC",
+  "description": "A post over a dig puts the safety in conflict."
+ },
+ "football": {
+  "read": "The safety over the dig: he drives on the dig \u2192 post over him; he stays deep \u2192 dig."
+ },
+ "sources": [
+  "Mills (post-dig): #1 post over #2 dig; backside curl-flat"
+ ],
+ "side": "weak",
+ "roles": {
+  "POST": "#1",
+  "DIG": "#2"
+ },
+ "assignments": {
+  "POST": {
+   "type": "post"
+  },
+  "DIG": {
+   "type": "dig",
+   "depth": 12,
+   "length": 10
+  },
+  "bs#1": {
+   "type": "curl"
+  },
+  "bs#2?": {
+   "type": "flat",
+   "width": 7
+  },
+  "#3?": {
+   "type": "flat",
+   "width": 7
+  },
+  "RB?": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "sit",
+    "depth": 3.5
+   }
+  }
+ },
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "POST",
+   "low": "DIG"
+  }
+ ],
+ "ball": {
+  "to": "POST",
+  "at": 0.9
+ },
+ "reads": [
+  "POST",
+  "DIG",
+  "RB"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11",
+   "side": "strength"
+  }
+ ]
+}

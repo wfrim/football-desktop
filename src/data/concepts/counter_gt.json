@@ -1,16 +1,10 @@
 {
- "id": "counter_gt_gun_trips_11",
  "conceptId": "counter_gt",
  "name": "Counter GT",
  "family": "run",
  "subfamily": "gap",
- "side": "right",
- "personnel": "11",
- "formation": "gun_trips_11",
  "copy": {
   "title": "COUNTER GT",
-  "meta": "RUN \u00b7 11 PERSONNEL",
-  "formation": "GUN TRIPS",
   "situation": "MISDIRECTION \u00b7 GAP RUN",
   "description": "Backfield action flows one way before two pullers lead the run back."
  },
@@ -18,39 +12,42 @@
   "rules": "RT, RG down; C back. LG pulls flat and kicks out the end man; LT pulls deeper behind him and wraps through the hole to the play-side LB. Backside DE is left: the QB's carry-out holds him.",
   "rb": "Counter step away, then cross the QB's face and follow the pullers."
  },
+ "sources": [
+  "Wikipedia \u2014 Counter run (GT: guard kicks out, tackle wraps)",
+  "Throw Deep Publishing \u2014 The Complete Guide to the Counter Play",
+  "vIQtory Sports \u2014 How to install the Counter play"
+ ],
+ "side": "away_from_back",
  "assignments": {
-  "RT": {
+  "PST": {
    "type": "down"
   },
-  "RG": {
+  "PSG": {
    "type": "down"
   },
   "C": {
    "type": "back"
   },
-  "LG": {
+  "BSG": {
    "type": "kickout",
    "at": [
-    4.9,
+    "d-0.1",
     0.2
    ],
    "turn": 2.0
   },
-  "LT": {
+  "BST": {
    "type": "wrap",
-   "hole": 3.4,
+   "hole": "c-0.3",
    "at": [
-    3.0,
+    "c-0.7",
     4.0
    ]
   },
   "QB": {
    "type": "handoff",
    "through": [
-    [
-     0.15,
-     -4.6
-    ],
+    "mesh",
     [
      -2.8,
      -5.9
@@ -71,60 +68,50 @@
     "type": "carry",
     "delay": 0.05,
     "through": [
+     "mesh",
      [
-      0.3,
-      -4.3
-     ],
-     [
-      3.7,
+      "c",
       -0.8
      ],
      [
-      4.1,
+      "c+0.4",
       5.5
      ]
     ]
    }
-  ],
-  "X": {
-   "type": "stalk"
-  },
-  "Y": {
-   "type": "stalk"
-  },
-  "H": {
-   "type": "stalk"
-  },
-  "Z": {
+  ]
+ },
+ "defaults": {
+  "receivers": {
    "type": "stalk"
   }
+ },
+ "handoff": {
+  "to": "RB",
+  "at": "mesh"
  },
  "relationships": [
   {
    "type": "wall",
    "participants": [
-    "RT",
-    "RG",
+    "PST",
+    "PSG",
     "C"
    ]
   },
   {
    "type": "pull",
-   "puller": "LG",
-   "wrap": "LT",
+   "puller": "BSG",
+   "wrap": "BST",
    "runner": "RB"
   }
  ],
- "handoff": {
-  "to": "RB",
-  "at": [
-   0.3,
-   -4.3
-  ]
- },
- "sources": [
-  "Wikipedia \u2014 Counter run (GT: guard kicks out, tackle wraps)",
-  "Throw Deep Publishing \u2014 The Complete Guide to the Counter Play",
-  "vIQtory Sports \u2014 How to install the Counter play"
+ "presentations": [
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_doubles_11"
+  }
  ]
 }

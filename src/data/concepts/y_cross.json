@@ -1,0 +1,80 @@
+{
+ "conceptId": "y_cross",
+ "name": "Y-Cross",
+ "family": "dropback_pass",
+ "subfamily": "crossers",
+ "copy": {
+  "title": "Y-CROSS",
+  "situation": "3RD & LONG",
+  "description": "The Y crosses deep into space the go route vacates."
+ },
+ "football": {
+  "read": "Post holds the middle safety; X clears the boundary corner; Y settles in the void past the hash. Checkdowns: H sit, RB swing."
+ },
+ "sources": [
+  "Air Raid Y-Cross: Y deep cross (15+) behind the go, post holds the safety"
+ ],
+ "situation": {
+  "down": 3,
+  "distance": 12
+ },
+ "side": "strength",
+ "roles": {
+  "CROSS": "#2",
+  "POST": "#1",
+  "SIT": "bs#2",
+  "GO": "bs#1"
+ },
+ "assignments": {
+  "GO": {
+   "type": "go"
+  },
+  "CROSS": {
+   "type": "cross",
+   "depth": 15,
+   "across": 26
+  },
+  "POST": {
+   "type": "post"
+  },
+  "SIT": {
+   "type": "sit",
+   "depth": 6
+  },
+  "RB?": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "swing"
+   }
+  }
+ },
+ "relationships": [
+  {
+   "type": "clear",
+   "clear": "GO",
+   "into": "CROSS",
+   "margin": 2
+  }
+ ],
+ "ball": {
+  "to": "CROSS",
+  "at": 0.82
+ },
+ "reads": [
+  "CROSS",
+  "SIT",
+  "RB"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11",
+   "roles": {
+    "CROSS": "#3",
+    "SIT": "#2"
+   }
+  }
+ ]
+}

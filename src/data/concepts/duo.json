@@ -1,0 +1,160 @@
+{
+ "conceptId": "duo",
+ "name": "Duo",
+ "family": "run",
+ "subfamily": "gap",
+ "copy": {
+  "title": "DUO",
+  "situation": "DOWNHILL \u00b7 NO PULLERS",
+  "description": "Two double teams drive the front; the back reads the Mike."
+ },
+ "football": {
+  "front": "4-3 over: 3-tech outside RG, 1-tech backside shade of C.",
+  "rules": "Vertical double teams on both down linemen, coming off late to the linebackers; Y and LT base the ends. RB presses the B gap and reads the Mike.",
+  "rb": "Downhill to the B gap; bounce or bang off the Mike's fit."
+ },
+ "sources": [
+  "Duo: 'power without a puller' \u2014 two vertical double teams, RB reads Mike"
+ ],
+ "side": "strength",
+ "assignments": {
+  "TE?": {
+   "type": "base"
+  },
+  "PST": {
+   "type": "combo",
+   "target": [
+    "b-0.1",
+    0.8
+   ]
+  },
+  "PSG": {
+   "type": "combo",
+   "target": [
+    "b-0.1",
+    0.8
+   ],
+   "climb": [
+    "PSG",
+    5.0
+   ],
+   "delay": 0.35
+  },
+  "C": {
+   "type": "combo",
+   "target": [
+    "-a",
+    0.8
+   ],
+   "climb": [
+    "-a+0.25",
+    5.0
+   ],
+   "delay": 0.35
+  },
+  "BSG": {
+   "type": "combo",
+   "target": [
+    "-a",
+    0.8
+   ]
+  },
+  "BST": {
+   "type": "base"
+  },
+  "CUTOFF?": {
+   "type": "block",
+   "to": [
+    1.0,
+    1.8
+   ]
+  },
+  "FB?": {
+   "type": "lead",
+   "through": [
+    [
+     "c-0.1",
+     -1.8
+    ],
+    [
+     "c-0.1",
+     0.4
+    ]
+   ],
+   "at": [
+    "c-0.6",
+    4.6
+   ]
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    "mesh",
+    [
+     -1.5,
+     -4.6
+    ]
+   ]
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    "mesh",
+    [
+     "c",
+     -1.6
+    ],
+    [
+     "c",
+     0.4
+    ],
+    [
+     "c+0.35",
+     5.5
+    ]
+   ]
+  }
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "handoff": {
+  "to": "RB",
+  "at": "mesh"
+ },
+ "relationships": [
+  {
+   "type": "combo",
+   "participants": [
+    "PST",
+    "PSG"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "BSG",
+    "C"
+   ]
+  }
+ ],
+ "presentations": [
+  {
+   "formation": "singleback_tight_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
+  },
+  {
+   "formation": "ace_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
+  },
+  {
+   "formation": "i_form_21"
+  }
+ ]
+}

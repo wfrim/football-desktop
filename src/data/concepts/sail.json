@@ -1,0 +1,75 @@
+{
+ "conceptId": "sail",
+ "name": "Sail",
+ "family": "dropback_pass",
+ "subfamily": "flood",
+ "copy": {
+  "title": "SAIL",
+  "situation": "FLOOD \u00b7 COVER 3 BEATER",
+  "description": "Three levels flood one sideline."
+ },
+ "football": {
+  "read": "Deep third is carried by the go; read the flat defender between the sail (out at 11) and the flat."
+ },
+ "sources": [
+  "Flood / Sail: #1 clear, #2 deep out, #3 flat \u2014 three-level sideline stretch"
+ ],
+ "side": "strength",
+ "assignments": {
+  "#1": {
+   "type": "go"
+  },
+  "#2": {
+   "type": "out",
+   "depth": 11,
+   "length": 6
+  },
+  "#3": {
+   "type": "flat",
+   "dir": "right",
+   "width": 8
+  },
+  "bs#1": {
+   "type": "dig",
+   "depth": 14,
+   "length": 10
+  },
+  "bs#2?": {
+   "type": "sit",
+   "depth": 6
+  },
+  "RB?": {
+   "type": "pass_set"
+  }
+ },
+ "relationships": [
+  {
+   "type": "levels",
+   "participants": [
+    "#1",
+    "#2",
+    "#3"
+   ]
+  }
+ ],
+ "ball": {
+  "to": "#2",
+  "at": 1
+ },
+ "reads": [
+  "#2",
+  "#3",
+  "bs#1"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  }
+ ]
+}

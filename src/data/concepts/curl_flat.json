@@ -1,0 +1,72 @@
+{
+ "conceptId": "curl_flat",
+ "name": "Curl-Flat",
+ "family": "quick_pass",
+ "subfamily": "high_low",
+ "copy": {
+  "title": "CURL-FLAT",
+  "description": "Creates a high-low read on the flat defender."
+ },
+ "football": {
+  "read": "High-low the flat defender: he sinks under the curl \u2192 flat; he widens to the flat \u2192 curl. Mirrored so the QB picks the better side pre-snap."
+ },
+ "sources": [
+  "Project handoff #1 \u2014 canonical presentation, route depths and relationship",
+  "Curl-flat: Cover 2 beater, mirrored both sides (most common 2x2 presentation)"
+ ],
+ "side": "strength",
+ "assignments": {
+  "#1": {
+   "type": "curl"
+  },
+  "#2": {
+   "type": "flat",
+   "dir": "right",
+   "width": 8
+  },
+  "bs#1": {
+   "type": "curl"
+  },
+  "bs#2": {
+   "type": "flat",
+   "dir": "left",
+   "width": 8
+  },
+  "#3?": {
+   "type": "seam"
+  },
+  "RB?": {
+   "type": "pass_set"
+  }
+ },
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "#1",
+   "low": "#2"
+  },
+  {
+   "type": "high_low",
+   "high": "bs#1",
+   "low": "bs#2"
+  }
+ ],
+ "ball": {
+  "to": "#1",
+  "at": 1
+ },
+ "reads": [
+  "#1",
+  "#2",
+  "bs#1",
+  "bs#2"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  }
+ ]
+}

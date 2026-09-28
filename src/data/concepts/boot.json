@@ -1,0 +1,124 @@
+{
+ "conceptId": "boot",
+ "name": "Boot",
+ "family": "play_action",
+ "subfamily": "boot",
+ "copy": {
+  "title": "BOOT",
+  "situation": "OUTSIDE ZONE ACTION",
+  "description": "Sell outside zone one way, flood the other."
+ },
+ "football": {
+  "rules": "Line and RB sell outside zone right; QB fakes and boots left (naked). X clears, Z deep over, Y drag, U flat: a three-level flood in front of the QB."
+ },
+ "sources": [
+  "Outside zone boot: over / drag / flat flood off wide-zone action"
+ ],
+ "side": "strength",
+ "roles": {
+  "DRAG": "TE",
+  "OVER": "#1",
+  "CLEAR": "bs#1"
+ },
+ "assignments": {
+  "PST": {
+   "type": "reach"
+  },
+  "PSG": {
+   "type": "reach"
+  },
+  "C": {
+   "type": "reach"
+  },
+  "BSG": {
+   "type": "reach"
+  },
+  "BST": {
+   "type": "reach"
+  },
+  "DRAG": {
+   "type": "cross",
+   "depth": 7,
+   "across": 16
+  },
+  "OVER": {
+   "type": "cross",
+   "depth": 16,
+   "across": 26
+  },
+  "CLEAR": {
+   "type": "go"
+  },
+  "FLAT": {
+   "type": "flat",
+   "dir": "left",
+   "width": 6
+  },
+  "RB": {
+   "type": "fake",
+   "through": [
+    "mesh",
+    [
+     "d-0.1",
+     -1.2
+    ]
+   ]
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    "mesh",
+    [
+     -3.5,
+     -5.3
+    ],
+    [
+     -6.5,
+     -5.0
+    ]
+   ],
+   "timing": {
+    "duration": 1.6
+   }
+  }
+ },
+ "relationships": [
+  {
+   "type": "levels",
+   "participants": [
+    "OVER",
+    "DRAG",
+    "FLAT"
+   ]
+  }
+ ],
+ "ball": {
+  "to": "OVER",
+  "at": 0.8
+ },
+ "reads": [
+  "OVER",
+  "DRAG",
+  "FLAT"
+ ],
+ "presentations": [
+  {
+   "formation": "singleback_tight_12",
+   "roles": {
+    "FLAT": "U"
+   }
+  },
+  {
+   "formation": "ace_12",
+   "roles": {
+    "FLAT": "U"
+   }
+  },
+  {
+   "formation": "i_form_21",
+   "roles": {
+    "FLAT": "F"
+   }
+  }
+ ]
+}

@@ -1,0 +1,79 @@
+{
+ "conceptId": "drive",
+ "name": "Drive",
+ "family": "dropback_pass",
+ "subfamily": "high_low",
+ "copy": {
+  "title": "DRIVE",
+  "situation": "MIDDLE OF THE FIELD",
+  "description": "A shallow cross runs under a dig: high-low on the hook defender."
+ },
+ "football": {
+  "read": "Hook/curl defender: he jumps the shallow \u2192 dig behind him; he sinks \u2192 shallow."
+ },
+ "sources": [
+  "Drive: shallow (2-3 yd) under a 12-yd dig from the same side; seam/go hold the safeties"
+ ],
+ "side": "weak",
+ "roles": {
+  "DRAG": "#2",
+  "DIG": "#1",
+  "SEAM": "bs#2",
+  "GO": "bs#1"
+ },
+ "assignments": {
+  "DRAG": {
+   "type": "drag",
+   "across": 18
+  },
+  "DIG": {
+   "type": "dig",
+   "depth": 12,
+   "length": 16
+  },
+  "SEAM": {
+   "type": "seam"
+  },
+  "GO": {
+   "type": "go"
+  },
+  "RB?": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "flat",
+    "width": 7
+   }
+  }
+ },
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "DIG",
+   "low": "DRAG"
+  }
+ ],
+ "ball": {
+  "to": "DRAG",
+  "at": 0.75
+ },
+ "reads": [
+  "DRAG",
+  "DIG",
+  "RB"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11",
+   "side": "strength",
+   "roles": {
+    "DRAG": "#3",
+    "DIG": "#1",
+    "SEAM": "#2",
+    "GO": "bs#1"
+   }
+  }
+ ]
+}

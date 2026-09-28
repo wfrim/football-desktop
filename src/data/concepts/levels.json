@@ -1,35 +1,42 @@
 {
- "id": "levels_gun_trips_11",
  "conceptId": "levels",
  "name": "Levels",
  "family": "dropback_pass",
- "personnel": "11",
- "formation": "gun_trips_11",
+ "subfamily": "high_low",
  "copy": {
   "title": "LEVELS",
-  "meta": "PASS \u00b7 11 PERSONNEL",
-  "formation": "GUN TRIPS",
   "situation": "ZONE BEATER",
   "description": "Two in-breakers at different depths stretch the underneath zone."
  },
+ "football": {
+  "read": "Vertical stretch of the hook defender: in at 10 over quick in at 5; Z clears the corner."
+ },
+ "sources": [
+  "Levels: #2 in at 10-12 over #3 in at 5 from trips; #1 clears"
+ ],
+ "side": "strength",
  "assignments": {
-  "H": {
+  "#2": {
    "type": "in",
    "depth": 10,
    "length": 9
   },
-  "Y": {
+  "#3": {
    "type": "quick_in",
    "depth": 5,
    "length": 5
   },
-  "Z": {
+  "#1": {
    "type": "go"
   },
-  "X": {
+  "bs#1": {
    "type": "curl"
   },
-  "RB": {
+  "bs#2?": {
+   "type": "sit",
+   "depth": 6
+  },
+  "RB?": {
    "type": "pass_set"
   }
  },
@@ -37,25 +44,29 @@
   {
    "type": "levels",
    "participants": [
-    "H",
-    "Y"
+    "#2",
+    "#3"
    ]
   }
  ],
- "subfamily": "high_low",
  "ball": {
-  "to": "H",
+  "to": "#2",
   "at": 0.9
  },
  "reads": [
-  "H",
-  "Y",
-  "X"
+  "#2",
+  "#3",
+  "bs#1"
  ],
- "football": {
-  "read": "Vertical stretch of the hook defender: in at 10 over quick in at 5; Z clears the corner."
- },
- "sources": [
-  "Levels: #2 in at 10-12 over #3 in at 5 from trips; #1 clears"
+ "presentations": [
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "gun_bunch_11"
+  }
  ]
 }

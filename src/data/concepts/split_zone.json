@@ -1,75 +1,75 @@
 {
- "id": "split_zone_pistol_strong_11",
  "conceptId": "split_zone",
  "name": "Split Zone",
  "family": "run",
- "personnel": "11",
- "formation": "pistol_strong_11",
+ "subfamily": "zone",
  "copy": {
   "title": "SPLIT ZONE",
-  "meta": "RUN \u00b7 11 PERSONNEL",
-  "formation": "PISTOL STRONG",
   "situation": "ZONE \u00b7 BACKSIDE KICK",
   "description": "Zone one way while the H-back splits back to seal the end."
  },
+ "football": {
+  "rules": "Inside zone right; the H-back crosses behind the line ('split' flow) and kicks out the backside end so the cutback is sealed."
+ },
+ "sources": [
+  "Split zone: inside zone with the H-back sifting across to the backside end"
+ ],
+ "side": "strength",
  "assignments": {
-  "RT": {
+  "PST": {
    "type": "zone_step"
   },
-  "RG": {
+  "PSG": {
    "type": "combo",
    "target": [
-    1.8,
+    "PSG+0.5",
     0.75
    ],
    "climb": [
-    2.9,
+    "PST+0.3",
     4.6
    ]
   },
   "C": {
    "type": "combo",
    "target": [
-    1.8,
+    "PSG+0.5",
     0.75
    ]
   },
-  "LG": {
+  "BSG": {
    "type": "combo",
    "target": [
-    -0.55,
+    "-a+0.1",
     0.7
    ]
   },
-  "LT": {
+  "BST": {
    "type": "combo",
    "target": [
-    -0.55,
+    "-a+0.1",
     0.7
    ],
    "climb": [
-    -1.4,
+    "BSG-0.1",
     4.6
    ]
   },
-  "Y": {
+  "SIFT": {
    "type": "lead",
    "via": [
     0.2,
     -1.7
    ],
    "at": [
-    -3.9,
+    "-c-0.2",
     0.1
    ]
   },
   "QB": {
    "type": "handoff",
    "through": [
-    [
-     0.3,
-     -4.4
-    ],
+    "mesh",
     [
      -1.4,
      -5.6
@@ -79,79 +79,87 @@
   "RB": {
    "type": "carry",
    "through": [
+    "mesh",
     [
-     0.7,
-     -4.6
-    ],
-    [
-     0.95,
+     "a+0.3",
      -1.6
     ],
     [
-     0.65,
+     "a",
      -0.2
     ],
     [
-     0.65,
+     "a",
      5.5
     ]
    ]
-  },
-  "X": {
-   "type": "stalk"
-  },
-  "H": {
-   "type": "stalk"
-  },
-  "Z": {
+  }
+ },
+ "defaults": {
+  "receivers": {
    "type": "stalk"
   }
+ },
+ "handoff": {
+  "to": "RB",
+  "at": "mesh"
  },
  "relationships": [
   {
    "type": "zone",
    "participants": [
-    "RT",
-    "RG",
+    "PST",
+    "PSG",
     "C",
-    "LG",
-    "LT"
+    "BSG",
+    "BST"
    ]
   },
   {
    "type": "combo",
    "participants": [
     "C",
-    "RG"
+    "PSG"
    ]
   },
   {
    "type": "combo",
    "participants": [
-    "LG",
-    "LT"
+    "BSG",
+    "BST"
    ]
   },
   {
    "type": "feature",
    "participants": [
-    "Y"
+    "SIFT"
    ]
   }
  ],
- "subfamily": "zone",
- "side": "right",
- "handoff": {
-  "to": "RB",
-  "at": [
-   0.7,
-   -4.6
-  ]
- },
- "football": {
-  "rules": "Inside zone right; the H-back crosses behind the line ('split' flow) and kicks out the backside end so the cutback is sealed."
- },
- "sources": [
-  "Split zone: inside zone with the H-back sifting across to the backside end"
+ "presentations": [
+  {
+   "formation": "pistol_strong_11",
+   "roles": {
+    "SIFT": "Y"
+   }
+  },
+  {
+   "formation": "gun_trey_11",
+   "side": "away_from_back",
+   "roles": {
+    "SIFT": "Y"
+   },
+   "tweaks": {
+    "QB": {
+     "through": [
+      "mesh",
+      [
+       -2.4,
+       -6.3
+      ]
+     ]
+    }
+   }
+  }
  ]
 }

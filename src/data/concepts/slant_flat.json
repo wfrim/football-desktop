@@ -1,0 +1,76 @@
+{
+ "conceptId": "slant_flat",
+ "name": "Slant-Flat",
+ "family": "quick_pass",
+ "subfamily": "quick",
+ "tags": [
+  "quick"
+ ],
+ "copy": {
+  "title": "SLANT-FLAT",
+  "situation": "QUICK THROW",
+  "description": "An in-out stretch on the flat defender, out on rhythm."
+ },
+ "football": {
+  "read": "Flat defender: he widens with the flat \u2192 slant inside him; he walls the slant \u2192 flat."
+ },
+ "sources": [
+  "Slant-flat: #1 3-step slant, #2 flat; mirrored quick game"
+ ],
+ "side": "strength",
+ "assignments": {
+  "#1": {
+   "type": "slant"
+  },
+  "#2": {
+   "type": "flat",
+   "dir": "right",
+   "width": 7
+  },
+  "bs#1": {
+   "type": "slant"
+  },
+  "bs#2": {
+   "type": "flat",
+   "dir": "left",
+   "width": 7
+  },
+  "#3?": {
+   "type": "sit",
+   "depth": 5
+  },
+  "RB?": {
+   "type": "pass_set"
+  }
+ },
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "#1",
+   "low": "#2"
+  },
+  {
+   "type": "high_low",
+   "high": "bs#1",
+   "low": "bs#2"
+  }
+ ],
+ "ball": {
+  "to": "#1",
+  "at": 0.7
+ },
+ "reads": [
+  "#1",
+  "#2",
+  "bs#1",
+  "bs#2"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  }
+ ]
+}

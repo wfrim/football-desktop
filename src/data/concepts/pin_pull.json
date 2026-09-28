@@ -1,61 +1,68 @@
 {
- "id": "pin_pull_singleback_tight_12",
  "conceptId": "pin_pull",
  "name": "Pin and Pull",
  "family": "run",
- "personnel": "12",
- "formation": "singleback_tight_12",
+ "subfamily": "gap",
+ "tags": [
+  "perimeter"
+ ],
  "copy": {
   "title": "PIN AND PULL",
-  "meta": "RUN \u00b7 12 PERSONNEL",
-  "formation": "SINGLEBACK TIGHT",
   "situation": "PERIMETER \u00b7 TOSS",
   "description": "Covered linemen pin inside; uncovered linemen pull and lead the toss."
  },
+ "football": {
+  "rules": "Front: 6-tech on Y, 1-tech on C's play-side shade. Covered players (Y, C) pin inside; uncovered RT and RG pull \u2014 RT to the force/corner, RG up the alley. Z cracks the support defender. Toss to the back.",
+  "rb": "Catch the pitch, stay on the pullers' outside hip."
+ },
+ "sources": [
+  "Pin-and-pull: covered linemen down, uncovered pull (wide-zone alternative to the perimeter)"
+ ],
+ "side": "strength",
  "assignments": {
-  "Y": {
+  "TE": {
    "type": "down"
   },
-  "RT": {
+  "PST": {
    "type": "pull",
    "at": [
-    12.6,
+    "d+7.5",
     3.0
-   ]
-  },
-  "RG": {
-   "type": "pull",
-   "dip": -1.9,
-   "hole": 5.2,
-   "at": [
-    6.0,
-    3.8
    ]
   },
   "C": {
    "type": "down"
   },
-  "LG": {
+  "PSG": {
+   "type": "pull",
+   "dip": -1.9,
+   "hole": "d+0.1",
+   "at": [
+    "d+0.9",
+    3.8
+   ]
+  },
+  "BSG": {
    "type": "scoop"
   },
-  "LT": {
+  "BST": {
    "type": "scoop"
   },
-  "U": {
+  "CUTOFF?": {
    "type": "block",
    "to": [
     1.0,
     1.8
    ]
   },
-  "Z": {
+  "#1": {
    "type": "crack",
    "at": [
-    9.0,
+    "#1-6",
     3.5
    ]
   },
-  "X": {
+  "bs#1": {
    "type": "stalk"
   },
   "QB": {
@@ -75,43 +82,20 @@
      -4.0
     ],
     [
-     8.3,
+     "d+3.2",
      -2.3
     ],
     [
-     10.3,
+     "d+5.2",
      0.4
     ],
     [
-     10.8,
+     "d+5.7",
      5.5
     ]
    ]
   }
  },
- "relationships": [
-  {
-   "type": "wall",
-   "participants": [
-    "Y",
-    "C"
-   ]
-  },
-  {
-   "type": "pull",
-   "puller": "RT",
-   "wrap": "RG",
-   "runner": "RB"
-  },
-  {
-   "type": "feature",
-   "participants": [
-    "Z"
-   ]
-  }
- ],
- "subfamily": "gap",
- "side": "right",
  "handoff": {
   "to": "RB",
   "at": [
@@ -119,14 +103,39 @@
    -4.0
   ]
  },
- "tags": [
-  "perimeter"
+ "relationships": [
+  {
+   "type": "wall",
+   "participants": [
+    "TE",
+    "C"
+   ]
+  },
+  {
+   "type": "pull",
+   "puller": "PST",
+   "wrap": "PSG",
+   "runner": "RB"
+  },
+  {
+   "type": "feature",
+   "participants": [
+    "#1"
+   ]
+  }
  ],
- "football": {
-  "rules": "Front: 6-tech on Y, 1-tech on C's play-side shade. Covered players (Y, C) pin inside; uncovered RT and RG pull \u2014 RT to the force/corner, RG up the alley. Z cracks the support defender. Toss to the back.",
-  "rb": "Catch the pitch, stay on the pullers' outside hip."
- },
- "sources": [
-  "Pin-and-pull: covered linemen down, uncovered pull (wide-zone alternative to the perimeter)"
+ "presentations": [
+  {
+   "formation": "singleback_tight_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
+  },
+  {
+   "formation": "ace_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
+  }
  ]
 }
