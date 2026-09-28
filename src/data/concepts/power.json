@@ -1,0 +1,148 @@
+{
+ "conceptId": "power",
+ "name": "Power",
+ "family": "run",
+ "subfamily": "gap",
+ "side": "strength",
+ "copy": {
+  "title": "POWER",
+  "situation": "GAP RUN \u00b7 SHORT YARDAGE",
+  "description": "Down blocks build the wall while the guard pulls to the point of attack."
+ },
+ "situation": {
+  "down": 3,
+  "distance": 2
+ },
+ "assignments": {
+  "PST": {
+   "type": "down"
+  },
+  "PSG": {
+   "type": "down"
+  },
+  "C": {
+   "type": "back"
+  },
+  "BST": {
+   "type": "hinge"
+  },
+  "TE?": {
+   "type": "down"
+  },
+  "BSG": {
+   "type": "pull",
+   "hole": "c",
+   "at": [
+    "c-0.8",
+    3.8
+   ]
+  },
+  "KICK": {
+   "type": "lead",
+   "at": [
+    "d+0.4",
+    0.25
+   ]
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    "mesh",
+    [
+     -1.4,
+     -5.6
+    ]
+   ]
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    "mesh",
+    [
+     "c",
+     -1.9
+    ],
+    [
+     "c",
+     0.4
+    ],
+    [
+     "c+0.4",
+     5.5
+    ]
+   ]
+  }
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "relationships": [
+  {
+   "type": "wall",
+   "participants": [
+    "PST",
+    "PSG",
+    "C",
+    "TE?"
+   ]
+  },
+  {
+   "type": "pull",
+   "puller": "BSG",
+   "runner": "RB"
+  },
+  {
+   "type": "kickout",
+   "blocker": "KICK",
+   "runner": "RB"
+  }
+ ],
+ "handoff": {
+  "to": "RB",
+  "at": "mesh"
+ },
+ "football": {
+  "rules": "Power O: PST, PSG (and an inline TE) block down, C blocks back for the pulling guard, BST hinges. The H-back / FB kicks out the end man; the backside guard pulls and wraps up through the hole to the play-side LB.",
+  "rb": "Downhill off the kick-out, inside the H-back, following the puller."
+ },
+ "sources": [
+  "Standard Power O rules (down / back / pull-wrap / kick-out); Wikipedia \u2014 Power run",
+  "Throw Deep Publishing \u2014 gap-scheme glossary"
+ ],
+ "presentations": [
+  {
+   "formation": "pistol_strong_11",
+   "roles": {
+    "KICK": "Y"
+   }
+  },
+  {
+   "formation": "i_form_21",
+   "roles": {
+    "KICK": "F"
+   },
+   "tweaks": {
+    "BSG": {
+     "dip": -1.0,
+     "radius": 0.25
+    },
+    "KICK": {
+     "via": [
+      "d-0.3",
+      -1.8
+     ]
+    },
+    "QB": {
+     "through": [
+      "mesh"
+     ]
+    }
+   },
+   "copy": {
+    "situation": "POWER O \u00b7 SHORT YARDAGE"
+   }
+  }
+ ]
+}

@@ -24,9 +24,6 @@
    ]
   },
   "RG": {
-   "type": "down"
-  },
-  "C": {
    "type": "pull",
    "dip": -1.9,
    "hole": 5.2,
@@ -34,6 +31,9 @@
     6.0,
     3.8
    ]
+  },
+  "C": {
+   "type": "down"
   },
   "LG": {
    "type": "scoop"
@@ -94,13 +94,13 @@
    "type": "wall",
    "participants": [
     "Y",
-    "RG"
+    "C"
    ]
   },
   {
    "type": "pull",
    "puller": "RT",
-   "wrap": "C",
+   "wrap": "RG",
    "runner": "RB"
   },
   {
@@ -123,7 +123,7 @@
   "perimeter"
  ],
  "football": {
-  "rules": "Covered players (Y, RG) pin the defender inside; uncovered RT and C pull \u2014 RT to the force/corner, C up the alley. Z cracks the support defender. Toss to the back.",
+  "rules": "Front: 6-tech on Y, 1-tech on C's play-side shade. Covered players (Y, C) pin inside; uncovered RT and RG pull \u2014 RT to the force/corner, RG up the alley. Z cracks the support defender. Toss to the back.",
   "rb": "Catch the pitch, stay on the pullers' outside hip."
  },
  "sources": [

@@ -243,6 +243,7 @@ window.FD = window.FD || {};
     kind: 'lead', end: 'tbar', radius: 1.2,
     build(p, ctx) {
       const pts = [[0, 0]];
+      if (p.through) pts.push(...p.through.map((q) => ctx.abs(q)));
       if (p.via) pts.push(p.at ? ctx.abs(p.via) : ctx.v(p.via));
       pts.push(p.at ? ctx.abs(p.at) : ctx.v(p.to || [0, 3]));
       return pts;

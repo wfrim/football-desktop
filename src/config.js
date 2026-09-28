@@ -44,6 +44,7 @@ window.FD = window.FD || {};
         list: q.get('list') || null,
         seed: q.has('seed') ? Math.round(num('seed', 1)) : Date.now() % 1e9, // fresh order each launch
         soak: q.has('soak'),
+        check: q.has('check'),
         start: q.get('play'),
         freeze: q.has('t') ? num('t', null) : null,
         mockTag: q.get('mocktag') !== '0',

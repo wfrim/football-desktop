@@ -1,50 +1,41 @@
 {
- "id": "hb_screen_gun_trips_11",
  "conceptId": "hb_screen",
  "name": "Halfback Screen",
  "family": "screen",
- "side": "left",
- "personnel": "11",
- "formation": "gun_trips_11",
- "primary": "RB",
+ "subfamily": "slow_screen",
+ "side": "to_back",
  "copy": {
   "title": "HALFBACK SCREEN",
-  "meta": "SCREEN \u00b7 11 PERSONNEL",
-  "formation": "GUN TRIPS",
   "situation": "PASS-RUSH ANSWER",
   "description": "Invite the rush upfield, then release the back behind a convoy."
  },
- "football": {
-  "rules": "Sell dropback: everyone pass-sets. LT, LG, C hold ~1 count, then release to the screen side: LT widest (force/corner), LG leads upfield, C seals inside. RG/RT stay in protection. Trips and X clear with verticals.",
-  "rb": "Check-block, slip out behind the LOS, catch, get behind the convoy."
- },
  "assignments": {
-  "LT": {
+  "PST": {
    "type": "screen_release",
    "via": [
-    -5.0,
+    5.0,
     0.4
    ],
    "at": [
-    -8.0,
+    8.0,
     1.4
    ]
   },
-  "LG": {
+  "PSG": {
    "type": "screen_release",
    "via": [
-    -3.5,
+    3.5,
     1.2
    ],
    "at": [
-    -5.1,
+    5.1,
     3.3
    ]
   },
   "C": {
    "type": "screen_release",
    "at": [
-    -3.7,
+    3.7,
     1.5
    ]
   },
@@ -59,7 +50,7 @@
      "type": "path",
      "through": [
       [
-       -5.4,
+       5.4,
        -3.4
       ]
      ],
@@ -72,29 +63,19 @@
     "delay": 0.55,
     "through": [
      [
-      -5.6,
+      5.6,
       -0.3
      ],
      [
-      -6.4,
+      6.4,
       5.5
      ]
     ]
    }
-  ],
-  "X": {
-   "type": "go",
-   "depth": 9
-  },
-  "Y": {
-   "type": "go",
-   "depth": 9
-  },
-  "H": {
-   "type": "go",
-   "depth": 9
-  },
-  "Z": {
+  ]
+ },
+ "defaults": {
+  "receivers": {
    "type": "go",
    "depth": 9
   }
@@ -103,8 +84,8 @@
   {
    "type": "convoy",
    "blockers": [
-    "LT",
-    "LG",
+    "PST",
+    "PSG",
     "C"
    ],
    "runner": "RB"
@@ -114,8 +95,21 @@
   "to": "RB",
   "at": 1
  },
+ "primary": "RB",
+ "football": {
+  "rules": "Sell dropback: everyone pass-sets. LT, LG, C hold ~1 count, then release to the screen side: LT widest (force/corner), LG leads upfield, C seals inside. RG/RT stay in protection. Trips and X clear with verticals.",
+  "rb": "Check-block, slip out behind the LOS, catch, get behind the convoy."
+ },
  "sources": [
   "OpenPlay Football \u2014 Halfback Screen (pass-rush manipulation)",
   "Standard slow-screen timing: OL sell pass for ~1 count, then release"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_doubles_11"
+  }
  ]
 }

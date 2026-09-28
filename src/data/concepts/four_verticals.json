@@ -1,28 +1,36 @@
 {
- "id": "four_verticals_gun_doubles_11",
+ "conceptId": "four_verticals",
  "name": "Four Verticals",
  "family": "dropback_pass",
- "personnel": "11",
- "formation": "gun_doubles_11",
+ "subfamily": "verticals",
+ "side": "strength",
+ "tags": [
+  "deep"
+ ],
+ "roles": {
+  "OUT1": "#1",
+  "IN1": "#2",
+  "IN2": "bs#2",
+  "OUT2": "bs#1"
+ },
  "copy": {
   "title": "FOUR VERTICALS",
-  "meta": "DEEP PASS \u00b7 11 PERSONNEL",
   "description": "Stretches the defense across all four deep lanes."
  },
  "assignments": {
-  "X": {
+  "OUT1": {
    "type": "go"
   },
-  "H": {
+  "IN1": {
    "type": "seam"
   },
-  "Y": {
+  "IN2": {
    "type": "seam"
   },
-  "Z": {
+  "OUT2": {
    "type": "go"
   },
-  "RB": {
+  "RB?": {
    "type": "pass_set_then_release",
    "release": {
     "type": "sit",
@@ -34,32 +42,41 @@
   {
    "type": "lanes",
    "participants": [
-    "X",
-    "H",
-    "Y",
-    "Z"
+    "OUT2",
+    "IN2",
+    "IN1",
+    "OUT1"
    ],
    "minGap": 4
   }
  ],
  "ball": {
-  "to": "H",
+  "to": "IN2",
   "at": 0.85
  },
- "conceptId": "four_verticals",
- "subfamily": "verticals",
  "reads": [
-  "H",
-  "Y",
-  "Z",
-  "X",
+  "IN2",
+  "IN1",
+  "OUT1",
+  "OUT2",
   "RB"
  ],
+ "football": {
+  "read": "Read the middle safety: throw the seam he doesn't take; outside go vs off-leverage corners; RB check-down."
+ },
  "sources": [
   "Project handoff #1 \u2014 canonical presentation, route depths and relationship",
   "Four Verts vs single-high: seams split the middle safety"
  ],
- "football": {
-  "read": "Read the middle safety: throw the seam he doesn't take; outside go vs off-leverage corners; RB check-down."
- }
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11",
+   "roles": {
+    "IN2": "#3"
+   }
+  }
+ ]
 }

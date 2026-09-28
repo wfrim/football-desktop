@@ -1,60 +1,65 @@
 {
- "id": "bubble_gun_trips_11",
  "conceptId": "bubble",
  "name": "Bubble Screen",
  "family": "screen",
- "personnel": "11",
- "formation": "gun_trips_11",
+ "subfamily": "perimeter",
+ "side": "strength",
+ "tags": [
+  "quick"
+ ],
  "copy": {
   "title": "BUBBLE",
-  "meta": "SCREEN \u00b7 11 PERSONNEL",
-  "formation": "GUN TRIPS",
   "situation": "PERIMETER \u00b7 NUMBERS",
   "description": "Throw it wide when the offense has the numbers outside."
  },
  "assignments": {
-  "Y": [
+  "#3": [
    {
     "type": "bubble",
-    "width": 7
+    "width": 7.5,
+    "dip": 1.5,
+    "depth": -1.2
    },
    {
     "type": "carry",
     "delay": 0.5,
     "through": [
      [
-      14.3,
-      1.0
+      "#3+8.3",
+      0.6
      ],
      [
-      15.6,
+      "#3+9.3",
       6.0
      ]
     ]
    }
   ],
-  "H": {
+  "#2": {
    "type": "lead",
    "at": [
-    12.4,
+    "#2+0.9",
     3.2
    ]
   },
-  "Z": {
+  "#1": {
    "type": "lead",
    "at": [
-    18.4,
+    "#1+0.4",
     4.2
    ]
   },
-  "X": {
+  "bs#1": {
+   "type": "hitch"
+  },
+  "bs#2?": {
    "type": "hitch"
   },
   "QB": {
    "type": "qb_drop",
    "drop": 0.6
   },
-  "RB": {
+  "RB?": {
    "type": "pass_set"
   }
  },
@@ -62,25 +67,29 @@
   {
    "type": "convoy",
    "blockers": [
-    "H",
-    "Z"
+    "#2",
+    "#1"
    ],
-   "runner": "Y"
+   "runner": "#3"
   }
  ],
- "subfamily": "perimeter",
- "primary": "Y",
  "ball": {
-  "to": "Y",
+  "to": "#3",
   "at": 1
  },
- "tags": [
-  "quick"
- ],
+ "primary": "#3",
  "football": {
   "rules": "Count the box vs trips: if the offense has 3-on-2 outside, #3 bubbles behind the LOS, #2 and #1 block the two perimeter defenders. Backside hitch."
  },
  "sources": [
   "Bubble screen: #3 bubble, #1/#2 stalk the flat and corner defenders"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  }
  ]
 }

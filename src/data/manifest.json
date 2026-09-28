@@ -1,37 +1,41 @@
 {
-  "_note": "Formations and plays, in playlist order. Run `node tools/bundle-data.mjs` after editing so file:// loading picks up changes.",
+  "_note": "Formations, concept templates (expanded per presentation) and single-presentation plays. Playlist order is decided by src/playlist.js. Run `node tools/bundle-data.mjs` after editing.",
   "formations": [
     "formations/gun_doubles_11.json",
     "formations/gun_trips_11.json",
     "formations/pistol_strong_11.json",
     "formations/singleback_tight_12.json",
-    "formations/i_form_21.json"
+    "formations/i_form_21.json",
+    "formations/gun_bunch_11.json",
+    "formations/gun_empty_11.json"
   ],
   "plays": [
-    "plays/mesh_gun_doubles_11.json",
-    "plays/inside_zone_gun_doubles_11.json",
-    "plays/four_verticals_gun_doubles_11.json",
-    "plays/power_pistol_strong_11.json",
-    "plays/stick_gun_trips_11.json",
-    "plays/hb_screen_gun_trips_11.json",
     "plays/curl_flat_gun_doubles_11.json",
-    "plays/outside_zone_singleback_tight_12.json",
     "plays/dagger_gun_doubles_11.json",
     "plays/counter_gt_gun_trips_11.json",
-    "plays/smash_gun_doubles_11.json",
     "plays/sail_gun_trips_11.json",
     "plays/drive_gun_doubles_11.json",
     "plays/levels_gun_trips_11.json",
     "plays/y_cross_gun_doubles_11.json",
     "plays/slant_flat_gun_doubles_11.json",
-    "plays/snag_gun_trips_11.json",
     "plays/mills_gun_doubles_11.json",
     "plays/boot_singleback_tight_12.json",
     "plays/duo_singleback_tight_12.json",
     "plays/split_zone_pistol_strong_11.json",
     "plays/iso_i_form_21.json",
     "plays/pin_pull_singleback_tight_12.json",
-    "plays/bubble_gun_trips_11.json",
     "plays/tunnel_gun_doubles_11.json"
+  ],
+  "concepts": [
+    "concepts/mesh.json",
+    "concepts/four_verticals.json",
+    "concepts/stick.json",
+    "concepts/snag.json",
+    "concepts/smash.json",
+    "concepts/bubble.json",
+    "concepts/hb_screen.json",
+    "concepts/inside_zone.json",
+    "concepts/outside_zone.json",
+    "concepts/power.json"
   ]
 }

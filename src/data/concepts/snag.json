@@ -1,33 +1,30 @@
 {
- "id": "snag_gun_trips_11",
  "conceptId": "snag",
  "name": "Snag",
  "family": "quick_pass",
- "personnel": "11",
- "formation": "gun_trips_11",
+ "subfamily": "triangle",
+ "side": "strength",
  "copy": {
   "title": "SNAG",
-  "meta": "PASS \u00b7 11 PERSONNEL",
-  "formation": "GUN TRIPS",
   "situation": "RED ZONE \u00b7 ZONE BEATER",
   "description": "A triangle of corner, snag and flat."
  },
  "assignments": {
-  "Z": {
+  "SNAG": {
    "type": "spot"
   },
-  "H": {
+  "CORNER": {
    "type": "corner"
   },
-  "Y": {
+  "FLAT": {
    "type": "flat",
    "dir": "right",
    "width": 9
   },
-  "X": {
+  "bs#1": {
    "type": "slant"
   },
-  "RB": {
+  "RB?": {
    "type": "pass_set"
   }
  },
@@ -35,26 +32,42 @@
   {
    "type": "levels",
    "participants": [
-    "H",
-    "Z",
-    "Y"
+    "CORNER",
+    "SNAG",
+    "FLAT"
    ]
   }
  ],
- "subfamily": "triangle",
  "ball": {
-  "to": "Z",
+  "to": "SNAG",
   "at": 1
  },
  "reads": [
-  "H",
-  "Z",
-  "Y"
+  "CORNER",
+  "SNAG",
+  "FLAT"
  ],
  "football": {
   "read": "Triangle stretch: corner (high) and flat (low) on the flat defender, snag/spot settling inside between them."
  },
  "sources": [
   "Snag / Spot: #1 snag at 5-6 settling inside, #2 corner, #3 flat"
- ]
+ ],
+ "presentations": [
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_bunch_11",
+   "roles": {
+    "CORNER": "#3",
+    "FLAT": "#2"
+   }
+  }
+ ],
+ "roles": {
+  "CORNER": "#2",
+  "SNAG": "#1",
+  "FLAT": "#3"
+ }
 }

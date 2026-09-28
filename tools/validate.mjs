@@ -11,7 +11,7 @@ const read = (p) => readFileSync(new URL(p, root), 'utf8');
 const ctx = { console };
 ctx.window = ctx;
 vm.createContext(ctx);
-for (const f of ['renderer/geometry.js', 'renderer/primitives.js', 'renderer/relationships.js', 'data/vocabulary.js', 'data/resolve.js']) {
+for (const f of ['renderer/geometry.js', 'renderer/primitives.js', 'renderer/relationships.js', 'data/vocabulary.js', 'data/resolve.js', 'data/concepts.js']) {
   vm.runInContext(read(`src/${f}`), ctx, { filename: f });
 }
 const FD = ctx.FD;
@@ -22,8 +22,14 @@ for (const f of manifest.formations) { const j = JSON.parse(read(`src/data/${f}`
 let fatalCount = 0;
 const ids = new Set();
 const concepts = {};
-for (const p of manifest.plays) {
-  const raw = JSON.parse(read(`src/data/${p}`));
+const raws = [];
+for (const c of manifest.concepts || []) {
+  const { plays, errors } = FD.Concepts.expand(JSON.parse(read(`src/data/${c}`)), formations);
+  raws.push(...plays);
+  for (const e of errors) { console.log(`✗ ${e.id}\n    FATAL ${e.message}`); fatalCount += 1; }
+}
+for (const p of manifest.plays) raws.push(JSON.parse(read(`src/data/${p}`)));
+for (const raw of raws) {
   const { fatal, warn } = FD.Resolve.resolve(raw, formations);
   if (ids.has(raw.id)) fatal.push('duplicate play id');
   ids.add(raw.id);
@@ -37,5 +43,5 @@ for (const p of manifest.plays) {
   for (const m of fatal) console.log(`    FATAL ${m}`);
   for (const m of warn) console.log(`    warn  ${m}`);
 }
-console.log(`\n${ids.size} plays · ${Object.entries(concepts).map(([k, v]) => `${k} ${v}`).join(' · ')}`);
+console.log(`\n${ids.size} plays · ${new Set(raws.map((r) => r.conceptId)).size} concepts · ${Object.entries(concepts).map(([k, v]) => `${k} ${v}`).join(' · ')}`);
 process.exit(fatalCount ? 1 : 0);

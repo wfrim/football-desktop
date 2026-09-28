@@ -1,0 +1,188 @@
+{
+ "conceptId": "inside_zone",
+ "name": "Inside Zone",
+ "family": "run",
+ "subfamily": "zone",
+ "side": "away_from_back",
+ "copy": {
+  "title": "INSIDE ZONE",
+  "situation": "EARLY DOWN \u00b7 INTERIOR RUN",
+  "description": "Press the interior and hit the first clean crease."
+ },
+ "situation": {
+  "down": 1,
+  "distance": 10
+ },
+ "assignments": {
+  "PST": {
+   "type": "zone_step"
+  },
+  "PSG": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ],
+   "climb": [
+    "PST+0.3",
+    4.6
+   ]
+  },
+  "C": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ]
+  },
+  "BSG": {
+   "type": "combo",
+   "target": [
+    "-a+0.1",
+    0.7
+   ]
+  },
+  "BST": {
+   "type": "combo",
+   "target": [
+    "-a+0.1",
+    0.7
+   ],
+   "climb": [
+    "BSG",
+    4.6
+   ]
+  },
+  "TE?": {
+   "type": "zone_step"
+  },
+  "EDGE?": {
+   "type": "lead",
+   "at": [
+    "d",
+    0.3
+   ]
+  },
+  "CUTOFF?": {
+   "type": "block",
+   "to": [
+    1.2,
+    1.9
+   ]
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    "mesh"
+   ]
+  },
+  "RB": [
+   {
+    "type": "carry",
+    "through": [
+     "mesh",
+     [
+      "a+0.25",
+      -1.6
+     ],
+     [
+      "a",
+      -0.2
+     ],
+     [
+      "a",
+      5.5
+     ]
+    ]
+   },
+   {
+    "type": "carry",
+    "alt": true,
+    "through": [
+     "mesh",
+     [
+      "a+0.25",
+      -1.6
+     ],
+     [
+      "-b",
+      5
+     ]
+    ]
+   }
+  ]
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "relationships": [
+  {
+   "type": "zone",
+   "participants": [
+    "PST",
+    "PSG",
+    "C",
+    "BSG",
+    "BST",
+    "TE?"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "C",
+    "PSG"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "BSG",
+    "BST"
+   ]
+  }
+ ],
+ "handoff": {
+  "to": "RB",
+  "at": "mesh"
+ },
+ "football": {
+  "front": "4-2 under: 3-tech outside the play-side guard, 1-tech shaded backside of C, 5-tech on the play-side tackle. Backside DE unblocked (gun: QB read).",
+  "rules": "Play-side zone steps. C (uncovered) doubles the 3-tech with PSG, PSG climbs to the play-side LB. BST (uncovered) doubles the 1-tech with BSG and climbs to the backside LB. Inline TE zone-steps; an H-back takes the play-side edge.",
+  "rb": "Aiming point: play-side guard's outside leg; drawn cutting into the A gap the double team opens (dashed: the bend)."
+ },
+ "sources": [
+  "Zone run (Wikipedia): coordinated play-side zone steps and double teams",
+  "Tomahawk Nation \u2014 RB reads in a zone offense (aiming point, bang/bounce/bend)"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11",
+   "tweaks": {
+    "QB": {
+     "through": [
+      "mesh",
+      [
+       -2.4,
+       -6.3
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "formation": "pistol_strong_11",
+   "roles": {
+    "EDGE": "Y"
+   }
+  },
+  {
+   "formation": "singleback_tight_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
+  }
+ ]
+}

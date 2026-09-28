@@ -1,61 +1,68 @@
 {
- "id": "smash_gun_doubles_11",
  "conceptId": "smash",
  "name": "Smash",
  "family": "quick_pass",
- "personnel": "11",
- "formation": "gun_doubles_11",
+ "subfamily": "high_low",
+ "side": "strength",
  "copy": {
   "title": "SMASH",
-  "meta": "PASS \u00b7 11 PERSONNEL",
-  "formation": "GUN DOUBLES",
   "situation": "COVER 2 BEATER",
   "description": "A hitch and a corner high-low the cornerback."
  },
  "assignments": {
-  "Z": {
+  "#1": {
    "type": "hitch"
   },
-  "Y": {
+  "#2": {
    "type": "corner"
   },
-  "X": {
+  "bs#1": {
    "type": "hitch"
   },
-  "H": {
+  "bs#2": {
    "type": "corner"
   },
-  "RB": {
+  "#3?": {
+   "type": "seam"
+  },
+  "RB?": {
    "type": "pass_set"
   }
  },
  "relationships": [
   {
    "type": "high_low",
-   "high": "Y",
-   "low": "Z"
+   "high": "#2",
+   "low": "#1"
   },
   {
    "type": "high_low",
-   "high": "H",
-   "low": "X"
+   "high": "bs#2",
+   "low": "bs#1"
   }
  ],
- "subfamily": "high_low",
  "ball": {
-  "to": "Y",
+  "to": "#2",
   "at": 0.93
  },
  "reads": [
-  "Y",
-  "Z",
-  "H",
-  "X"
+  "#2",
+  "#1",
+  "bs#2",
+  "bs#1"
  ],
  "football": {
   "read": "Read the cornerback: he squats on the hitch \u2192 corner behind him; he bails \u2192 hitch."
  },
  "sources": [
   "Smash: #1 hitch at 5, #2 corner at 10-12 (Cover 2 corner/safety void); mirrored 2x2"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  }
  ]
 }

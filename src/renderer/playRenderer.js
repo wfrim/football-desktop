@@ -45,7 +45,53 @@ window.FD = window.FD || {};
     };
   }
 
+  /*
+   * Collision QA (warnings only): a moving path (route, carry, pull, lead)
+   * must not pass through another player's marker, and a ball carrier must
+   * not run through a block's contact point. Crossing other paths is fine
+   * (football paths cross; timing separates them).
+   */
+  const MARK = { r: 0.58, olW: 0.92, olH: 0.62 }; // keep in sync with formationRenderer SIZE
+  const MOVING = new Set(['route', 'run', 'pull', 'lead']);
+  function markerDist(p, pl) {
+    const c = pl.snap;
+    if (/^(LT|LG|C|RG|RT)$/.test(pl.data.role)) {
+      const dx = Math.max(0, Math.abs(p[0] - c[0]) - MARK.olW / 2);
+      const dy = Math.max(0, Math.abs(p[1] - c[1]) - MARK.olH / 2);
+      return Math.hypot(dx, dy);
+    }
+    return Math.max(0, G.dist(p, c) - MARK.r);
+  }
+  function collisions(players, assignments) {
+    const out = [];
+    const field = (a) => a.measure.points.map((q) => [q[0] - a.ballX, -q[1]]);
+    const tbars = assignments.filter((a) => a.view && a.spec.end !== 'none' && (a.kind === 'block' || a.kind === 'lead' || a.kind === 'pull'));
+    for (const a of assignments) {
+      if (!MOVING.has(a.kind) || a.alt) continue;
+      const pts = field(a);
+      // Skip the first 0.9 yd (leaving one's own spot next to teammates).
+      const start = pts[0];
+      const body = pts.filter((q) => G.dist(q, start) > 0.9);
+      if (body.length < 2) continue;
+      for (const pl of players.values()) {
+        if (pl.data.id === a.player) continue;
+        let d = Infinity;
+        for (const q of body) d = Math.min(d, markerDist(q, pl));
+        if (d < 0.02) out.push(`collision: ${a.player}'s ${a.kind} passes through ${pl.data.id}`);
+      }
+      if (a.kind === 'run') {
+        for (const b of tbars) {
+          if (b.player === a.player) continue;
+          const d = G.distToPolyline(b.fieldEnd, body);
+          if (d < 0.4) out.push(`collision: ${a.player}'s carry runs through ${b.player}'s block (${d.toFixed(2)} yd)`);
+        }
+      }
+    }
+    return Array.from(new Set(out));
+  }
+
   const PlayRenderer = {
+    collisions,
     /**
      * Build a scene for `play` inside stage.playLayer.
      * cfg: { labels, mode }
@@ -286,6 +332,7 @@ window.FD = window.FD || {};
 
       // Relationships: validation, timing constraints, concept emphasis.
       warnings.push(...FD.Relationships.apply(scene));
+      warnings.push(...collisions(players, assignments));
       if (warnings.length) console.warn(`[play ${play.id || '?'}]`, warnings);
       return scene;
     },

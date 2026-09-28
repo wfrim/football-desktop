@@ -21,6 +21,25 @@ window.FD = window.FD || {};
       return;
     }
 
+    // ?check=1: build every play once, collect warnings, stop. Results land on
+    // <html data-check> so headless Chrome (--dump-dom) can read them: tools/check.sh
+    if (cfg.check) {
+      const lines = FD.Data.report.filter((r) => r.fatal.length).map((r) => `${r.id} FATAL ${r.fatal.join(' | ')}`);
+      const nodes = new Set();
+      for (const p of plays) {
+        const scene = FD.PlayRenderer.build(p, stage, cfg);
+        const tl = FD.Choreography.build(scene, { enter() {}, exit() {} }, cfg);
+        for (let t = 0; t <= FD.Timing.phases.end; t += 0.25) tl.evaluate(t);
+        if (scene.warnings.length) lines.push(`${p.id} ${scene.warnings.join(' | ')}`);
+        scene.destroy();
+        nodes.add(document.getElementsByTagName('*').length);
+      }
+      lines.push(`${plays.length} plays checked; DOM node counts after teardown: ${Array.from(nodes).join(',')}`);
+      document.documentElement.dataset.check = lines.join('\n');
+      console.log(lines.join('\n'));
+      return;
+    }
+
     const playlist = new FD.Playlist(plays, { order: cfg.order, seed: cfg.seed, start: cfg.start, list: cfg.list });
     const animator = new FD.Animator({ timeScale: cfg.speed, maxFps: cfg.fps });
     FD.app = { cfg, stage, animator, playlist }; // handy from the console

@@ -42,13 +42,15 @@ window.FD = window.FD || {};
             const json = await fetchJson(BASE + f);
             plays.push(...(Array.isArray(json) ? json : [json]));
           }
-          payload = { formations, plays };
+          const concepts = [];
+          for (const f of manifest.concepts || []) concepts.push(await fetchJson(BASE + f));
+          payload = { formations, concepts, plays };
         } catch (err) {
           console.warn('[data] fetch failed, falling back to bundle:', err.message);
         }
       }
       if (!payload) payload = bundled;
-      if (!payload || !payload.plays || !payload.plays.length) {
+      if (!payload || !((payload.plays || []).length || (payload.concepts || []).length)) {
         throw new Error('No play data found. Run "node tools/bundle-data.mjs", or serve this folder over http.');
       }
       return Data.accept(payload);
@@ -60,7 +62,18 @@ window.FD = window.FD || {};
 
       const ok = [];
       Data.report = [];
-      payload.plays.forEach((raw, i) => {
+      // Concept templates expand into ordinary plays (one per presentation).
+      const all = [];
+      for (const c of payload.concepts || []) {
+        const { plays, errors } = FD.Concepts.expand(c, formations);
+        all.push(...plays);
+        for (const e of errors) {
+          Data.report.push({ id: e.id, fatal: [e.message], warn: [] });
+          console.error(`[data] skipping ${e.id}:`, e.message);
+        }
+      }
+      all.push(...(payload.plays || []));
+      all.forEach((raw, i) => {
         const { play, fatal, warn } = FD.Resolve.resolve(raw, formations);
         Data.report.push({ id: raw.id, fatal, warn });
         if (fatal.length) {

@@ -1,79 +1,77 @@
 {
- "id": "outside_zone_singleback_tight_12",
  "conceptId": "outside_zone",
  "name": "Outside Zone",
  "family": "run",
  "subfamily": "zone",
- "side": "right",
- "personnel": "12",
- "formation": "singleback_tight_12",
+ "side": "strength",
  "copy": {
   "title": "OUTSIDE ZONE",
-  "meta": "RUN \u00b7 12 PERSONNEL",
-  "formation": "SINGLEBACK TIGHT",
   "situation": "PERIMETER RUN",
   "description": "Stretch the front horizontally, then make one decisive cut."
  },
- "football": {
-  "front": "4-3 under: 9-tech on Y, 5-tech on RT, 1-tech on C's play-side shade, 3-tech outside LG; backside end handled by U.",
-  "rules": "Everyone reach-steps play-side. Y and RT reach the 9 and 5. C and LG scoop the 1-tech, LG climbs to the backside LB. RG is uncovered: steps play-side and climbs to Mike. LT scoops the 3-tech, U cuts off the backside end.",
-  "rb": "Aiming point: outside leg of the TE. Press it, then one cut (bang/bend), or bounce if the edge is reached."
- },
  "assignments": {
-  "Y": {
+  "TE?": {
    "type": "reach",
    "lateral": 1.1
   },
-  "RT": {
+  "PST": {
    "type": "reach",
    "lateral": 1.1
   },
-  "RG": {
+  "PSG": {
    "type": "lead",
    "via": [
-    2.4,
+    "PSG+1.1",
     0.4
    ],
    "at": [
-    3.0,
+    "PSG+1.7",
     4.8
    ]
   },
   "C": {
    "type": "combo",
    "target": [
-    0.45,
+    "a-0.2",
     0.6
    ]
   },
-  "LG": {
+  "BSG": {
    "type": "combo",
    "target": [
-    0.45,
+    "a-0.2",
     0.6
    ],
    "climb": [
-    1.2,
+    "C+1.2",
     4.6
    ]
   },
-  "LT": {
+  "BST": {
    "type": "scoop"
   },
-  "U": {
+  "CUTOFF?": {
    "type": "block",
    "to": [
     1.2,
     1.9
    ]
   },
+  "EDGE?": {
+   "type": "lead",
+   "via": [
+    "PST+0.6",
+    -2.3
+   ],
+   "at": [
+    "d+1.9",
+    1.2
+   ]
+  },
   "QB": {
    "type": "handoff",
    "through": [
-    [
-     0.8,
-     -2.9
-    ],
+    "mesh",
     [
      -2.8,
      -5.2
@@ -84,20 +82,17 @@
    {
     "type": "carry",
     "through": [
+     "mesh",
      [
-      1.0,
-      -3.0
-     ],
-     [
-      5.3,
+      "d+0.2",
       -1.6
      ],
      [
-      6.0,
+      "d+0.9",
       0.3
      ],
      [
-      6.0,
+      "d+0.9",
       5.5
      ]
     ]
@@ -106,25 +101,21 @@
     "type": "carry",
     "alt": true,
     "through": [
+     "mesh",
      [
-      1.0,
-      -3.0
-     ],
-     [
-      5.3,
+      "d+0.2",
       -1.6
      ],
      [
-      8.6,
+      "d+3.5",
       4.2
      ]
     ]
    }
-  ],
-  "X": {
-   "type": "stalk"
-  },
-  "Z": {
+  ]
+ },
+ "defaults": {
+  "receivers": {
    "type": "stalk"
   }
  },
@@ -132,32 +123,51 @@
   {
    "type": "zone",
    "participants": [
-    "Y",
-    "RT",
-    "RG",
+    "TE?",
+    "PST",
+    "PSG",
     "C",
-    "LG",
-    "LT",
-    "U"
+    "BSG",
+    "BST",
+    "CUTOFF?"
    ]
   },
   {
    "type": "combo",
    "participants": [
     "C",
-    "LG"
+    "BSG"
    ]
   }
  ],
  "handoff": {
   "to": "RB",
-  "at": [
-   1.0,
-   -3.0
-  ]
+  "at": "mesh"
+ },
+ "football": {
+  "front": "4-3 under: 9-tech on Y, 5-tech on RT, 1-tech on C's play-side shade, 3-tech outside LG; backside end handled by U.",
+  "rules": "Everyone reach-steps play-side. Y and RT reach the 9 and 5. C and LG scoop the 1-tech, LG climbs to the backside LB. RG is uncovered: steps play-side and climbs to Mike. LT scoops the 3-tech, U cuts off the backside end.",
+  "rb": "Aiming point: outside leg of the TE. Press it, then one cut (bang/bend), or bounce if the edge is reached."
  },
  "sources": [
   "Weekly Spiral \u2014 Football 101: Outside Zone",
   "FootballCoach.com \u2014 Bend-Bang-Bounce for outside zone (aiming point: outside leg of the TE)"
+ ],
+ "presentations": [
+  {
+   "formation": "singleback_tight_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
+  },
+  {
+   "formation": "i_form_21",
+   "roles": {
+    "EDGE": "F"
+   },
+   "copy": {
+    "situation": "PERIMETER RUN \u00b7 FB ON THE EDGE"
+   }
+  }
  ]
 }

@@ -17,7 +17,7 @@ window.FD = window.FD || {};
   const { el, f } = FD.svg;
 
   const OL_ROLES = new Set(['LT', 'LG', 'C', 'RG', 'RT', 'OL', 'T', 'G']);
-  const SIZE = { r: 0.62, olW: 1.04, olH: 0.66, dot: 0.2 };
+  const SIZE = { r: 0.58, olW: 0.92, olH: 0.62, dot: 0.19 };
 
   function kindOf(player) {
     if (player.kind) return player.kind;
