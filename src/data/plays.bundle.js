@@ -192,11 +192,203 @@ FD.Data.register({
           ]
         }
       ]
+    },
+    {
+      "_note": "Pistol: QB at 4 yd, RB directly behind. Strength right: Y is an H-back offset just outside and behind the right tackle (the Power kick-out player). 2x1 receivers.",
+      "id": "pistol_strong_11",
+      "name": "Pistol Strong",
+      "personnel": "11",
+      "players": [
+        {
+          "id": "LT",
+          "role": "LT",
+          "at": [
+            -2.6,
+            -0.55
+          ]
+        },
+        {
+          "id": "LG",
+          "role": "LG",
+          "at": [
+            -1.3,
+            -0.55
+          ]
+        },
+        {
+          "id": "C",
+          "role": "C",
+          "at": [
+            0,
+            -0.55
+          ]
+        },
+        {
+          "id": "RG",
+          "role": "RG",
+          "at": [
+            1.3,
+            -0.55
+          ]
+        },
+        {
+          "id": "RT",
+          "role": "RT",
+          "at": [
+            2.6,
+            -0.55
+          ]
+        },
+        {
+          "id": "QB",
+          "role": "QB",
+          "at": [
+            0,
+            -4
+          ]
+        },
+        {
+          "id": "RB",
+          "role": "RB",
+          "at": [
+            0,
+            -7
+          ]
+        },
+        {
+          "id": "Y",
+          "role": "Y",
+          "at": [
+            4.3,
+            -2.2
+          ]
+        },
+        {
+          "id": "X",
+          "role": "X",
+          "at": [
+            -18,
+            -0.6
+          ]
+        },
+        {
+          "id": "H",
+          "role": "H",
+          "at": [
+            -12,
+            -1.3
+          ]
+        },
+        {
+          "id": "Z",
+          "role": "Z",
+          "at": [
+            16,
+            -0.6
+          ]
+        }
+      ]
+    },
+    {
+      "_note": "Under center, one back at 6.5 yd. Y inline right (on the line, strength), U off the ball as a left wing so X stays an eligible end. Z off the line right.",
+      "id": "singleback_tight_12",
+      "name": "Singleback Tight",
+      "personnel": "12",
+      "players": [
+        {
+          "id": "LT",
+          "role": "LT",
+          "at": [
+            -2.6,
+            -0.55
+          ]
+        },
+        {
+          "id": "LG",
+          "role": "LG",
+          "at": [
+            -1.3,
+            -0.55
+          ]
+        },
+        {
+          "id": "C",
+          "role": "C",
+          "at": [
+            0,
+            -0.55
+          ]
+        },
+        {
+          "id": "RG",
+          "role": "RG",
+          "at": [
+            1.3,
+            -0.55
+          ]
+        },
+        {
+          "id": "RT",
+          "role": "RT",
+          "at": [
+            2.6,
+            -0.55
+          ]
+        },
+        {
+          "id": "QB",
+          "role": "QB",
+          "at": [
+            0,
+            -1.7
+          ]
+        },
+        {
+          "id": "RB",
+          "role": "RB",
+          "at": [
+            0,
+            -6.5
+          ]
+        },
+        {
+          "id": "Y",
+          "role": "Y",
+          "at": [
+            3.9,
+            -0.6
+          ]
+        },
+        {
+          "id": "U",
+          "role": "U",
+          "at": [
+            -3.9,
+            -1.3
+          ]
+        },
+        {
+          "id": "X",
+          "role": "X",
+          "at": [
+            -17,
+            -0.6
+          ]
+        },
+        {
+          "id": "Z",
+          "role": "Z",
+          "at": [
+            15,
+            -1.3
+          ]
+        }
+      ]
     }
   ],
   "plays": [
     {
-      "id": "mesh",
+      "id": "mesh_gun_doubles_11",
       "name": "Mesh",
       "family": "dropback_pass",
       "personnel": "11",
@@ -260,12 +452,192 @@ FD.Data.register({
       ],
       "ball": {
         "to": "H",
-        "at": 0.7,
-        "_provisional": "Presentation-only throw target chosen by the renderer; the handoff did not specify one."
+        "at": 0.7
+      },
+      "conceptId": "mesh",
+      "subfamily": "crossers",
+      "reads": [
+        "H",
+        "Y",
+        "Z",
+        "RB"
+      ],
+      "sources": [
+        "Project handoff #1 — canonical presentation, route depths and relationship",
+        "Air Raid mesh family: shallow crossers vs man, sit/curl as the zone answer"
+      ],
+      "football": {
+        "read": "Vs man: the crossers rub each other; throw the first one that clears. Vs zone: sit/curl over the underneath defenders, RB outlet."
       }
     },
     {
-      "id": "four_verticals",
+      "id": "inside_zone_gun_doubles_11",
+      "conceptId": "inside_zone",
+      "name": "Inside Zone",
+      "family": "run",
+      "subfamily": "zone",
+      "side": "left",
+      "personnel": "11",
+      "formation": "gun_doubles_11",
+      "copy": {
+        "title": "INSIDE ZONE",
+        "meta": "RUN · 11 PERSONNEL",
+        "formation": "GUN DOUBLES",
+        "situation": "EARLY DOWN · INTERIOR RUN",
+        "description": "Press the interior and hit the first clean crease."
+      },
+      "situation": {
+        "down": 1,
+        "distance": 10
+      },
+      "football": {
+        "front": "4-2 under: 3-tech outside LG (play-side), 1-tech shaded backside of C, 5-tech on LT, two LBs at 4.5 yd. Backside DE unblocked (QB read).",
+        "rules": "Play-side zone steps. C (uncovered) doubles the 3-tech with LG; LG climbs to the play-side LB. RT (uncovered: the DE is the read) doubles the 1-tech with RG, RT climbs to the backside LB.",
+        "rb": "Aiming point: play-side guard's outside leg. Bang / bounce / bend on the first down lineman past the center."
+      },
+      "assignments": {
+        "LT": {
+          "type": "zone_step"
+        },
+        "LG": {
+          "type": "combo",
+          "target": [
+            -1.8,
+            0.75
+          ],
+          "climb": [
+            -2.9,
+            4.6
+          ]
+        },
+        "C": {
+          "type": "combo",
+          "target": [
+            -1.8,
+            0.75
+          ]
+        },
+        "RG": {
+          "type": "combo",
+          "target": [
+            0.55,
+            0.7
+          ]
+        },
+        "RT": {
+          "type": "combo",
+          "target": [
+            0.55,
+            0.7
+          ],
+          "climb": [
+            1.3,
+            4.6
+          ]
+        },
+        "QB": {
+          "type": "handoff",
+          "through": [
+            [
+              -0.1,
+              -4.75
+            ],
+            [
+              2.4,
+              -6.3
+            ]
+          ]
+        },
+        "RB": [
+          {
+            "type": "carry",
+            "through": [
+              [
+                0.2,
+                -4.3
+              ],
+              [
+                -1.95,
+                -1.2
+              ],
+              [
+                -2.05,
+                5.5
+              ]
+            ]
+          },
+          {
+            "type": "carry",
+            "alt": true,
+            "through": [
+              [
+                0.2,
+                -4.3
+              ],
+              [
+                -1.2,
+                -1.5
+              ],
+              [
+                1,
+                5
+              ]
+            ]
+          }
+        ],
+        "X": {
+          "type": "stalk"
+        },
+        "H": {
+          "type": "stalk"
+        },
+        "Y": {
+          "type": "stalk"
+        },
+        "Z": {
+          "type": "stalk"
+        }
+      },
+      "relationships": [
+        {
+          "type": "zone",
+          "participants": [
+            "LT",
+            "LG",
+            "C",
+            "RG",
+            "RT"
+          ]
+        },
+        {
+          "type": "combo",
+          "participants": [
+            "C",
+            "LG"
+          ]
+        },
+        {
+          "type": "combo",
+          "participants": [
+            "RG",
+            "RT"
+          ]
+        }
+      ],
+      "handoff": {
+        "to": "RB",
+        "at": [
+          0.2,
+          -4.3
+        ]
+      },
+      "sources": [
+        "Zone run (Wikipedia): coordinated play-side zone steps and double teams",
+        "Tomahawk Nation — RB reads in a zone offense (aiming point, bang/bounce/bend)"
+      ]
+    },
+    {
+      "id": "four_verticals_gun_doubles_11",
       "name": "Four Verticals",
       "family": "dropback_pass",
       "personnel": "11",
@@ -310,12 +682,155 @@ FD.Data.register({
       ],
       "ball": {
         "to": "H",
-        "at": 0.85,
-        "_provisional": "Presentation-only throw target chosen by the renderer; the handoff did not specify one."
+        "at": 0.85
+      },
+      "conceptId": "four_verticals",
+      "subfamily": "verticals",
+      "reads": [
+        "H",
+        "Y",
+        "Z",
+        "X",
+        "RB"
+      ],
+      "sources": [
+        "Project handoff #1 — canonical presentation, route depths and relationship",
+        "Four Verts vs single-high: seams split the middle safety"
+      ],
+      "football": {
+        "read": "Read the middle safety: throw the seam he doesn't take; outside go vs off-leverage corners; RB check-down."
       }
     },
     {
-      "id": "stick",
+      "id": "power_pistol_strong_11",
+      "conceptId": "power",
+      "name": "Power",
+      "family": "run",
+      "subfamily": "gap",
+      "side": "right",
+      "personnel": "11",
+      "formation": "pistol_strong_11",
+      "copy": {
+        "title": "POWER",
+        "meta": "RUN · 11 PERSONNEL",
+        "formation": "PISTOL STRONG",
+        "situation": "GAP RUN · SHORT YARDAGE",
+        "description": "Down blocks build the wall while the guard pulls to the point of attack."
+      },
+      "situation": {
+        "down": 3,
+        "distance": 2
+      },
+      "football": {
+        "rules": "Power O: RT and RG block down, C blocks back for the pulling guard, LT hinges. Y (H-back) kicks out the end man; LG pulls and wraps up through the hole to the play-side LB.",
+        "rb": "Downhill off the kick-out, inside the H-back, following the puller."
+      },
+      "assignments": {
+        "RT": {
+          "type": "down"
+        },
+        "RG": {
+          "type": "down"
+        },
+        "C": {
+          "type": "back"
+        },
+        "LT": {
+          "type": "hinge"
+        },
+        "LG": {
+          "type": "pull",
+          "hole": 3.3,
+          "at": [
+            2.9,
+            3.8
+          ]
+        },
+        "Y": {
+          "type": "lead",
+          "at": [
+            5.4,
+            0.25
+          ]
+        },
+        "QB": {
+          "type": "handoff",
+          "through": [
+            [
+              0.35,
+              -4.4
+            ],
+            [
+              -1.4,
+              -5.6
+            ]
+          ]
+        },
+        "RB": {
+          "type": "carry",
+          "through": [
+            [
+              0.7,
+              -4.7
+            ],
+            [
+              3.75,
+              -1.9
+            ],
+            [
+              4.05,
+              -0.3
+            ],
+            [
+              4.25,
+              5.5
+            ]
+          ]
+        },
+        "X": {
+          "type": "stalk"
+        },
+        "H": {
+          "type": "stalk"
+        },
+        "Z": {
+          "type": "stalk"
+        }
+      },
+      "relationships": [
+        {
+          "type": "wall",
+          "participants": [
+            "RT",
+            "RG",
+            "C"
+          ]
+        },
+        {
+          "type": "pull",
+          "puller": "LG",
+          "runner": "RB"
+        },
+        {
+          "type": "kickout",
+          "blocker": "Y",
+          "runner": "RB"
+        }
+      ],
+      "handoff": {
+        "to": "RB",
+        "at": [
+          0.7,
+          -4.7
+        ]
+      },
+      "sources": [
+        "Standard Power O rules (down / back / pull-wrap / kick-out); Wikipedia — Power run",
+        "Throw Deep Publishing — gap-scheme glossary"
+      ]
+    },
+    {
+      "id": "stick_gun_trips_11",
       "name": "Stick",
       "family": "quick_pass",
       "personnel": "11",
@@ -325,7 +840,6 @@ FD.Data.register({
         "meta": "QUICK GAME · 11 PERSONNEL",
         "description": "A simple three-level stretch of the underneath defender."
       },
-      "_interpretation": "Trips to the right. 'Outside receiver' = Z (#1), 'inside receiver' = H (#2), 'third receiver' = Y (#3). X and RB are unassigned in the handoff and are left idle.",
       "assignments": {
         "Z": {
           "type": "go"
@@ -338,6 +852,12 @@ FD.Data.register({
           "type": "flat",
           "dir": "right",
           "width": 9
+        },
+        "X": {
+          "type": "slant"
+        },
+        "RB": {
+          "type": "pass_set"
         }
       },
       "relationships": [
@@ -352,12 +872,142 @@ FD.Data.register({
       ],
       "ball": {
         "to": "H",
-        "at": 1,
-        "_provisional": "Presentation-only throw target chosen by the renderer; the handoff did not specify one."
+        "at": 1
+      },
+      "conceptId": "stick",
+      "subfamily": "quick",
+      "reads": [
+        "H",
+        "Y",
+        "X"
+      ],
+      "sources": [
+        "Project handoff #1 — canonical presentation, route depths and relationship",
+        "Stick concept: #1 clears, #2 stick at 5-6, #3 flat; backside slant"
+      ],
+      "football": {
+        "read": "Read the flat defender: if he widens with the flat, throw the stick; if he sits on the stick, throw the flat. Backside slant vs pressure."
       }
     },
     {
-      "id": "curl_flat",
+      "id": "hb_screen_gun_trips_11",
+      "conceptId": "hb_screen",
+      "name": "Halfback Screen",
+      "family": "screen",
+      "side": "left",
+      "personnel": "11",
+      "formation": "gun_trips_11",
+      "primary": "RB",
+      "copy": {
+        "title": "HALFBACK SCREEN",
+        "meta": "SCREEN · 11 PERSONNEL",
+        "formation": "GUN TRIPS",
+        "situation": "PASS-RUSH ANSWER",
+        "description": "Invite the rush upfield, then release the back behind a convoy."
+      },
+      "football": {
+        "rules": "Sell dropback: everyone pass-sets. LT, LG, C hold ~1 count, then release to the screen side: LT widest (force/corner), LG leads upfield, C seals inside. RG/RT stay in protection. Trips and X clear with verticals.",
+        "rb": "Check-block, slip out behind the LOS, catch, get behind the convoy."
+      },
+      "assignments": {
+        "LT": {
+          "type": "screen_release",
+          "via": [
+            -5,
+            0.4
+          ],
+          "at": [
+            -8,
+            1.4
+          ]
+        },
+        "LG": {
+          "type": "screen_release",
+          "via": [
+            -3.5,
+            1.2
+          ],
+          "at": [
+            -5.1,
+            3.3
+          ]
+        },
+        "C": {
+          "type": "screen_release",
+          "at": [
+            -3.7,
+            1.5
+          ]
+        },
+        "QB": {
+          "type": "qb_drop",
+          "drop": 3.2
+        },
+        "RB": [
+          {
+            "type": "pass_set_then_release",
+            "release": {
+              "type": "path",
+              "through": [
+                [
+                  -5.4,
+                  -3.4
+                ]
+              ],
+              "end": "settle",
+              "delay": 1
+            }
+          },
+          {
+            "type": "carry",
+            "delay": 0.55,
+            "through": [
+              [
+                -5.6,
+                -0.3
+              ],
+              [
+                -6.4,
+                5.5
+              ]
+            ]
+          }
+        ],
+        "X": {
+          "type": "go"
+        },
+        "Y": {
+          "type": "go"
+        },
+        "H": {
+          "type": "go"
+        },
+        "Z": {
+          "type": "go"
+        }
+      },
+      "relationships": [
+        {
+          "type": "convoy",
+          "blockers": [
+            "LT",
+            "LG",
+            "C"
+          ],
+          "runner": "RB"
+        }
+      ],
+      "ball": {
+        "to": "RB",
+        "at": 1
+      },
+      "sources": [
+        "OpenPlay Football — Halfback Screen (pass-rush manipulation)",
+        "Standard slow-screen timing: OL sell pass for ~1 count, then release"
+      ]
+    },
+    {
+      "id": "curl_flat_gun_doubles_11",
       "name": "Curl-Flat",
       "family": "quick_pass",
       "personnel": "11",
@@ -367,7 +1017,6 @@ FD.Data.register({
         "meta": "QUICK PASS · 11 PERSONNEL",
         "description": "Creates a high-low read on the flat defender."
       },
-      "_interpretation": "Concept side is not specified; drawn to the right (Z outside, Y inside). Backside and RB are unassigned and left idle.",
       "assignments": {
         "Z": {
           "type": "curl"
@@ -376,6 +1025,17 @@ FD.Data.register({
           "type": "flat",
           "dir": "right",
           "width": 8
+        },
+        "X": {
+          "type": "curl"
+        },
+        "H": {
+          "type": "flat",
+          "dir": "left",
+          "width": 8
+        },
+        "RB": {
+          "type": "pass_set"
         }
       },
       "relationships": [
@@ -383,16 +1043,198 @@ FD.Data.register({
           "type": "high_low",
           "high": "Z",
           "low": "Y"
+        },
+        {
+          "type": "high_low",
+          "high": "X",
+          "low": "H"
         }
       ],
       "ball": {
         "to": "Z",
-        "at": 1,
-        "_provisional": "Presentation-only throw target chosen by the renderer; the handoff did not specify one."
+        "at": 1
+      },
+      "conceptId": "curl_flat",
+      "subfamily": "high_low",
+      "reads": [
+        "Z",
+        "Y",
+        "X",
+        "H"
+      ],
+      "sources": [
+        "Project handoff #1 — canonical presentation, route depths and relationship",
+        "Curl-flat: Cover 2 beater, mirrored both sides (most common 2x2 presentation)"
+      ],
+      "football": {
+        "read": "High-low the flat defender: he sinks under the curl → flat; he widens to the flat → curl. Mirrored so the QB picks the better side pre-snap."
       }
     },
     {
-      "id": "dagger",
+      "id": "outside_zone_singleback_tight_12",
+      "conceptId": "outside_zone",
+      "name": "Outside Zone",
+      "family": "run",
+      "subfamily": "zone",
+      "side": "right",
+      "personnel": "12",
+      "formation": "singleback_tight_12",
+      "copy": {
+        "title": "OUTSIDE ZONE",
+        "meta": "RUN · 12 PERSONNEL",
+        "formation": "SINGLEBACK TIGHT",
+        "situation": "PERIMETER RUN",
+        "description": "Stretch the front horizontally, then make one decisive cut."
+      },
+      "football": {
+        "front": "4-3 under: 9-tech on Y, 5-tech on RT, 1-tech on C's play-side shade, 3-tech outside LG; backside end handled by U.",
+        "rules": "Everyone reach-steps play-side. Y and RT reach the 9 and 5. C and LG scoop the 1-tech, LG climbs to the backside LB. RG is uncovered: steps play-side and climbs to Mike. LT scoops the 3-tech, U cuts off the backside end.",
+        "rb": "Aiming point: outside leg of the TE. Press it, then one cut (bang/bend), or bounce if the edge is reached."
+      },
+      "assignments": {
+        "Y": {
+          "type": "reach",
+          "lateral": 1.1
+        },
+        "RT": {
+          "type": "reach",
+          "lateral": 1.1
+        },
+        "RG": {
+          "type": "lead",
+          "via": [
+            2.4,
+            0.4
+          ],
+          "at": [
+            3,
+            4.8
+          ]
+        },
+        "C": {
+          "type": "combo",
+          "target": [
+            0.45,
+            0.6
+          ]
+        },
+        "LG": {
+          "type": "combo",
+          "target": [
+            0.45,
+            0.6
+          ],
+          "climb": [
+            1.2,
+            4.6
+          ]
+        },
+        "LT": {
+          "type": "scoop"
+        },
+        "U": {
+          "type": "block",
+          "to": [
+            1.2,
+            1.9
+          ]
+        },
+        "QB": {
+          "type": "handoff",
+          "through": [
+            [
+              0.8,
+              -2.9
+            ],
+            [
+              -2.8,
+              -5.2
+            ]
+          ]
+        },
+        "RB": [
+          {
+            "type": "carry",
+            "through": [
+              [
+                1,
+                -3
+              ],
+              [
+                5.3,
+                -1.6
+              ],
+              [
+                6,
+                0.3
+              ],
+              [
+                6,
+                5.5
+              ]
+            ]
+          },
+          {
+            "type": "carry",
+            "alt": true,
+            "through": [
+              [
+                1,
+                -3
+              ],
+              [
+                5.3,
+                -1.6
+              ],
+              [
+                8.6,
+                4.2
+              ]
+            ]
+          }
+        ],
+        "X": {
+          "type": "stalk"
+        },
+        "Z": {
+          "type": "stalk"
+        }
+      },
+      "relationships": [
+        {
+          "type": "zone",
+          "participants": [
+            "Y",
+            "RT",
+            "RG",
+            "C",
+            "LG",
+            "LT",
+            "U"
+          ]
+        },
+        {
+          "type": "combo",
+          "participants": [
+            "C",
+            "LG"
+          ]
+        }
+      ],
+      "handoff": {
+        "to": "RB",
+        "at": [
+          1,
+          -3
+        ]
+      },
+      "sources": [
+        "Weekly Spiral — Football 101: Outside Zone",
+        "FootballCoach.com — Bend-Bang-Bounce for outside zone (aiming point: outside leg of the TE)"
+      ]
+    },
+    {
+      "id": "dagger_gun_doubles_11",
       "name": "Dagger",
       "family": "dropback_pass",
       "personnel": "11",
@@ -402,7 +1244,6 @@ FD.Data.register({
         "meta": "INTERMEDIATE PASS · 11 PERSONNEL",
         "description": "The seam clears space for a deep dig underneath."
       },
-      "_interpretation": "Concept side is not specified; drawn to the left (H inside, X outside) so the dig breaks toward the middle. Backside and RB are unassigned and left idle.",
       "assignments": {
         "H": {
           "type": "seam"
@@ -411,6 +1252,21 @@ FD.Data.register({
           "type": "dig",
           "depth": 15,
           "length": 12
+        },
+        "Z": {
+          "type": "go"
+        },
+        "Y": {
+          "type": "sit",
+          "depth": 5.5
+        },
+        "RB": {
+          "type": "pass_set_then_release",
+          "release": {
+            "type": "flat",
+            "dir": "right",
+            "width": 8
+          }
         }
       },
       "relationships": [
@@ -423,9 +1279,152 @@ FD.Data.register({
       ],
       "ball": {
         "to": "X",
-        "at": 0.85,
-        "_provisional": "Presentation-only throw target chosen by the renderer; the handoff did not specify one."
+        "at": 0.96
+      },
+      "conceptId": "dagger",
+      "subfamily": "clear_dig",
+      "reads": [
+        "H",
+        "X",
+        "Y"
+      ],
+      "sources": [
+        "Project handoff #1 — canonical presentation, route depths and relationship",
+        "Dagger: #2 seam clears the hook/curl zone for #1's deep dig; backside checkdown"
+      ],
+      "football": {
+        "read": "Seam first vs a hole in the middle of the field; otherwise the dig behind the vacated hook defender; backside sit / RB as the check-down."
       }
+    },
+    {
+      "id": "counter_gt_gun_trips_11",
+      "conceptId": "counter_gt",
+      "name": "Counter GT",
+      "family": "run",
+      "subfamily": "gap",
+      "side": "right",
+      "personnel": "11",
+      "formation": "gun_trips_11",
+      "copy": {
+        "title": "COUNTER GT",
+        "meta": "RUN · 11 PERSONNEL",
+        "formation": "GUN TRIPS",
+        "situation": "MISDIRECTION · GAP RUN",
+        "description": "Backfield action flows one way before two pullers lead the run back."
+      },
+      "football": {
+        "rules": "RT, RG down; C back. LG pulls flat and kicks out the end man; LT pulls deeper behind him and wraps through the hole to the play-side LB. Backside DE is left: the QB's carry-out holds him.",
+        "rb": "Counter step away, then cross the QB's face and follow the pullers."
+      },
+      "assignments": {
+        "RT": {
+          "type": "down"
+        },
+        "RG": {
+          "type": "down"
+        },
+        "C": {
+          "type": "back"
+        },
+        "LG": {
+          "type": "kickout",
+          "at": [
+            4.9,
+            0.2
+          ],
+          "turn": 2
+        },
+        "LT": {
+          "type": "wrap",
+          "hole": 3.4,
+          "at": [
+            3,
+            4
+          ]
+        },
+        "QB": {
+          "type": "handoff",
+          "through": [
+            [
+              0.15,
+              -4.6
+            ],
+            [
+              -2.8,
+              -5.9
+            ]
+          ]
+        },
+        "RB": [
+          {
+            "type": "counter_step",
+            "through": [
+              [
+                -2.5,
+                -5.15
+              ]
+            ]
+          },
+          {
+            "type": "carry",
+            "delay": 0.05,
+            "through": [
+              [
+                0.3,
+                -4.3
+              ],
+              [
+                3.7,
+                -0.8
+              ],
+              [
+                4.1,
+                5.5
+              ]
+            ]
+          }
+        ],
+        "X": {
+          "type": "stalk"
+        },
+        "Y": {
+          "type": "stalk"
+        },
+        "H": {
+          "type": "stalk"
+        },
+        "Z": {
+          "type": "stalk"
+        }
+      },
+      "relationships": [
+        {
+          "type": "wall",
+          "participants": [
+            "RT",
+            "RG",
+            "C"
+          ]
+        },
+        {
+          "type": "pull",
+          "puller": "LG",
+          "wrap": "LT",
+          "runner": "RB"
+        }
+      ],
+      "handoff": {
+        "to": "RB",
+        "at": [
+          0.3,
+          -4.3
+        ]
+      },
+      "sources": [
+        "Wikipedia — Counter run (GT: guard kicks out, tackle wraps)",
+        "Throw Deep Publishing — The Complete Guide to the Counter Play",
+        "vIQtory Sports — How to install the Counter play"
+      ]
     }
   ]
 });

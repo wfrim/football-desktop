@@ -11,17 +11,14 @@
  * ended, after it finishes (see playRenderer.js). Canonical parameters
  * (depth, dir, width…) pass straight through and override the defaults.
  *
- * Status:
- *   validated   routes + pass protection + pass_set_then_release + qb_drop
- *   provisional run / blocking entries — mapped so the vocabulary is complete,
- *               but not exercised until the run-game handoff.
+ * Every entry is exercised by at least one play (see docs/football/).
  */
 window.FD = window.FD || {};
 (function (FD) {
   'use strict';
 
   // Canonical keys a spec may carry that are *not* geometry parameters.
-  const META = new Set(['type', 'player', 'delay', 'timing', 'end', 'style', 'check', '_note']);
+  const META = new Set(['type', 'player', 'delay', 'timing', 'end', 'style', 'check', 'alt', '_note']);
 
   function params(spec, defaults) {
     const out = Object.assign({}, defaults);
@@ -33,6 +30,7 @@ window.FD = window.FD || {};
     if (spec.end) out.end = spec.end;
     if (spec.style) out.style = spec.style;
     if (spec.timing) out.timing = spec.timing;
+    if (spec.alt) out.alt = true;
     if (typeof spec.delay === 'number') out.timing = Object.assign({}, out.timing, { delay: spec.delay });
     return out;
   }
@@ -61,6 +59,23 @@ window.FD = window.FD || {};
     curl:  prim('settle', { depth: 12, back: 1.5, width: 1.3, dir: 'in', radius: 0.9 }, { end: 'settle' }),
     flat:  prim('flat', { depth: 2, width: 7, dir: 'out' }),
     dig:   prim('horizontal', { depth: 14, length: 10, dir: 'in' }),
+    in:    prim('horizontal', { depth: 10, length: 8, dir: 'in' }),
+    out:   prim('horizontal', { depth: 10, length: 6, dir: 'out' }),
+    quick_out: prim('horizontal', { depth: 5, length: 5, dir: 'out' }),
+    quick_in:  prim('horizontal', { depth: 5, length: 5, dir: 'in' }),
+    slant: prim('angle', { stem: 1.5, angle: 55, length: 8, dir: 'in' }),
+    post:  prim('angle', { stem: 11, angle: 40, length: 10, dir: 'in' }),
+    skinny_post: prim('angle', { stem: 10, angle: 20, length: 10, dir: 'in' }),
+    corner: prim('angle', { stem: 11, angle: 45, length: 8, dir: 'out' }),
+    fade:  prim('vertical', { depth: 18, release: 'outside', releaseWidth: 1.5 }),
+    hitch: prim('settle', { depth: 5, back: 0.8, width: 0.4, dir: 'in' }, { end: 'settle' }),
+    comeback: prim('angle', { stem: 13, angle: 150, length: 2.5, dir: 'out' }),
+    spot:  prim('settle', { depth: 5, back: 0.4, width: 1.8, dir: 'in' }, { end: 'settle' }),
+    arrow: prim('angle', { stem: 0, angle: 65, length: 7, dir: 'out' }),
+    swing: prim('swing', { width: 6, depth: 0.5 }),
+    bubble: prim('swing', { width: 4.5, depth: -0.3, dip: 1.2 }),
+    wheel: prim('path', { points: [[4, 1.5], [6, 6], [6, 16]] }),
+    double_move: prim('doubleMove', {}),
 
     // ── Protection ──────────────────────────────────────────────────────
     pass_set: {
@@ -93,30 +108,55 @@ window.FD = window.FD || {};
 
     qb_drop: prim('qbDrop', { drop: 2 }),
 
-    // ── Run game (provisional) ──────────────────────────────────────────
-    zone_step: provisional(prim('block', { to: [0.9, 0.6] })),
-    reach:     provisional(prim('block', { to: [1.1, 0.8] })),
-    down:      provisional(prim('block', { to: [-1.1, 0.8] })),
-    climb:     provisional(prim('lead', { to: [0.5, 4] })),
-    combo: provisional({
-      // Double-team at `target`, then one player climbs to `climb`.
+    // ── Run game ────────────────────────────────────────────────────────
+    // Blocks point at the defender's spot; T-bar = contact. `dir: 'play'` /
+    // `'back'` resolve against the play's `side`. Absolute landmarks (`at`,
+    // `target`, `through`) are ball-relative data coordinates.
+    zone_step: prim('step', { lateral: 0.8, up: 1.0, dir: 'play' }),   // inside zone: play-side step, knee-to-knee
+    reach:     prim('step', { lateral: 1.2, up: 0.7, dir: 'play' }),   // outside zone: lateral, overtake the play-side shoulder
+    scoop:     prim('step', { lateral: 1.3, up: 0.8, dir: 'play' }),   // backside cut-off
+    down:      prim('step', { lateral: 1.1, up: 0.9, dir: 'back' }),   // gap scheme: block inside, build the wall
+    back:      prim('step', { lateral: 1.1, up: 0.7, dir: 'back' }),   // center fills for the pulling guard
+    hinge:     prim('step', { lateral: 0.7, up: -0.9, dir: 'back' }),  // backside tackle when the guard pulls
+    base:      prim('step', { lateral: 0, up: 1.1 }),
+    stalk:     prim('step', { lateral: 0, up: 3 }),                    // receiver blocks the man over him
+    combo: {
+      // Double-team at `target`; the climber (`climb`: LB landmark) comes off to the second level.
+      status: 'validated',
       expand(spec) {
         const steps = [{ type: 'doubleTeam', target: spec.target || [0, 1], end: spec.climb ? 'none' : 'tbar' }];
-        if (spec.climb) steps.push({ type: 'lead', to: spec.climb, timing: { delay: 0.1 } });
+        if (spec.climb) steps.push({ type: 'lead', at: spec.climb, timing: { delay: spec.delay !== undefined ? spec.delay : 0.15 } });
         return steps;
       },
-    }),
-    pull:      provisional(prim('pull', { dir: 'right', run: 4, depth: 1.5 })),
-    wrap:      provisional(prim('pull', { dir: 'right', run: 2.5, dip: 0.6, depth: 2.5 })),
-    kickout:   provisional(prim('kickOut', { to: [5, 0.5] })),
-    lead:      provisional(prim('lead', { to: [3, 2] })),
-    release:   provisional(prim('lead', { to: [3, 4] })),
-    runner_path: provisional(prim('path', { points: [[2, 4]] })),
-    // `handoff` is a two-player event, not a single-player path: see play.ball / play.events.
+    },
+    climb:     prim('lead', { at: [0, 4.5] }),
+    pull:      prim('pull', { dip: -1.4 }),                            // `at` = block point, optional `hole` = turn-up x
+    kickout:   prim('pull', { dip: -1.3 }),                            // pull + bend out onto the end man
+    wrap:      prim('pull', { dip: -1.9 }),                            // second puller: deeper, turns up through `hole`
+    lead:      prim('lead', {}),                                       // back / H-back to a point, block
+    screen_release: {
+      // Sell pass protection, then release to a convoy spot `at`.
+      status: 'validated',
+      expand(spec, player) {
+        return [
+          Object.assign({ type: 'block', to: passSetVector(player), end: 'none' }),
+          { type: 'lead', at: spec.at, via: spec.via, timing: { delay: spec.delay !== undefined ? spec.delay : 0.9 } },
+        ];
+      },
+    },
+    carry:        prim('run', {}),                                     // ball carrier: `through` landmarks
+    counter_step: prim('run', {}, { end: 'none' }),                    // jab away from the play before the carry
+    handoff:      prim('qbPath', {}),                                  // QB to the mesh point (+ carry-out fake)
+    runner_path:  prim('run', {}),
+    // The ball's exchange is a two-player event: see play.handoff (resolve.js).
   };
+
+  const ALIASES = { shallow: 'drag', hook: 'sit', stop: 'hitch', whip: 'quick_out', speed_out: 'quick_out', vertical: 'go', streak: 'go', flag: 'corner' };
+  for (const [a, canon] of Object.entries(ALIASES)) if (!V[a]) V[a] = V[canon];
 
   const Vocabulary = {
     table: V,
+    aliases: ALIASES,
     has: (name) => Object.prototype.hasOwnProperty.call(V, name) || FD.Primitives.has(name),
 
     /**
@@ -126,17 +166,19 @@ window.FD = window.FD || {};
     expand(spec, player) {
       const entry = V[spec.type];
       if (entry) return entry.expand(spec, player);
-      if (FD.Primitives.has(spec.type)) return [Object.assign({}, spec)]; // raw primitive passthrough
+      if (FD.Primitives.has(spec.type)) return [Object.assign({ type: spec.type }, params(spec, {}))]; // raw primitive passthrough
       throw new Error(`Unknown assignment "${spec.type}"`);
     },
 
     /**
      * Family defaults fill in players the play doesn't mention.
-     * PROVISIONAL: pass families protect with the OL and drop the QB.
+     * Pass families protect with the OL and drop the QB; runs are explicit.
      */
     families: {
       dropback_pass: { ol: { type: 'pass_set' }, qb: { type: 'qb_drop', drop: 2 } },
       quick_pass: { ol: { type: 'pass_set' }, qb: { type: 'qb_drop', drop: 1 } },
+      screen: { ol: { type: 'pass_set' }, qb: { type: 'qb_drop', drop: 3 } },
+      run: {},                                  // every run assignment is explicit
     },
   };
 

@@ -1,0 +1,65 @@
+{
+ "id": "four_verticals_gun_doubles_11",
+ "name": "Four Verticals",
+ "family": "dropback_pass",
+ "personnel": "11",
+ "formation": "gun_doubles_11",
+ "copy": {
+  "title": "FOUR VERTICALS",
+  "meta": "DEEP PASS \u00b7 11 PERSONNEL",
+  "description": "Stretches the defense across all four deep lanes."
+ },
+ "assignments": {
+  "X": {
+   "type": "go"
+  },
+  "H": {
+   "type": "seam"
+  },
+  "Y": {
+   "type": "seam"
+  },
+  "Z": {
+   "type": "go"
+  },
+  "RB": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "sit",
+    "depth": 3.5
+   }
+  }
+ },
+ "relationships": [
+  {
+   "type": "lanes",
+   "participants": [
+    "X",
+    "H",
+    "Y",
+    "Z"
+   ],
+   "minGap": 4
+  }
+ ],
+ "ball": {
+  "to": "H",
+  "at": 0.85
+ },
+ "conceptId": "four_verticals",
+ "subfamily": "verticals",
+ "reads": [
+  "H",
+  "Y",
+  "Z",
+  "X",
+  "RB"
+ ],
+ "sources": [
+  "Project handoff #1 \u2014 canonical presentation, route depths and relationship",
+  "Four Verts vs single-high: seams split the middle safety"
+ ],
+ "football": {
+  "read": "Read the middle safety: throw the seam he doesn't take; outside go vs off-leverage corners; RB check-down."
+ }
+}

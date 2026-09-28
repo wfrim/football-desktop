@@ -1,0 +1,166 @@
+{
+ "id": "inside_zone_gun_doubles_11",
+ "conceptId": "inside_zone",
+ "name": "Inside Zone",
+ "family": "run",
+ "subfamily": "zone",
+ "side": "left",
+ "personnel": "11",
+ "formation": "gun_doubles_11",
+ "copy": {
+  "title": "INSIDE ZONE",
+  "meta": "RUN \u00b7 11 PERSONNEL",
+  "formation": "GUN DOUBLES",
+  "situation": "EARLY DOWN \u00b7 INTERIOR RUN",
+  "description": "Press the interior and hit the first clean crease."
+ },
+ "situation": {
+  "down": 1,
+  "distance": 10
+ },
+ "football": {
+  "front": "4-2 under: 3-tech outside LG (play-side), 1-tech shaded backside of C, 5-tech on LT, two LBs at 4.5 yd. Backside DE unblocked (QB read).",
+  "rules": "Play-side zone steps. C (uncovered) doubles the 3-tech with LG; LG climbs to the play-side LB. RT (uncovered: the DE is the read) doubles the 1-tech with RG, RT climbs to the backside LB.",
+  "rb": "Aiming point: play-side guard's outside leg. Bang / bounce / bend on the first down lineman past the center."
+ },
+ "assignments": {
+  "LT": {
+   "type": "zone_step"
+  },
+  "LG": {
+   "type": "combo",
+   "target": [
+    -1.8,
+    0.75
+   ],
+   "climb": [
+    -2.9,
+    4.6
+   ]
+  },
+  "C": {
+   "type": "combo",
+   "target": [
+    -1.8,
+    0.75
+   ]
+  },
+  "RG": {
+   "type": "combo",
+   "target": [
+    0.55,
+    0.7
+   ]
+  },
+  "RT": {
+   "type": "combo",
+   "target": [
+    0.55,
+    0.7
+   ],
+   "climb": [
+    1.3,
+    4.6
+   ]
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    [
+     -0.1,
+     -4.75
+    ],
+    [
+     2.4,
+     -6.3
+    ]
+   ]
+  },
+  "RB": [
+   {
+    "type": "carry",
+    "through": [
+     [
+      0.2,
+      -4.3
+     ],
+     [
+      -1.95,
+      -1.2
+     ],
+     [
+      -2.05,
+      5.5
+     ]
+    ]
+   },
+   {
+    "type": "carry",
+    "alt": true,
+    "through": [
+     [
+      0.2,
+      -4.3
+     ],
+     [
+      -1.2,
+      -1.5
+     ],
+     [
+      1.0,
+      5
+     ]
+    ]
+   }
+  ],
+  "X": {
+   "type": "stalk"
+  },
+  "H": {
+   "type": "stalk"
+  },
+  "Y": {
+   "type": "stalk"
+  },
+  "Z": {
+   "type": "stalk"
+  }
+ },
+ "relationships": [
+  {
+   "type": "zone",
+   "participants": [
+    "LT",
+    "LG",
+    "C",
+    "RG",
+    "RT"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "C",
+    "LG"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "RG",
+    "RT"
+   ]
+  }
+ ],
+ "handoff": {
+  "to": "RB",
+  "at": [
+   0.2,
+   -4.3
+  ]
+ },
+ "sources": [
+  "Zone run (Wikipedia): coordinated play-side zone steps and double teams",
+  "Tomahawk Nation \u2014 RB reads in a zone offense (aiming point, bang/bounce/bend)"
+ ]
+}

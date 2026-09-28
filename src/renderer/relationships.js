@@ -8,6 +8,9 @@
  *   lanes       paths stay in left→right order, ≥ N yards apart (validation)
  *   levels      paths end at distinct depths, deep → shallow     (validation)
  *   clears      A must be past B's break depth before B breaks   (TIMING: delays B)
+ *   converge    blockers' first steps end within N yards (double team)  (validation)
+ *   follows     B reaches the LOS ≥ N s after A does (runner behind puller) (TIMING: delays B)
+ *   order       B's assignment starts ≥ N s after A's (second puller)   (TIMING: delays B)
  *
  * Every participant also gets concept emphasis (full-strength stroke), so the
  * concept reads first and supporting routes recede.
@@ -28,8 +31,17 @@ window.FD = window.FD || {};
     levels:   (r) => [['levels', ids(r), r.minGap || 2]],
     high_low: (r) => [['levels', [r.high, r.low], r.minGap || 3]],
     clear:    (r) => [['clears', [r.clear, r.into], r.margin !== undefined ? r.margin : 2]],
-    // Blocking relationships arrive with the run-game handoff.
-    combo:    () => [],
+    // Run game.
+    combo:    (r) => [['converge', ids(r), r.within || 1.2]],
+    // Gap-scheme pull: `puller` (+ optional `wrap`, the second puller) leads `runner`.
+    pull:     (r) => [['follows', [r.puller, r.runner], r.margin !== undefined ? r.margin : 0.15]]
+      .concat(r.wrap ? [['order', [r.puller, r.wrap], 0.12], ['follows', [r.wrap, r.runner], 0.05]] : []),
+    kickout:  (r) => [['follows', [r.blocker, r.runner], r.margin !== undefined ? r.margin : 0.15]],
+    // Screen: `blockers` form up before the `runner` gets the ball. Emphasis only.
+    convoy:   () => [],
+    // Zone: every participant's first step goes play-side. Wall: down blocks go back-side.
+    zone:     (r) => [['flow', ids(r), 'play']],
+    wall:     (r) => [['flow', ids(r), 'back']],
   };
 
   function ids(r) {
@@ -38,7 +50,8 @@ window.FD = window.FD || {};
 
   function participantsOf(r) {
     const set = new Set(r.participants || []);
-    for (const k of ['high', 'low', 'clear', 'into']) if (r[k]) set.add(r[k]);
+    for (const k of ['high', 'low', 'clear', 'into', 'puller', 'wrap', 'runner', 'blocker']) if (r[k]) set.add(r[k]);
+    for (const id of r.blockers || []) set.add(id);
     return Array.from(set);
   }
 
@@ -46,7 +59,7 @@ window.FD = window.FD || {};
   function routeOf(scene, id) {
     const pl = scene.players.get(id);
     if (!pl) return null;
-    const routes = pl.assignments.filter((a) => a.kind === 'route');
+    const routes = pl.assignments.filter((a) => a.kind === 'route' || a.kind === 'run');
     return routes[routes.length - 1] || pl.assignments[pl.assignments.length - 1] || null;
   }
 
@@ -171,6 +184,70 @@ window.FD = window.FD || {};
     },
   };
 
+  /** Clock time at which a's path first crosses `depth` (LOS-relative). */
+  function timeAtDepth(a, depth) {
+    const f = fractionAtDepth(a, depth);
+    return f === null ? null : timeAt(a, f);
+  }
+
+  function shiftFrom(scene, id, from, shift) {
+    const pl = scene.players.get(id);
+    for (const a of pl.assignments) if (a.start >= from.start) a.start += shift;
+  }
+
+  // Blocking helpers: the first path a player draws / the one reaching the LOS.
+  const firstOf = (scene, id) => (scene.players.get(id) || { assignments: [] }).assignments[0] || null;
+  function lineCrossing(scene, id) {
+    const pl = scene.players.get(id);
+    if (!pl) return null;
+    for (const a of pl.assignments) {
+      if (a.fieldPts[0][1] >= 0) return { a, t: a.start };
+      const t = timeAtDepth(a, 0);
+      if (t !== null) return { a, t };
+    }
+    const last = pl.assignments[pl.assignments.length - 1];
+    return last ? { a: last, t: last.start + last.duration } : null;
+  }
+
+  Object.assign(CONSTRAINTS, {
+    converge(scene, list, within, warn) {
+      const ends = list.map((id) => firstOf(scene, id)).filter(Boolean).map((a) => a.fieldPts[a.fieldPts.length - 1]);
+      for (let i = 1; i < ends.length; i++) {
+        const d = G.dist(ends[0], ends[i]);
+        if (d > within) warn(`converge: ${list[0]}/${list[i]} double-team points ${d.toFixed(2)} yd apart`);
+      }
+    },
+
+    follows(scene, [leader, follower], margin, warn) {
+      const L = lineCrossing(scene, leader);
+      const F = lineCrossing(scene, follower);
+      if (!L || !F) return;
+      const shift = L.t + margin - F.t;
+      if (shift > 0) {
+        shiftFrom(scene, follower, firstOf(scene, follower), shift); // whole backfield action
+        if (shift > 0.6) warn(`follows: ${follower} delayed ${shift.toFixed(2)} s behind ${leader}`);
+      }
+    },
+
+    flow(scene, list, dir, warn) {
+      const want = (scene.play.side === 'left' ? -1 : 1) * (dir === 'back' ? -1 : 1);
+      for (const id of list) {
+        const a = firstOf(scene, id);
+        if (!a) continue;
+        const dx = a.fieldPts[a.fieldPts.length - 1][0] - a.fieldPts[0][0];
+        if (dx * want <= 0) warn(`flow: ${id}'s first step does not go ${dir}-side`);
+      }
+    },
+
+    order(scene, [first, second], gap) {
+      const a = firstOf(scene, first);
+      const b = firstOf(scene, second);
+      if (!a || !b) return;
+      const shift = a.start + gap - b.start;
+      if (shift > 0) shiftFrom(scene, second, b, shift);
+    },
+  });
+
   const Relationships = {
     TYPES,
     CONSTRAINTS,
@@ -196,7 +273,7 @@ window.FD = window.FD || {};
       for (const id of concept) {
         const pl = scene.players.get(id);
         if (!pl) continue;
-        for (const a of pl.assignments) if (a.kind === 'route') a.view.el.classList.add('is-concept');
+        for (const a of pl.assignments) if (a.kind !== 'qb') a.view.el.classList.add('is-concept');
       }
       if (concept.size) scene.root.classList.add('has-concept');
       return warnings;

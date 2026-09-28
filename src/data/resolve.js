@@ -17,6 +17,10 @@ window.FD = window.FD || {};
   'use strict';
 
   const OL = new Set(['LT', 'LG', 'C', 'RG', 'RT']);
+  // Position group by role, for personnel validation. A formation player may
+  // set `pos` explicitly (e.g. a TE aligned as a slot).
+  const POS = { QB: 'QB', RB: 'RB', F: 'RB', FB: 'RB', Y: 'TE', U: 'TE', X: 'WR', Z: 'WR', H: 'WR', W: 'WR' };
+  const posOf = (p) => p.pos || (OL.has(p.role) ? 'OL' : POS[p.role] || '?');
   const clone = (o) => JSON.parse(JSON.stringify(o));
 
   function resolve(play, formations) {
@@ -35,6 +39,24 @@ window.FD = window.FD || {};
       if (byId.has(id)) byId.get(id).at = at;
       else fatal.push(`alignment override for unknown player "${id}"`);
     }
+
+    // Eleven players, unique ids, personnel matches position groups.
+    if (players.length !== 11) fatal.push(`formation has ${players.length} players, not 11`);
+    if (byId.size !== players.length) fatal.push('duplicate player ids in formation');
+    const personnel = play.personnel || formation.personnel;
+    if (personnel && /^\d\d$/.test(personnel)) {
+      const count = (g) => players.filter((p) => posOf(p) === g).length;
+      const want = { RB: +personnel[0], TE: +personnel[1] };
+      want.WR = 5 - want.RB - want.TE;
+      for (const g of ['RB', 'TE', 'WR']) {
+        if (count(g) !== want[g]) fatal.push(`personnel ${personnel}: expected ${want[g]} ${g}, found ${count(g)}`);
+      }
+    }
+    if (formation.personnel && play.personnel && formation.personnel !== play.personnel) {
+      fatal.push(`play personnel ${play.personnel} ≠ formation personnel ${formation.personnel}`);
+    }
+    const onLine = players.filter((p) => p.at[1] > -0.9).length;
+    if (onLine !== 7) warn.push(`${onLine} players on the line of scrimmage (want 7)`);
 
     // Hard rule: QB directly behind C unless the play/formation opts out.
     const qb = players.find((p) => p.role === 'QB');
@@ -68,11 +90,12 @@ window.FD = window.FD || {};
         fatal.push(`${id}: ${err.message}`);
         continue;
       }
-      for (const s of seq) {
-        const entry = FD.Vocabulary.table[s.type];
-        if (entry && entry.status === 'provisional') warn.push(`${id}: "${s.type}" is provisional vocabulary`);
-      }
-      steps.forEach((s, i) => assignments.push(Object.assign({}, s, { player: id, chain: i > 0 })));
+      // Alternate paths (cutback, option break) start from the player, not the previous step.
+      let chained = false;
+      steps.forEach((s) => {
+        assignments.push(Object.assign({}, s, { player: id, chain: chained && !s.alt }));
+        if (!s.alt) chained = true;
+      });
     }
     const idle = players.filter((p) => !given[p.id]).map((p) => p.id);
 
@@ -85,12 +108,23 @@ window.FD = window.FD || {};
     const ballTo = play.ball && (typeof play.ball.to === 'string' ? play.ball.to : play.ball.to && play.ball.to.player);
     if (ballTo && !byId.has(ballTo)) fatal.push(`ball target "${ballTo}" is not in the formation`);
 
+    const ho = play.handoff;
+    if (ho && !byId.has(ho.to)) fatal.push(`handoff target "${ho.to}" is not in the formation`);
+    if (ho && play.ball) fatal.push('a play has either `ball` (pass) or `handoff`, not both');
+    if (play.side && !['left', 'right'].includes(play.side)) fatal.push(`side must be "left" or "right"`);
+
     const copy = play.copy || {};
+    if (!copy.title || !copy.meta || !copy.description) warn.push('display copy missing title / meta / description');
+    if (copy.description && copy.description.length > 72) warn.push('display description is long for a wallpaper');
     const resolved = {
       id: play.id,
       number: play.number,
       name: play.name,
       family: play.family,
+      side: play.side || 'right',
+      primary: play.primary || (ho ? ho.to : undefined),
+      handoff: ho || null,
+      frame: play.frame,
       _mock: play._mock,
       copy: {
         title: copy.title || play.name,

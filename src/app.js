@@ -57,6 +57,12 @@ window.FD = window.FD || {};
         if (scene && cfg.freeze === null) scene.destroy();
       }
       if (cfg.debug) console.debug('[app] stats', animator.stats);
+      if (cfg.soak) {
+        // Soak test: one line per finished play (also readable via --dump-dom).
+        const line = `${info.play.id} nodes=${document.getElementsByTagName('*').length} defs=${stage.defs.childNodes.length} frames=${animator.stats.frames}`;
+        console.log(`[soak] ${line}`);
+        document.documentElement.dataset.soak = (document.documentElement.dataset.soak || '') + line + ';';
+      }
     }
   }
 

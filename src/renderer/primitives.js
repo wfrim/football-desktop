@@ -17,6 +17,9 @@
  *   dir        'in' | 'out' | 'left' | 'right'   ('in' = toward the ball)
  *   to         [dx, dy] relative vector
  *   points     [[dx, dy], ...] relative waypoints (escape hatch)
+ *   through    [[x, y], ...] ABSOLUTE landmarks (ball-relative, data space)
+ *   at         [x, y] ABSOLUTE end landmark (block point, LB, kick-out spot)
+ *   dir 'play' / 'back' resolve against the play's `side` (run game).
  */
 window.FD = window.FD || {};
 (function (FD) {
@@ -32,6 +35,8 @@ window.FD = window.FD || {};
       case 'out': return ctx.outward;
       case 'left': return -ctx.lateral;
       case 'right': return ctx.lateral;
+      case 'play': return ctx.playside;       // toward the play's point of attack
+      case 'back': return -ctx.playside;      // toward the backside
       default: return fallback !== undefined ? fallback : ctx.inward;
     }
   }
@@ -39,7 +44,7 @@ window.FD = window.FD || {};
   const Primitives = {
     /**
      * register(name, { kind, end, style, radius, build(params, ctx) → points })
-     *   kind    route | block | pull | lead | qb | motion  (drives timing + styling)
+     *   kind    route | run | block | pull | lead | qb | motion  (drives timing + styling)
      *   end     arrow | tbar | dot | none
      *   style   solid | dashed | dotted
      *   radius  corner rounding in yards
@@ -170,11 +175,14 @@ window.FD = window.FD || {};
   });
 
   // Escape hatch: explicit relative waypoints.
+  function waypoints(p, ctx) {
+    if (p.through) return [[0, 0]].concat(p.through.map((q) => ctx.abs(q)));
+    return [[0, 0]].concat((p.points || []).map((q) => ctx.v(q)));
+  }
+
   Primitives.register('path', {
     kind: 'route', end: 'arrow', radius: 0.9,
-    build(p, ctx) {
-      return [[0, 0]].concat((p.points || []).map((q) => ctx.v(q)));
-    },
+    build: waypoints,
   });
 
   // ── RUN / BLOCKING ────────────────────────────────────────────────────────
@@ -183,47 +191,71 @@ window.FD = window.FD || {};
   Primitives.register('block', {
     kind: 'block', end: 'tbar', radius: 0,
     build(p, ctx) {
-      return [[0, 0], ctx.v(p.to || [0, 1])];
+      return [[0, 0], p.at ? ctx.abs(p.at) : ctx.v(p.to || [0, 1])];
     },
   });
 
-  // Two blockers sharing a target point: each gets its own `doubleTeam`
-  // assignment with the same `target` (relative to the ball).
+  // Directional block step: `lateral` yards toward `dir`, `up` yards upfield
+  // (negative = retreat). zone step, reach, down, hinge, scoop, base, stalk.
+  Primitives.register('step', {
+    kind: 'block', end: 'tbar', radius: 0,
+    build(p, ctx) {
+      const s = dirSign(p.dir, ctx, ctx.playside);
+      return [[0, 0], [s * ctx.u(p.lateral || 0), ctx.u(p.up !== undefined ? p.up : 1)]];
+    },
+  });
+
+  // Two blockers sharing a defender: each gets a `doubleTeam` step whose
+  // `target` is the same ABSOLUTE point.
   Primitives.register('doubleTeam', {
     kind: 'block', end: 'tbar', radius: 0,
     build(p, ctx) {
-      if (p.target) {
-        const t = ctx.v(p.target);
-        return [[0, 0], [t[0] - ctx.origin[0], t[1] - ctx.origin[1]]];
-      }
-      return [[0, 0], ctx.v(p.to || [0, 1])];
+      return [[0, 0], p.target ? ctx.abs(p.target) : ctx.v(p.to || [0, 1])];
     },
   });
 
-  // Pulling lineman: open, run laterally behind the line, turn up.
+  /*
+   * Pulling lineman. Opens, runs flat behind the line at `dip` (absolute
+   * depth, e.g. -1.4), then either
+   *   hole: x   turns up through that lateral landmark to `at` (wrap / lead)
+   *   (none)    bends to `at` from the inside (kick-out)
+   */
   Primitives.register('pull', {
-    kind: 'pull', end: 'tbar', radius: 0.7,
+    kind: 'pull', end: 'tbar', radius: 0.8,
     build(p, ctx) {
-      const s = dirSign(p.dir, ctx, 1);
-      const run = ctx.u(p.run !== undefined ? p.run : 4);
-      const dip = -ctx.u(p.dip !== undefined ? p.dip : 1);
-      const up = ctx.dy(p.depth !== undefined ? p.depth : 1.5);
-      return [[0, 0], [s * 0.6, dip], [s * run, dip], [s * (run + ctx.u(p.turn !== undefined ? p.turn : 0.8)), up]];
+      const at = ctx.abs(p.at || [4, 1]);
+      const s = Math.sign(at[0]) || ctx.playside;
+      const dip = ctx.dy(p.dip !== undefined ? p.dip : -1.4);
+      const pts = [[0, 0], [s * 0.55, dip]];
+      if (p.hole !== undefined) {
+        const hx = ctx.abs([p.hole, 0])[0];
+        pts.push([hx, dip], [hx, ctx.dy(0.4)]);
+      } else {
+        pts.push([at[0] - s * ctx.u(p.turn !== undefined ? p.turn : 1.3), dip]);
+      }
+      pts.push(at);
+      return pts;
     },
   });
 
-  // Lead / kick-out: path to a point, ending in a block.
+  // Lead / kick-out / climb: path to a point (via optional), ending in a block.
   const toPoint = {
     kind: 'lead', end: 'tbar', radius: 1.2,
     build(p, ctx) {
       const pts = [[0, 0]];
-      if (p.via) pts.push(ctx.v(p.via));
-      pts.push(ctx.v(p.to || [0, 3]));
+      if (p.via) pts.push(p.at ? ctx.abs(p.via) : ctx.v(p.via));
+      pts.push(p.at ? ctx.abs(p.at) : ctx.v(p.to || [0, 3]));
       return pts;
     },
   };
   Primitives.register('lead', toPoint);
   Primitives.register('kickOut', toPoint);
+
+  // Ball carrier's track through absolute landmarks (mesh, aiming point, cut).
+  Primitives.register('run', {
+    kind: 'run', end: 'arrow', radius: 1.4,
+    build: waypoints,
+  });
 
   // ── QUARTERBACK / MOTION ──────────────────────────────────────────────────
 
@@ -234,11 +266,10 @@ window.FD = window.FD || {};
     },
   });
 
+  // Handoff / fake / boot tracks. `through` = absolute landmarks.
   Primitives.register('qbPath', {
     kind: 'qb', end: 'none', style: 'dashed', radius: 1,
-    build(p, ctx) {
-      return [[0, 0]].concat((p.points || []).map((q) => ctx.v(q)));
-    },
+    build: waypoints,
   });
 
   // Pre-snap motion. The player's marker physically relocates (in every mode)

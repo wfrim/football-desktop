@@ -98,6 +98,29 @@
   stroke-opacity: 0.34;
 }
 
+/* Ball carrier: the run's hero line. */
+.a-run {
+  stroke-width: calc(var(--sw-route) * 1.25);
+  stroke-opacity: 0.92;
+}
+.a-wrap-run .a-head { fill-opacity: 0.92; }
+
+/* Run game: blockers that form the concept (combos, pullers, kick-outs,
+   convoy) draw at route weight; the rest of the line recedes. */
+.has-concept .a-wrap.is-concept .a-block,
+.has-concept .a-wrap.is-concept .a-tbar {
+  stroke-width: var(--sw-route);
+  stroke-opacity: 0.9;
+}
+.has-concept .a-wrap:not(.is-concept) .a-pull,
+.has-concept .a-wrap:not(.is-concept) .a-lead,
+.has-concept .a-wrap:not(.is-concept) .a-tbar-pull,
+.has-concept .a-wrap:not(.is-concept) .a-tbar-lead { stroke-opacity: 0.5; }
+
+/* Alternate path (cutback, option break): a quiet second answer. */
+.a-wrap.is-alt .a { stroke-opacity: 0.32; stroke-width: var(--sw-block); }
+.a-wrap.is-alt .a-head { fill-opacity: 0.3; }
+
 .a-qb {
   stroke-width: var(--sw-block);
   stroke-opacity: 0.5;

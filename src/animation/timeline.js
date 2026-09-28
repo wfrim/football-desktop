@@ -49,6 +49,7 @@ window.FD = window.FD || {};
     readStagger: 0.14,
     readFade: 0.4,
     catchPulse: 0.9,
+    exchange: 0.28,   // QB → carrier ball travel at a handoff
 
     // Reduced-motion / static profile.
     staticHold: 16,
@@ -62,6 +63,7 @@ window.FD = window.FD || {};
      */
     kinds: {
       route:  { phase: 'assign', delay: 0,    speed: 11, min: 0.7,  max: 2.3, ease: 'inOutQuad', moves: true },
+      run:    { phase: 'snap',   delay: 0.3,  speed: 7,  min: 0.9,  max: 2.4, ease: 'inOutSine', moves: true },
       block:  { phase: 'snap',   delay: 0.08, speed: 3,  min: 0.35, max: 0.6, ease: 'outCubic',  moves: true },
       pull:   { phase: 'snap',   delay: 0.05, speed: 9,  min: 0.6,  max: 1.5, ease: 'inOutQuad', moves: true },
       lead:   { phase: 'snap',   delay: 0.15, speed: 8,  min: 0.5,  max: 1.3, ease: 'inOutQuad', moves: true },

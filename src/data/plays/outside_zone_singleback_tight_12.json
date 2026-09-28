@@ -1,0 +1,163 @@
+{
+ "id": "outside_zone_singleback_tight_12",
+ "conceptId": "outside_zone",
+ "name": "Outside Zone",
+ "family": "run",
+ "subfamily": "zone",
+ "side": "right",
+ "personnel": "12",
+ "formation": "singleback_tight_12",
+ "copy": {
+  "title": "OUTSIDE ZONE",
+  "meta": "RUN \u00b7 12 PERSONNEL",
+  "formation": "SINGLEBACK TIGHT",
+  "situation": "PERIMETER RUN",
+  "description": "Stretch the front horizontally, then make one decisive cut."
+ },
+ "football": {
+  "front": "4-3 under: 9-tech on Y, 5-tech on RT, 1-tech on C's play-side shade, 3-tech outside LG; backside end handled by U.",
+  "rules": "Everyone reach-steps play-side. Y and RT reach the 9 and 5. C and LG scoop the 1-tech, LG climbs to the backside LB. RG is uncovered: steps play-side and climbs to Mike. LT scoops the 3-tech, U cuts off the backside end.",
+  "rb": "Aiming point: outside leg of the TE. Press it, then one cut (bang/bend), or bounce if the edge is reached."
+ },
+ "assignments": {
+  "Y": {
+   "type": "reach",
+   "lateral": 1.1
+  },
+  "RT": {
+   "type": "reach",
+   "lateral": 1.1
+  },
+  "RG": {
+   "type": "lead",
+   "via": [
+    2.4,
+    0.4
+   ],
+   "at": [
+    3.0,
+    4.8
+   ]
+  },
+  "C": {
+   "type": "combo",
+   "target": [
+    0.45,
+    0.6
+   ]
+  },
+  "LG": {
+   "type": "combo",
+   "target": [
+    0.45,
+    0.6
+   ],
+   "climb": [
+    1.2,
+    4.6
+   ]
+  },
+  "LT": {
+   "type": "scoop"
+  },
+  "U": {
+   "type": "block",
+   "to": [
+    1.2,
+    1.9
+   ]
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    [
+     0.8,
+     -2.9
+    ],
+    [
+     -2.8,
+     -5.2
+    ]
+   ]
+  },
+  "RB": [
+   {
+    "type": "carry",
+    "through": [
+     [
+      1.0,
+      -3.0
+     ],
+     [
+      5.3,
+      -1.6
+     ],
+     [
+      6.0,
+      0.3
+     ],
+     [
+      6.0,
+      5.5
+     ]
+    ]
+   },
+   {
+    "type": "carry",
+    "alt": true,
+    "through": [
+     [
+      1.0,
+      -3.0
+     ],
+     [
+      5.3,
+      -1.6
+     ],
+     [
+      8.6,
+      4.2
+     ]
+    ]
+   }
+  ],
+  "X": {
+   "type": "stalk"
+  },
+  "Z": {
+   "type": "stalk"
+  }
+ },
+ "relationships": [
+  {
+   "type": "zone",
+   "participants": [
+    "Y",
+    "RT",
+    "RG",
+    "C",
+    "LG",
+    "LT",
+    "U"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "C",
+    "LG"
+   ]
+  }
+ ],
+ "handoff": {
+  "to": "RB",
+  "at": [
+   1.0,
+   -3.0
+  ]
+ },
+ "sources": [
+  "Weekly Spiral \u2014 Football 101: Outside Zone",
+  "FootballCoach.com \u2014 Bend-Bang-Bounce for outside zone (aiming point: outside leg of the TE)"
+ ]
+}

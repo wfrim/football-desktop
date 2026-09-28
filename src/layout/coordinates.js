@@ -95,6 +95,14 @@ window.FD = window.FD || {};
      */
     DEFAULT_FRAME: { x0: -29.5, x1: 29.5, y0: -9, y1: 20 },
 
+    /**
+     * The second canonical camera, for plays whose artwork stays within
+     * ~10 yd of the LOS (runs, screens, quick game). Only two scales exist,
+     * so the wallpaper never zooms to arbitrary sizes between plays.
+     */
+    TIGHT_FRAME: { x0: -21, x1: 21, y0: -9, y1: 11.5 },
+    TIGHT_MAX_DEPTH: 10,
+
     frameToSvg(fr) {
       return { x0: fr.x0, x1: fr.x1, y0: -fr.y1, y1: -fr.y0 };
     },

@@ -2,13 +2,20 @@
   "_note": "Formations and plays, in playlist order. Run `node tools/bundle-data.mjs` after editing so file:// loading picks up changes.",
   "formations": [
     "formations/gun_doubles_11.json",
-    "formations/gun_trips_11.json"
+    "formations/gun_trips_11.json",
+    "formations/pistol_strong_11.json",
+    "formations/singleback_tight_12.json"
   ],
   "plays": [
-    "plays/mesh.json",
-    "plays/four_verticals.json",
-    "plays/stick.json",
-    "plays/curl_flat.json",
-    "plays/dagger.json"
+    "plays/mesh_gun_doubles_11.json",
+    "plays/inside_zone_gun_doubles_11.json",
+    "plays/four_verticals_gun_doubles_11.json",
+    "plays/power_pistol_strong_11.json",
+    "plays/stick_gun_trips_11.json",
+    "plays/hb_screen_gun_trips_11.json",
+    "plays/curl_flat_gun_doubles_11.json",
+    "plays/outside_zone_singleback_tight_12.json",
+    "plays/dagger_gun_doubles_11.json",
+    "plays/counter_gt_gun_trips_11.json"
   ]
 }

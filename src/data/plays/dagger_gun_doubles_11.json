@@ -1,0 +1,63 @@
+{
+ "id": "dagger_gun_doubles_11",
+ "name": "Dagger",
+ "family": "dropback_pass",
+ "personnel": "11",
+ "formation": "gun_doubles_11",
+ "copy": {
+  "title": "DAGGER",
+  "meta": "INTERMEDIATE PASS \u00b7 11 PERSONNEL",
+  "description": "The seam clears space for a deep dig underneath."
+ },
+ "assignments": {
+  "H": {
+   "type": "seam"
+  },
+  "X": {
+   "type": "dig",
+   "depth": 15,
+   "length": 12
+  },
+  "Z": {
+   "type": "go"
+  },
+  "Y": {
+   "type": "sit",
+   "depth": 5.5
+  },
+  "RB": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "flat",
+    "dir": "right",
+    "width": 8
+   }
+  }
+ },
+ "relationships": [
+  {
+   "type": "clear",
+   "clear": "H",
+   "into": "X",
+   "margin": 2
+  }
+ ],
+ "ball": {
+  "to": "X",
+  "at": 0.96
+ },
+ "conceptId": "dagger",
+ "subfamily": "clear_dig",
+ "reads": [
+  "H",
+  "X",
+  "Y"
+ ],
+ "sources": [
+  "Project handoff #1 \u2014 canonical presentation, route depths and relationship",
+  "Dagger: #2 seam clears the hook/curl zone for #1's deep dig; backside checkdown"
+ ],
+ "football": {
+  "read": "Seam first vs a hole in the middle of the field; otherwise the dig behind the vacated hook defender; backside sit / RB as the check-down."
+ }
+}

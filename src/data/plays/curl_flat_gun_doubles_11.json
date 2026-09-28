@@ -1,0 +1,64 @@
+{
+ "id": "curl_flat_gun_doubles_11",
+ "name": "Curl-Flat",
+ "family": "quick_pass",
+ "personnel": "11",
+ "formation": "gun_doubles_11",
+ "copy": {
+  "title": "CURL-FLAT",
+  "meta": "QUICK PASS \u00b7 11 PERSONNEL",
+  "description": "Creates a high-low read on the flat defender."
+ },
+ "assignments": {
+  "Z": {
+   "type": "curl"
+  },
+  "Y": {
+   "type": "flat",
+   "dir": "right",
+   "width": 8
+  },
+  "X": {
+   "type": "curl"
+  },
+  "H": {
+   "type": "flat",
+   "dir": "left",
+   "width": 8
+  },
+  "RB": {
+   "type": "pass_set"
+  }
+ },
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "Z",
+   "low": "Y"
+  },
+  {
+   "type": "high_low",
+   "high": "X",
+   "low": "H"
+  }
+ ],
+ "ball": {
+  "to": "Z",
+  "at": 1
+ },
+ "conceptId": "curl_flat",
+ "subfamily": "high_low",
+ "reads": [
+  "Z",
+  "Y",
+  "X",
+  "H"
+ ],
+ "sources": [
+  "Project handoff #1 \u2014 canonical presentation, route depths and relationship",
+  "Curl-flat: Cover 2 beater, mirrored both sides (most common 2x2 presentation)"
+ ],
+ "football": {
+  "read": "High-low the flat defender: he sinks under the curl \u2192 flat; he widens to the flat \u2192 curl. Mirrored so the QB picks the better side pre-snap."
+ }
+}

@@ -55,6 +55,7 @@ window.FD = window.FD || {};
       const tl = new FD.Timeline(P.end);
 
       tl.at(0.05, () => hud.enter());
+      if (scene.reframed) tl.track(0, 1.0, (p) => scene.field.setAttribute('opacity', FD.svg.f(p)), 'inOutSine');
 
       // Entry: line of scrimmage draws outward from the ball.
       scene.los.forEach((d) => tl.track(0.12, T.losDraw, (p) => d.setProgress(p), 'inOutCubic'));
@@ -75,6 +76,7 @@ window.FD = window.FD || {};
         const kind = T.kinds[a.kind] || {};
         const moves = a.kind === 'motion' || (sim && kind.moves);
         tl.track(a.start, a.duration, (p) => {
+          a.lastP = p;
           a.view.setProgress(p);
           if (moves) pl.marker.setPosition(a.measure.at(p).point);
         }, a.ease);
@@ -143,6 +145,38 @@ window.FD = window.FD || {};
         }
       }
 
+      // Handoff: ball to the exchange point, then it rides the carrier's track.
+      const ho = scene.handoff;
+      if (ho && qb) {
+        const tr = ho.track;
+        const tEx = FD.Relationships.timeAt(tr, ho.at);
+        const exPt = tr.measure.at(ho.at).point;
+        const qbPos = scene.toSvg(qb.snap);
+        const t0 = Math.max(P.snap + T.snapDuration, tEx - T.exchange);
+        tl.track(t0, tEx - t0, (p, raw) => {
+          if (raw > 0) {
+            qb.marker.setHasBall(false);
+            ball.setVisible(true);
+            ball.setOpacity(1);
+          }
+          ball.setPos(G.lerp(qbPos, exPt, p));
+        }, 'inOutQuad');
+        // Ride along the track as it draws (diagram) or as the carrier runs (simulation).
+        tl.track(tEx, tr.start + tr.duration - tEx, () => {
+          const p = Math.max(ho.at, tr.lastP || 0);
+          const pt = tr.measure.at(p);
+          ball.setPos(pt.point);
+          ball.setRotation((Math.atan2(pt.tangent[1], pt.tangent[0]) * 180) / Math.PI);
+        }, 'linear');
+        const ring = FD.svg.el('circle', {
+          cx: FD.svg.f(exPt[0]), cy: FD.svg.f(exPt[1]), r: 0.4, class: 'catch-ring', opacity: 0,
+        }, scene.layers.ball);
+        tl.track(tEx, T.catchPulse, (p) => {
+          ring.setAttribute('r', FD.svg.f(0.4 + 0.9 * p));
+          ring.setAttribute('opacity', FD.svg.f(0.7 * (1 - p)));
+        }, 'outCubic');
+      }
+
       // Exit.
       tl.at(P.exit, () => hud.exit());
       tl.track(P.exit, P.end - P.exit, (p) => scene.setOpacity(1 - p), 'inCubic');
@@ -162,6 +196,7 @@ window.FD = window.FD || {};
       const tl = new FD.Timeline(hold);
       tl.at(0.05, () => hud.enter());
       tl.track(0, fade, (p) => scene.setOpacity(p), 'inOutSine');
+      if (scene.reframed) tl.track(0, fade, (p) => scene.field.setAttribute('opacity', FD.svg.f(p)), 'inOutSine');
       tl.at(hold - fade, () => hud.exit());
       tl.track(hold - fade, fade, (p) => scene.setOpacity(1 - p), 'inOutSine');
       return tl;

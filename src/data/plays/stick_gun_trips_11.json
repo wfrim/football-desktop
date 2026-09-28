@@ -1,0 +1,60 @@
+{
+ "id": "stick_gun_trips_11",
+ "name": "Stick",
+ "family": "quick_pass",
+ "personnel": "11",
+ "formation": "gun_trips_11",
+ "copy": {
+  "title": "STICK",
+  "meta": "QUICK GAME \u00b7 11 PERSONNEL",
+  "description": "A simple three-level stretch of the underneath defender."
+ },
+ "assignments": {
+  "Z": {
+   "type": "go"
+  },
+  "H": {
+   "type": "stick",
+   "depth": 5.5
+  },
+  "Y": {
+   "type": "flat",
+   "dir": "right",
+   "width": 9
+  },
+  "X": {
+   "type": "slant"
+  },
+  "RB": {
+   "type": "pass_set"
+  }
+ },
+ "relationships": [
+  {
+   "type": "levels",
+   "participants": [
+    "Z",
+    "H",
+    "Y"
+   ]
+  }
+ ],
+ "ball": {
+  "to": "H",
+  "at": 1
+ },
+ "conceptId": "stick",
+ "subfamily": "quick",
+ "reads": [
+  "H",
+  "Y",
+  "X"
+ ],
+ "sources": [
+  "Project handoff #1 \u2014 canonical presentation, route depths and relationship",
+  "Stick concept: #1 clears, #2 stick at 5-6, #3 flat; backside slant"
+ ],
+ "football": {
+  "read": "Read the flat defender: if he widens with the flat, throw the stick; if he sits on the stick, throw the flat. Backside slant vs pressure."
+ }
+}

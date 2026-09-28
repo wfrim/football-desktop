@@ -97,6 +97,8 @@ window.FD = window.FD || {};
           outward,
           inward: -outward,
           lateral: 1,
+          playside: play.side === 'left' ? -1 : 1,
+          abs: (q) => G.sub(C.fromData(q), origin),
           u: (n) => C.scalar(n),
           v: (q) => C.fromData(q),
           dy: (depth) => C.scalar(depth) - origin[1],
@@ -111,10 +113,11 @@ window.FD = window.FD || {};
           defs: stage.defs,
           path,
           kind: prim.kind,
-          style: prim.style,
+          style: spec.alt ? 'dashed' : prim.style,
           end: prim.end,
-          primary: spec.player === primaryId && prim.kind === 'route',
+          primary: !spec.alt && spec.player === primaryId && (prim.kind === 'route' || prim.kind === 'run'),
         });
+        if (spec.alt) view.el.classList.add('is-alt');
         destroyers.push(view.destroy);
 
         const timing = FD.Timing.resolve(prim.kind, spec.timing, view.length);
@@ -123,13 +126,20 @@ window.FD = window.FD || {};
           timing.start = prev.start + prev.duration + gap;
         }
         const a = {
-          spec, player: spec.player, kind: prim.kind, path, view, ballX, fieldPts,
+          spec, player: spec.player, kind: prim.kind, alt: !!spec.alt, path, view, ballX, fieldPts,
           measure: view.measure, fieldEnd: fieldPts[fieldPts.length - 1], ...timing,
         };
         assignments.push(a);
-        pl.assignments.push(a);
+        if (!a.alt) pl.assignments.push(a);
         if (prim.kind === 'motion') pl.snap = a.fieldEnd;
       }
+
+      // ── Camera: tight for plays that live near the line ──────────────────
+      let deepest = 0;
+      for (const a of assignments) for (const q of a.fieldPts) deepest = Math.max(deepest, q[1]);
+      const frameKey = play.frame || (deepest <= C.TIGHT_MAX_DEPTH ? 'tight' : 'default');
+      const reframed = stage.setFrame(frameKey);
+      if (reframed) stage.field.setAttribute('opacity', 0);
 
       // ── Markers (after paths so they sit on top; placed at alignment) ────
       for (const pl of players.values()) {
@@ -138,7 +148,7 @@ window.FD = window.FD || {};
       }
 
       // ── Line of scrimmage + line to gain ─────────────────────────────────
-      const hw = C.FIELD.halfWidth;
+      const hw = Math.min(C.FIELD.halfWidth, stage.frame.x1 - 0.5);
       const los = [-hw, hw].map((edge) =>
         FD.RouteRenderer.create({
           parent: layers.scrim, defs: stage.defs, kind: 'los', cls: 'los',
@@ -184,6 +194,28 @@ window.FD = window.FD || {};
           timing: bspec.timing || {},
         };
         pass.trailParent = layers.ball;
+      }
+
+      // ── Handoff: the ball rides the carrier's track from the exchange ─────
+      let handoff = null;
+      const ho = play.handoff;
+      if (ho && qb) {
+        const carrier = players.get(ho.to);
+        const track = carrier ? carrier.assignments.filter((a) => a.kind === 'run').pop() : null;
+        if (!track) warnings.push(`handoff target "${ho.to}" has no carry`);
+        else {
+          let at = typeof ho.at === 'number' ? ho.at : 0.25;
+          if (Array.isArray(ho.at)) {
+            // Nearest point on the (drawn) track to the given exchange landmark.
+            const want = toSvg(C.fromData(ho.at));
+            let best = Infinity;
+            for (let i = 0; i <= 200; i++) {
+              const d = G.dist(track.measure.at(i / 200).point, want);
+              if (d < best) { best = d; at = i / 200; }
+            }
+          }
+          handoff = { carrier, track, at, from: qb };
+        }
       }
 
       // ── Read / progression numerals ─────────────────────────────────────
@@ -236,9 +268,12 @@ window.FD = window.FD || {};
         qb,
         ball,
         pass,
+        handoff,
         reads,
         events,
         warnings,
+        reframed,
+        field: stage.field,
         setOpacity(o) { root.setAttribute('opacity', f(o)); },
         /** Add a drawable created later (e.g. by choreography) to teardown. */
         own(destroy) { destroyers.push(destroy); },

@@ -41,6 +41,7 @@ window.FD = window.FD || {};
         fps: clamp(Math.round(num('fps', 60)), 15, 120),
         order: pick('order', ['sequential', 'shuffle'], 'sequential'),
         seed: Math.round(num('seed', 1)),
+        soak: q.has('soak'),
         start: q.get('play'),
         freeze: q.has('t') ? num('t', null) : null,
         mockTag: q.get('mocktag') !== '0',

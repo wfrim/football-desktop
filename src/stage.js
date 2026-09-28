@@ -14,13 +14,15 @@ window.FD = window.FD || {};
       const defs = el('defs', null, svg);
       const field = FD.FieldRenderer.create(svg, defs, {});
       const playLayer = el('g', { class: 'play-layer' }, svg);
-      const frame = FD.Coords.frameToSvg(FD.Coords.DEFAULT_FRAME);
-
-      if (cfg.debug) {
-        el('rect', {
-          x: frame.x0, y: frame.y0, width: frame.x1 - frame.x0, height: frame.y1 - frame.y0, class: 'debug-frame',
-        }, svg);
-      }
+      let frame = FD.Coords.frameToSvg(FD.Coords.DEFAULT_FRAME);
+      let frameKey = 'default';
+      const debugRect = cfg.debug ? el('rect', { class: 'debug-frame' }, svg) : null;
+      const drawDebug = () => {
+        if (debugRect) {
+          for (const [k, v] of Object.entries({ x: frame.x0, y: frame.y0, width: frame.x1 - frame.x0, height: frame.y1 - frame.y0 })) debugRect.setAttribute(k, v);
+        }
+      };
+      drawDebug();
 
       let raf = 0;
       const apply = () => {
@@ -38,7 +40,16 @@ window.FD = window.FD || {};
         defs,
         field,
         playLayer,
-        frame,
+        get frame() { return frame; },
+        /** Switch canonical camera ('default' | 'tight'). Returns true if it changed. */
+        setFrame(key) {
+          if (key === frameKey) return false;
+          frameKey = key;
+          frame = FD.Coords.frameToSvg(key === 'tight' ? FD.Coords.TIGHT_FRAME : FD.Coords.DEFAULT_FRAME);
+          apply();
+          drawDebug();
+          return true;
+        },
         destroy() {
           window.removeEventListener('resize', onResize);
           if (raf) cancelAnimationFrame(raf);
