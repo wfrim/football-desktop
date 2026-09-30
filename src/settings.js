@@ -22,7 +22,10 @@ window.FD = window.FD || {};
     hash:    { label: 'Hash',           choices: [['middle', 'Middle'], ['random', 'Varied']], def: 'middle' },
     drive:   { label: 'Drive mode',     choices: [['off', 'Off'], ['on', 'On']], def: 'off' },
     motion:  { label: 'Motion',         choices: [['full', 'Full'], ['calm', 'Calm'], ['still', 'Still']], def: 'full' },
-    speed:   { label: 'Pace',           choices: [['0.8', 'Slow'], ['1', 'Normal'], ['1.25', 'Quick']], def: '1' },
+    speed:   { label: 'Pace',           choices: [['0.55', 'Extra slow'], ['0.8', 'Slow'], ['1', 'Normal'], ['1.25', 'Quick']], def: '1' },
+    length:  { label: 'Play length',    choices: [['7', '7 s'], ['9', '9 s'], ['12', '12 s'], ['16', '16 s'], ['24', '24 s']], def: '9' },
+    zoom:    { label: 'Zoom',           choices: [['close', 'Close'], ['standard', 'Standard'], ['wide', 'Wide']], def: 'standard' },
+    moments: { label: 'Moments',        choices: [['on', 'On'], ['off', 'Off']], def: 'on' },
   };
 
   function load() {

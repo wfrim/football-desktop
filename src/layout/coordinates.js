@@ -106,8 +106,16 @@ window.FD = window.FD || {};
      * ~10 yd of the LOS (runs, screens, quick game). Only two scales exist,
      * so the wallpaper never zooms to arbitrary sizes between plays.
      */
-    TIGHT_FRAME: { x0: -21, x1: 21, y0: -9, y1: 11.5 },
+    TIGHT_FRAME: { x0: -23, x1: 23, y0: -9, y1: 14.5 },
     TIGHT_MAX_DEPTH: 10,
+
+    /** Scale a frame about its centre (zoom: <1 closer, >1 wider). */
+    zoomFrame(fr, k) {
+      const cx = (fr.x0 + fr.x1) / 2;
+      const cy = (fr.y0 + fr.y1) / 2;
+      return { x0: cx + (fr.x0 - cx) * k, x1: cx + (fr.x1 - cx) * k, y0: cy + (fr.y0 - cy) * k, y1: cy + (fr.y1 - cy) * k };
+    },
+    ZOOM: { close: 0.92, standard: 1.06, wide: 1.22 },
 
     frameToSvg(fr) {
       return { x0: fr.x0, x1: fr.x1, y0: -fr.y1, y1: -fr.y0 };

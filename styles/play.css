@@ -266,3 +266,5 @@
 .def-p.is-key .def-mark { stroke-opacity: 0.75; stroke-width: var(--sw-route); }
 .a-wrap-def.is-key .a-def { stroke-opacity: 0.6; }
 .def-ring { fill: none; stroke: var(--ink); stroke-width: var(--sw-block); }
+
+.moment-ring { fill: none; stroke: var(--ink); stroke-width: var(--sw-block); }

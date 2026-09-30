@@ -24,7 +24,8 @@ window.FD = window.FD || {};
     if (pass.point) return pass.point;
     const r = pass.route;
     if (!r) return null;
-    if (!sim) return r.measure.at(pass.at).point;
+    // Diagram: the ball lands ON the arrowhead / settle ring, never on the line behind it.
+    if (!sim) return G.endPoint(r.path);
     // Where the receiver actually is when the ball arrives.
     const raw = Math.max(0, Math.min(1, (arrive - r.start) / r.duration));
     return r.measure.at(FD.Ease[r.ease] ? FD.Ease[r.ease](raw) : raw).point;
@@ -41,18 +42,60 @@ window.FD = window.FD || {};
     const pass = scene.pass;
     let arrive = pass && typeof pass.timing.arrive === 'number' ? pass.timing.arrive : P.arrive;
     if (pass && pass.route && !pass.point && !sim) {
-      const drawnAt = FD.Relationships.timeAt(pass.route, pass.at);
+      const drawnAt = FD.Relationships.timeAt(pass.route, 1);
       arrive = Math.max(arrive, drawnAt + 0.15);
     }
-    arrive = Math.min(arrive, P.exit - T.catchPulse - 0.3);
+    arrive = Math.min(arrive, P.exit + (scene.holdExtra || 0) - T.catchPulse - 0.3);
     return { release: arrive - flight, arrive };
   }
 
+  /** A brief ink ring at `pt` (SVG space) starting at time t — the "moment" pulse. */
+  function momentRing(scene, tl, pt, t, big) {
+    const ring = FD.svg.el('circle', { cx: FD.svg.f(pt[0]), cy: FD.svg.f(pt[1]), r: 0.35, class: big ? 'catch-ring' : 'moment-ring', opacity: 0 }, scene.layers.notes);
+    tl.track(t, big ? 1.2 : 0.9, (p) => {
+      ring.setAttribute('r', FD.svg.f(0.35 + (big ? 1.9 : 0.9) * p));
+      ring.setAttribute('opacity', FD.svg.f((big ? 0.9 : 0.55) * (1 - p)));
+    }, 'outCubic');
+  }
+
+  /** The one structural moment of a play: crossers meeting, or a kick-out / double team landing. */
+  function structuralMoment(scene, tl) {
+    const rels = scene.play.relationships || [];
+    const routeOf = (id) => { const pl = scene.players.get(id); return pl ? pl.assignments.filter((a) => a.kind === 'route').pop() : null; };
+    const mesh = rels.find((r) => r.type === 'mesh');
+    if (mesh && mesh.participants && mesh.participants.length === 2) {
+      const [ra, rb] = mesh.participants.map(routeOf);
+      if (ra && rb) {
+        const A = ra.measure.points;
+        const B = rb.measure.points;
+        let best = Infinity; let bi = 0; let bj = 0;
+        for (let i = 0; i < A.length; i++) for (let j = 0; j < B.length; j++) {
+          const d = G.dist(A[i], B[j]);
+          if (d < best) { best = d; bi = i; bj = j; }
+        }
+        const t = Math.max(FD.Relationships.timeAt(ra, bi / (A.length - 1)), FD.Relationships.timeAt(rb, bj / (B.length - 1)));
+        momentRing(scene, tl, G.lerp(A[bi], B[bj], 0.5), t);
+        return;
+      }
+    }
+    const blockerId = (rels.find((r) => r.type === 'kickout') || {}).blocker || (rels.find((r) => r.type === 'pull') || {}).puller
+      || ((rels.find((r) => r.type === 'combo') || {}).participants || [])[0];
+    const pl = blockerId && scene.players.get(blockerId);
+    const a = pl && pl.assignments[0];
+    if (a && a.spec.end !== 'none') momentRing(scene, tl, G.endPoint(a.path), a.start + a.duration);
+  }
+
   const Choreography = {
+    momentRing,
     build(scene, hud, cfg) {
       const P = T.phases;
       const sim = cfg.mode === 'simulation';
-      const tl = new FD.Timeline(P.end);
+      // Play length: extra (or less) hold on the finished diagram; drawing speed unchanged.
+      const extra = Math.max(-1.8, cfg.holdExtra || 0);
+      scene.holdExtra = extra;
+      const EXIT = P.exit + extra;
+      const END = P.end + extra;
+      const tl = new FD.Timeline(END);
 
       tl.at(0.05, () => hud.enter());
       if (scene.reframed) tl.track(0, 1.0, (p) => scene.field.setAttribute('opacity', FD.svg.f(p)), 'inOutSine');
@@ -196,9 +239,12 @@ window.FD = window.FD || {};
         }, 'outCubic');
       }
 
+      // Moments: one structural pulse per play (settings → Moments).
+      if (!cfg.settings || cfg.settings.moments !== 'off') structuralMoment(scene, tl);
+
       // Exit.
-      tl.at(P.exit, () => hud.exit());
-      tl.track(P.exit, P.end - P.exit, (p) => scene.setOpacity(1 - p), 'inCubic');
+      tl.at(EXIT, () => hud.exit());
+      tl.track(EXIT, END - EXIT, (p) => scene.setOpacity(1 - p), 'inCubic');
 
       return tl;
     },
@@ -210,7 +256,7 @@ window.FD = window.FD || {};
       scene.setOpacity(0);
       full.evaluate(Math.min(T.phases.exit - 0.01, Math.max(T.phases.hold, T.phases.arrive + T.catchPulse + 0.01)));
 
-      const hold = T.staticHold;
+      const hold = cfg.staticHold || T.staticHold;
       const fade = T.staticFade;
       const tl = new FD.Timeline(hold);
       tl.at(0.05, () => hud.enter());

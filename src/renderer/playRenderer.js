@@ -37,6 +37,7 @@ window.FD = window.FD || {};
     apply();
     return {
       pre,
+      getPos: () => pos,
       setPos(p) { pos = p; apply(); },
       setRotation(r) { rot = r; apply(); },
       setScale(s) { scale = s; apply(); },
@@ -208,28 +209,45 @@ window.FD = window.FD || {};
         if (prim.kind === 'motion') pl.snap = a.fieldEnd;
       }
 
-      // ── Camera: tight for plays that live near the line ──────────────────
-      const deepest = L.deepest;
-      const frameKey = play.frame || (deepest <= C.TIGHT_MAX_DEPTH ? 'tight' : 'default');
-      const reframed = stage.setFrame(frameKey);
-      stage.field.update(place ? place.spot : null, Math.min(C.FIELD.halfWidth + 0.9, stage.frame.x1 - 0.6));
-      if (reframed) stage.field.setAttribute('opacity', 0);
-
-      // ── Faint defense (generated from the offense's alignment) ───────────
-      let defense = null;
+      // ── Faint defense data (built before the camera so the frame fits it) ─
+      let defData = null;
       const defMode = cfg.settings ? cfg.settings.defense : 'off';
       if (defMode !== 'off' && FD.Defense && play.defense !== false) {
-        try {
-          const D = FD.Defense.build(play, play.defense, ballX);
-          const k = FD.Defense.keyOf(D.defenders, D.look.key);
-          defense = FD.DefenseRenderer.create({
-            parent: layers.defense, defs: stage.defs, defenders: D.defenders, toSvg, players,
-            keyId: k ? k.id : null, showKey: defMode === 'key',
-          });
-          destroyers.push(defense.destroy);
-        } catch (err) {
-          warnings.push(`defense: ${err.message}`);
+        try { defData = FD.Defense.build(play, play.defense, ballX); } catch (err) { warnings.push(`defense: ${err.message}`); }
+      }
+
+      // ── Camera: tight when everything (offense, defense, drops) fits it ──
+      let deepest = L.deepest;
+      let widest = 0;
+      for (const it of L.items) for (const q of it.fieldPts) widest = Math.max(widest, Math.abs(q[0] + ballX));
+      for (const p of players.values()) widest = Math.max(widest, Math.abs(p.align[0] + ballX));
+      if (defData) {
+        for (const d of defData.defenders) {
+          for (const q of [d.at, d.drop, d.fit]) {
+            if (!q) continue;
+            const fq = C.fromData(q);
+            deepest = Math.max(deepest, fq[1]);
+            widest = Math.max(widest, Math.abs(fq[0] + ballX));
+          }
         }
+      }
+      const TF = C.TIGHT_FRAME;
+      const fitsTight = L.deepest <= C.TIGHT_MAX_DEPTH && deepest <= TF.y1 - 0.8 && widest <= TF.x1 - 0.8;
+      const frameKey = play.frame || cfg.frameLock || (fitsTight ? 'tight' : 'default');
+      const zoom = C.ZOOM[(cfg.settings && cfg.settings.zoom) || 'standard'] || 1;
+      const reframed = stage.setFrame(frameKey, zoom);
+      if (reframed) stage.field.setAttribute('opacity', 0);
+      stage.field.update(place ? place.spot : null, Math.min(C.FIELD.halfWidth + 0.9, stage.frame.x1 - 0.6));
+
+      // ── Faint defense drawing ─────────────────────────────────────────────
+      let defense = null;
+      if (defData) {
+        const k = FD.Defense.keyOf(defData.defenders, defData.look.key);
+        defense = FD.DefenseRenderer.create({
+          parent: layers.defense, defs: stage.defs, defenders: defData.defenders, toSvg, players,
+          keyId: k ? k.id : null, showKey: defMode === 'key', bold: play.family === 'defense',
+        });
+        destroyers.push(defense.destroy);
       }
 
       // ── Markers (after paths so they sit on top; placed at alignment) ────
@@ -260,7 +278,7 @@ window.FD = window.FD || {};
           d: `M${f(-hw)} ${y}h${L}M${f(hw)} ${y}h${-L}`, class: 'ltg',
         }, layers.scrim);
         line.setAttribute('opacity', 0);
-        ltg = { setOpacity: (o) => line.setAttribute('opacity', f(o)) };
+        ltg = { setOpacity: (o) => line.setAttribute('opacity', f(o)), el: line };
       }
 
       // ── Ball ───────────────────────────────────────────────────────────

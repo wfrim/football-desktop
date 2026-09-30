@@ -56,6 +56,13 @@ window.FD = window.FD || {};
       // Motion setting: Full 30 fps · Calm 20 fps · Still (finished diagrams, crossfaded).
       if (!new URLSearchParams(location.search).has('fps')) animator.minFrameMs = 1000 / (cfg.settings.motion === 'calm' ? 20 : 30) - 1.5;
       if (!new URLSearchParams(location.search).has('motion')) cfg.motion = cfg.settings.motion === 'still' ? 'static' : 'auto';
+      // Play length (real seconds at the chosen pace): extra hold on the finished diagram.
+      {
+        const pace = animator.timeScale || 1;
+        const len = parseFloat(cfg.settings.length) || 9;
+        cfg.holdExtra = len * pace - FD.Timing.phases.end;
+        cfg.staticHold = Math.max(8, len) * pace;
+      }
       // Field position (drive mode takes over in drive.js).
       const q = new URLSearchParams(location.search);
       let filter = null;
@@ -87,7 +94,15 @@ window.FD = window.FD || {};
         if (drive) {
           // The result appears while the finished diagram holds.
           const result = drive.advance(info.play);
-          tl.at(profile === 'static' ? 1.2 : FD.Timing.phases.hold - 0.3, () => hud.result(result));
+          const tr = profile === 'static' ? 1.2 : FD.Timing.phases.hold - 0.3;
+          tl.at(tr, () => hud.result(result));
+          if (cfg.settings.moments !== 'off' && profile !== 'static') {
+            if (/TOUCHDOWN/.test(result)) {
+              tl.at(tr, () => FD.Choreography.momentRing(scene, tl, scene.ball.getPos(), tr, true));
+            } else if (/FIRST DOWN/.test(result) && scene.ltg) {
+              tl.track(tr, 1.2, (p) => scene.ltg.setOpacity(1 - 0.75 * Math.sin(Math.PI * p)), 'inOutSine');
+            }
+          }
         }
 
         if (cfg.freeze !== null) {

@@ -47,10 +47,12 @@ window.FD = window.FD || {};
         playLayer,
         get frame() { return frame; },
         /** Switch canonical camera ('default' | 'tight'). Returns true if it changed. */
-        setFrame(key) {
-          if (key === frameKey) return false;
-          frameKey = key;
-          frame = FD.Coords.frameToSvg(key === 'tight' ? FD.Coords.TIGHT_FRAME : FD.Coords.DEFAULT_FRAME);
+        setFrame(key, zoom) {
+          const k = `${key}|${zoom || 1}`;
+          if (k === frameKey) return false;
+          frameKey = k;
+          const base = key === 'tight' ? FD.Coords.TIGHT_FRAME : FD.Coords.DEFAULT_FRAME;
+          frame = FD.Coords.frameToSvg(FD.Coords.zoomFrame(base, zoom || 1));
           apply();
           drawDebug();
           return true;
