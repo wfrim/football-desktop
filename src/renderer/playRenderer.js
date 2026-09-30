@@ -38,6 +38,7 @@ window.FD = window.FD || {};
     return {
       pre,
       getPos: () => pos,
+      isShown: () => visible && opacity > 0.05,
       setPos(p) { pos = p; apply(); },
       setRotation(r) { rot = r; apply(); },
       setScale(s) { scale = s; apply(); },
@@ -294,13 +295,47 @@ window.FD = window.FD || {};
         } catch (err) { warnings.push(`defense: ${err.message}`); }
       }
 
+      // Option routes: a receiver with alternate branches runs ONE of them.
+      // Live styles read the coverage (man on him → break away; zone → sit);
+      // "Decide" picks a branch per snap in the diagram styles too. `flip`
+      // swaps which branch is real (the default look keeps the authored main).
+      const styleName = cfg.style || (cfg.settings && cfg.settings.style) || 'diagram';
+      const decideOpt = styleName === 'live' || styleName === 'game' || (cfg.settings && cfg.settings.options === 'decide');
+      const flip = new Set();
+      const treeOf = new Map(); // player → true when branches are shown as a route tree
+      if (decideOpt) {
+        const byPlayer = new Map();
+        L.items.forEach((it, i) => {
+          if (it.prim.kind !== 'route') return;
+          if (!byPlayer.has(it.spec.player)) byPlayer.set(it.spec.player, []);
+          byPlayer.get(it.spec.player).push(i);
+        });
+        for (const [pid, idxs] of byPlayer) {
+          const alts = idxs.filter((i) => L.items[i].spec.alt);
+          const mains = idxs.filter((i) => !L.items[i].spec.alt);
+          if (!alts.length || mains.length !== 1) continue;
+          let pick = -1; // -1: the authored main branch
+          if (styleName === 'live' || styleName === 'game') {
+            const manned = defData && defData.defenders.some((d) => d.man === pid);
+            if (manned) pick = 0;
+          } else {
+            let h = 0;
+            for (const ch of `${play.id}:${place ? place.spot : ''}:${Date.now() >> 12}`) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+            pick = (h % (alts.length + 1)) - 1;
+          }
+          if (pick >= 0) { flip.add(mains[0]); flip.add(alts[pick]); }
+          if (cfg.settings && cfg.settings.options === 'decide') treeOf.set(pid, true);
+        }
+      }
+      const altOf = (i) => (flip.has(i) ? !L.items[i].spec.alt : !!L.items[i].spec.alt);
+
       // Play style: Lead / Live — the targeted route stops where the ball meets
       // the receiver in stride (the play's ball.at); the rest becomes a ghost.
-      const style = cfg.style || (cfg.settings && cfg.settings.style) || 'diagram';
+      const style = styleName;
       let leadIdx = -1;
       const bt = play.ball && play.ball.to;
       if (style !== 'diagram' && bt && bt.player && typeof bt.at === 'number' && bt.at < 0.97) {
-        L.items.forEach((it, i) => { if (it.spec.player === bt.player && it.prim.kind === 'route' && !it.spec.alt) leadIdx = i; });
+        L.items.forEach((it, i) => { if (it.spec.player === bt.player && it.prim.kind === 'route' && !altOf(i)) leadIdx = i; });
       }
 
       // Live styles: receivers' perimeter blocks go to real defenders (nearest
@@ -330,7 +365,8 @@ window.FD = window.FD || {};
       }
 
       for (let idx = 0; idx < L.items.length; idx++) {
-        const { spec } = L.items[idx];
+        const spec = flip.has(idx) ? Object.assign({}, L.items[idx].spec, { alt: altOf(idx) }) : L.items[idx].spec;
+        const tree = spec.alt && treeOf.has(spec.player) && L.items[idx].prim.kind === 'route';
         let { prim, fieldPts } = L.items[idx];
         if (blockOn.has(idx)) {
           const { q } = blockOn.get(idx);
@@ -360,11 +396,11 @@ window.FD = window.FD || {};
           defs: stage.defs,
           path,
           kind: prim.kind,
-          style: spec.alt ? 'dashed' : prim.style,
+          style: tree ? 'dotted' : spec.alt ? 'dashed' : prim.style,
           end: prim.end,
           primary: !spec.alt && spec.player === primaryId && (prim.kind === 'route' || prim.kind === 'run'),
         });
-        if (spec.alt) view.el.classList.add('is-alt');
+        if (spec.alt) view.el.classList.add(tree ? 'is-tree' : 'is-alt');
         destroyers.push(view.destroy);
 
         const timing = FD.Timing.resolve(prim.kind, spec.timing, view.length);
@@ -377,6 +413,7 @@ window.FD = window.FD || {};
           measure: view.measure, fieldEnd: fieldPts[fieldPts.length - 1], ...timing,
         };
         assignments.push(a);
+        if (tree) a.tree = true;
         if (!a.alt) pl.assignments.push(a);
         if (blockOn.has(idx)) a.engages = blockOn.get(idx).d.id;
         if (prim.kind === 'motion') pl.snap = a.fieldEnd;

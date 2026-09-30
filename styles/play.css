@@ -283,3 +283,7 @@
 
 .a-wrap .a.is-dotted, .a-wrap:has(.is-ghost) {}
 .a-wrap.is-ghost .a, .is-ghost .a { stroke-opacity: 0.28; }
+
+/* Option routes as a route tree (Settings → Option routes: Decide). */
+.a-wrap.is-tree .a { stroke-opacity: 0.5; }
+.a-wrap.is-tree .a-head { fill-opacity: 0.45; }

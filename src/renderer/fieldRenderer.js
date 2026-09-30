@@ -48,6 +48,9 @@ window.FD = window.FD || {};
         const k = `${spot}|${labelX}`;
         if (k === key) return;
         key = k;
+        // Registration crosses belong to the real field (every 5 yard lines), so a
+        // drive's scroll and the reset after it line up exactly: no jump.
+        pat.setAttribute('y', f(-2.5 + (spot === null ? 0 : ((spot % 5) + 5) % 5)));
         if (dyn) dyn.remove();
         dyn = el('g', { class: 'field-dyn' }, g);
         const lx = f(-labelX);

@@ -103,6 +103,13 @@ window.FD = window.FD || {};
       const EXIT = P.exit + extra;
       const END = P.end + extra + (cfg.transition === 'rewind' || cfg.exitShift ? 0.5 : 0);
       const tl = new FD.Timeline(END);
+      // Who holds the ball from when (QA, and the ball follows its holder).
+      scene.possession = [];
+      scene.holderAt = (t) => {
+        let h = null;
+        for (const e of scene.possession) if (e.t <= t) h = e.holder;
+        return h;
+      };
 
       tl.at(0.05, () => hud.enter());
       if (scene.reframed) tl.track(0, 1.0, (p) => scene.field.setAttribute('opacity', FD.svg.f(p)), 'inOutSine');
@@ -144,11 +151,31 @@ window.FD = window.FD || {};
         if (D.key) tl.track(P.read, T.catchPulse * 1.2, (p) => D.key.pulse(p), 'outCubic');
       }
 
+      // Option routes shown as a route tree: every branch dots out with the
+      // receiver's stem; once he breaks, the branches he didn't take fade.
+      for (const a of scene.assignments) {
+        if (!a.tree) continue;
+        const pl = scene.players.get(a.player);
+        const real = pl && pl.assignments.filter((b) => b.kind === 'route').pop();
+        if (!real) continue;
+        let split = 1;
+        const pts = a.measure.points;
+        for (let i = 0; i < pts.length; i++) {
+          if (G.distToPolyline(pts[i], real.measure.points) > 0.6) { split = i / Math.max(1, pts.length - 1); break; }
+        }
+        const decide = FD.Relationships.timeAt(real, Math.min(1, split + 0.08));
+        a.start = real.start;
+        a.duration = Math.max(0.5, decide - real.start);
+        a.ease = 'linear';
+        tl.track(decide + 0.1, 0.7, (p) => a.view.el.setAttribute('opacity', FD.svg.f(1 - p)), 'outCubic');
+      }
+
       // Assignments.
       for (const a of scene.assignments) {
         const pl = scene.players.get(a.player);
         const kind = T.kinds[a.kind] || {};
-        const moves = a.kind === 'motion' || (sim && kind.moves);
+        // Alternate branches (cutbacks, option breaks) and ghosts are notation: they never move a player.
+        const moves = !a.alt && (a.kind === 'motion' || (sim && kind.moves));
         tl.track(a.start, a.duration, (p) => {
           a.lastP = p;
           a.view.setProgress(p);
@@ -240,13 +267,25 @@ window.FD = window.FD || {};
           }
           ball.setPos(G.lerp(qbPos, exPt, p));
         }, 'inOutQuad');
-        // Ride along the track as it draws (diagram) or as the carrier runs (simulation).
-        tl.track(tEx, tr.start + tr.duration - tEx, () => {
-          const p = Math.max(ho.at, tr.lastP || 0);
-          const pt = tr.measure.at(p);
-          ball.setPos(pt.point);
-          ball.setRotation((Math.atan2(pt.tangent[1], pt.tangent[0]) * 180) / Math.PI);
-        }, 'linear');
+        if (sim) scene.possession.push({ t: tEx + 0.05, holder: ho.carrier });
+        if (sim) {
+          // Simulation: the ball stays in the carrier's arms, wherever he runs (carry, cutback, run after contact).
+          let prev = exPt;
+          tl.track(tEx, END - tEx, () => {
+            const q = ho.carrier.marker.position;
+            if (G.dist(q, prev) > 0.02) ball.setRotation((Math.atan2(q[1] - prev[1], q[0] - prev[0]) * 180) / Math.PI);
+            prev = q;
+            ball.setPos(q);
+          }, 'linear');
+        } else {
+          // Diagram: ride the tip of the carry as it draws.
+          tl.track(tEx, tr.start + tr.duration - tEx, () => {
+            const p = Math.max(ho.at, tr.lastP || 0);
+            const pt = tr.measure.at(p);
+            ball.setPos(pt.point);
+            ball.setRotation((Math.atan2(pt.tangent[1], pt.tangent[0]) * 180) / Math.PI);
+          }, 'linear');
+        }
         const ring = FD.svg.el('circle', {
           cx: FD.svg.f(exPt[0]), cy: FD.svg.f(exPt[1]), r: 0.4, class: 'catch-ring', opacity: 0,
         }, scene.layers.ball);
@@ -266,10 +305,6 @@ window.FD = window.FD || {};
           const t0 = tr[0][0];
           const t1 = tr[tr.length - 1][0];
           tl.track(t0, t1 - t0, (p) => g.setPos(FD.Live.trackAt(tr, t0 + p * (t1 - t0))), 'linear');
-        }
-        if (LV.yac && scene.handoff) {
-          const y = LV.yac;
-          tl.track(y.start, y.duration, (p) => ball.setPos(y.measure.at(p).point), 'linear');
         }
         const oc = LV.outcome;
         if (LV.game && (oc.type === 'tackle' || oc.type === 'score') && LV.yac && (!cfg.settings || cfg.settings.moments !== 'off')) {

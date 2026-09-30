@@ -150,8 +150,10 @@ window.FD = window.FD || {};
     let scored = false;
     const up = [0, -1];
     for (let k = 0; k < 70 && t < o.endT; k++, t += DT) {
-      // Steering: blend toward upfield, bend away from defenders ahead (small angles).
-      dir = norm(G.add(G.mul(dir, 0.82), G.mul(up, 0.18)));
+      // Steering: catch, plant (≈0.3 s), then get downhill fast; bend away from
+      // defenders ahead (small angles). Crossers turn upfield within ~2 yards.
+      const plant = ev.kind === 'catch' && k < 3;
+      if (!plant) dir = norm(G.add(G.mul(dir, 0.55), G.mul(up, 0.45)));
       let push = 0;
       for (const x of D) {
         const v = G.sub(pos, x.pos);
@@ -167,10 +169,10 @@ window.FD = window.FD || {};
       }
       let heading = norm([dir[0] + 0.32 * push, dir[1]]);
       const ang = Math.atan2(heading[0], -heading[1]);
-      const lim = k < 4 ? 1.2 : 0.62; // ≤ ~35° off vertical once turned upfield
+      const lim = plant ? 1.45 : 0.62; // ≤ ~35° off vertical once turned upfield
       if (Math.abs(ang) > lim) heading = [Math.sin(Math.sign(ang) * lim), -Math.cos(lim)];
       dir = heading;
-      const tired = k * DT > 1.5 ? 0.82 : 1; // carriers slow after a burst
+      const tired = (plant ? 0.7 : 1) * (k * DT > 1.5 ? 0.82 : 1); // gather at the catch; slow after a burst
       const stepLen = vRun * tired * DT;
       pos = G.add(pos, G.mul(heading, stepLen));
       pos[0] = Math.max(-26 + 1, Math.min(26 - 1, pos[0]));

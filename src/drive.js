@@ -4,7 +4,8 @@
  * State: spot (yards from own goal), down, distance, drive number. Each play
  * is chosen for the situation (eligible(play)), then a plausible gain is
  * applied (advance(play)). Drives end in a touchdown, a field goal or a punt;
- * the next drive starts between the 20 and the 35.
+ * the next drive usually starts between the 20 and the 35 (1 in 5 backed up
+ * inside the 20).
  *
  * Gains are storytelling, not simulation: the wallpaper is showing what the
  * concept is for. The field scrolls by the gain between plays (app.js /
@@ -18,6 +19,8 @@ window.FD = window.FD || {};
   const chance = (p) => Math.random() < p;
   const ordinal = (n) => ['', '1ST', '2ND', '3RD', '4TH'][n] || `${n}TH`;
   const tagged = (p, t) => (p.tags || []).includes(t);
+  // Where a drive starts: usually between the 20 and the 35, sometimes backed up.
+  const startSpot = () => (chance(0.8) ? r(20, 35) : r(1, 19));
 
   function gainFor(play) {
     if (tagged(play, 'deep')) return chance(0.75) ? r(18, 38) : r(8, 15);
@@ -33,7 +36,7 @@ window.FD = window.FD || {};
 
   const Drive = {
     create() {
-      const st = { spot: r(20, 35), down: 1, distance: 10, number: 1, play: 0, shift: 0 };
+      const st = { spot: startSpot(), down: 1, distance: 10, number: 1, play: 0, shift: 0 };
 
       const drive = {
         state: st,
@@ -102,7 +105,7 @@ window.FD = window.FD || {};
       function next(label, gain, td) {
         st.number += 1;
         st.play = 0;
-        st.spot = r(20, 35);
+        st.spot = startSpot();
         st.down = 1;
         st.distance = 10;
         st.shift = 0; // a new drive fades in rather than scrolling

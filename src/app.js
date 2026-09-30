@@ -26,10 +26,21 @@ window.FD = window.FD || {};
     if (cfg.check) {
       const lines = FD.Data.report.filter((r) => r.fatal.length).map((r) => `${r.id} FATAL ${r.fatal.join(' | ')}`);
       const nodes = new Set();
+      // Styles and settings come from the URL: tools/check.sh "style=game&call=comp"
+      cfg.settings = FD.Settings.get();
+      cfg.style = cfg.settings.style;
+      if (cfg.style === 'live' || cfg.style === 'game') { cfg.mode = 'simulation'; cfg.frameLock = 'default'; }
       for (const p of plays) {
         const scene = FD.PlayRenderer.build(p, stage, cfg);
         const tl = FD.Choreography.build(scene, { enter() {}, exit() {} }, cfg);
-        for (let t = 0; t <= FD.Timing.phases.end; t += 0.25) tl.evaluate(t);
+        // Ball QA: once someone holds the ball, the ball sits on that player.
+        let worst = 0;
+        for (let t = 0; t <= FD.Timing.phases.end; t += 0.1) {
+          tl.evaluate(t);
+          const h = scene.holderAt ? scene.holderAt(t) : null;
+          if (h && h.marker && scene.ball.isShown()) worst = Math.max(worst, FD.Geometry.dist(scene.ball.getPos(), h.marker.position));
+        }
+        if (worst > 0.6) scene.warnings.push(`ball ${worst.toFixed(1)} yd off its carrier`);
         if (scene.warnings.length) lines.push(`${p.id} ${scene.warnings.join(' | ')}`);
         scene.destroy();
         nodes.add(document.getElementsByTagName('*').length);

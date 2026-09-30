@@ -227,6 +227,22 @@ window.FD = window.FD || {};
       else drop('FS', 'middle', 0, 'deep_middle');
       if (cov === 'robber') drop(under[1], 'robber', 0, 'deep_robber');
       else if (cov !== 'cover0') drop(under[1], 'rat', 0, 'deep_rat');
+      // Nobody uncovered: a receiver still without a man (trips #3, empty) is
+      // taken by the nearest coverage player who has no job yet, else the rat/robber.
+      const manned = new Set(out.filter((d) => d.man).map((d) => d.man));
+      for (const r of A.receivers) {
+        if (manned.has(r.id)) continue;
+        const free = out.filter((d) => d.glyph !== 'dl' && !d.edge && !d.man && !d.rush && !d.blitz
+          && !/^(deep_middle|half_|corner)/.test(d.job || '') && d.id !== 'FS');
+        const idle = free.filter((d) => !d.drop);
+        const pool = idle.length ? idle : free;
+        if (!pool.length) continue;
+        pool.sort((a, b) => Math.hypot(a.at[0] - r.at[0], a.at[1]) - Math.hypot(b.at[0] - r.at[0], b.at[1]));
+        manOn(pool[0].id, r);
+        manned.add(r.id);
+        // He travels with his man pre-snap (inside leverage, off the ball).
+        if (Math.abs(pool[0].at[0] - r.at[0]) > 5) pool[0].at = [r.at[0] - Math.sign(r.at[0] || 1) * 1.2, Math.max(pool[0].at[1], 4.5)];
+      }
     }
 
     // ── Pass rush lanes (defense-first plays) ─────────────────────────────
