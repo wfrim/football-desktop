@@ -101,7 +101,7 @@
   "rb": "Check-block, slip out behind the LOS, catch, get behind the convoy."
  },
  "sources": [
-  "OpenPlay Football — Halfback Screen (pass-rush manipulation)",
+  "OpenPlay Football \u2014 Halfback Screen (pass-rush manipulation)",
   "Standard slow-screen timing: OL sell pass for ~1 count, then release"
  ],
  "presentations": [
@@ -120,5 +120,8 @@
   {
    "formation": "pistol_doubles_11"
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover1"
+ }
 }

@@ -12,7 +12,7 @@
  },
  "copy": {
   "title": "MESH",
-  "situation": "MAN / MATCH · 3RD & MEDIUM",
+  "situation": "MAN / MATCH \u00b7 3RD & MEDIUM",
   "description": "Crossing routes create traffic underneath."
  },
  "situation": {
@@ -68,7 +68,7 @@
   "read": "Vs man: the crossers rub each other; throw the first one that clears. Vs zone: sit/curl over the underneath defenders, RB outlet."
  },
  "sources": [
-  "Project handoff #1 — canonical presentation, route depths and relationship",
+  "Project handoff #1 \u2014 canonical presentation, route depths and relationship",
   "Air Raid mesh family: shallow crossers vs man, sit/curl as the zone answer"
  ],
  "presentations": [
@@ -130,5 +130,8 @@
   {
    "formation": "gun_y_off_11"
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover1"
+ }
 }

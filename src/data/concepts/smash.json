@@ -52,7 +52,7 @@
   "bs#1"
  ],
  "football": {
-  "read": "Read the cornerback: he squats on the hitch → corner behind him; he bails → hitch."
+  "read": "Read the cornerback: he squats on the hitch \u2192 corner behind him; he bails \u2192 hitch."
  },
  "sources": [
   "Smash: #1 hitch at 5, #2 corner at 10-12 (Cover 2 corner/safety void); mirrored 2x2"
@@ -70,5 +70,9 @@
   {
    "formation": "singleback_doubles_11"
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover2",
+  "key": "flat"
+ }
 }

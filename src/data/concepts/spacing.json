@@ -6,7 +6,7 @@
  "side": "strength",
  "copy": {
   "title": "SPACING",
-  "situation": "ZONE BEATER · QUICK",
+  "situation": "ZONE BEATER \u00b7 QUICK",
   "description": "Receivers settle in every underneath window at five yards."
  },
  "assignments": {
@@ -77,5 +77,9 @@
  },
  "sources": [
   "Spacing (Air Raid / West Coast): horizontal stretch of underneath zones at 5-6 yd"
- ]
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "hook"
+ }
 }

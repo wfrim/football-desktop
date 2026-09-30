@@ -120,5 +120,8 @@
     "FLAT": "F"
    }
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover3"
+ }
 }

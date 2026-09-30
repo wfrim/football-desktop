@@ -80,5 +80,9 @@
   {
    "formation": "singleback_doubles_11"
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "hook"
+ }
 }

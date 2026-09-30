@@ -72,5 +72,9 @@
  },
  "sources": [
   "Out-and-up double move"
- ]
+ ],
+ "defense": {
+  "coverage": "cover2",
+  "key": "flat"
+ }
 }

@@ -6,7 +6,7 @@
  "side": "away_from_back",
  "copy": {
   "title": "DART",
-  "situation": "ZONE · BACKSIDE PULL",
+  "situation": "ZONE \u00b7 BACKSIDE PULL",
   "description": "Zone up front while the backside tackle pulls for the linebacker."
  },
  "assignments": {
@@ -126,5 +126,8 @@
  },
  "sources": [
   "Dart: zone front side, backside tackle pull (gun run game)"
- ]
+ ],
+ "defense": {
+  "key": "end_bs"
+ }
 }

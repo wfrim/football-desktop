@@ -6,7 +6,7 @@
  "side": "strength",
  "copy": {
   "title": "SMOKE",
-  "situation": "QUICK SCREEN · OFF COVERAGE",
+  "situation": "QUICK SCREEN \u00b7 OFF COVERAGE",
   "description": "Punish soft corners: catch it at the line and go."
  },
  "assignments": {
@@ -107,5 +107,9 @@
  },
  "sources": [
   "Smoke / now screen: quick throw to #1, #2 blocks the corner"
- ]
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "third"
+ }
 }

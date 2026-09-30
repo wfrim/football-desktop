@@ -78,5 +78,9 @@
  },
  "sources": [
   "Stick-nod: double move off the stick concept"
- ]
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "flat"
+ }
 }

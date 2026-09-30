@@ -87,5 +87,9 @@
  },
  "sources": [
   "Slant-and-go (sluggo) double move"
- ]
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "third"
+ }
 }

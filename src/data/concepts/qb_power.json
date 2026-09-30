@@ -105,5 +105,8 @@
  },
  "sources": [
   "QB power (gun): RB kicks out, backside guard wraps, QB carries"
- ]
+ ],
+ "defense": {
+  "key": "end_ps"
+ }
 }

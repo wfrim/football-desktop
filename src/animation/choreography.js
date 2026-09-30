@@ -70,6 +70,17 @@ window.FD = window.FD || {};
       });
       tl.track(0.35, T.markerEnter, (p) => scene.ball.setOpacity(p), 'outCubic');
 
+      // Faint defense: appears after the offense, moves at the snap, key pulses at the read.
+      const D = scene.defense;
+      if (D) {
+        D.glyphs.forEach((d, i) => tl.track(0.75 + i * 0.03, T.markerEnter, (p) => d.setAppear(p), 'outCubic'));
+        for (const m of D.moves) {
+          const t = FD.Timing.resolve('def', null, m.length);
+          tl.track(t.start, t.duration, (p) => m.view.setProgress(p), t.ease);
+        }
+        if (D.key) tl.track(P.read, T.catchPulse * 1.2, (p) => D.key.pulse(p), 'outCubic');
+      }
+
       // Assignments.
       for (const a of scene.assignments) {
         const pl = scene.players.get(a.player);

@@ -73,5 +73,8 @@
  },
  "sources": [
   "Double slants: #1 and #2 both run 3-step slants"
- ]
+ ],
+ "defense": {
+  "coverage": "cover1"
+ }
 }

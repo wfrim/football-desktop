@@ -238,6 +238,7 @@ window.FD = window.FD || {};
       football: c.football,
       sources: c.sources,
       frame: pr.frame || c.frame,
+      defense: Object.assign({}, c.defense, pr.defense),
     };
     if (c.ball) play.ball = Object.assign({}, c.ball, { to: idOf(c.ball.to) }, pr.ball);
     if (c.handoff) {

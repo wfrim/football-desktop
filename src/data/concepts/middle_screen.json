@@ -116,5 +116,8 @@
   {
    "formation": "pistol_doubles_11"
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover1"
+ }
 }

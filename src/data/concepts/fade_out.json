@@ -69,5 +69,9 @@
  },
  "sources": [
   "Fade-out (hi-lo) red-zone concept"
- ]
+ ],
+ "defense": {
+  "coverage": "cover2",
+  "key": "flat"
+ }
 }

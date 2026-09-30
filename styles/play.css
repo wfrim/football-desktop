@@ -250,3 +250,19 @@
   stroke-width: var(--sw-field);
   stroke-dasharray: 0.5 0.5;
 }
+
+/* ── Faint defense ───────────────────────────────────────────────────── */
+.def { --def: 0.3; }
+.def-mark {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: var(--sw-block);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-opacity: var(--def);
+}
+.a-def { stroke-width: var(--sw-block); stroke-opacity: calc(var(--def) * 0.8); }
+.a-wrap-def .a-head, .a-wrap-def .a-settle { fill-opacity: calc(var(--def) * 0.8); stroke-opacity: calc(var(--def) * 0.8); stroke-width: var(--sw-block); }
+.def-p.is-key .def-mark { stroke-opacity: 0.75; stroke-width: var(--sw-route); }
+.a-wrap-def.is-key .a-def { stroke-opacity: 0.6; }
+.def-ring { fill: none; stroke: var(--ink); stroke-width: var(--sw-block); }

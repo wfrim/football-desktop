@@ -155,5 +155,8 @@
  },
  "sources": [
   "Zone read: inside zone with the backside end as the QB's read"
- ]
+ ],
+ "defense": {
+  "key": "end_bs"
+ }
 }

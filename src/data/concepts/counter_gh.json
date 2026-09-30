@@ -126,5 +126,8 @@
  },
  "sources": [
   "Counter GH: guard kick-out, H-back wrap (the 11-personnel counter)"
- ]
+ ],
+ "defense": {
+  "key": "end_ps"
+ }
 }

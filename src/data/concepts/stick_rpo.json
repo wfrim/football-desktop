@@ -154,5 +154,9 @@
     "situation": "RUN-PASS OPTION \u00b7 TREY"
    }
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "flat_bs"
+ }
 }

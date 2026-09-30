@@ -184,5 +184,18 @@
   {
    "formation": "singleback_doubles_11"
   }
- ]
+ ],
+ "defense": {
+  "key": "end_ps",
+  "front": {
+   "play": [
+    1,
+    9
+   ],
+   "back": [
+    3,
+    5
+   ]
+  }
+ }
 }

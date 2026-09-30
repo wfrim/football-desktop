@@ -148,5 +148,8 @@
   {
    "formation": "gun_bunch_11"
   }
- ]
+ ],
+ "defense": {
+  "key": "end_ps"
+ }
 }

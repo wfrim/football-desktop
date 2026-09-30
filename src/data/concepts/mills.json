@@ -8,11 +8,11 @@
  ],
  "copy": {
   "title": "MILLS",
-  "situation": "SHOT PLAY · MOFC",
+  "situation": "SHOT PLAY \u00b7 MOFC",
   "description": "A post over a dig puts the safety in conflict."
  },
  "football": {
-  "read": "The safety over the dig: he drives on the dig → post over him; he stays deep → dig."
+  "read": "The safety over the dig: he drives on the dig \u2192 post over him; he stays deep \u2192 dig."
  },
  "sources": [
   "Mills (post-dig): #1 post over #2 dig; backside curl-flat"
@@ -80,5 +80,9 @@
   {
    "formation": "pistol_doubles_11"
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover4",
+  "key": "in_q"
+ }
 }

@@ -144,5 +144,8 @@
     "situation": "POWER O \u00b7 SHORT YARDAGE"
    }
   }
- ]
+ ],
+ "defense": {
+  "key": "end_ps"
+ }
 }

@@ -6,7 +6,7 @@
  "side": "to_back",
  "copy": {
   "title": "BUCK SWEEP",
-  "situation": "PERIMETER · GAP RUN",
+  "situation": "PERIMETER \u00b7 GAP RUN",
   "description": "Both guards pull: one kicks out the edge, one leads up the alley."
  },
  "assignments": {
@@ -112,5 +112,8 @@
  },
  "sources": [
   "Buck sweep (Wing-T): double guard pull, kick-out and wrap"
- ]
+ ],
+ "defense": {
+  "key": "end_ps"
+ }
 }

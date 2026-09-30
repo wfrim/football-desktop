@@ -130,5 +130,8 @@
   {
    "formation": "gun_trey_11"
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover3"
+ }
 }

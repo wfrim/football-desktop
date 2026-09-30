@@ -74,9 +74,13 @@
   }
  ],
  "football": {
-  "read": "Read the safety: he drives on the post → corner behind him; he widens with the corner → post."
+  "read": "Read the safety: he drives on the post \u2192 corner behind him; he widens with the corner \u2192 post."
  },
  "sources": [
   "Scissors: #1 post, #2 corner crossing under it"
- ]
+ ],
+ "defense": {
+  "coverage": "cover4",
+  "key": "in_q"
+ }
 }

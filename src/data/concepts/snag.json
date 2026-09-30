@@ -6,7 +6,7 @@
  "side": "strength",
  "copy": {
   "title": "SNAG",
-  "situation": "RED ZONE · ZONE BEATER",
+  "situation": "RED ZONE \u00b7 ZONE BEATER",
   "description": "A triangle of corner, snag and flat."
  },
  "assignments": {
@@ -75,5 +75,9 @@
   "CORNER": "#2",
   "SNAG": "#1",
   "FLAT": "#3"
+ },
+ "defense": {
+  "coverage": "cover3",
+  "key": "flat"
  }
 }

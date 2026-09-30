@@ -127,6 +127,7 @@ window.FD = window.FD || {};
       side: play.side || 'right',
       primary: play.primary || (ho ? ho.to : undefined),
       handoff: ho || null,
+      defense: play.defense,
       frame: play.frame,
       _mock: play._mock,
       copy: {

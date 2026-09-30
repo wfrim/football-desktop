@@ -74,5 +74,9 @@
  },
  "sources": [
   "Texas / Angle: RB angle route under a clearing #2 route"
- ]
+ ],
+ "defense": {
+  "coverage": "cover1",
+  "key": "man_RB"
+ }
 }

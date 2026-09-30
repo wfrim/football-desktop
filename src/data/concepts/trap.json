@@ -6,7 +6,7 @@
  "side": "strength",
  "copy": {
   "title": "TRAP",
-  "situation": "QUICK HITTER · GAP RUN",
+  "situation": "QUICK HITTER \u00b7 GAP RUN",
   "description": "The 3-technique is left unblocked, then trapped from the backside."
  },
  "assignments": {
@@ -125,5 +125,8 @@
  },
  "sources": [
   "Trap: influence the 3-technique, trap with the backside guard"
- ]
+ ],
+ "defense": {
+  "key": "tackle_ps"
+ }
 }

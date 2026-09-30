@@ -91,5 +91,9 @@
   {
    "formation": "gun_empty_11"
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "flat"
+ }
 }

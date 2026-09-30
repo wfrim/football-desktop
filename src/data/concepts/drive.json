@@ -9,7 +9,7 @@
   "description": "A shallow cross runs under a dig: high-low on the hook defender."
  },
  "football": {
-  "read": "Hook/curl defender: he jumps the shallow → dig behind him; he sinks → shallow."
+  "read": "Hook/curl defender: he jumps the shallow \u2192 dig behind him; he sinks \u2192 shallow."
  },
  "sources": [
   "Drive: shallow (2-3 yd) under a 12-yd dig from the same side; seam/go hold the safeties"
@@ -84,5 +84,9 @@
   {
    "formation": "singleback_doubles_11"
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "hook"
+ }
 }

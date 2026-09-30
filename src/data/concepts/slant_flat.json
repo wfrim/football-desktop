@@ -12,7 +12,7 @@
   "description": "An in-out stretch on the flat defender, out on rhythm."
  },
  "football": {
-  "read": "Flat defender: he widens with the flat → slant inside him; he walls the slant → flat."
+  "read": "Flat defender: he widens with the flat \u2192 slant inside him; he walls the slant \u2192 flat."
  },
  "sources": [
   "Slant-flat: #1 3-step slant, #2 flat; mirrored quick game"
@@ -78,5 +78,9 @@
   {
    "formation": "singleback_doubles_11"
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "flat"
+ }
 }

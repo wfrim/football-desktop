@@ -106,5 +106,8 @@
  },
  "sources": [
   "Switch verticals: #1 and #2 exchange vertical lanes"
- ]
+ ],
+ "defense": {
+  "coverage": "cover1"
+ }
 }

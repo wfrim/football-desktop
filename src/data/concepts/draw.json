@@ -6,7 +6,7 @@
  "side": "to_back",
  "copy": {
   "title": "DRAW",
-  "situation": "PASS-RUSH ANSWER · RUN",
+  "situation": "PASS-RUSH ANSWER \u00b7 RUN",
   "description": "Show pass, then hand it off behind the rush."
  },
  "assignments": {
@@ -113,5 +113,8 @@
  },
  "sources": [
   "Draw: pass-protection look, delayed handoff"
- ]
+ ],
+ "defense": {
+  "coverage": "cover3"
+ }
 }

@@ -72,5 +72,9 @@
  },
  "sources": [
   "Hoss (hitch-seam), Air Raid quick game"
- ]
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "hook"
+ }
 }

@@ -157,6 +157,7 @@ window.FD = window.FD || {};
       const root = el('g', { class: 'play', 'data-play': play.id || '' }, stage.playLayer);
       const layers = {
         scrim: el('g', { class: 'layer-scrim' }, root),
+        defense: el('g', { class: 'layer-defense' }, root),
         paths: el('g', { class: 'layer-paths' }, root),
         ball: el('g', { class: 'layer-ball' }, root),
         players: el('g', { class: 'layer-players' }, root),
@@ -213,6 +214,23 @@ window.FD = window.FD || {};
       const reframed = stage.setFrame(frameKey);
       stage.field.update(place ? place.spot : null, Math.min(C.FIELD.halfWidth + 0.9, stage.frame.x1 - 0.6));
       if (reframed) stage.field.setAttribute('opacity', 0);
+
+      // ── Faint defense (generated from the offense's alignment) ───────────
+      let defense = null;
+      const defMode = cfg.settings ? cfg.settings.defense : 'off';
+      if (defMode !== 'off' && FD.Defense && play.defense !== false) {
+        try {
+          const D = FD.Defense.build(play, play.defense, ballX);
+          const k = FD.Defense.keyOf(D.defenders, D.look.key);
+          defense = FD.DefenseRenderer.create({
+            parent: layers.defense, defs: stage.defs, defenders: D.defenders, toSvg, players,
+            keyId: k ? k.id : null, showKey: defMode === 'key',
+          });
+          destroyers.push(defense.destroy);
+        } catch (err) {
+          warnings.push(`defense: ${err.message}`);
+        }
+      }
 
       // ── Markers (after paths so they sit on top; placed at alignment) ────
       for (const pl of players.values()) {
@@ -343,6 +361,7 @@ window.FD = window.FD || {};
         ball,
         pass,
         handoff,
+        defense,
         reads,
         events,
         warnings,

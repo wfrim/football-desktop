@@ -11,7 +11,7 @@
   "read": "Seam first vs a hole in the middle of the field; otherwise the dig behind the vacated hook defender; backside sit / RB as the check-down."
  },
  "sources": [
-  "Project handoff #1 — canonical presentation, route depths and relationship",
+  "Project handoff #1 \u2014 canonical presentation, route depths and relationship",
   "Dagger: #2 seam clears the hook/curl zone for #1's deep dig; backside checkdown"
  ],
  "side": "strength",
@@ -87,5 +87,9 @@
   {
    "formation": "singleback_doubles_11"
   }
- ]
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "hook"
+ }
 }

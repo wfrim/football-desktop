@@ -64,6 +64,7 @@ window.FD = window.FD || {};
     kinds: {
       route:  { phase: 'assign', delay: 0,    speed: 11, min: 0.7,  max: 2.3, ease: 'inOutQuad', moves: true },
       run:    { phase: 'snap',   delay: 0.3,  speed: 7,  min: 0.9,  max: 2.4, ease: 'inOutSine', moves: true },
+      def:    { phase: 'snap',   delay: 0.2,  speed: 7,  min: 0.6,  max: 1.6, ease: 'inOutSine', moves: false },
       block:  { phase: 'snap',   delay: 0.08, speed: 3,  min: 0.35, max: 0.6, ease: 'outCubic',  moves: true },
       pull:   { phase: 'snap',   delay: 0.05, speed: 9,  min: 0.6,  max: 1.5, ease: 'inOutQuad', moves: true },
       lead:   { phase: 'snap',   delay: 0.15, speed: 8,  min: 0.5,  max: 1.3, ease: 'inOutQuad', moves: true },

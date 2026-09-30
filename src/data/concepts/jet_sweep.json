@@ -146,5 +146,8 @@
   {
    "formation": "singleback_doubles_11"
   }
- ]
+ ],
+ "defense": {
+  "key": "end_ps"
+ }
 }
