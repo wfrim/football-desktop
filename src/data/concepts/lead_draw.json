@@ -1,0 +1,131 @@
+{
+ "conceptId": "lead_draw",
+ "name": "Lead Draw",
+ "family": "run",
+ "subfamily": "draw",
+ "side": "strength",
+ "copy": {
+  "title": "LEAD DRAW",
+  "situation": "PASS LOOK · RUN",
+  "description": "Show pass; the H-back leads the back through the middle on a linebacker."
+ },
+ "assignments": {
+  "PST": {
+   "type": "pass_set"
+  },
+  "PSG": {
+   "type": "pass_set"
+  },
+  "C": {
+   "type": "pass_set"
+  },
+  "BSG": {
+   "type": "pass_set"
+  },
+  "BST": {
+   "type": "pass_set"
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    [
+     0,
+     -6.6
+    ]
+   ],
+   "timing": {
+    "duration": 0.9
+   }
+  },
+  "LEAD": {
+   "type": "lead",
+   "through": [
+    [
+     "a",
+     -1.6
+    ],
+    [
+     "a",
+     0.4
+    ]
+   ],
+   "at": [
+    "a-0.5",
+    4.6
+   ],
+   "delay": 0.6
+  },
+  "RB": [
+   {
+    "type": "block",
+    "to": [
+     0.9,
+     -0.6
+    ],
+    "end": "none"
+   },
+   {
+    "type": "carry",
+    "delay": 0.55,
+    "through": [
+     [
+      0.9,
+      -5.9
+     ],
+     [
+      "a",
+      -1.6
+     ],
+     [
+      "a",
+      0.3
+     ],
+     [
+      "a+0.3",
+      5.5
+     ]
+    ]
+   }
+  ]
+ },
+ "presentations": [
+  {
+   "formation": "gun_y_off_11"
+  },
+  {
+   "formation": "pistol_strong_11"
+  }
+ ],
+ "roles": {
+  "LEAD": "Y"
+ },
+ "defaults": {
+  "receivers": {
+   "type": "go",
+   "depth": 9
+  }
+ },
+ "handoff": {
+  "to": "RB",
+  "at": [
+   0.9,
+   -5.9
+  ]
+ },
+ "relationships": [
+  {
+   "type": "kickout",
+   "blocker": "LEAD",
+   "runner": "RB"
+  }
+ ],
+ "defense": {
+  "coverage": "cover2"
+ },
+ "football": {
+  "rules": "Draw with a lead blocker: the line pass-sets, receivers clear, the H-back leads through the A gap onto the linebacker and the back follows on a delayed handoff."
+ },
+ "sources": [
+  "Lead draw"
+ ]
+}

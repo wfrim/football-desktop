@@ -1,0 +1,85 @@
+{
+ "conceptId": "choice",
+ "name": "Choice",
+ "family": "dropback_pass",
+ "subfamily": "option",
+ "side": "strength",
+ "copy": {
+  "title": "CHOICE",
+  "situation": "MAN OR ZONE",
+  "description": "Sit down against zone, break out against man."
+ },
+ "assignments": {
+  "#1": {
+   "type": "go"
+  },
+  "#2": {
+   "type": "seam"
+  },
+  "#3": [
+   {
+    "type": "sit",
+    "depth": 6
+   },
+   {
+    "type": "quick_out",
+    "depth": 6,
+    "length": 5,
+    "alt": true
+   }
+  ],
+  "bs#1": {
+   "type": "dig",
+   "depth": 14,
+   "length": 10
+  },
+  "bs#2?": {
+   "type": "sit",
+   "depth": 6
+  },
+  "RB?": {
+   "type": "pass_set"
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  },
+  {
+   "formation": "gun_bunch_11"
+  }
+ ],
+ "ball": {
+  "to": "#3",
+  "at": 1
+ },
+ "reads": [
+  "#3",
+  "#2",
+  "bs#1"
+ ],
+ "defense": {
+  "coverage": "cover1",
+  "key": "man_Y"
+ },
+ "relationships": [
+  {
+   "type": "feature",
+   "participants": [
+    "#3"
+   ]
+  }
+ ],
+ "football": {
+  "read": "Option route for #3: settles between zone defenders, or breaks away from a man defender's leverage (dashed). #1 and #2 clear vertically."
+ },
+ "sources": [
+  "Choice / option route concept (West Coast)"
+ ]
+}

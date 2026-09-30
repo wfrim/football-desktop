@@ -1,0 +1,101 @@
+{
+ "conceptId": "verts_bender",
+ "name": "Verts Bender",
+ "family": "dropback_pass",
+ "subfamily": "verticals",
+ "side": "strength",
+ "copy": {
+  "title": "VERTS BENDER",
+  "situation": "SINGLE-HIGH",
+  "description": "Four verticals, and the slot bends his seam away from the post safety."
+ },
+ "assignments": {
+  "#1": {
+   "type": "go"
+  },
+  "#2": {
+   "type": "path",
+   "points": [
+    [
+     -0.8,
+     3
+    ],
+    [
+     -0.8,
+     9
+    ],
+    [
+     -3.2,
+     15
+    ],
+    [
+     -3.4,
+     18
+    ]
+   ]
+  },
+  "bs#1": {
+   "type": "go"
+  },
+  "#3?": {
+   "type": "seam"
+  },
+  "RB?": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "sit",
+    "depth": 3.5
+   }
+  },
+  "bs#2?": {
+   "type": "seam"
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  }
+ ],
+ "ball": {
+  "to": "#2",
+  "at": 1
+ },
+ "reads": [
+  "#2",
+  "#1",
+  "bs#1"
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "deep_middle"
+ },
+ "tags": [
+  "deep"
+ ],
+ "relationships": [
+  {
+   "type": "feature",
+   "participants": [
+    "#2"
+   ]
+  }
+ ],
+ "football": {
+  "read": "Versus a single-high safety the seam 'bends' across his face to the open side of the middle; versus two-high it would stay on the hash."
+ },
+ "sources": [
+  "Four verts: seam bender adjustment"
+ ]
+}

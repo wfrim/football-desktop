@@ -8,7 +8,7 @@ Where coaching systems differ, one presentation is chosen and the choice is writ
 concept's `football` block. Assumed defensive fronts are noted where blocking depends on
 them; defenders are never drawn.
 
-284 plays · 85 concepts · 12 formations
+307 plays · 92 concepts · 12 formations
 
 ## defense
 
@@ -238,6 +238,14 @@ them; defenders are never drawn.
 
 ## Dropback pass
 
+### Choice
+
+- **Presentations:** Gun Trips (11, right) · Gun Trey (11, right) · Gun Empty (11, right) · Gun Bunch (11, right)
+- **Wallpaper:** MAN OR ZONE — "Sit down against zone, break out against man."
+- **Defining relationship:** feature
+- **Read:** Option route for #3: settles between zone defenders, or breaks away from a man defender's leverage (dashed). #1 and #2 clear vertically.
+- **Sources:** Choice / option route concept (West Coast)
+
 ### Dagger
 
 - **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Gun Empty (11, right) · Gun Bunch (11, right) · Gun Trey (11, right) · Pistol Doubles (11, right) · Singleback Doubles (11, right)
@@ -350,6 +358,14 @@ them; defenders are never drawn.
 - **Read:** The back's angle route: out to the flat, then snap back inside against the linebacker's leverage. The slot's out clears the flat defender.
 - **Sources:** Texas / Angle: RB angle route under a clearing #2 route
 
+### Verts Bender
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Gun Empty (11, right) · Gun Trey (11, right) · Pistol Doubles (11, right)
+- **Wallpaper:** SINGLE-HIGH — "Four verticals, and the slot bends his seam away from the post safety."
+- **Defining relationship:** feature
+- **Read:** Versus a single-high safety the seam 'bends' across his face to the open side of the middle; versus two-high it would stay on the hash.
+- **Sources:** Four verts: seam bender adjustment
+
 ### Y-Cross
 
 - **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Gun Empty (11, right) · Pistol Doubles (11, right)
@@ -383,6 +399,14 @@ them; defenders are never drawn.
 - **Defining relationship:** high_low
 - **Read:** High-low on the corner: he sinks with the fade → out; he jumps the out → fade over him.
 - **Sources:** Fade-out (hi-lo) red-zone concept
+
+### Flat-7
+
+- **Presentations:** Gun Doubles (11, right) · Gun Empty (11, right) · Pistol Doubles (11, right) · Singleback Doubles (11, right)
+- **Wallpaper:** COVER 2 BEATER — "A corner route over a flat: the squat corner can't take both."
+- **Defining relationship:** high_low
+- **Read:** The outside receiver's flat pulls the Cover 2 corner down; the slot's 7 (corner) route lands behind him before the half safety arrives.
+- **Sources:** Flat-7 (corner-flat) combination
 
 ### Hank
 
@@ -485,6 +509,14 @@ them; defenders are never drawn.
 - **Read:** Read the play-side linebacker / overhang: he triggers on the run → glance (skinny post) behind him; he drops → give.
 - **Rules:** Run-pass option: the line blocks inside zone (double teams stay at the line: no linemen downfield on a throw). The QB reads the conflict defender at the mesh; the dashed track is the give.
 - **Sources:** Glance RPO: inside zone paired with a #1 skinny post behind the conflict defender
+
+### Pop RPO
+
+- **Presentations:** Gun Trey (11, right) · Singleback Tight (12, right) · Ace (12, right)
+- **Wallpaper:** RUN-PASS OPTION — "The tight end pops up the seam behind a linebacker who comes downhill."
+- **Defining relationship:** zone, feature
+- **Read:** Read the play-side hook linebacker: he fits the zone → pop pass to the tight end behind him; he stays → give (dashed).
+- **Sources:** Pop pass RPO (TE seam off zone)
 
 ### Stick RPO
 
@@ -610,6 +642,14 @@ them; defenders are never drawn.
 - **Rb:** Aiming point: play-side guard's outside leg; drawn cutting into the A gap the double team opens (dashed: the bend).
 - **Sources:** Zone run (Wikipedia): coordinated play-side zone steps and double teams; Tomahawk Nation — RB reads in a zone offense (aiming point, bang/bounce/bend)
 
+### Inverted Veer
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trey (11, right) · Gun Trips (11, right)
+- **Wallpaper:** QB RUN · READ THE END — "The back sweeps wide; the quarterback follows the pulling guard inside."
+- **Defining relationship:** wall, pull
+- **Read:** Power blocking with the play-side end unblocked: he widens with the back's sweep (dashed give) → the QB keeps and follows the pulling guard; he squeezes → give.
+- **Sources:** Inverted veer / power read
+
 ### Iso
 
 - **Presentations:** I-Formation (21, right)
@@ -627,6 +667,14 @@ them; defenders are never drawn.
 - **Defining relationship:** zone, feature
 - **Rules:** The slot comes in jet motion and is at full speed at the snap; the line reach-blocks to the sweep side and #2 arcs to the force defender. The back fakes inside zone the other way to hold the linebackers.
 - **Sources:** Jet sweep: motion-based perimeter run with reach blocking and an arc block
+
+### Lead Draw
+
+- **Presentations:** Gun Y-Off (11, right) · Pistol Strong (11, right)
+- **Wallpaper:** PASS LOOK · RUN — "Show pass; the H-back leads the back through the middle on a linebacker."
+- **Defining relationship:** kickout
+- **Rules:** Draw with a lead blocker: the line pass-sets, receivers clear, the H-back leads through the A gap onto the linebacker and the back follows on a delayed handoff.
+- **Sources:** Lead draw
 
 ### Outside Zone
 
@@ -681,6 +729,14 @@ them; defenders are never drawn.
 - **Rules:** The 3-tech is left alone and invited upfield; the backside guard traps him. PSG releases inside to the Mike, PST climbs, C blocks back. The FB seals the backside end.
 - **Rb:** Straight downhill inside the trap block.
 - **Sources:** Trap: influence the 3-technique, trap with the backside guard
+
+### Wham
+
+- **Presentations:** Gun Y-Off (11, left) · Pistol Strong (11, left)
+- **Wallpaper:** TRAP · TIGHT END — "The guard releases; the tight end whams the tackle."
+- **Defining relationship:** kickout, feature
+- **Rules:** The play-side guard releases to the linebacker, inviting the 3-technique upfield; the H-back crosses the formation and whams him from the side. The back hits the A gap inside the wham.
+- **Sources:** Wham block (TE/H-back trap)
 
 ### Zone Read
 

@@ -1,0 +1,124 @@
+{
+ "conceptId": "wham",
+ "name": "Wham",
+ "family": "run",
+ "subfamily": "gap",
+ "side": "weak",
+ "copy": {
+  "title": "WHAM",
+  "situation": "TRAP · TIGHT END",
+  "description": "The guard releases; the tight end whams the tackle."
+ },
+ "assignments": {
+  "PST": {
+   "type": "base"
+  },
+  "PSG": {
+   "type": "lead",
+   "via": [
+    "PSG+0.2",
+    0.6
+   ],
+   "at": [
+    "b",
+    4.6
+   ]
+  },
+  "C": {
+   "type": "back"
+  },
+  "BSG": {
+   "type": "base"
+  },
+  "BST": {
+   "type": "base"
+  },
+  "WHAM": {
+   "type": "lead",
+   "through": [
+    [
+     -1.4,
+     -2.1
+    ],
+    [
+     "b",
+     -1.3
+    ]
+   ],
+   "at": [
+    "b",
+    0.6
+   ]
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    "mesh",
+    [
+     -2.4,
+     -6.3
+    ]
+   ]
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    "mesh",
+    [
+     "a+0.2",
+     -1.6
+    ],
+    [
+     "a",
+     0.2
+    ],
+    [
+     "a",
+     5.5
+    ]
+   ]
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_y_off_11"
+  },
+  {
+   "formation": "pistol_strong_11"
+  }
+ ],
+ "roles": {
+  "WHAM": "Y"
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "handoff": {
+  "to": "RB",
+  "at": "mesh"
+ },
+ "relationships": [
+  {
+   "type": "kickout",
+   "blocker": "WHAM",
+   "runner": "RB"
+  },
+  {
+   "type": "feature",
+   "participants": [
+    "PSG"
+   ]
+  }
+ ],
+ "defense": {
+  "key": "tackle_ps"
+ },
+ "football": {
+  "rules": "The play-side guard releases to the linebacker, inviting the 3-technique upfield; the H-back crosses the formation and whams him from the side. The back hits the A gap inside the wham."
+ },
+ "sources": [
+  "Wham block (TE/H-back trap)"
+ ]
+}

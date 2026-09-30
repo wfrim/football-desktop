@@ -1,0 +1,134 @@
+{
+ "conceptId": "pop_rpo",
+ "name": "Pop RPO",
+ "family": "rpo",
+ "subfamily": "rpo",
+ "side": "away_from_back",
+ "copy": {
+  "title": "POP RPO",
+  "situation": "RUN-PASS OPTION",
+  "description": "The tight end pops up the seam behind a linebacker who comes downhill."
+ },
+ "assignments": {
+  "PST": {
+   "type": "zone_step"
+  },
+  "PSG": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ]
+  },
+  "C": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ]
+  },
+  "BSG": {
+   "type": "combo",
+   "target": [
+    "-a+0.1",
+    0.7
+   ]
+  },
+  "BST": {
+   "type": "combo",
+   "target": [
+    "-a+0.1",
+    0.7
+   ]
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    "mesh"
+   ]
+  },
+  "RB": {
+   "type": "fake",
+   "through": [
+    "mesh",
+    [
+     "a+0.25",
+     -1.6
+    ],
+    [
+     "a",
+     -0.2
+    ],
+    [
+     "a",
+     4.5
+    ]
+   ]
+  },
+  "TE": {
+   "type": "seam",
+   "depth": 9
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "singleback_tight_12"
+  },
+  {
+   "formation": "ace_12"
+  }
+ ],
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "events": [
+  {
+   "type": "mesh",
+   "at": "mesh",
+   "timing": {
+    "phase": "snap",
+    "delay": 0.45
+   }
+  }
+ ],
+ "ball": {
+  "to": "TE",
+  "at": 1,
+  "timing": {
+   "arrive": 3.5
+  }
+ },
+ "defense": {
+  "coverage": "cover3",
+  "key": "hook"
+ },
+ "relationships": [
+  {
+   "type": "zone",
+   "participants": [
+    "PST",
+    "PSG",
+    "C",
+    "BSG",
+    "BST"
+   ]
+  },
+  {
+   "type": "feature",
+   "participants": [
+    "TE"
+   ]
+  }
+ ],
+ "football": {
+  "read": "Read the play-side hook linebacker: he fits the zone \u2192 pop pass to the tight end behind him; he stays \u2192 give (dashed)."
+ },
+ "sources": [
+  "Pop pass RPO (TE seam off zone)"
+ ]
+}

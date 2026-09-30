@@ -1,0 +1,130 @@
+{
+ "conceptId": "inverted_veer",
+ "name": "Inverted Veer",
+ "family": "run",
+ "subfamily": "gap",
+ "side": "strength",
+ "copy": {
+  "title": "INVERTED VEER",
+  "situation": "QB RUN · READ THE END",
+  "description": "The back sweeps wide; the quarterback follows the pulling guard inside."
+ },
+ "assignments": {
+  "PST": {
+   "type": "down"
+  },
+  "PSG": {
+   "type": "down"
+  },
+  "C": {
+   "type": "back"
+  },
+  "BST": {
+   "type": "hinge"
+  },
+  "BSG": {
+   "type": "pull",
+   "hole": "b",
+   "at": [
+    "b-0.6",
+    3.8
+   ]
+  },
+  "RB": {
+   "type": "fake",
+   "through": [
+    [
+     2.8,
+     -4.8
+    ],
+    [
+     "d+2.5",
+     -2.6
+    ],
+    [
+     "d+4.0",
+     1.5
+    ]
+   ]
+  },
+  "QB": {
+   "type": "carry",
+   "through": [
+    [
+     0.4,
+     -4.4
+    ],
+    [
+     "b",
+     -1.9
+    ],
+    [
+     "b",
+     0.4
+    ],
+    [
+     "b+0.3",
+     5.5
+    ]
+   ]
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "handoff": {
+  "to": "QB",
+  "at": 0.02
+ },
+ "primary": "QB",
+ "events": [
+  {
+   "type": "mesh",
+   "at": [
+    0.9,
+    -4.6
+   ],
+   "timing": {
+    "phase": "snap",
+    "delay": 0.45
+   }
+  }
+ ],
+ "relationships": [
+  {
+   "type": "wall",
+   "participants": [
+    "PST",
+    "PSG",
+    "C"
+   ]
+  },
+  {
+   "type": "pull",
+   "puller": "BSG",
+   "runner": "QB"
+  }
+ ],
+ "defense": {
+  "key": "end_ps"
+ },
+ "football": {
+  "read": "Power blocking with the play-side end unblocked: he widens with the back's sweep (dashed give) → the QB keeps and follows the pulling guard; he squeezes → give."
+ },
+ "sources": [
+  "Inverted veer / power read"
+ ]
+}

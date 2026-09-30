@@ -1,0 +1,74 @@
+{
+ "conceptId": "flat_7",
+ "name": "Flat-7",
+ "family": "quick_pass",
+ "subfamily": "high_low",
+ "side": "strength",
+ "copy": {
+  "title": "FLAT-7",
+  "situation": "COVER 2 BEATER",
+  "description": "A corner route over a flat: the squat corner can't take both."
+ },
+ "assignments": {
+  "#1": {
+   "type": "flat",
+   "width": 5
+  },
+  "#2": {
+   "type": "corner"
+  },
+  "bs#1": {
+   "type": "hitch"
+  },
+  "bs#2": {
+   "type": "seam"
+  },
+  "#3?": {
+   "type": "sit",
+   "depth": 6
+  },
+  "RB?": {
+   "type": "pass_set"
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "singleback_doubles_11"
+  }
+ ],
+ "ball": {
+  "to": "#2",
+  "at": 1
+ },
+ "reads": [
+  "#2",
+  "#1",
+  "bs#2"
+ ],
+ "defense": {
+  "coverage": "cover2",
+  "key": "flat"
+ },
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "#2",
+   "low": "#1"
+  }
+ ],
+ "football": {
+  "read": "The outside receiver's flat pulls the Cover 2 corner down; the slot's 7 (corner) route lands behind him before the half safety arrives."
+ },
+ "sources": [
+  "Flat-7 (corner-flat) combination"
+ ]
+}

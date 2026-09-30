@@ -101,6 +101,13 @@
     "concepts/def_335.json",
     "concepts/def_dime.json",
     "concepts/def_rotate_2_1.json",
-    "concepts/def_rotate_3_4.json"
+    "concepts/def_rotate_3_4.json",
+    "concepts/choice.json",
+    "concepts/flat_7.json",
+    "concepts/verts_bender.json",
+    "concepts/pop_rpo.json",
+    "concepts/inverted_veer.json",
+    "concepts/wham.json",
+    "concepts/lead_draw.json"
   ]
 }
