@@ -93,6 +93,21 @@ unrecognizable, football correctness wins.
   deterministic 0.1 s simulation at build time; players move; run after catch; Live
   game: defense pursues, coverage decides the throw, tackles; Defense call Cooperative
   / Competitive; drives follow the outcome). QA: `index.html?check=1&style=game&call=comp`.
+- Live game engine v2 (`src/live/pairing.js`, `sim.js`, `notes.js`): 22 players simulated
+  together. pairing.js gives every block a defender (pass pro, run blocks, pulls/leads);
+  blockers latch on contact and the pair moves as one until a seeded shed. Zone drops match
+  and break on the ball; man trails; the QB works `reads` (Competitive) with hot throws,
+  throwaways, sacks; outcomes complete/incomplete/interception/sack/tackle/score feed the
+  HUD, the drive and the Coach's note. Offensive markers follow `scene.live.otracks`.
+  Competitive call = a weighted pick from the def_* playbook (`pickCall`), shown as the
+  matchup line under the title. Tune with `tools/check.sh "style=game&call=comp&why=1"`
+  (outcome mix, run medians, who makes stops); `simdebug=1` prints pairs/latches per play.
+- Ball chain: `exchanges: [{type: handoff|pitch|pass, from?, to, at?}]` (trick plays).
+  The ball rides its holder between legs; timing = when the receiver's authored path is
+  closest to `at`. Direct snap = give the snap-taker `role: "QB"` (wildcat formations,
+  `kind`/`label` keep his RB look). QA: check mode flags a ball > 0.6 yd off its holder.
+- Playbooks: `src/data/playbooks.js` (formations / concepts / tags / families filters).
+  Drive mode: goal-line tags only inside the 5 or short yardage; one trick play per drive.
 - Other settings: Library, Text, Brightness, Lines (hand-drawn), Transition (rewind),
   Zoom, Play length, Pace (extra slow), Moments (one ring pulse per play).
 - `node tools/bundle-data.mjs` also cache-busts every asset URL in index.html:
@@ -102,6 +117,7 @@ unrecognizable, football correctness wins.
   field layer). Measure with `tools/energy.sh`.
 
 ## Status (see git log for detail)
-- 307 plays / 92 concepts (60 offense + 32 defense) / 12 formations.
+- 348 plays / 108 concepts (73 offense + 35 defense) / 18 formations
+  (+ Wildcat 11/21, Goal Line 23, Jumbo 13, Power T 32, Wing-T 21).
 - Next: more concepts + variants (§8 of the contract notes), an RPO shape,
   pre-snap motion, then polish (pacing, typography, battery behaviour).

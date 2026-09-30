@@ -79,6 +79,14 @@ marker clears the center.
 }
 ```
 
+Trick plays / direct snaps: instead of `ball` / `handoff`, a play may give the whole ball
+chain: `"exchanges": [{ "type": "handoff" | "pitch" | "pass", "from"?: id, "to": id, "at"?: fraction | landmark }]`
+(from defaults to the current holder; in concepts, roles and landmarks resolve as usual).
+A formation's snap-taker is whoever has `role: "QB"`; wildcat formations give that role to
+the running back (`"kind": "skill", "label": "RB"`) and split the quarterback out as a
+receiver (`"pos": "QB"` keeps personnel counts right). Goal-line defensive packages:
+`gl65`, `gl53`.
+
 Family defaults: `dropback_pass` / `quick_pass` / `screen` protect with the OL and drop
 the QB (2 / 1 / 3 yd). `run` and `play_action` have no defaults: every assignment is
 explicit. Anything unassigned is drawn idle (dimmed), never invented.

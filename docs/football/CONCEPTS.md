@@ -8,7 +8,7 @@ Where coaching systems differ, one presentation is chosen and the choice is writ
 concept's `football` block. Assumed defensive fronts are noted where blocking depends on
 them; defenders are never drawn.
 
-307 plays · 92 concepts · 12 formations
+348 plays · 108 concepts · 18 formations
 
 ## defense
 
@@ -138,6 +138,27 @@ them; defenders are never drawn.
 - **Rules:** Zone pressure: the nickel and Mike blitz, the play-side end drops into the flat. Three deep (corners + free safety), three under (end, Will, strong safety).
 - **Sources:** Fire zone: 5-man zone pressure, 3 deep 3 under (Dick LeBeau lineage)
 
+### Goal Line 5-3
+
+- **Presentations:** Goal Line (23, right) · Jumbo (13, right) · I-Formation (21, right)
+- **Wallpaper:** SHORT YARDAGE · MAN FREE — "Five up front, three linebackers, a safety in the middle of the end zone."
+- **Rules:** A nose and four linemen, three linebackers at 3 yards, corners in man and one safety free.
+- **Sources:** Goal Line 5-3
+
+### Goal Line 6-5
+
+- **Presentations:** Goal Line (23, right) · Jumbo (13, right) · I-Formation (21, right)
+- **Wallpaper:** SHORT YARDAGE · ALL GAPS — "Six down linemen fill every gap; man coverage behind them."
+- **Rules:** Six linemen take a gap each and penetrate; three linebackers fill downhill; the corners play man.
+- **Sources:** Goal Line 6-5
+
+### Mug Cover 1
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Singleback Tight (12, right)
+- **Wallpaper:** SIM PRESSURE · COVER 1 — "Both linebackers mug the A gaps; one comes, one drops."
+- **Rules:** Two linebackers stand in the A gaps to stress the protection; at the snap one blitzes and one drops to the hook.
+- **Sources:** Mug Cover 1
+
 ### Overload
 
 - **Presentations:** Gun Trips (11, right) · Gun Doubles (11, right)
@@ -254,6 +275,13 @@ them; defenders are never drawn.
 - **Read:** Seam first vs a hole in the middle of the field; otherwise the dig behind the vacated hook defender; backside sit / RB as the check-down.
 - **Sources:** Project handoff #1 — canonical presentation, route depths and relationship; Dagger: #2 seam clears the hook/curl zone for #1's deep dig; backside checkdown
 
+### Double Pass
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** TRICK · LATERAL THEN SHOT — "A lateral screen to the outside receiver, who throws it back downfield."
+- **Read:** The defense rallies to the lateral screen; the slot fakes a block and goes.
+- **Sources:** Double pass (throwback)
+
 ### Drive
 
 - **Presentations:** Gun Doubles (11, left) · Gun Trips (11, right) · Gun Empty (11, left) · Pistol Doubles (11, left) · Singleback Doubles (11, left)
@@ -269,6 +297,13 @@ them; defenders are never drawn.
 - **Defining relationship:** lanes
 - **Read:** Read the middle safety: throw the seam he doesn't take; outside go vs off-leverage corners; RB check-down.
 - **Sources:** Project handoff #1 — canonical presentation, route depths and relationship; Four Verts vs single-high: seams split the middle safety
+
+### Hook and Lateral
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** TRICK · LATE GAME — "The hook draws the tackle; the trailer takes the pitch at full speed."
+- **Read:** Coverage drives on the curl; the pitch goes outside to the trailer with a head of steam.
+- **Sources:** Hook and lateral
 
 ### Levels
 
@@ -394,7 +429,7 @@ them; defenders are never drawn.
 
 ### Fade-Out
 
-- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Gun Trey (11, right)
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Gun Trey (11, right) · Jumbo (13, right)
 - **Wallpaper:** RED ZONE — "A fade over the top, an out underneath: the corner can't cover both."
 - **Defining relationship:** high_low
 - **Read:** High-low on the corner: he sinks with the fade → out; he jumps the out → fade over him.
@@ -474,6 +509,20 @@ them; defenders are never drawn.
 - **Rules:** Line and RB sell outside zone right; QB fakes and boots left (naked). X clears, Z deep over, Y drag, U flat: a three-level flood in front of the QB.
 - **Sources:** Outside zone boot: over / drag / flat flood off wide-zone action
 
+### Flea Flicker
+
+- **Presentations:** I-Formation (21, right) · Singleback Tight (12, right)
+- **Wallpaper:** TRICK · SHOT PLAY — "Handoff, the back pitches it back to the quarterback, then the deep shot."
+- **Read:** The safeties come up for the run; the pitch back gives the QB a clean deep throw.
+- **Sources:** Flea flicker
+
+### Halfback Pass
+
+- **Presentations:** I-Formation (21, right) · Singleback Tight (12, right)
+- **Wallpaper:** TRICK · TOSS PASS — "Toss sweep look; the back pulls up and throws deep over the charging secondary."
+- **Read:** The corner sees toss and comes up to force; the flanker runs by him.
+- **Sources:** Halfback option pass
+
 ### PA Crossers
 
 - **Presentations:** Singleback Tight (12, right) · Ace (12, right) · I-Formation (21, right) · Gun Trey (11, right)
@@ -481,6 +530,35 @@ them; defenders are never drawn.
 - **Defining relationship:** high_low
 - **Rules:** Inside-zone action; the line shows run (base blocks), backs protect. The TE crosses at 11 under the backside receiver's deep dig at 16, both behind the linebackers who bit on the fake; the go clears the corner.
 - **Sources:** Play-action crossers: run fake + TE cross under a deep dig
+
+### Philly Special
+
+- **Presentations:** Ace (12, right)
+- **Wallpaper:** TRICK · GOAL LINE — "The back takes it, pitches to the tight end on the reverse, who throws to the quarterback."
+- **Read:** Nobody covers the quarterback after he hands it off; the tight end pulls up and throws it to him.
+- **Sources:** Philly Special (Super Bowl LII)
+
+### TE Pop
+
+- **Presentations:** Goal Line (23, right) · Jumbo (13, right) · Singleback Tight (12, right)
+- **Wallpaper:** GOAL LINE · PLAY ACTION — "Sell the dive, then pop the tight end up the seam behind the linebackers."
+- **Read:** Linebackers bite on the run fake; the tight end releases late into the space they vacate.
+- **Sources:** Tight end pop pass (play action)
+
+### Waggle
+
+- **Presentations:** Wing-T (21, right)
+- **Wallpaper:** WING-T · BOOT — "Fake the buck sweep, boot the other way; the wingback crosses the field behind it."
+- **Defining relationship:** high_low
+- **Read:** Flow goes with the sweep fake; the QB boots back against it and reads the shallow crosser to the deep crosser.
+- **Sources:** Wing-T waggle (bootleg)
+
+### Wildcat Throwback
+
+- **Presentations:** Wildcat (11, right) · Wildcat Heavy (21, right)
+- **Wallpaper:** TRICK · WILDCAT — "The wildcat back sells power, pulls up, and throws back to the split-out quarterback."
+- **Read:** Everyone flows to the power look; nobody covers the quarterback who lined up as a receiver.
+- **Sources:** Wildcat throwback pass
 
 ### Yankee
 
@@ -632,6 +710,13 @@ them; defenders are never drawn.
 - **Rb:** Downhill to the B gap; bounce or bang off the Mike's fit.
 - **Sources:** Duo: 'power without a puller' — two vertical double teams, RB reads Mike
 
+### Fullback Dive
+
+- **Presentations:** Power T (32, right) · Wing-T (21, right)
+- **Wallpaper:** T FORMATION · QUICK HITTER — "The fastest hole in football: the fullback hits the A gap off base blocks."
+- **Rules:** Base blocks; the fullback takes a quick handoff and hits the A gap while the halfback fakes the other way.
+- **Sources:** Fullback dive (T formation / Wing-T)
+
 ### Inside Zone
 
 - **Presentations:** Gun Doubles (11, left) · Pistol Strong (11, right) · Singleback Tight (12, right) · Ace (12, right) · Gun Trips (11, right) · Pistol Doubles (11, right) · Singleback Doubles (11, right)
@@ -662,7 +747,7 @@ them; defenders are never drawn.
 
 ### Jet Sweep
 
-- **Presentations:** Gun Doubles (11, right) · Singleback Doubles (11, right)
+- **Presentations:** Gun Doubles (11, right) · Singleback Doubles (11, right) · Wildcat (11, left)
 - **Wallpaper:** MOTION · PERIMETER RUN — "Full-speed motion takes the handoff and outruns the pursuit to the edge."
 - **Defining relationship:** zone, feature
 - **Rules:** The slot comes in jet motion and is at full speed at the snap; the line reach-blocks to the sweep side and #2 arcs to the force defender. The back fakes inside zone the other way to hold the linebackers.
@@ -675,6 +760,14 @@ them; defenders are never drawn.
 - **Defining relationship:** kickout
 - **Rules:** Draw with a lead blocker: the line pass-sets, receivers clear, the H-back leads through the A gap onto the linebacker and the back follows on a delayed handoff.
 - **Sources:** Lead draw
+
+### Lead Iso
+
+- **Presentations:** Goal Line (23, right)
+- **Wallpaper:** GOAL LINE · LEAD — "Base blocks up front; the fullback isolates the linebacker in the B gap."
+- **Defining relationship:** kickout
+- **Rules:** Man blocking on the line; the fullback leads through the B gap onto the play-side linebacker; the back reads his block.
+- **Sources:** Lead / iso (I-formation)
 
 ### Outside Zone
 
@@ -697,7 +790,7 @@ them; defenders are never drawn.
 
 ### Power
 
-- **Presentations:** Pistol Strong (11, right) · I-Formation (21, right)
+- **Presentations:** Pistol Strong (11, right) · I-Formation (21, right) · Power T (32, right)
 - **Wallpaper:** GAP RUN · SHORT YARDAGE — "Down blocks build the wall while the guard pulls to the point of attack."
 - **Defining relationship:** wall, pull, kickout
 - **Rules:** Power O: PST, PSG (and an inline TE) block down, C blocks back for the pulling guard, BST hinges. The H-back / FB kicks out the end man; the backside guard pulls and wraps up through the hole to the play-side LB.
@@ -706,11 +799,26 @@ them; defenders are never drawn.
 
 ### QB Power
 
-- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, left) · Gun Trey (11, left)
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, left) · Gun Trey (11, left) · Wildcat (11, right) · Wildcat Heavy (21, right)
 - **Wallpaper:** GAP RUN · QB KEEP — "The back kicks out the end, the guard wraps, the quarterback keeps it."
 - **Defining relationship:** wall, pull, kickout
 - **Rules:** Power blocking with the back as the kick-out player: PST, PSG down, C back, BSG pulls and wraps to the LB. The QB is the runner, giving the offense an extra blocker.
 - **Sources:** QB power (gun): RB kicks out, backside guard wraps, QB carries
+
+### QB Sneak
+
+- **Presentations:** Goal Line (23, right) · Jumbo (13, right) · Power T (32, right) · I-Formation (21, right)
+- **Wallpaper:** SHORT YARDAGE · GOAL LINE — "Wedge the A gap and fall forward behind the center."
+- **Defining relationship:** wall
+- **Rules:** Every lineman wedges toward the play-side A gap; the QB follows the center’s hip and falls forward.
+- **Sources:** QB sneak (wedge)
+
+### Reverse
+
+- **Presentations:** I-Formation (21, left) · Singleback Tight (12, left)
+- **Wallpaper:** TRICK · MISDIRECTION — "Flow one way with the back, hand it to the receiver coming back the other."
+- **Rules:** The back runs a sweep look away; the flanker comes back behind him, takes the handoff and runs to the vacated side.
+- **Sources:** Reverse / end-around
 
 ### Split Zone
 
@@ -722,7 +830,7 @@ them; defenders are never drawn.
 
 ### Trap
 
-- **Presentations:** I-Formation (21, right) · Gun Doubles (11, right) · Gun Trips (11, right) · Pistol Doubles (11, right) · Singleback Doubles (11, right)
+- **Presentations:** I-Formation (21, right) · Gun Doubles (11, right) · Gun Trips (11, right) · Pistol Doubles (11, right) · Singleback Doubles (11, right) · Wing-T (21, right) · Power T (32, right)
 - **Wallpaper:** QUICK HITTER · GAP RUN — "The 3-technique is left unblocked, then trapped from the backside."
 - **Defining relationship:** kickout, feature
 - **Front:** 4-3: 3-tech outside the play-side guard.
@@ -737,6 +845,14 @@ them; defenders are never drawn.
 - **Defining relationship:** kickout, feature
 - **Rules:** The play-side guard releases to the linebacker, inviting the 3-technique upfield; the H-back crosses the formation and whams him from the side. The back hits the A gap inside the wham.
 - **Sources:** Wham block (TE/H-back trap)
+
+### Wing-T Buck Sweep
+
+- **Presentations:** Wing-T (21, right)
+- **Wallpaper:** WING-T · SIGNATURE — "Fullback fake inside, both guards pull, the halfback sweeps behind them."
+- **Defining relationship:** pull
+- **Rules:** The tight end and wingback block down, the play-side guard kicks out the force player, the backside guard wraps up the alley; the fullback’s dive fake holds the linebackers.
+- **Sources:** Delaware Wing-T buck sweep
 
 ### Zone Read
 

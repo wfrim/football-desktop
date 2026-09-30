@@ -105,6 +105,30 @@ An assignment can override its timing in data with `timing: { phase, delay, dura
 
 A handoff is a two-player event, not a path: `play.handoff = { to, at }`. The ball travels from the QB to the exchange point on the carrier's `run` track when that point is drawn, then rides the track as it draws (or with the runner in simulation). Blocking primitives take absolute landmarks (`at`, `target`, `through`, `hole`), because blocks are authored against defenders' spots, not against the blocker. Gap-scheme timing is relational, not hand-tuned: the `pull` / `kickout` relationships delay the whole backfield action until the pullers reach the line first.
 
+## Live styles (src/live/)
+
+- `pairing.js` — build-time: which defender every blocking assignment meets (pass pro by
+  rusher across, run blocks by contact point, kick-outs by the end man, leads/wraps by
+  the second-level player; perimeter blocks pre-targeted in playRenderer).
+- `sim.js` — one deterministic 0.1 s pass over all 22 players: blockers follow their
+  paths, work up to their man and latch; latched pairs move as one until the hold time
+  expires (shed); rushers take lanes to the QB; man defenders trail; zone defenders drop,
+  match and break on the ball; the QB throws on schedule (Cooperative) or works the
+  progression (Competitive); after the catch/carry the carrier steers upfield and free
+  defenders take pursuit angles. Outputs every player's track, the throw actually made,
+  latches (pulls/leads are redrawn to the real contact), and `outcome.why`.
+- `notes.js` — turns `outcome.why` into the Coach's note.
+- Play out "to the whistle" runs the simulation until the play ends; the camera follows
+  the carrier by translating the play and field layers (same mechanism as the drive scroll).
+
+## Ball chain
+
+`play.exchanges` generalises handoff/pass into a sequence (handoff, pitch, pass from any
+player). `resolveChain` (playRenderer) times each leg from the receiver's authored path;
+choreography flies the ball between holders and otherwise keeps it on the holder
+(marker in live styles, drawing tip in diagram). In every live style the ball follows
+its holder's marker, and QA checks it never drifts.
+
 ## Dev aids
 
 - `node tools/validate.mjs`: headless data validation (exit 1 on fatal).
