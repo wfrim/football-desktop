@@ -7,6 +7,7 @@
  *   node tools/bundle-data.mjs
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -30,3 +31,17 @@ writeFileSync(
     `FD.Data.register(${JSON.stringify({ formations, concepts, plays })});\n`
 );
 console.log(`Bundled ${formations.length} formation(s), ${concepts.length} concept(s), ${plays.length} play file(s) → src/data/plays.bundle.js`);
+
+// Cache-busting: Plash's WebView keeps serving cached copies of unchanged URLs,
+// so every script / stylesheet link in index.html carries a content hash.
+const htmlPath = join(root, 'index.html');
+const html = readFileSync(htmlPath, 'utf8').replace(/((?:src|href)=")([^"?]+\.(?:js|css))(?:\?v=[0-9a-f]+)?(")/g, (m, a, file, z) => {
+  try {
+    const h = createHash('sha1').update(readFileSync(join(root, file))).digest('hex').slice(0, 8);
+    return `${a}${file}?v=${h}${z}`;
+  } catch (e) {
+    return m;
+  }
+});
+writeFileSync(htmlPath, html);
+console.log('index.html: asset links stamped with content hashes');

@@ -8,7 +8,7 @@
 
 .field-surface {
   fill: var(--ink);
-  fill-opacity: 0.011;
+  fill-opacity: calc(0.011 * var(--field-k));
 }
 
 .field-line {
@@ -18,21 +18,21 @@
   shape-rendering: geometricPrecision;
 }
 
-.field-yard { stroke-opacity: 0.055; }
-.field-hash { stroke-opacity: 0.075; }
-.field-side { stroke-opacity: 0.12; }
+.field-yard { stroke-opacity: calc(0.055 * var(--field-k)); }
+.field-hash { stroke-opacity: calc(0.075 * var(--field-k)); }
+.field-side { stroke-opacity: calc(0.12 * var(--field-k)); }
 
 .field-cross {
   fill: none;
   stroke: var(--ink);
-  stroke-opacity: 0.09;
+  stroke-opacity: calc(0.09 * var(--field-k));
   stroke-width: var(--sw-field);
 }
 
 .field-label {
   font-family: var(--font-mono);
   fill: var(--ink);
-  fill-opacity: 0.2;
+  fill-opacity: calc(0.2 * var(--field-k));
   letter-spacing: 0.04em;
 }
 

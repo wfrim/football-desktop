@@ -13,6 +13,7 @@
  *   ?t=5.5                       freeze at a time (design review / screenshots)
  *   ?mocktag=0                   hide the "mock data" note in the counter
  *   ?debug=1                     draw the camera frame, log stats
+ *   ?theme= ?defense= ?field= ?hash= ?drive=   pin a user setting (see settings.js)
  *
  * motion=auto resolves per play: prefers-reduced-motion → static; a
  * discharging battery (where the Battery API exists) → static; else full.
@@ -37,7 +38,9 @@ window.FD = window.FD || {};
       return {
         mode: pick('mode', ['diagram', 'simulation'], 'diagram'),
         motion: pick('motion', ['auto', 'full', 'static', 'reduced'], 'auto'),
-        speed: clamp(num('speed', 1), 0.25, 4),
+        // Pace: a URL number (0.25–4, for review) or the saved setting.
+        speed: q.has('speed') ? clamp(num('speed', 1), 0.25, 4) : parseFloat(FD.Settings.get().speed),
+        settings: FD.Settings.get(),
         labels: pick('labels', ['skill', 'all', 'none'], 'skill'),
         fps: clamp(Math.round(num('fps', 60)), 15, 120),
         order: pick('order', ['mix', 'shuffle', 'sequential'], 'mix'),

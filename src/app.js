@@ -44,8 +44,14 @@ window.FD = window.FD || {};
     const animator = new FD.Animator({ timeScale: cfg.speed, maxFps: cfg.fps });
     FD.app = { cfg, stage, animator, playlist }; // handy from the console
 
+    if (FD.SettingsPanel) FD.SettingsPanel.create(document.querySelector('.hud-counter'));
+
     let failures = 0;
     for (;;) {
+      // Settings can change at any time (panel); they take effect per play.
+      cfg.settings = FD.Settings.get();
+      FD.Theme.apply(cfg.settings.theme, true); // "auto" follows the clock
+      if (!new URLSearchParams(location.search).has('speed')) animator.timeScale = parseFloat(cfg.settings.speed) || 1;
       const info = playlist.next();
       let scene = null;
       try {

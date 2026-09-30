@@ -1,0 +1,114 @@
+/*
+ * panel.css — the settings sheet, opened from the play counter.
+ * Typographic, quiet, theme-aware (uses the same tokens as the HUD).
+ */
+
+.hud-counter {
+  pointer-events: auto;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0.35em 0;
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.hud-counter:hover,
+.hud-counter:focus-visible {
+  color: var(--ink);
+  outline: none;
+}
+
+.fd-panel {
+  position: fixed;
+  right: var(--edge-x);
+  bottom: calc(var(--edge-y) + 2.4em);
+  z-index: 10;
+  width: min(360px, 88vw);
+  padding: 20px 22px 16px;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--ink);
+  font-family: var(--font-display);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.fd-panel.is-open {
+  opacity: 1;
+  transform: none;
+}
+
+.fd-panel p { margin: 0; }
+
+.fd-panel-title {
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin-bottom: 14px !important;
+}
+
+.fd-row {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 0;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 7%, transparent);
+}
+
+.fd-label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.fd-seg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.fd-seg button {
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  color: var(--ink-2);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.fd-seg button:hover { color: var(--ink); border-color: color-mix(in srgb, var(--ink) 30%, transparent); }
+
+.fd-seg button.is-on {
+  color: var(--bg);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.fd-seg.is-locked button { cursor: default; opacity: 0.45; }
+
+.fd-panel-note {
+  margin-top: 12px !important;
+  font-family: var(--font-text);
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--ink-3);
+}

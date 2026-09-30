@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>Playbook — desktop</title>
-  <link rel="stylesheet" href="styles/base.css">
-  <link rel="stylesheet" href="styles/play.css">
+  <link rel="stylesheet" href="styles/base.css?v=56ed8f1c">
+  <link rel="stylesheet" href="styles/play.css?v=a78f9538">
+  <link rel="stylesheet" href="styles/themes.css?v=4bf491ee">
+  <link rel="stylesheet" href="styles/panel.css?v=40f838f9">
 </head>
 <body>
   <div class="backdrop" aria-hidden="true"></div>
@@ -27,7 +29,7 @@
     </footer>
     <div class="hud-corner">
       <p class="hud-flag" data-part="flag" hidden></p>
-      <p class="hud-counter" data-part="counter"></p>
+      <button type="button" class="hud-counter" data-part="counter" title="Settings"></button>
     </div>
   </div>
 
@@ -35,28 +37,31 @@
     Classic scripts (not ES modules) on purpose: they run from file://, which
     is how Plash loads a local page. Order matters: each file extends window.FD.
   -->
-  <script src="src/renderer/svg.js"></script>
-  <script src="src/renderer/geometry.js"></script>
-  <script src="src/layout/coordinates.js"></script>
-  <script src="src/layout/responsive.js"></script>
-  <script src="src/animation/timeline.js"></script>
-  <script src="src/animation/animator.js"></script>
-  <script src="src/renderer/primitives.js"></script>
-  <script src="src/renderer/routeRenderer.js"></script>
-  <script src="src/renderer/formationRenderer.js"></script>
-  <script src="src/renderer/fieldRenderer.js"></script>
-  <script src="src/renderer/relationships.js"></script>
-  <script src="src/renderer/playRenderer.js"></script>
-  <script src="src/animation/choreography.js"></script>
-  <script src="src/data/vocabulary.js"></script>
-  <script src="src/data/resolve.js"></script>
-  <script src="src/data/concepts.js"></script>
-  <script src="src/data/loader.js"></script>
-  <script src="src/data/plays.bundle.js"></script>
-  <script src="src/playlist.js"></script>
-  <script src="src/config.js"></script>
-  <script src="src/hud.js"></script>
-  <script src="src/stage.js"></script>
-  <script src="src/app.js"></script>
+  <script src="src/renderer/svg.js?v=954a015b"></script>
+  <script src="src/renderer/geometry.js?v=9854b30c"></script>
+  <script src="src/layout/coordinates.js?v=27ffe36f"></script>
+  <script src="src/layout/responsive.js?v=85652b11"></script>
+  <script src="src/animation/timeline.js?v=37044b50"></script>
+  <script src="src/animation/animator.js?v=0a439891"></script>
+  <script src="src/renderer/primitives.js?v=921f0db6"></script>
+  <script src="src/renderer/routeRenderer.js?v=ac17f7e9"></script>
+  <script src="src/renderer/formationRenderer.js?v=59d1169e"></script>
+  <script src="src/renderer/fieldRenderer.js?v=0bea0540"></script>
+  <script src="src/renderer/relationships.js?v=288da0a1"></script>
+  <script src="src/renderer/playRenderer.js?v=2890b697"></script>
+  <script src="src/animation/choreography.js?v=ae0cd8d7"></script>
+  <script src="src/data/vocabulary.js?v=c1b9f843"></script>
+  <script src="src/data/resolve.js?v=68e623d4"></script>
+  <script src="src/data/concepts.js?v=80153317"></script>
+  <script src="src/data/loader.js?v=8ff3be46"></script>
+  <script src="src/data/plays.bundle.js?v=5ae8f840"></script>
+  <script src="src/playlist.js?v=fb894204"></script>
+  <script src="src/settings.js?v=75a37c1a"></script>
+  <script src="src/theme.js?v=19fd6eb6"></script>
+  <script src="src/config.js?v=f0271640"></script>
+  <script src="src/hud.js?v=03617118"></script>
+  <script src="src/settingsPanel.js?v=7c878cac"></script>
+  <script src="src/stage.js?v=7b3e49ce"></script>
+  <script src="src/app.js?v=dc1b33fb"></script>
 </body>
 </html>

@@ -1,0 +1,56 @@
+/*
+ * themes.css — each theme redefines the palette tokens from base.css.
+ * Nothing else in the stylesheet knows about themes. `--field-k` scales the
+ * faint field markings (light grounds need a little more ink to read).
+ * Selected by FD.Theme (src/theme.js) via <html data-theme="…">.
+ */
+
+:root {
+  --bg-deep: #060708;
+  --vignette: rgba(0, 0, 0, 0.5);
+  --field-k: 1;
+  --texture: none;
+}
+
+html[data-theme="blueprint"] {
+  --bg: #0a2143;
+  --bg-lift: #123364;
+  --bg-deep: #071833;
+  --ink: #e4efff;
+  --ink-2: rgba(228, 239, 255, 0.62);
+  --ink-3: rgba(228, 239, 255, 0.36);
+  --accent: #ffd36b;
+  --vignette: rgba(3, 10, 25, 0.45);
+  --field-k: 1.6;
+}
+
+html[data-theme="chalk"] {
+  --bg: #1c2a25;
+  --bg-lift: #26372f;
+  --bg-deep: #15201c;
+  --ink: #eef0e6;
+  --ink-2: rgba(238, 240, 230, 0.62);
+  --ink-3: rgba(238, 240, 230, 0.36);
+  --accent: #f0d27c;
+  --vignette: rgba(5, 12, 9, 0.5);
+  --field-k: 1.4;
+  /* Static chalk dust: one SVG noise tile, rasterised once by the browser. */
+  --texture: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.05 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+}
+
+html[data-theme="paper"] {
+  color-scheme: light;
+  --bg: #efe9dc;
+  --bg-lift: #f7f2e7;
+  --bg-deep: #e3dccc;
+  --ink: #2a2622;
+  --ink-2: rgba(42, 38, 34, 0.64);
+  --ink-3: rgba(42, 38, 34, 0.4);
+  --accent: #b4472c;
+  --vignette: rgba(110, 90, 55, 0.14);
+  --field-k: 1.8;
+}
+
+/* Theme swaps fade the whole page briefly (see theme.js). */
+body { transition: opacity 0.45s ease; }
+body.is-theming { opacity: 0; }

@@ -46,7 +46,7 @@ body {
 .backdrop {
   position: fixed;
   inset: 0;
-  background: radial-gradient(120% 95% at 50% 56%, var(--bg-lift) 0%, var(--bg) 58%, #060708 100%);
+  background: var(--texture), radial-gradient(120% 95% at 50% 56%, var(--bg-lift) 0%, var(--bg) 58%, var(--bg-deep) 100%);
 }
 
 #stage {
@@ -62,7 +62,7 @@ body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 78% 72% at 50% 52%, transparent 58%, rgba(0, 0, 0, 0.5) 100%);
+  background: radial-gradient(ellipse 78% 72% at 50% 52%, transparent 58%, var(--vignette) 100%);
 }
 
 /* ── HUD ─────────────────────────────────────────────────────────────── */
