@@ -82,6 +82,19 @@ unrecognizable, football correctness wins.
   (nickel/base, front by technique, Cover 1-4, man, run fits). Concepts carry
   `defense: { coverage, key, front }`; key = the defender job the concept attacks.
 - Drive mode: `src/drive.js` (situational selection, results, field scroll).
+  Drive flow Continuous: the exit rewinds while play + field scroll by the gain.
+- Defensive playbook: `src/data/concepts/def_*.json`, family `defense` (defense drawn
+  bold with playbook letters, offense faint). `defense` block: package (nickel, base,
+  34, dime, bear, 335), front (techniques; `o` = standing edge), coverage (cover0/1/
+  robber/2/tampa2/cover2man/3/buzz/4/6), moves {ID: {blitz|rush|stunt|drop|man|spy|at}},
+  disguise (pre-snap shell), key. Syntax: header of `src/defense/align.js`.
+- Play styles (Settings → Play style): Diagram (default) · Lead (throw in stride; route
+  stops at `ball.at`, ghost of the rest) · Live offense / Live game (`src/live/sim.js`:
+  deterministic 0.1 s simulation at build time; players move; run after catch; Live
+  game: defense pursues, coverage decides the throw, tackles; Defense call Cooperative
+  / Competitive; drives follow the outcome). QA: `index.html?check=1&style=game&call=comp`.
+- Other settings: Library, Text, Brightness, Lines (hand-drawn), Transition (rewind),
+  Zoom, Play length, Pace (extra slow), Moments (one ring pulse per play).
 - `node tools/bundle-data.mjs` also cache-busts every asset URL in index.html:
   Plash's WebView serves stale cached files otherwise. Always run it after edits,
   then `open "plash:reload"`.
@@ -89,6 +102,6 @@ unrecognizable, football correctness wins.
   field layer). Measure with `tools/energy.sh`.
 
 ## Status (see git log for detail)
-- 212 plays / 53 concepts / 12 formations; everything except Iso is a template.
+- 307 plays / 92 concepts (60 offense + 32 defense) / 12 formations.
 - Next: more concepts + variants (§8 of the contract notes), an RPO shape,
   pre-snap motion, then polish (pacing, typography, battery behaviour).

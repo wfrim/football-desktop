@@ -13,8 +13,12 @@ After editing any play or formation JSON, run `node tools/bundle-data.mjs` so `f
 
 ## Settings
 
-Click the play counter (bottom right) to open the settings sheet: theme, faint
-defense, field position, hash, drive mode, motion and pace. Settings are saved on
+Click the play counter (bottom right) to open the settings sheet:
+- Look: theme, brightness, text, lines (precise / hand-drawn), zoom
+- Football: play style (diagram / lead / live offense / live game), defense call,
+  pursuit, library (everything / offense / defense / runs / passes / screens),
+  faint defense, field position, hash, drive mode, drive flow
+- Motion: motion (full / calm / still), pace, play length, transition, moments Settings are saved on
 this Mac. In Plash, clicks only reach the page in **Browsing Mode** (Plash menu →
 Browsing Mode); turn it off again afterwards.
 

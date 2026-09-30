@@ -28,3 +28,9 @@ Rules that keep it low (don't regress these):
 
 User controls: Settings → Motion (Full 30 fps · Calm 20 fps · Still). Plash's own
 "deactivate on battery" pauses it entirely on battery.
+
+## Since then (overnight build)
+- With the display asleep Plash (and WebKit) pause entirely: 0 % CPU, memory released.
+- New per-frame work is limited to moving defender glyphs in Live styles and the
+  rewind/scroll exit; drops/drives/moments reuse existing drawables. Re-measure with
+  `tools/energy.sh` in Plash with the screen on (Full motion) — target stays ≈ 14 %.
