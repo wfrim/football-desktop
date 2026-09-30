@@ -23,6 +23,9 @@ window.FD = window.FD || {};
     lines:      { group: 'Look', label: 'Lines',       choices: [['precise', 'Precise'], ['hand', 'Hand-drawn']], def: 'precise' },
     zoom:       { group: 'Look', label: 'Zoom',        choices: [['close', 'Close'], ['standard', 'Standard'], ['wide', 'Wide']], def: 'standard' },
     // Football
+    style:      { group: 'Football', label: 'Play style', choices: [['diagram', 'Diagram'], ['lead', 'Lead'], ['live', 'Live offense'], ['game', 'Live game']], def: 'diagram' },
+    call:       { group: 'Football', label: 'Defense call', choices: [['coop', 'Cooperative'], ['comp', 'Competitive']], def: 'coop' },
+    pursuit:    { group: 'Football', label: 'Pursuit',    choices: [['calm', 'Calm'], ['aggressive', 'Aggressive']], def: 'calm' },
     library:    { group: 'Football', label: 'Library',    choices: [['all', 'Everything'], ['offense', 'Offense'], ['defense', 'Defense'], ['runs', 'Runs'], ['passes', 'Passes'], ['screens', 'Screens & RPO']], def: 'all' },
     defense:    { group: 'Football', label: 'Defense',    choices: [['off', 'Off'], ['faint', 'Faint'], ['key', 'Faint + key']], def: 'faint' },
     field:      { group: 'Football', label: 'Field',      choices: [['classic', 'Classic'], ['random', 'Anywhere'], ['redzone', 'Red zone']], def: 'classic' },

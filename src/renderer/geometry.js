@@ -161,6 +161,27 @@ window.FD = window.FD || {};
     return out;
   };
 
+  /** Split a path at a fraction of its arc length → { head, tail } point lists. */
+  G.cutAt = function (path, fraction) {
+    const pts = G.sample(path);
+    let total = 0;
+    for (let i = 1; i < pts.length; i++) total += G.dist(pts[i - 1], pts[i]);
+    const want = total * Math.max(0, Math.min(1, fraction));
+    const head = [pts[0]];
+    let run = 0;
+    for (let i = 1; i < pts.length; i++) {
+      const d = G.dist(pts[i - 1], pts[i]);
+      if (run + d >= want) {
+        const cut = G.lerp(pts[i - 1], pts[i], d ? (want - run) / d : 0);
+        head.push(cut);
+        return { head, tail: [cut].concat(pts.slice(i)) };
+      }
+      run += d;
+      head.push(pts[i]);
+    }
+    return { head, tail: [pts[pts.length - 1]] };
+  };
+
   /**
    * Measure a path once; returns { length, points, at(fraction) }.
    * at() returns { point, tangent } at a fraction of arc length.

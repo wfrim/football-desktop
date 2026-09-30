@@ -280,3 +280,6 @@
 
 .def-letter { font-family: var(--font-display); font-weight: 600; fill: var(--ink); fill-opacity: 0.95; letter-spacing: 0.02em; }
 .def-p.is-key .def-letter { fill: var(--ink); }
+
+.a-wrap .a.is-dotted, .a-wrap:has(.is-ghost) {}
+.a-wrap.is-ghost .a, .is-ghost .a { stroke-opacity: 0.28; }

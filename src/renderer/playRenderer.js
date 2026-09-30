@@ -178,11 +178,30 @@ window.FD = window.FD || {};
       const primaryId = play.primary || readOrder[0];
       const assignments = [];
 
-      for (const { spec, prim, fieldPts } of L.items) {
+      // Play style: Lead / Live — the targeted route stops where the ball meets
+      // the receiver in stride (the play's ball.at); the rest becomes a ghost.
+      const style = cfg.style || (cfg.settings && cfg.settings.style) || 'diagram';
+      let leadIdx = -1;
+      const bt = play.ball && play.ball.to;
+      if (style !== 'diagram' && bt && bt.player && typeof bt.at === 'number' && bt.at < 0.97) {
+        L.items.forEach((it, i) => { if (it.spec.player === bt.player && it.prim.kind === 'route' && !it.spec.alt) leadIdx = i; });
+      }
+
+      for (let idx = 0; idx < L.items.length; idx++) {
+        const { spec } = L.items[idx];
+        let { prim, fieldPts } = L.items[idx];
         const pl = players.get(spec.player);
         const prev = spec.chain ? pl.assignments[pl.assignments.length - 1] : null;
         const hand = cfg.settings && cfg.settings.lines === 'hand' && prim.kind !== 'block';
-        const svgPts = fieldPts.map(toSvg);
+        let svgPts = fieldPts.map(toSvg);
+        let ghost = null;
+        if (idx === leadIdx) {
+          const cut = G.cutAt(G.fromPoints(svgPts, prim.radius), bt.at);
+          svgPts = cut.head;
+          ghost = cut.tail;
+          fieldPts = svgPts.map((q) => [q[0] - ballX, -q[1]]);
+          prim = Object.assign({}, prim, { end: 'settle', radius: 0 });
+        }
         const path = hand
           ? G.fromPoints(G.wobble(svgPts, `${play.id}:${spec.player}:${spec.type}`), Math.max(prim.radius, 0.9))
           : G.fromPoints(svgPts, prim.radius);
@@ -211,6 +230,15 @@ window.FD = window.FD || {};
         assignments.push(a);
         if (!a.alt) pl.assignments.push(a);
         if (prim.kind === 'motion') pl.snap = a.fieldEnd;
+        if (ghost && ghost.length > 1) {
+          // The route the receiver would have finished: faint, dotted, after the catch.
+          const gv = FD.RouteRenderer.create({ parent: layers.paths, defs: stage.defs, path: G.fromPoints(ghost, 0), kind: 'route', style: 'dotted', end: 'none' });
+          gv.el.classList.add('is-ghost');
+          destroyers.push(gv.destroy);
+          assignments.push({ spec: Object.assign({}, spec, { alt: true }), player: spec.player, kind: 'route', alt: true, path: G.fromPoints(ghost, 0), view: gv, ballX,
+            fieldPts: ghost.map((q) => [q[0] - ballX, -q[1]]), measure: gv.measure, fieldEnd: [ghost[ghost.length - 1][0] - ballX, -ghost[ghost.length - 1][1]],
+            start: a.start + a.duration + 0.15, duration: 0.7, ease: 'outCubic', ghost: true });
+        }
       }
 
       // ── Faint defense data (built before the camera so the frame fits it) ─
@@ -396,6 +424,7 @@ window.FD = window.FD || {};
         pass,
         handoff,
         defense,
+        style,
         reads,
         events,
         warnings,

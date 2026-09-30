@@ -24,8 +24,8 @@ window.FD = window.FD || {};
     if (pass.point) return pass.point;
     const r = pass.route;
     if (!r) return null;
-    // Diagram: the ball lands ON the arrowhead / settle ring, never on the line behind it.
-    if (!sim) return G.endPoint(r.path);
+    // Diagram / Lead: the ball lands ON the arrowhead / settle ring (Lead: where the route stops).
+    if (!sim || (scene.style && scene.style !== 'diagram')) return G.endPoint(r.path);
     // Where the receiver actually is when the ball arrives.
     const raw = Math.max(0, Math.min(1, (arrive - r.start) / r.duration));
     return r.measure.at(FD.Ease[r.ease] ? FD.Ease[r.ease](raw) : raw).point;
@@ -41,6 +41,13 @@ window.FD = window.FD || {};
     const flight = P.arrive - P.release;
     const pass = scene.pass;
     let arrive = pass && typeof pass.timing.arrive === 'number' ? pass.timing.arrive : P.arrive;
+    if (pass && pass.route && !pass.point && scene.style && scene.style !== 'diagram') {
+      // Lead / Live: the ball meets the receiver in stride, the moment he reaches the spot.
+      const reach = FD.Relationships.timeAt(pass.route, 1);
+      arrive = Math.max(reach + 0.02, P.snap + 0.8 + flight);
+      arrive = Math.min(arrive, P.exit + (scene.holdExtra || 0) - T.catchPulse - 0.3);
+      return { release: arrive - flight, arrive };
+    }
     if (pass && pass.route && !pass.point && !sim) {
       const drawnAt = FD.Relationships.timeAt(pass.route, 1);
       arrive = Math.max(arrive, drawnAt + 0.15);
