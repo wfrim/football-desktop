@@ -330,6 +330,54 @@ window.FD = window.FD || {};
     return legs;
   }
 
+  /** The run-out continuation: from `from` along `dir`, bending upfield, clipped to the frame. */
+  function runOutPts(from, dir, len, frame, seed) {
+    let h = 0;
+    for (const ch of seed) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+    const bend = ((h % 100) / 100 - 0.5) * 0.25;
+    const pts = [from.slice()];
+    let d = G.norm(dir);
+    let p = from.slice();
+    for (let i = 0; i < len; i++) {
+      d = G.norm(G.add(G.mul(d, 0.6), [bend, -0.4]));
+      const q = G.add(p, d);
+      if (q[1] < frame.y0 + 1.6 || Math.abs(q[0]) > C.FIELD.halfWidth - 1) break;
+      p = q;
+      pts.push(p.slice());
+    }
+    return pts;
+  }
+
+  function runOut(scene, x) {
+    const len = 7 + ((scene.play.id.length * 7) % 6);
+    if (scene.handoff) {
+      const tr = scene.handoff.track;
+      const more = runOutPts(G.endPoint(tr.path), G.endTangent(tr.path), len, x.stage.frame, scene.play.id);
+      if (more.length < 3) return;
+      const len0 = tr.view.length || 1;
+      redraw(tr, tr.measure.points.concat(more.slice(1)), x, 'arrow');
+      tr.duration *= tr.view.length / len0;
+      tr.ease = 'linear';
+      scene.runOut = tr;
+    } else if (scene.pass && scene.pass.route && !scene.pass.point) {
+      const r = scene.pass.route;
+      const pl = scene.pass.receiver;
+      const more = runOutPts(G.endPoint(r.path), G.endTangent(r.path), len - 2, x.stage.frame, scene.play.id);
+      if (more.length < 3) return;
+      const view = FD.RouteRenderer.create({ parent: x.layers.paths, defs: x.stage.defs, path: G.fromPoints(more, 0.8), kind: 'run', style: 'solid', end: 'arrow' });
+      x.destroyers.push(view.destroy);
+      const a = {
+        spec: { type: 'runout', player: pl.data.id }, player: pl.data.id, kind: 'run', alt: false, path: G.fromPoints(more, 0.8), view,
+        ballX: x.ballX, fieldPts: more.map((q) => [q[0] - x.ballX, -q[1]]), measure: view.measure,
+        fieldEnd: [more[more.length - 1][0] - x.ballX, -more[more.length - 1][1]],
+        start: 0, duration: view.length / 6.5, ease: 'linear', yac: true, afterCatch: true,
+      };
+      scene.assignments.push(a);
+      pl.assignments.push(a);
+      scene.runOut = a;
+    }
+  }
+
   const COVER_LABEL = {
     cover0: 'COVER 0', cover1: 'COVER 1', robber: 'COVER 1 ROBBER', cover2: 'COVER 2', tampa2: 'TAMPA 2',
     cover2man: '2-MAN', cover3: 'COVER 3', buzz: 'COVER 3 BUZZ', cover4: 'QUARTERS', cover6: 'COVER 6',
@@ -743,6 +791,11 @@ window.FD = window.FD || {};
 
       // Relationships: validation, timing constraints, concept emphasis.
       warnings.push(...FD.Relationships.apply(scene));
+      // Run out (Settings, offense only): the ball carrier keeps running upfield
+      // after the designed carry / catch instead of stopping near the line.
+      if (cfg.settings && cfg.settings.runout !== 'off' && defMode === 'off' && !play.exchanges && play.family !== 'defense') {
+        runOut(scene, { stage, destroyers, layers, toSvg, ballX });
+      }
       if (play.exchanges && qb) scene.chain = resolveChain(scene);
       if (live && FD.Live) runLive(scene, { defData, style, cfg, toSvg, ballX, stage, place, destroyers, layers, warnings });
       warnings.push(...collisions(players, assignments));

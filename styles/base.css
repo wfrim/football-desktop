@@ -224,3 +224,16 @@ body {
 @media (max-aspect-ratio: 1/1) {
   .hud-notes { max-width: 70vw; }
 }
+
+/* Live game: why the play worked (Settings → Coach's note). */
+.hud-note {
+  margin-top: 0.35em !important;
+  font-family: var(--font-text);
+  font-size: clamp(12px, 0.8vw, 15px);
+  line-height: 1.35;
+  color: var(--ink-2);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.6s ease 0.25s, transform 0.6s ease 0.25s;
+}
+.hud-note.is-shown { opacity: 1; transform: none; }

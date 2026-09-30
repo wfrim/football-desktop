@@ -49,6 +49,7 @@ window.FD = window.FD || {};
         if (worst > 0.6) scene.warnings.push(`ball ${worst.toFixed(1)} yd off its carrier`);
         if (scene.live && scene.live.game) {
           const oc = scene.live.outcome;
+          if (/notes/.test(location.search)) scene.warnings.push(`${oc.type} ${oc.gain}: ${FD.CoachNote.note(oc, p)}`);
           stats.push({ type: oc.type, gain: oc.gain, run: p.family === 'run', pass: !!scene.pass, why: oc.why });
         }
         if (scene.warnings.length) lines.push(`${p.id} ${scene.warnings.join(' | ')}`);
@@ -171,7 +172,8 @@ window.FD = window.FD || {};
 
         if (result) {
           const tr = profile === 'static' ? 1.2 : scene.resultAt || FD.Timing.phases.hold - 0.3;
-          tl.at(tr, () => hud.result(result));
+          const why = oc && cfg.settings.note !== 'off' ? FD.CoachNote.note(oc, info.play) : '';
+          tl.at(tr, () => hud.result(result, why));
           if (cfg.settings.moments !== 'off' && profile !== 'static') {
             if (/TOUCHDOWN/.test(result)) {
               tl.at(tr, () => FD.Choreography.momentRing(scene, tl, scene.ball.getPos(), tr, true));

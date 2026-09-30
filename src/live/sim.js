@@ -390,6 +390,7 @@ window.FD = window.FD || {};
     }
     outcome.gain = outcome.point ? Math.round(-outcome.point[1]) : 0;
     outcome.t = deadT !== null ? deadT : t;
+    outcome.event = event;
     if (outcome.type === 'incomplete' || outcome.type === 'interception') outcome.gain = 0;
     const tracks = new Map(D.map((x) => [x.d.id, x.track]));
     const otracks = new Map(O.map((b) => [b.id, b.track]));

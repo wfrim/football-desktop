@@ -180,6 +180,12 @@ window.FD = window.FD || {};
         tl.track(decide + 0.1, 0.7, (p) => a.view.el.setAttribute('opacity', FD.svg.f(1 - p)), 'outCubic');
       }
 
+      // Run out after the catch starts when the ball arrives.
+      if (scene.runOut && scene.runOut.afterCatch) {
+        const PT0 = passTiming(scene, sim);
+        scene.runOut.start = PT0.arrive + 0.15;
+      }
+
       // Assignments.
       for (const a of scene.assignments) {
         const pl = scene.players.get(a.player);
@@ -262,6 +268,18 @@ window.FD = window.FD || {};
           ring.setAttribute('opacity', FD.svg.f(0.9 * (1 - p)));
         }, 'outCubic');
 
+        if (scene.runOut && scene.runOut.afterCatch && !pass.incomplete) {
+          // Offense-only run out: the ball goes with the receiver after the catch.
+          const ro = scene.runOut;
+          tl.track(ro.start, ro.duration, (p) => {
+            const pt = ro.measure.at(p);
+            ball.setVisible(true);
+            ball.setOpacity(1);
+            ball.setScale(1);
+            ball.setPos(pt.point);
+            ball.setRotation((Math.atan2(pt.tangent[1], pt.tangent[0]) * 180) / Math.PI);
+          }, 'linear');
+        }
         if (pass.intercepted && scene.live && scene.live.tracks.get(pass.intercepted)) {
           // Picked off: the ball goes with the defender.
           const tr = scene.live.tracks.get(pass.intercepted);

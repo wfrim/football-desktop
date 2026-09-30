@@ -19,6 +19,7 @@ window.FD = window.FD || {};
       const parts = {};
       root.querySelectorAll('[data-part]').forEach((node) => { parts[node.dataset.part] = node; });
       parts.result = root.querySelector('[data-result]');
+      parts.note = root.querySelector('[data-note]');
       const setText = (k, v) => {
         if (!parts[k]) return;
         parts[k].textContent = v || '';
@@ -43,15 +44,20 @@ window.FD = window.FD || {};
             ? `Drive ${String(info.drive.drive).padStart(2, '0')} \u00B7 Play ${String(info.drive.play).padStart(2, '0')}`
             : `Play ${pad(info.number)} / ${pad(info.total)}`);
           if (parts.result) { parts.result.textContent = ''; parts.result.classList.remove('is-shown'); }
+          if (parts.note) { parts.note.textContent = ''; parts.note.classList.remove('is-shown'); }
           setText('flag', play._mock && cfg.mockTag ? 'Mock data' : '');
         },
         /** Live game: the defensive call this play runs into. */
         matchup(text) { setText('matchup', text); },
         /** Drive mode: the play's result, shown during the hold. */
-        result(text) {
+        result(text, why) {
           if (!parts.result) return;
           parts.result.textContent = text || '';
           parts.result.classList.toggle('is-shown', !!text);
+          if (parts.note) {
+            parts.note.textContent = why || '';
+            parts.note.classList.toggle('is-shown', !!why);
+          }
         },
         enter() {
           root.classList.remove('is-out');
@@ -59,6 +65,7 @@ window.FD = window.FD || {};
         },
         exit() {
           if (parts.result) parts.result.classList.remove('is-shown');
+          if (parts.note) parts.note.classList.remove('is-shown');
           root.classList.remove('is-in');
           root.classList.add('is-out');
         },
