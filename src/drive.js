@@ -74,6 +74,7 @@ window.FD = window.FD || {};
           st.play += 1;
           const toGoal = 100 - st.spot;
           // Live game: what happened on screen decides the drive.
+          if (outcome && outcome.type === 'interception') return next('INTERCEPTED', 0, false);
           if (outcome && outcome.type === 'incomplete') {
             st.shift = 0;
             st.down += 1;
@@ -81,11 +82,18 @@ window.FD = window.FD || {};
             if (st.down === 4 && st.distance > 2) return st.spot >= 63 ? next('FIELD GOAL', 0, false) : next('PUNT', 0, false);
             return 'INCOMPLETE';
           }
-          let gain = outcome ? Math.max(-6, Math.min(outcome.type === 'score' ? toGoal : outcome.gain, toGoal)) : Math.min(gainFor(play), toGoal);
+          let gain = outcome ? Math.max(-9, Math.min(outcome.type === 'score' ? toGoal : outcome.type === 'sack' ? Math.min(-1, outcome.gain) : outcome.gain, toGoal)) : Math.min(gainFor(play), toGoal);
           if (gain >= toGoal) return next('TOUCHDOWN', gain, true);
           st.spot += gain;
           st.shift = gain;
-          if (gain < 0) { st.distance -= gain; st.down += 1; return `TACKLE FOR LOSS \u00B7 ${gain}`; }
+          if (gain < 0) {
+            st.distance -= gain;
+            st.down += 1;
+            const lossText = `${outcome && outcome.type === 'sack' ? 'SACK' : 'TACKLE FOR LOSS'} \u00B7 ${gain}`;
+            if (st.down > 4) return next('TURNOVER ON DOWNS', gain, false);
+            if (st.down === 4 && st.distance > 2) return st.spot >= 63 ? next('FIELD GOAL', gain, false) : next('PUNT', gain, false);
+            return lossText;
+          }
           if (gain >= st.distance) {
             st.down = 1;
             st.distance = 10;

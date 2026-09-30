@@ -1,16 +1,24 @@
 /*
- * sim.js — Live styles: a tiny, deterministic football simulation computed
- * ONCE per play at build time (0.1 s steps), then played back by the timeline.
- * No per-frame physics.
+ * sim.js — Live styles: a small, deterministic 22-player football simulation,
+ * computed ONCE per play at build time (0.1 s steps) and played back by the
+ * timeline. No per-frame physics.
  *
- *   Live offense  the ball carrier turns upfield after the catch / carry and
- *                 runs to the top of the frame, bending away from defenders;
- *                 defenders only execute their drops (the offense "wins").
- *   Live game     defenders also trail / rush / fit, then pursue once the ball
- *                 is out. The coverage decides the throw (separation at the
- *                 catch point) and the first free defender to reach the
- *                 carrier makes the tackle. Blocked defenders are held for a
- *                 while first.
+ *   Line play   blockers run their authored paths until they meet the defender
+ *               pairing.js gave them, then latch: the pair moves as one (drive
+ *               block / pocket) until the defender sheds (hold time: long when
+ *               Cooperative, seeded by the matchup when Competitive).
+ *   Coverage    man defenders trail their receiver; zone defenders drop to a
+ *               landmark, match the nearest receiver entering it, and break on
+ *               the ball once it's thrown. Rushers take their lanes to the QB.
+ *   QB          Cooperative: the designed throw. Competitive: works the
+ *               progression (play.reads) and throws to the first receiver open
+ *               at the catch point; else throws it away or is sacked.
+ *   Ball        after the catch / carry the carrier turns upfield and runs,
+ *               bending away from defenders; free defenders take pursuit angles.
+ *
+ *   Live offense  the offense "wins": no tackles, defenders chase a step slow.
+ *   Live game     outcomes come from the simulation (complete, broken up,
+ *                 intercepted, sack, tackle, touchdown).
  *
  * Everything is SVG space (yards, y grows toward the offense's backfield).
  */
@@ -22,8 +30,10 @@ window.FD = window.FD || {};
   const DT = 0.1;
   const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
   const norm = (v) => { const l = Math.hypot(v[0], v[1]) || 1; return [v[0] / l, v[1] / l]; };
+  const OL = /^(LT|LG|C|RG|RT)$/;
+  const DEEP = /^(deep_|half_|third_|out_q|in_q)/;
 
-  /** Position of an offensive player (scene player) at clock time t. */
+  /** Position of an offensive player (scene player) at clock time t, on his authored paths. */
   function playerPos(pl, t, toSvg) {
     let pos = toSvg(pl.align);
     for (const a of pl.assignments) {
@@ -43,34 +53,55 @@ window.FD = window.FD || {};
   }
 
   /**
-   * o: { scene, defenders (align.js output), toSvg, fromData, game, pursuit,
-   *      event: { t, point, dir, carrierId, kind: 'catch'|'carry' },
-   *      engaged: Map(defId → release time), topY, goalY, endT, seed }
-   * Returns { yac: {pts, t0, t1} | null, tracks: Map(id → [[t,x,y]…]), outcome }.
+   * o: { scene, defenders (align.js output), toSvg, fromData, game, call, pursuit,
+   *      event: { t, point, dir, carrierId, kind: 'catch'|'carry', carrier },
+   *      exchangeT, topY, goalY, endT, seed }
+   * Returns { tracks, otracks, yac, outcome, pass, latches, event }.
    */
   function simulate(o) {
     const P = FD.Timing.phases;
     const game = !!o.game;
-    const vDef = (o.pursuit === 'aggressive' ? 7.4 : 6.8);
+    const coop = o.call !== 'comp';
+    const rnd = (k) => hash01(`${o.seed}:${k}`);
+    const aggressive = o.pursuit === 'aggressive';
+    const vDef = aggressive ? 7.4 : 6.8;
     const vRun = 6.8;
     const snap = P.snap;
-    const recv = (id) => o.scene.players.get(id);
+    const scene = o.scene;
+    const ev0 = o.event;
+    const passPlay = ev0.kind === 'catch';
+    const toS = (q) => o.toSvg(o.fromData(q));
+    const flightFor = (a, b) => Math.max(0.38, Math.min(0.9, 0.3 + G.dist(a, b) / 30));
 
-    // ── Defenders: state + phase-A intent ──────────────────────────────────
+    // ── Defense state ───────────────────────────────────────────────────────
     const D = o.defenders.map((d) => {
-      const at = o.toSvg(o.fromData(d.at)); // any disguise rotation finishes before the snap
+      const at = toS(d.at);
+      const rushes = passPlay && !d.drop && !d.man && (d.rushPath || d.glyph === 'dl' || (d.edge && d.rush));
+      let rushPath = d.rushPath ? d.rushPath.map(toS) : null;
+      if (rushes && !rushPath) {
+        const lane = d.at[0] + Math.sign(d.at[0] || 1) * 0.3;
+        rushPath = [toS([lane, -0.6]), toS([lane * 0.55, -3.1])];
+      }
       return {
-        d,
-        pos: at.slice(),
-        drop: d.drop ? o.toSvg(o.fromData(d.drop)) : null,
-        fit: d.fit ? o.toSvg(o.fromData(d.fit)) : null,
-        rush: d.rushPath ? d.rushPath.map((q) => o.toSvg(o.fromData(q))) : null,
-        rushI: 0,
-        track: [[snap, at[0], at[1]]],
-        release: o.engaged.has(d.id) ? o.engaged.get(d.id) : (d.glyph === 'dl' && !d.rushPath ? Infinity : -1),
-        dl: d.glyph === 'dl',
+        d, pos: at.slice(), track: [[snap, at[0], at[1]]],
+        rusher: !!rushes, rushPath, rushI: 0,
+        drop: d.drop ? toS(d.drop) : null, dropped: false,
+        fit: d.fit ? toS(d.fit) : null,
+        heldBy: [], release: -1, shedFrom: null, blitz: !!d.rushPath && d.glyph !== 'dl',
       };
     });
+
+    // ── Offense state ───────────────────────────────────────────────────────
+    const O = [];
+    for (const [id, pl] of scene.players) {
+      const pos = playerPos(pl, snap, o.toSvg);
+      O.push({ id, pl, role: pl.data.role, pos, track: [[snap, pos[0], pos[1]]], latch: null, done: new Set(), trail: null,
+        routeEnd: Math.max(0, ...pl.assignments.filter((a) => a.kind === 'route' && !a.yac).map((a) => a.start + a.duration)) });
+    }
+    const byOff = new Map(O.map((b) => [b.id, b]));
+    const qb = O.find((b) => b.role === 'QB') || null;
+    const { pairs, unblocked } = FD.LivePairing.pair(scene, D);
+    const latches = [];
 
     const step = (x, target, v) => {
       const dv = G.sub(target, x.pos);
@@ -78,138 +109,405 @@ window.FD = window.FD || {};
       const m = Math.min(dist, v * DT);
       if (dist > 1e-6) x.pos = G.add(x.pos, G.mul(dv, m / dist));
     };
-
-    // Phase A: snap → event (drops, trails, rushes, fits).
-    const phaseA = (x, t) => {
-      if (t < snap) return;
-      if (x.rush) {
-        const tgt = x.rush[Math.min(x.rushI, x.rush.length - 1)];
-        step(x, tgt, 5.4);
-        if (G.dist(x.pos, tgt) < 0.2 && x.rushI < x.rush.length - 1) x.rushI += 1;
-      } else if (x.d.man && recv(x.d.man)) {
-        const r = playerPos(recv(x.d.man), Math.max(snap, t - 0.3), o.toSvg);
-        const side = Math.sign(x.pos[0] - r[0]) || 1;
-        step(x, [r[0] + side * 0.7, r[1] - 0.6], 7.4);
-      } else if (x.drop && t > snap + 0.2) {
-        step(x, x.drop, 6.0);
-      } else if (x.fit && t > snap + 0.15) {
-        step(x, x.fit, 5.0);
-      } else if (x.dl) {
-        step(x, [x.pos[0], Math.max(x.pos[1], -0.3)], 1.5); // engaged at the line
+    const isFree = (x, t) => !x.heldBy.length && t >= x.release;
+    const coverage = () => D.filter((x) => !x.rusher && !x.heldBy.length);
+    const nearestCover = (pt) => {
+      let best = null;
+      let bd = Infinity;
+      for (const x of D) {
+        if (x.rusher) continue;
+        const d = G.dist(x.pos, pt);
+        if (d < bd) { bd = d; best = x; }
       }
+      return { x: best, sep: bd };
     };
 
-    const ev = o.event;
-    let t = snap;
-    for (; t < ev.t; t += DT) {
-      for (const x of D) {
-        // Versus a run, free second-level defenders flow to the carrier as soon as they read it.
-        if (game && ev.kind === 'carry' && t > snap + 0.5 && t >= x.release && x.d.glyph === 'lb' && !x.d.edge && ev.carrier) {
-          step(x, playerPos(ev.carrier, t + 0.3, o.toSvg), vDef * 0.6);
-        } else phaseA(x, t);
-        x.track.push([t + DT, x.pos[0], x.pos[1]]);
-      }
-    }
+    // ── Ball state ──────────────────────────────────────────────────────────
+    let phase = 'pre';                 // pre → air → yac → dead
+    let thrown = null;                 // { to, point, release, releaseT, arrive, away }
+    let carrier = null;                // offense state with the ball after the event
+    let event = null;
+    const outcome = { type: 'complete', gain: 0, point: ev0.point, by: null, why: {} };
+    const designed = passPlay ? ev0.carrierId : null;
+    const reads = passPlay ? (scene.play.reads || []).map((r) => (typeof r === 'string' ? r : r.player)).filter((id) => byOff.has(id)) : [];
+    if (passPlay && !reads.includes(designed)) reads.unshift(designed);
+    let readI = 0;
+    let hotCall = null; // under pressure: does this QB get it out? (decided once)
+    const readT = (i) => {
+      if (reads[i] === designed) return ev0.t - flightFor(qb ? qb.pos : ev0.point, ev0.point);
+      return Math.max(snap + 0.9, P.read - 0.3) + i * 0.55;
+    };
+    let deadT = null;
 
-    // ── The throw (Live game): does the coverage get there? ───────────────
-    const outcome = { type: 'complete', gain: 0, point: ev.point, by: null };
-    if (game && ev.kind === 'catch') {
-      let sep = Infinity;
-      let who = null;
-      for (const x of D) {
-        if (x.rush) continue;
-        const d = G.dist(x.pos, ev.point);
-        if (d < sep) { sep = d; who = x.d.id; }
-      }
-      const coop = o.call !== 'comp';
-      const r = hash01(o.seed);
-      const complete = coop ? sep > 0.45 || r < 0.85 : sep >= 3.0 || (sep >= 1.5 && r < 0.5);
-      if (!complete) {
-        outcome.type = 'incomplete';
-        outcome.by = who;
-        outcome.sep = sep;
-        // Defenders settle; no run after catch.
-        for (let k = 0; k < 8; k++, t += DT) for (const x of D) { phaseA(x, t); x.track.push([t + DT, x.pos[0], x.pos[1]]); }
-        return { yac: null, tracks: finish(D), outcome };
-      }
-    }
-
-    // ── After the ball: carrier turns upfield; defenders pursue (game) ─────
-    // Defensive backs read and react a beat after the ball comes out.
-    if (game) for (const x of D) if (x.d.glyph === 'db') x.release = Math.max(x.release, ev.t + 0.35);
-    // Cooperative: the offense wins the play, gains a few yards after the catch or
-    // the line, then the defense closes and makes the stop.
-    const coopStop = game && o.call !== 'comp';
-    const budget = 4 + Math.floor(hash01(`${o.seed}:yac`) * 9);
+    // Run-after-catch steering state.
+    let dir = null;
+    let k = 0;
     let travelled = 0;
-    let pos = ev.point.slice();
-    let dir = norm(ev.dir || [0, -1]);
-    const pts = [pos.slice()];
-    const t0 = ev.t;
-    let tackled = null;
-    let scored = false;
-    const up = [0, -1];
-    for (let k = 0; k < 70 && t < o.endT; k++, t += DT) {
-      // Steering: catch, plant (≈0.3 s), then get downhill fast; bend away from
-      // defenders ahead (small angles). Crossers turn upfield within ~2 yards.
-      const plant = ev.kind === 'catch' && k < 3;
+    const pts = [];
+    const budget = 4 + Math.floor(rnd('yac') * 9);
+    const coopStop = game && coop;
+
+    const throwTo = (id, t, pt) => {
+      const release = qb ? qb.pos.slice() : pt;
+      thrown = { to: id, point: pt, release, releaseT: t, arrive: t + flightFor(release, pt) };
+      phase = 'air';
+    };
+
+    let t = snap;
+    for (; t < o.endT; t += DT) {
+      const tn = t + DT;
+
+      // ── The QB's decision (pass plays) ────────────────────────────────────
+      if (passPlay && phase === 'pre' && qb) {
+        const hot = game && !coop && D.some((x) => x.rusher && isFree(x, tn) && G.dist(x.pos, qb.pos) < 2.4);
+        if (coop || !game || ev0.screen || scene.play.family === 'screen') {
+          // Designed throw (screens are thrown over the rush, on time).
+          if (tn >= ev0.t - flightFor(qb.pos, ev0.point)) throwTo(designed, t, ev0.point);
+        } else if (hot && (hotCall === null ? (hotCall = rnd('hot') < 0.6) : hotCall)) {
+          // Pressure: get it out to whoever is most open right now, or throw it away.
+          let best = null;
+          let bs = -1;
+          for (const id of reads) {
+            const r = byOff.get(id);
+            const { sep } = nearestCover(r.pos);
+            if (sep > bs) { bs = sep; best = r; }
+          }
+          if (best && bs >= 1.2) { throwTo(best.id, t, playerPos(best.pl, t + flightFor(qb.pos, best.pos), o.toSvg)); outcome.why.hot = true; }
+          else { const side = Math.sign(qb.pos[0] - scene.ballX) || 1; throwTo(null, t, [scene.ballX + side * 27, qb.pos[1] - 10]); thrown.away = true; outcome.why.hot = true; }
+        } else if (coop || !game) {
+          if (tn >= ev0.t - flightFor(qb.pos, ev0.point)) throwTo(designed, t, ev0.point);
+        } else if (readI < reads.length && tn >= readT(readI)) {
+          const id = reads[readI];
+          const r = byOff.get(id);
+          const fl = flightFor(qb.pos, r.pos);
+          const pt = id === designed ? ev0.point : playerPos(r.pl, t + fl, o.toSvg);
+          // Where will the nearest cover player be when the ball gets there?
+          let sep = Infinity;
+          for (const x of coverage()) {
+            const reach = Math.max(0, fl - 0.3) * vDef;
+            sep = Math.min(sep, Math.max(0, G.dist(x.pos, pt) - reach * 0.55));
+          }
+          const need = 1.35 + (rnd(`read${readI}`) - 0.5) * 1.4;
+          if (sep >= need || (readI === reads.length - 1 && sep >= 0.9 && rnd('last') < 0.7)) {
+            throwTo(id, t, pt);
+            outcome.why.read = readI;
+          }
+          readI += 1;
+        } else if (readI >= reads.length && tn >= readT(reads.length - 1) + 0.6) {
+          // Nobody open: throw it away (unless the rush gets there first).
+          const pressure = D.some((x) => x.rusher && isFree(x, t) && G.dist(x.pos, qb.pos) < 3.5);
+          if (!pressure || rnd('hang') < 0.4) {
+            const side = Math.sign(qb.pos[0] - scene.ballX) || 1;
+            throwTo(null, t, [scene.ballX + side * 27, qb.pos[1] - 12]);
+            thrown.away = true;
+          }
+        }
+      }
+
+      // ── Offense ───────────────────────────────────────────────────────────
+      for (const b of O) {
+        if (b === carrier && phase === 'yac') continue; // steered below
+        if (phase === 'dead') continue;
+        const cur = b.pl.assignments.filter((a) => a.start <= tn && pairs.has(a)).pop() || null;
+        // A new block assignment (combo → climb) ends the old latch.
+        if (b.latch && b.latch.a !== cur) unlatch(b, tn, false);
+        if (b.latch) continue; // moved with its pair below
+        if (cur && !b.done.has(cur)) {
+          const x = pairs.get(cur);
+          const plan = playerPos(b.pl, tn, o.toSvg);
+          const planEnd = cur.start + cur.duration;
+          const gap = G.dist(b.pos, x.pos);
+          if (x.shedFrom && !x.heldBy.length) b.pos = plan; // already beaten by someone else: stay on the path
+          else if (gap < 1.15 && tn >= cur.start + 0.05) latch(b, cur, x, tn);
+          else if (tn < planEnd && gap < 2.4 && tn > cur.start + 0.2 && !FD.LivePairing.isPassPro(cur)) step(b, x.pos, cur.kind === 'block' ? 4.2 : 6.0); // work up to him
+          else if (tn < planEnd) b.pos = plan;
+          else if (tn < planEnd + 1.6) step(b, x.pos, cur.kind === 'pull' ? 6.2 : cur.kind === 'lead' ? 6.0 : 5.2);
+          else b.done.add(cur);
+        } else if (b.trail) {
+          const x = b.trail;
+          if (G.dist(b.pos, x.pos) > 1.2) step(b, x.pos, 3.2);
+        } else if (phase === 'yac' && b.role !== 'QB' && !OL.test(b.role) && b.routeEnd > 0 && tn > b.routeEnd + 0.2 && carrier) {
+          // Convoy: finished receivers work toward the ball carrier's lane.
+          const c = carrier.pos;
+          const threat = D.filter((x) => isFree(x, tn)).sort((p, q) => G.dist(p.pos, c) - G.dist(q.pos, c))[0];
+          const aim = threat ? G.add(c, G.mul(norm(G.sub(threat.pos, c)), 1.8)) : c;
+          if (G.dist(b.pos, c) < 14) step(b, aim, 4.6);
+        } else if (!(phase === 'yac' && b === carrier)) {
+          b.pos = playerPos(b.pl, tn, o.toSvg);
+        }
+      }
+      // Latched pairs move as one.
+      for (const b of O) {
+        const L = b.latch;
+        if (!L || phase === 'dead') continue;
+        const x = L.x;
+        if (tn > L.t0 + L.hold) { unlatch(b, tn, true); continue; }
+        if (x.heldBy[0] !== b) {
+          // Second man on a double team: shoulder to shoulder beside the first.
+          const perp = [-L.dir[1], L.dir[0]];
+          const sg = Math.sign((b.pos[0] - x.pos[0]) * perp[0] + (b.pos[1] - x.pos[1]) * perp[1]) || 1;
+          step(b, G.add(G.sub(x.pos, G.mul(L.dir, 0.55)), G.mul(perp, 0.6 * sg)), 3);
+          continue;
+        }
+        let dirNow = L.dir;
+        if (L.pro && qb) dirNow = norm(G.sub(x.pos, qb.pos)); // pass pro: stay between rusher and QB
+        const contact = G.add(G.lerp(b.pos, x.pos, 0.5), G.mul(dirNow, L.push * DT));
+        b.pos = G.sub(contact, G.mul(dirNow, 0.45));
+        x.pos = G.add(contact, G.mul(dirNow, 0.45));
+      }
+
+      // ── Ball in the air → arrives ───────────────────────────────────────
+      if (phase === 'air' && tn >= thrown.arrive) {
+        const pt = thrown.point;
+        const { x: cov, sep } = nearestCover(pt);
+        const r = rnd('catch');
+        let result = 'complete';
+        if (thrown.away) result = 'away';
+        else if (!game || coop) result = sep > 0.45 || r < 0.85 ? 'complete' : 'pbu';
+        else if (sep < 1.0) result = r < 0.1 ? 'int' : r < 0.6 ? 'pbu' : 'complete';
+        else if (sep < 2.2) result = r < 0.32 ? 'pbu' : 'complete';
+        else if (r < 0.1) result = 'miss'; // overthrown / dropped
+        outcome.sep = sep;
+        outcome.why.cover = cov ? { id: cov.d.id, job: cov.d.job, sep } : null;
+        outcome.why.target = thrown.to;
+        if (result !== 'complete') {
+          outcome.type = result === 'int' ? 'interception' : 'incomplete';
+          outcome.why.result = result;
+          outcome.by = cov ? cov.d.id : null;
+          outcome.point = pt.slice();
+          phase = 'dead';
+          deadT = tn;
+        } else {
+          carrier = byOff.get(thrown.to);
+          carrier.pos = pt.slice();
+          event = { t: tn, point: pt.slice(), dir: norm(G.sub(pt, playerPos(carrier.pl, tn - 0.25, o.toSvg))), carrierId: carrier.id, kind: 'catch' };
+          startYac();
+        }
+      }
+      // Run plays: the designed carry hands over to the simulation.
+      if (!passPlay && phase === 'pre' && tn >= ev0.t) {
+        carrier = byOff.get(ev0.carrierId);
+        if (carrier) {
+          carrier.pos = ev0.point.slice();
+          event = Object.assign({}, ev0);
+          startYac();
+        }
+      }
+
+      // ── Ball carrier after the catch / line ─────────────────────────────
+      if (phase === 'yac') steerCarrier();
+
+      // ── Defense ───────────────────────────────────────────────────────────
+      for (const x of D) {
+        if (x.heldBy.length && phase !== 'dead') { x.track.push([tn, x.pos[0], x.pos[1]]); continue; }
+        if (phase === 'dead') {
+          // Whistle: everyone eases toward the ball.
+          if (outcome.point && tn < deadT + 1) step(x, outcome.point, 2.2 * (1 - (tn - deadT)));
+        } else if (phase === 'yac' && tn >= Math.max(x.release, event.t + (x.d.glyph === 'db' ? 0.35 : 0.2))) {
+          // Pursuit angle: aim where the carrier will be when we get there.
+          const d = G.dist(x.pos, carrier.pos);
+          let v = vDef * (x.d.glyph === 'db' ? 1.08 : 1);
+          if (coopStop && travelled >= budget) v *= 1.7;
+          if (!game) v *= 0.85;
+          const tau = Math.min(1.2, d / v);
+          step(x, G.add(carrier.pos, G.mul(dir, vRun * tau)), v);
+        } else if (phase === 'air' && !x.rusher && tn >= thrown.releaseT + 0.25 + G.dist(x.pos, thrown.point) * 0.02 && G.dist(x.pos, thrown.point) < 15) {
+          step(x, thrown.point, vDef * 1.02); // break on the ball
+        } else {
+          defend(x, tn);
+        }
+        x.track.push([tn, x.pos[0], x.pos[1]]);
+      }
+
+      // ── Whistles: sack, tackle, touchdown ─────────────────────────────────
+      if (phase === 'pre' && passPlay && qb && game && !coop && scene.play.family !== 'screen' && !ev0.screen) {
+        const sacker = D.find((x) => x.rusher && isFree(x, tn) && G.dist(x.pos, qb.pos) < 0.95);
+        if (sacker) {
+          phase = 'dead';
+          deadT = tn;
+          outcome.type = 'sack';
+          outcome.by = sacker.d.id;
+          outcome.point = qb.pos.slice();
+          outcome.why.rusher = { id: sacker.d.id, job: sacker.d.job, unblocked: !sacker.shedFrom && !sacker.releasedBy, shedFrom: sacker.shedFrom || sacker.releasedBy, blitz: sacker.blitz };
+        }
+      }
+      if (phase === 'pre' && !passPlay && game && !coop && o.exchangeT !== undefined && tn > o.exchangeT + 0.1) {
+        // Run stopped in the backfield by a free defender.
+        const c = byOff.get(ev0.carrierId);
+        let tk = null;
+        for (const x of (c ? D : [])) {
+          if (!isFree(x, tn) || x.missed || G.dist(x.pos, c.pos) >= 1.0) continue;
+          if (rnd(`bmiss:${x.d.id}`) < 0.3) { x.missed = true; x.release = tn + 0.6; continue; }
+          tk = x;
+          break;
+        }
+        if (tk) {
+          carrier = c;
+          phase = 'dead';
+          deadT = tn;
+          outcome.type = 'tackle';
+          outcome.by = tk.d.id;
+          outcome.point = c.pos.slice();
+          outcome.why.tackler = { id: tk.d.id, job: tk.d.job, unblocked: !tk.shedFrom && !tk.releasedBy, shedFrom: tk.shedFrom || tk.releasedBy, backfield: true };
+          event = { t: tn, point: c.pos.slice(), dir: [0, -1], carrierId: c.id, kind: 'carry', stuffed: true };
+        }
+      }
+      if (phase === 'yac') {
+        const canTackle = game && (!coopStop || travelled >= budget * 0.8);
+        let tk = null;
+        if (canTackle) {
+          for (const x of D) {
+            if (!isFree(x, tn) || tn < event.t + 0.2 || G.dist(x.pos, carrier.pos) >= 1.15 || x.missed) continue;
+            // One try each: sometimes the carrier breaks it (Competitive).
+            if (!coop && rnd(`miss:${x.d.id}`) < (x.d.glyph === 'db' ? 0.25 : 0.18)) { x.missed = true; x.release = tn + 0.7; outcome.why.broken = (outcome.why.broken || 0) + 1; continue; }
+            tk = x;
+            break;
+          }
+        }
+        const scored = o.goalY !== null && o.goalY !== undefined && carrier.pos[1] <= o.goalY;
+        if (tk || scored || carrier.pos[1] <= o.topY + 1 || k >= 70) {
+          outcome.type = scored ? 'score' : tk ? 'tackle' : event.kind === 'catch' ? 'complete' : 'run';
+          outcome.by = tk ? tk.d.id : null;
+          // Falls forward through contact.
+          if (tk && dir[1] < 0) { carrier.pos = G.add(carrier.pos, G.mul(dir, 0.9)); pts.push(carrier.pos.slice()); }
+          outcome.point = carrier.pos.slice();
+          if (tk) outcome.why.tackler = { id: tk.d.id, job: tk.d.job, unblocked: !tk.shedFrom && !tk.releasedBy, shedFrom: tk.shedFrom || tk.releasedBy };
+          phase = 'dead';
+          deadT = tn;
+        }
+      }
+      for (const b of O) b.track.push([tn, b.pos[0], b.pos[1]]);
+      if (phase === 'dead' && tn > deadT + 1.0) break;
+    }
+
+    // Outcome bookkeeping.
+    if (phase !== 'dead') {
+      outcome.type = !event ? (passPlay ? 'incomplete' : 'run') : event.kind === 'catch' ? 'complete' : 'run';
+      if (carrier) outcome.point = carrier.pos.slice();
+    }
+    outcome.gain = outcome.point ? Math.round(-outcome.point[1]) : 0;
+    outcome.t = deadT !== null ? deadT : t;
+    if (outcome.type === 'incomplete' || outcome.type === 'interception') outcome.gain = 0;
+    const tracks = new Map(D.map((x) => [x.d.id, x.track]));
+    const otracks = new Map(O.map((b) => [b.id, b.track]));
+    const yac = event && pts.length > 1 ? { pts: pts.slice(), t0: event.t, t1: deadT !== null ? deadT : t } : null;
+    return { tracks, otracks, yac, outcome, pass: thrown, latches, event, unblocked: unblocked.map((x) => x.d.id),
+      pairs: Array.from(pairs).map(([a, x]) => [a.player, x.d.id]) };
+
+    // ── helpers (hoisted) ───────────────────────────────────────────────────
+    function latch(b, a, x, tn) {
+      const pro = FD.LivePairing.isPassPro(a);
+      const kind = pro ? 'pro' : a.spec.type === 'doubleTeam' ? 'double' : a.kind;
+      const base = { pro: 2.6, double: 2.6, block: 1.3, pull: 1.3, lead: 1.1 }[kind] || 1.8;
+      const hold = (coop || !game) ? 6 : base * (0.55 + 0.9 * rnd(`hold:${b.id}:${x.d.id}`)) * (aggressive ? 0.8 : 1);
+      const e = G.endPoint(a.path);
+      const s = a.measure.at(0).point;
+      let d = norm(G.sub(e, s));
+      if (pro || Math.hypot(e[0] - s[0], e[1] - s[1]) < 0.3) d = norm(G.sub(x.pos, b.pos));
+      const push = pro ? -0.4 : (coop || !game) ? 0.9 : (rnd(`push:${b.id}`) - 0.35) * 1.6;
+      b.latch = { a, x, t0: tn, hold, dir: d, push, pro };
+      x.heldBy.push(b);
+      latches.push({ blockerId: b.id, a, defId: x.d.id, t: tn, at: b.pos.slice() });
+    }
+    function unlatch(b, tn, shed) {
+      const L = b.latch;
+      b.latch = null;
+      b.done.add(L.a);
+      L.x.heldBy = L.x.heldBy.filter((q) => q !== b);
+      if (!L.x.heldBy.length) {
+        L.x.release = tn + (shed ? 0 : 0.2);
+        if (shed) { L.x.shedFrom = b.id; b.trail = L.x; } else L.x.releasedBy = b.id;
+      }
+    }
+    function defend(x, tn) {
+      const qbPos = qb ? qb.pos : [scene.ballX, 3];
+      if (x.rusher) {
+        const last = x.rushPath.length - 1;
+        let tgt = x.rushI > last ? qbPos : x.rushPath[x.rushI];
+        if (x.rushI <= last && G.dist(x.pos, tgt) < 0.3) { x.rushI += 1; tgt = x.rushI > last ? qbPos : x.rushPath[x.rushI]; }
+        let v = x.blitz ? 6.4 : 5.4;
+        // Cooperative / Live offense: the rush hurries, never arrives.
+        if ((coop || !game) && G.dist(x.pos, qbPos) < 2.2) v = 0.4;
+        step(x, tgt, v);
+        return;
+      }
+      if (x.d.man && byOff.has(x.d.man)) {
+        const r = byOff.get(x.d.man);
+        const lag = playerPos(r.pl, Math.max(snap, tn - 0.3), o.toSvg);
+        const side = Math.sign(x.pos[0] - lag[0]) || 1;
+        step(x, [lag[0] + side * 0.7, lag[1] - 0.6], 7.4);
+        return;
+      }
+      if (!passPlay && tn > snap + 0.55) {
+        // Versus the run: fit, then flow to the ball (safeties come down late).
+        const c = byOff.get(ev0.carrierId);
+        const late = x.d.glyph === 'db' && DEEP.test(x.d.job || '') ? 1.1 : x.d.glyph === 'db' ? 0.7 : 0;
+        const read = x.d.glyph === 'lb' ? 0.3 : 0;
+        if (c && tn > snap + 0.55 + late + read && isFree(x, tn)) {
+          // Fill the hole a yard or two downfield; only penetrators (DL, blitzers) chase into the backfield.
+          const v = x.d.glyph === 'dl' ? vDef * 0.5 : vDef * 0.68;
+          const fill = x.d.glyph === 'dl' || x.blitz ? G.add(c.pos, [0, -0.8]) : [c.pos[0], Math.min(c.pos[1] - 0.8, -1.8)];
+          step(x, fill, v);
+          return;
+        }
+      }
+      if (x.drop && tn > snap + 0.2) {
+        if (!x.dropped && (G.dist(x.pos, x.drop) < 0.8 || tn > snap + 1.4)) x.dropped = true;
+        let tgt = x.drop;
+        if (x.dropped && passPlay) {
+          // Match the nearest receiver working into the zone.
+          let r = null;
+          let rd = 6;
+          for (const b of O) {
+            if (b.routeEnd <= 0 || b.role === 'QB') continue;
+            const d = G.dist(b.pos, x.drop);
+            if (d < rd) { rd = d; r = b; }
+          }
+          if (r) {
+            tgt = G.lerp(x.drop, r.pos, 0.55);
+            if (DEEP.test(x.d.job || '')) tgt = [tgt[0], Math.min(tgt[1], r.pos[1] - 1.5)]; // stay on top
+          }
+        }
+        step(x, tgt, x.dropped ? 5.2 : 6.0);
+        return;
+      }
+      if (x.fit && tn > snap + 0.15) { step(x, x.fit, 5.0); return; }
+      if (x.d.glyph === 'dl') step(x, [x.pos[0], Math.max(x.pos[1], -0.3)], 1.5);
+    }
+    function startYac() {
+      phase = 'yac';
+      dir = norm(event.dir || [0, -1]);
+      k = 0;
+      travelled = 0;
+      pts.length = 0;
+      pts.push(carrier.pos.slice());
+      // Defensive backs read and react a beat after the ball comes out.
+      if (game) for (const x of D) if (x.d.glyph === 'db') x.release = Math.max(x.release, event.t + 0.35);
+    }
+    function steerCarrier() {
+      const up = [0, -1];
+      const plant = event.kind === 'catch' && k < 3;
       if (!plant) dir = norm(G.add(G.mul(dir, 0.55), G.mul(up, 0.45)));
       let push = 0;
       for (const x of D) {
-        const v = G.sub(pos, x.pos);
+        const v = G.sub(carrier.pos, x.pos);
         const dist = Math.hypot(v[0], v[1]);
-        if (dist > 5 || x.pos[1] > pos[1] + 1) continue; // only defenders ahead
-        push += Math.sign(v[0] || 1) * (5 - dist) / 5;
-      }
-      for (const b of o.obstacles || []) {
-        // Blockers' contact points: slide past them, don't run through the block.
-        const v = G.sub(pos, b);
-        const dist = Math.hypot(v[0], v[1]);
-        if (dist < 2.2 && b[1] < pos[1] + 0.5) push += Math.sign(v[0] || 1) * (2.2 - dist) / 2.2 * 1.4;
+        if (dist > 5 || x.pos[1] > carrier.pos[1] + 1) continue; // only defenders ahead
+        push += Math.sign(v[0] || 1) * (5 - dist) / 5 * (x.heldBy.length ? 0.4 : 1);
       }
       let heading = norm([dir[0] + 0.32 * push, dir[1]]);
       const ang = Math.atan2(heading[0], -heading[1]);
-      const lim = plant ? 1.45 : 0.62; // ≤ ~35° off vertical once turned upfield
+      const lim = plant ? 1.45 : 0.62;
       if (Math.abs(ang) > lim) heading = [Math.sin(Math.sign(ang) * lim), -Math.cos(lim)];
       dir = heading;
-      const tired = (plant ? 0.7 : 1) * (k * DT > 1.5 ? 0.82 : 1); // gather at the catch; slow after a burst
-      const stepLen = vRun * tired * DT;
-      pos = G.add(pos, G.mul(heading, stepLen));
-      pos[0] = Math.max(-26 + 1, Math.min(26 - 1, pos[0]));
-      travelled += stepLen;
-      pts.push(pos.slice());
-
-      for (const x of D) {
-        const react = ev.t + (x.d.glyph === 'db' ? 0.35 : 0.2);
-        const pursuing = !x.dl || x.release !== Infinity ? t >= Math.max(x.release, react) : false;
-        if (pursuing) {
-          // Pursuit angle: aim where the carrier will be when we get there.
-          const d = G.dist(x.pos, pos);
-          let v = vDef * (x.d.glyph === 'db' ? 1.08 : 1);
-          if (coopStop && travelled >= budget) v *= 1.7;   // the stop arrives
-          if (!game) v *= 0.85;                            // Live offense: chase, don't catch
-          const tau = Math.min(1.2, d / v);
-          step(x, G.add(pos, G.mul(heading, vRun * tired * tau)), v);
-        } else phaseA(x, t);
-        x.track.push([t + DT, x.pos[0], x.pos[1]]);
-        const canTackle = game && pursuing && (!coopStop || travelled >= budget * 0.8);
-        if (canTackle && G.dist(x.pos, pos) < 1.15 && !tackled) tackled = x.d.id;
-      }
-      if (tackled) break;
-      if (o.goalY !== null && o.goalY !== undefined && pos[1] <= o.goalY) { scored = true; break; }
-      if (pos[1] <= o.topY + 1) break;
+      const tired = (plant ? 0.7 : 1) * (k * DT > 1.5 ? 0.82 : 1);
+      const len = vRun * tired * DT;
+      carrier.pos = G.add(carrier.pos, G.mul(heading, len));
+      carrier.pos[0] = Math.max(-26 + 1, Math.min(26 - 1, carrier.pos[0]));
+      travelled += len;
+      k += 1;
+      pts.push(carrier.pos.slice());
     }
-    outcome.type = scored ? 'score' : tackled ? 'tackle' : ev.kind === 'catch' ? 'complete' : 'run';
-    outcome.by = tackled;
-    outcome.point = pos;
-    outcome.gain = Math.round(-pos[1]); // yards past the LOS (svg y is -depth)
-    return { yac: { pts, t0, t1: t }, tracks: finish(D), outcome };
-  }
-
-  function finish(D) {
-    const m = new Map();
-    for (const x of D) m.set(x.d.id, x.track);
-    return m;
   }
 
   /** Interpolated position on a track at time t. */

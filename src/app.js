@@ -26,6 +26,7 @@ window.FD = window.FD || {};
     if (cfg.check) {
       const lines = FD.Data.report.filter((r) => r.fatal.length).map((r) => `${r.id} FATAL ${r.fatal.join(' | ')}`);
       const nodes = new Set();
+      const stats = [];
       // Styles and settings come from the URL: tools/check.sh "style=game&call=comp"
       cfg.settings = FD.Settings.get();
       cfg.style = cfg.settings.style;
@@ -41,9 +42,33 @@ window.FD = window.FD || {};
           if (h && h.marker && scene.ball.isShown()) worst = Math.max(worst, FD.Geometry.dist(scene.ball.getPos(), h.marker.position));
         }
         if (worst > 0.6) scene.warnings.push(`ball ${worst.toFixed(1)} yd off its carrier`);
+        if (scene.live && scene.live.game) {
+          const oc = scene.live.outcome;
+          stats.push({ type: oc.type, gain: oc.gain, run: p.family === 'run', pass: !!scene.pass, why: oc.why });
+        }
         if (scene.warnings.length) lines.push(`${p.id} ${scene.warnings.join(' | ')}`);
         scene.destroy();
         nodes.add(document.getElementsByTagName('*').length);
+      }
+      if (stats.length) {
+        const count = (f) => stats.filter(f).length;
+        const med = (arr) => { const a = arr.slice().sort((x, y) => x - y); return a.length ? a[Math.floor(a.length / 2)] : 0; };
+        const passes = stats.filter((x) => x.pass);
+        const types = {};
+        for (const x of stats) types[x.type] = (types[x.type] || 0) + 1;
+        lines.push(`outcomes ${JSON.stringify(types)}`);
+        lines.push(`passes ${passes.length}: completion ${Math.round(100 * count((x) => x.pass && !/incomplete|interception|sack/.test(x.type)) / (passes.length || 1))}% · sacks ${count((x) => x.type === 'sack')} · INT ${count((x) => x.type === 'interception')} · off-script throws ${count((x) => x.pass && x.why.target && x.why.read > 0)}`);
+        if (new URLSearchParams(location.search).has('why')) {
+          const tally = {};
+          for (const x of stats) {
+            const w = x.why.tackler || x.why.rusher;
+            if (!w || (x.gain > 0 && x.type !== 'sack')) continue;
+            const k = `${x.type}:${w.job || w.id}:${w.unblocked ? 'unblocked' : 'shed ' + w.shedFrom}`;
+            tally[k] = (tally[k] || 0) + 1;
+          }
+          lines.push(Object.entries(tally).sort((a, b) => b[1] - a[1]).slice(0, 25).map(([k, v]) => `${v} ${k}`).join('\n'));
+        }
+        lines.push(`gains: runs median ${med(stats.filter((x) => x.run).map((x) => x.gain))} · passes median ${med(passes.filter((x) => x.type !== 'incomplete').map((x) => x.gain))} · run TFL ${count((x) => x.run && x.gain < 0)}`);
       }
       lines.push(`${plays.length} plays checked; DOM node counts after teardown: ${Array.from(nodes).join(',')}`);
       document.documentElement.dataset.check = lines.join('\n');
@@ -120,7 +145,8 @@ window.FD = window.FD || {};
         const profile = FD.Config.profile(cfg);
         // Live game: the simulation's outcome is the result (and drives follow it).
         const oc = scene.live && scene.live.game ? scene.live.outcome : null;
-        const ocText = !oc ? null : oc.type === 'incomplete' ? 'INCOMPLETE'
+        const ocText = !oc ? null : oc.type === 'incomplete' ? (oc.why && oc.why.result === 'away' ? 'THROWN AWAY' : 'INCOMPLETE')
+          : oc.type === 'interception' ? 'INTERCEPTED' : oc.type === 'sack' ? `SACK \u00B7 ${Math.min(-1, oc.gain)}`
           : oc.type === 'score' ? 'TOUCHDOWN' : oc.gain < 0 ? `TACKLE FOR LOSS \u00B7 ${oc.gain}` : oc.gain === 0 ? 'NO GAIN' : `+${oc.gain}`;
         // Drive: decide the result first (it shapes the exit), show it during the hold.
         const result = drive ? drive.advance(info.play, oc) : ocText;

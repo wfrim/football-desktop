@@ -69,7 +69,7 @@ window.FD = window.FD || {};
     const field = (a) => a.measure.points.map((q) => [q[0] - a.ballX, -q[1]]);
     const tbars = assignments.filter((a) => a.view && a.spec.end !== 'none' && (a.kind === 'block' || a.kind === 'lead' || a.kind === 'pull'));
     for (const a of assignments) {
-      if (!MOVING.has(a.kind) || a.alt) continue;
+      if (!MOVING.has(a.kind) || a.alt || a.simDrawn || a.yac) continue;
       const pts = field(a);
       // Skip the first 0.9 yd (leaving one's own spot next to teammates).
       const start = pts[0];
@@ -146,10 +146,36 @@ window.FD = window.FD || {};
    * Live styles: find the ball event (catch or end of the designed carry),
    * simulate, then add the run-after-catch path and the defenders' tracks.
    */
+  /** Replace an assignment's drawn path (keeps its timing object). */
+  function redraw(a, pts, x, end) {
+    if (pts.length < 2) return;
+    const path = G.fromPoints(pts, a.kind === 'run' ? 1.2 : 0.6);
+    a.view.destroy();
+    const nv = FD.RouteRenderer.create({ parent: x.layers.paths, defs: x.stage.defs, path, kind: a.kind, style: a.kind === 'run' ? 'solid' : undefined, end });
+    x.destroyers.push(nv.destroy);
+    Object.assign(a, { view: nv, path, measure: nv.measure });
+  }
+
+  /** Cut a carry at fraction `frac` of its length (the simulation takes over there). */
+  function cutCarry(tr, frac, x) {
+    if (!(frac > 0.05 && frac < 0.97)) return;
+    const cut = G.cutAt(tr.path, frac);
+    const len0 = tr.view.length || 1;
+    redraw(tr, cut.head, x, 'none');
+    tr.duration *= Math.max(0.3, tr.view.length / len0);
+  }
+
+  /*
+   * Live styles: find the designed ball event (catch, or end of the designed
+   * carry), run the 22-player simulation, then apply what happened: the throw
+   * the QB actually made, the run after the catch, blocks redrawn onto the
+   * defenders they met, and every player's track.
+   */
   function runLive(scene, x) {
     const P = FD.Timing.phases;
     const pass = scene.pass;
     let event = null;
+    let exchangeT;
     if (pass && pass.route) {
       const flight = P.arrive - P.release;
       const reach = FD.Relationships.timeAt(pass.route, 1);
@@ -158,9 +184,10 @@ window.FD = window.FD || {};
       // Screens already draw a designed run after the catch: continue from its end.
       const pl = scene.players.get(pass.route.player);
       const after = pl ? pl.assignments.filter((a) => a.kind === 'run' && a.start >= pass.route.start && !a.alt).pop() : null;
-      if (after) event = Object.assign(event, { t: after.start + after.duration, point: G.endPoint(after.path), dir: G.endTangent(after.path) });
+      if (after) event = Object.assign(event, { t: after.start + after.duration, point: G.endPoint(after.path), dir: G.endTangent(after.path), screen: true });
     } else if (scene.handoff) {
       const tr = scene.handoff.track;
+      exchangeT = FD.Relationships.timeAt(tr, scene.handoff.at);
       if (x.style === 'game') {
         // Live game: the designed carry hands over to the simulation just past the line.
         const pts = tr.measure.points;
@@ -173,53 +200,71 @@ window.FD = window.FD || {};
           if (-a0[1] < 1.2 && -b0[1] >= 1.2) frac = (run + seg * ((1.2 + a0[1]) / ((a0[1] - b0[1]) || 1))) / tr.measure.length;
           run += seg;
         }
-        if (frac > 0.05 && frac < 0.95) {
-          const cut = G.cutAt(tr.path, frac);
-          const np = G.fromPoints(cut.head, 0);
-          tr.view.destroy();
-          const nv = FD.RouteRenderer.create({ parent: x.layers.paths, defs: x.stage.defs, path: np, kind: 'run', style: 'solid', end: 'none' });
-          x.destroyers.push(nv.destroy);
-          tr.duration *= Math.max(0.3, nv.length / (tr.view.length || nv.length));
-          Object.assign(tr, { view: nv, path: np, measure: nv.measure });
-        }
+        cutCarry(tr, frac, x);
       }
       event = { t: tr.start + tr.duration, point: G.endPoint(tr.path), dir: G.endTangent(tr.path), carrierId: tr.player, kind: 'carry', carrier: scene.players.get(tr.player) };
     }
     if (!event || !x.defData) return;
     const game = x.style === 'game';
-    const hold = x.cfg.settings && x.cfg.settings.pursuit === 'aggressive' ? 0.9 : 1.4;
-    // Who is blocked, and until when: re-targeted perimeter blocks, and any
-    // defender sitting on a lineman's block point.
-    const engaged = new Map();
-    for (const a of scene.assignments) {
-      if (a.engages) engaged.set(a.engages, a.start + a.duration + hold);
-      if (a.kind === 'block' || a.kind === 'pull' || (a.kind === 'lead' && !a.engages)) {
-        const end = a.fieldEnd;
-        for (const d of x.defData.defenders) {
-          const q = C.fromData(d.at);
-          if (!engaged.has(d.id) && G.dist(q, end) < (d.glyph === 'lb' ? 2.6 : 1.6)) engaged.set(d.id, a.start + a.duration + hold + 0.4);
-        }
-      }
-    }
-    const obstacles = scene.assignments
-      .filter((a) => (a.kind === 'block' || a.kind === 'lead' || a.kind === 'pull') && a.spec.end !== 'none' && a.player !== event.carrierId)
-      .map((a) => G.endPoint(a.path));
     const res = FD.Live.simulate({
-      obstacles,
       scene, defenders: x.defData.defenders, toSvg: x.toSvg, fromData: C.fromData, game,
       pursuit: x.cfg.settings && x.cfg.settings.pursuit, call: x.cfg.settings && x.cfg.settings.call,
-      event, engaged,
+      event, exchangeT,
       topY: x.stage.frame.y0, goalY: x.place && x.place.spot !== null && x.place.spot !== undefined ? -(100 - x.place.spot) : null,
       endT: P.exit + (x.cfg.holdExtra || 0) - 0.4, seed: `${scene.play.id}:${x.place ? x.place.spot : ''}`,
     });
-    scene.live = { event, outcome: res.outcome, tracks: res.tracks, game };
-    if (res.outcome.type === 'incomplete' && pass) pass.incomplete = true;
+    const oc = res.outcome;
+    if (/simdebug/.test(location.search)) {
+      x.warnings.push(`pairs ${res.pairs.map((q) => `${q[0]}>${q[1]}`).join(' ')} · latches ${res.latches.map((L) => `${L.blockerId}>${L.defId}@${L.t.toFixed(1)}`).join(' ')} · unblocked ${res.unblocked.join(',')} · ${oc.type} ${oc.gain} ${JSON.stringify(oc.why)}`);
+    }
+    scene.live = { event: res.event || event, outcome: oc, tracks: res.tracks, otracks: res.otracks, game };
+
+    // The throw the QB actually made (Competitive can go elsewhere, or nowhere).
+    if (pass) {
+      if (!res.pass) pass.sacked = oc.type === 'sack';
+      else {
+        const rp = res.pass;
+        pass.point = rp.point;
+        pass.release = rp.release;
+        pass.timing = { release: rp.releaseT, arrive: rp.arrive };
+        if (rp.to !== pass.route.player) {
+          pass.receiver = rp.to ? scene.players.get(rp.to) : null;
+          pass.route = pass.receiver ? pass.receiver.assignments.filter((a) => a.kind === 'route').pop() || pass.route : pass.route;
+        }
+        if (oc.type === 'incomplete' || oc.type === 'interception') pass.incomplete = true;
+        if (oc.type === 'interception') pass.intercepted = oc.by;
+        if (rp.away) pass.receiver = null;
+      }
+    }
+    // A run stopped in the backfield: the drawn carry ends where he went down.
+    if (scene.handoff && oc.why.tackler && oc.why.tackler.backfield) {
+      const tr = scene.handoff.track;
+      let best = 1;
+      let bd = Infinity;
+      for (let i = 0; i <= 100; i++) { const d = G.dist(tr.measure.at(i / 100).point, oc.point); if (d < bd) { bd = d; best = i / 100; } }
+      cutCarry(tr, best, x);
+    }
+    // Pulls and leads: drawn to the defender they actually met.
+    for (const L of res.latches) {
+      const a = L.a;
+      if (a.kind !== 'pull' && a.kind !== 'lead') continue;
+      if (G.dist(L.at, G.endPoint(a.path)) < 0.8) continue;
+      const tr = res.otracks.get(L.blockerId);
+      const pts = tr.filter((q) => q[0] >= a.start && q[0] <= L.t).map((q) => [q[1], q[2]]);
+      const thin = pts.filter((q, i) => i === 0 || i === pts.length - 1 || G.dist(q, pts[i - 1]) > 0.25);
+      if (thin.length >= 2) {
+        redraw(a, thin, x, 'tbar');
+        a.duration = Math.max(0.3, L.t - a.start);
+        a.simDrawn = true; // the real path taken: players had moved, so no alignment collision QA
+      }
+    }
     if (res.yac && res.yac.pts.length > 2) {
-      const pl = scene.players.get(event.carrierId);
+      const carrierId = res.event.carrierId;
+      const pl = scene.players.get(carrierId);
       const view = FD.RouteRenderer.create({ parent: x.layers.paths, defs: x.stage.defs, path: G.fromPoints(res.yac.pts, 0.6), kind: 'run', style: 'solid', end: 'arrow' });
       x.destroyers.push(view.destroy);
       const a = {
-        spec: { type: 'yac', player: event.carrierId }, player: event.carrierId, kind: 'run', alt: false, path: view.measure && G.fromPoints(res.yac.pts, 0.6), view,
+        spec: { type: 'yac', player: carrierId }, player: carrierId, kind: 'run', alt: false, path: G.fromPoints(res.yac.pts, 0.6), view,
         ballX: x.ballX, fieldPts: res.yac.pts.map((q) => [q[0] - x.ballX, -q[1]]), measure: view.measure,
         fieldEnd: [res.yac.pts[res.yac.pts.length - 1][0] - x.ballX, -res.yac.pts[res.yac.pts.length - 1][1]],
         start: res.yac.t0 + 0.05, duration: Math.max(0.4, res.yac.t1 - res.yac.t0), ease: 'linear', yac: true,

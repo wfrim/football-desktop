@@ -40,6 +40,8 @@ window.FD = window.FD || {};
     const P = T.phases;
     const flight = P.arrive - P.release;
     const pass = scene.pass;
+    // Live styles: the simulation decided when the ball left and landed.
+    if (pass && typeof pass.timing.release === 'number') return { release: pass.timing.release, arrive: pass.timing.arrive };
     let arrive = pass && typeof pass.timing.arrive === 'number' ? pass.timing.arrive : P.arrive;
     if (pass && pass.route && !pass.point && scene.style && scene.style !== 'diagram') {
       // Lead / Live: the ball meets the receiver in stride, the moment he reaches the spot.
@@ -175,12 +177,25 @@ window.FD = window.FD || {};
         const pl = scene.players.get(a.player);
         const kind = T.kinds[a.kind] || {};
         // Alternate branches (cutbacks, option breaks) and ghosts are notation: they never move a player.
-        const moves = !a.alt && (a.kind === 'motion' || (sim && kind.moves));
+        // Live styles: after the snap every player follows his simulated track instead.
+        const moves = !a.alt && (a.kind === 'motion' || (sim && kind.moves && !(scene.live && scene.live.otracks)));
         tl.track(a.start, a.duration, (p) => {
           a.lastP = p;
           a.view.setProgress(p);
           if (moves) pl.marker.setPosition(a.measure.at(p).point);
         }, a.ease);
+      }
+
+      // Live styles: every offensive player on his simulated track from the snap
+      // (before the ball, which follows its holder).
+      if (scene.live && scene.live.otracks) {
+        for (const [id, tr] of scene.live.otracks) {
+          const pl = scene.players.get(id);
+          if (!pl || tr.length < 2) continue;
+          const t0 = tr[0][0];
+          const t1 = tr[tr.length - 1][0];
+          tl.track(t0, t1 - t0, (p) => pl.marker.setPosition(FD.Live.trackAt(tr, t0 + p * (t1 - t0))), 'linear');
+        }
       }
 
       // Point events.
@@ -209,7 +224,7 @@ window.FD = window.FD || {};
       const PT = passTiming(scene, sim);
       const target = passTarget(scene, sim, PT.arrive);
       const pass = scene.pass;
-      if (pass && target && qb) {
+      if (pass && target && qb && !pass.sacked) {
         const trail = FD.RouteRenderer.create({
           parent: pass.trailParent, defs: scene.defs, kind: 'ball', cls: 'ball-trail',
           path: G.fromPoints([pass.release, target], 0),
@@ -239,7 +254,11 @@ window.FD = window.FD || {};
           ring.setAttribute('opacity', FD.svg.f(0.9 * (1 - p)));
         }, 'outCubic');
 
-        if (pass.incomplete) {
+        if (pass.intercepted && scene.live && scene.live.tracks.get(pass.intercepted)) {
+          // Picked off: the ball goes with the defender.
+          const tr = scene.live.tracks.get(pass.intercepted);
+          tl.track(PT.arrive, END - PT.arrive, (p, raw) => ball.setPos(FD.Live.trackAt(tr, PT.arrive + raw * (END - PT.arrive))), 'linear');
+        } else if (pass.incomplete) {
           // Broken up: the ball carries on past the spot and dies.
           const beyond = G.add(target, G.mul(dir, 2.2));
           tl.track(PT.arrive, 0.6, (p) => { ball.setPos(G.lerp(target, beyond, p)); ball.setOpacity(1 - p); }, 'outQuad');
@@ -307,9 +326,8 @@ window.FD = window.FD || {};
           tl.track(t0, t1 - t0, (p) => g.setPos(FD.Live.trackAt(tr, t0 + p * (t1 - t0))), 'linear');
         }
         const oc = LV.outcome;
-        if (LV.game && (oc.type === 'tackle' || oc.type === 'score') && LV.yac && (!cfg.settings || cfg.settings.moments !== 'off')) {
-          const end = LV.yac.start + LV.yac.duration;
-          momentRing(scene, tl, LV.yac.measure.at(1).point, end, oc.type === 'score');
+        if (LV.game && /^(tackle|score|sack)$/.test(oc.type) && oc.point && (!cfg.settings || cfg.settings.moments !== 'off')) {
+          momentRing(scene, tl, oc.point, oc.t, oc.type === 'score');
         }
         void Pn;
       }
