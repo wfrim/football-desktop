@@ -18,6 +18,7 @@ window.FD = window.FD || {};
     create(root) {
       const parts = {};
       root.querySelectorAll('[data-part]').forEach((node) => { parts[node.dataset.part] = node; });
+      parts.result = root.querySelector('[data-result]');
       const setText = (k, v) => {
         if (!parts[k]) return;
         parts[k].textContent = v || '';
@@ -38,14 +39,24 @@ window.FD = window.FD || {};
           const base = cfg.place && cfg.place.situation ? cfg.place.situation : c.situation || [sit.coverage, down].filter(Boolean).join(' \u00B7 ');
           setText('situation', [base, where].filter(Boolean).join(' \u00B7 '));
           setText('description', c.description);
-          setText('counter', `Play ${pad(info.number)} / ${pad(info.total)}`);
+          setText('counter', info.drive
+            ? `Drive ${String(info.drive.drive).padStart(2, '0')} \u00B7 Play ${String(info.drive.play).padStart(2, '0')}`
+            : `Play ${pad(info.number)} / ${pad(info.total)}`);
+          if (parts.result) { parts.result.textContent = ''; parts.result.classList.remove('is-shown'); }
           setText('flag', play._mock && cfg.mockTag ? 'Mock data' : '');
+        },
+        /** Drive mode: the play's result, shown during the hold. */
+        result(text) {
+          if (!parts.result) return;
+          parts.result.textContent = text || '';
+          parts.result.classList.toggle('is-shown', !!text);
         },
         enter() {
           root.classList.remove('is-out');
           root.classList.add('is-in');
         },
         exit() {
+          if (parts.result) parts.result.classList.remove('is-shown');
           root.classList.remove('is-in');
           root.classList.add('is-out');
         },

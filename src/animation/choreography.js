@@ -56,6 +56,14 @@ window.FD = window.FD || {};
 
       tl.at(0.05, () => hud.enter());
       if (scene.reframed) tl.track(0, 1.0, (p) => scene.field.setAttribute('opacity', FD.svg.f(p)), 'inOutSine');
+      // Drive mode: the field scrolls by the previous play's gain as the next play forms.
+      if (scene.fieldShift) {
+        const k = scene.fieldShift;
+        tl.track(0, 1.3, (p, raw) => {
+          if (raw >= 1) scene.field.removeAttribute('transform');
+          else scene.field.setAttribute('transform', `translate(0 ${FD.svg.f(-k * (1 - p))})`);
+        }, 'inOutCubic');
+      }
 
       // Entry: line of scrimmage draws outward from the ball.
       scene.los.forEach((d) => tl.track(0.12, T.losDraw, (p) => d.setProgress(p), 'inOutCubic'));

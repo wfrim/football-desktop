@@ -46,6 +46,7 @@ window.FD = window.FD || {};
 
     if (FD.SettingsPanel) FD.SettingsPanel.create(document.querySelector('.hud-counter'));
 
+    let drive = null;
     let failures = 0;
     for (;;) {
       // Settings can change at any time (panel); they take effect per play.
@@ -54,11 +55,22 @@ window.FD = window.FD || {};
       if (!new URLSearchParams(location.search).has('speed')) animator.timeScale = parseFloat(cfg.settings.speed) || 1;
       // Field position (drive mode takes over in drive.js).
       const q = new URLSearchParams(location.search);
-      const place = q.has('spot') // review aid: ?spot=92&at_hash=left
-        ? { spot: Math.max(1, Math.min(99, parseInt(q.get('spot'), 10) || 50)), hash: q.get('at_hash') || 'middle' }
-        : FD.FieldPosition.pick(cfg.settings);
-      cfg.place = place && place.spot !== null ? place : place ? { spot: null, hash: place.hash } : null;
-      const info = playlist.next(cfg.place && cfg.place.spot !== null ? (p) => FD.FieldPosition.fits(p, cfg.place.spot) : null);
+      let filter = null;
+      if (cfg.settings.drive === 'on') {
+        // Drive mode owns field position and play selection.
+        if (!drive) drive = FD.Drive.create();
+        cfg.place = drive.place(cfg.settings.hash);
+        filter = (p) => drive.eligible(p);
+      } else {
+        drive = null;
+        const place = q.has('spot') // review aid: ?spot=92&at_hash=left
+          ? { spot: Math.max(1, Math.min(99, parseInt(q.get('spot'), 10) || 50)), hash: q.get('at_hash') || 'middle' }
+          : FD.FieldPosition.pick(cfg.settings);
+        cfg.place = place;
+        if (place && place.spot !== null) filter = (p) => FD.FieldPosition.fits(p, place.spot);
+      }
+      const info = playlist.next(filter);
+      if (drive) info.drive = cfg.place;
       let scene = null;
       try {
         scene = FD.PlayRenderer.build(info.play, stage, cfg);
@@ -68,6 +80,12 @@ window.FD = window.FD || {};
         const tl = profile === 'static'
           ? FD.Choreography.buildStatic(scene, hud, cfg)
           : FD.Choreography.build(scene, hud, cfg);
+
+        if (drive) {
+          // The result appears while the finished diagram holds.
+          const result = drive.advance(info.play);
+          tl.at(profile === 'static' ? 1.2 : FD.Timing.phases.hold - 0.3, () => hud.result(result));
+        }
 
         if (cfg.freeze !== null) {
           tl.evaluate(cfg.freeze);

@@ -366,6 +366,7 @@ window.FD = window.FD || {};
         events,
         warnings,
         reframed,
+        fieldShift: place && place.shift && !reframed ? place.shift : 0,
         field: stage.field,
         setOpacity(o) { root.setAttribute('opacity', f(o)); },
         /** Add a drawable created later (e.g. by choreography) to teardown. */
