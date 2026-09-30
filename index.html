@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>Playbook — desktop</title>
-  <link rel="stylesheet" href="styles/base.css?v=22ade79d">
+  <link rel="stylesheet" href="styles/base.css?v=22160520">
   <link rel="stylesheet" href="styles/play.css?v=a198fdd0">
   <link rel="stylesheet" href="styles/themes.css?v=4bf491ee">
   <link rel="stylesheet" href="styles/panel.css?v=40f838f9">
@@ -13,9 +13,13 @@
 <body>
   <div class="backdrop" aria-hidden="true"></div>
 
-  <svg id="stage" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated football play diagram"></svg>
-
+  <!-- Vignette sits UNDER the drawing: an overlay above an animating layer
+       forces a full-screen recomposite every frame (see docs/ENERGY.md). -->
   <div class="vignette" aria-hidden="true"></div>
+
+  <!-- The field is static: its own SVG layer, never repainted while plays animate. -->
+  <svg id="field-layer" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+  <svg id="stage" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated football play diagram"></svg>
 
   <div id="hud" class="hud">
     <header class="hud-title">
@@ -43,9 +47,9 @@
   <script src="src/layout/coordinates.js?v=86557f9e"></script>
   <script src="src/layout/responsive.js?v=85652b11"></script>
   <script src="src/animation/timeline.js?v=9d34b780"></script>
-  <script src="src/animation/animator.js?v=0a439891"></script>
+  <script src="src/animation/animator.js?v=0756fb20"></script>
   <script src="src/renderer/primitives.js?v=921f0db6"></script>
-  <script src="src/renderer/routeRenderer.js?v=ac17f7e9"></script>
+  <script src="src/renderer/routeRenderer.js?v=5301fd86"></script>
   <script src="src/renderer/formationRenderer.js?v=59d1169e"></script>
   <script src="src/renderer/fieldRenderer.js?v=e1cebf2a"></script>
   <script src="src/renderer/relationships.js?v=288da0a1"></script>
@@ -61,12 +65,12 @@
   <script src="src/fieldPosition.js?v=5041e21f"></script>
   <script src="src/drive.js?v=e8c3770b"></script>
   <script src="src/playlist.js?v=8460ae5d"></script>
-  <script src="src/settings.js?v=75a37c1a"></script>
+  <script src="src/settings.js?v=95ed8761"></script>
   <script src="src/theme.js?v=19fd6eb6"></script>
-  <script src="src/config.js?v=f0271640"></script>
+  <script src="src/config.js?v=81f188cc"></script>
   <script src="src/hud.js?v=8fce5ece"></script>
   <script src="src/settingsPanel.js?v=7c878cac"></script>
-  <script src="src/stage.js?v=7b3e49ce"></script>
-  <script src="src/app.js?v=60a779fd"></script>
+  <script src="src/stage.js?v=62e1c149"></script>
+  <script src="src/app.js?v=8f51e50f"></script>
 </body>
 </html>

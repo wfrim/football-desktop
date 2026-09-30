@@ -12,7 +12,11 @@ window.FD = window.FD || {};
     create(svg, cfg) {
       svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
       const defs = el('defs', null, svg);
-      const field = FD.FieldRenderer.create(svg, defs, {});
+      // Separate, static SVG for the field (see index.html / docs/ENERGY.md).
+      const fieldSvg = document.getElementById('field-layer') || svg;
+      fieldSvg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+      const fieldDefs = fieldSvg === svg ? defs : el('defs', null, fieldSvg);
+      const field = FD.FieldRenderer.create(fieldSvg, fieldDefs, {});
       const playLayer = el('g', { class: 'play-layer' }, svg);
       let frame = FD.Coords.frameToSvg(FD.Coords.DEFAULT_FRAME);
       let frameKey = 'default';
@@ -28,6 +32,7 @@ window.FD = window.FD || {};
       const apply = () => {
         raf = 0;
         FD.Responsive.apply(svg, frame);
+        if (fieldSvg !== svg) FD.Responsive.apply(fieldSvg, frame);
       };
       const onResize = () => {
         if (!raf) raf = requestAnimationFrame(apply);

@@ -21,6 +21,7 @@ window.FD = window.FD || {};
     field:   { label: 'Field position', choices: [['classic', 'Classic'], ['random', 'Anywhere'], ['redzone', 'Red zone']], def: 'classic' },
     hash:    { label: 'Hash',           choices: [['middle', 'Middle'], ['random', 'Varied']], def: 'middle' },
     drive:   { label: 'Drive mode',     choices: [['off', 'Off'], ['on', 'On']], def: 'off' },
+    motion:  { label: 'Motion',         choices: [['full', 'Full'], ['calm', 'Calm'], ['still', 'Still']], def: 'full' },
     speed:   { label: 'Pace',           choices: [['0.8', 'Slow'], ['1', 'Normal'], ['1.25', 'Quick']], def: '1' },
   };
 

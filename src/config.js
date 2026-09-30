@@ -6,7 +6,7 @@
  *   ?motion=auto|full|static     motion profile               (default auto)
  *   ?speed=1                     global pace multiplier       (0.25 – 4)
  *   ?labels=skill|all|none       role letters on markers      (default skill)
- *   ?fps=60                      frame cap while animating    (15 – 120)
+ *   ?fps=30                      frame cap while animating    (15 – 120, default 30)
  *   ?order=mix|shuffle|sequential playlist order (mix: alternates run/pass/screen)
  *   ?list=run                    playlist filter by tag (run, pass, screen, zone, gap, quick, <conceptId>…)
  *   ?seed=1                      shuffle seed
@@ -42,7 +42,7 @@ window.FD = window.FD || {};
         speed: q.has('speed') ? clamp(num('speed', 1), 0.25, 4) : parseFloat(FD.Settings.get().speed),
         settings: FD.Settings.get(),
         labels: pick('labels', ['skill', 'all', 'none'], 'skill'),
-        fps: clamp(Math.round(num('fps', 60)), 15, 120),
+        fps: clamp(Math.round(num('fps', 30)), 15, 120), // 30: line reveals stay smooth at half the GPU cost
         order: pick('order', ['mix', 'shuffle', 'sequential'], 'mix'),
         list: q.get('list') || null,
         seed: q.has('seed') ? Math.round(num('seed', 1)) : Date.now() % 1e9, // fresh order each launch

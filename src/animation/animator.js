@@ -78,7 +78,17 @@ window.FD = window.FD || {};
       }
 
       if (st.active) {
-        this._requestFrame();
+        if (this.minFrameMs) {
+          // Frame cap: sleep until the next frame is due instead of waking on
+          // every display refresh (120 Hz panels) only to skip it.
+          const due = this.minFrameMs - (performance.now() - now);
+          this._timer = setTimeout(() => {
+            this._timer = 0;
+            this._requestFrame();
+          }, Math.max(0, due - 4));
+        } else {
+          this._requestFrame();
+        }
       } else {
         // Nothing moving: sleep until the next scheduled change.
         const waitMs = ((st.next - t) / this.timeScale) * 1000;

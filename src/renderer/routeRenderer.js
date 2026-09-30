@@ -3,8 +3,9 @@
  * control: setProgress(p ∈ [0, 1]).
  *
  *  solid         stroke-dashoffset reveal on the path itself
- *  dashed/dotted a solid mask path is revealed; the dashed path shows through
- *                (animating dashoffset directly would fight the dash pattern)
+ *  dashed/dotted the dash pattern itself is written up to the revealed length,
+ *                then one long gap (no SVG masks: masks are re-rasterised every
+ *                frame and were the wallpaper's biggest GPU cost)
  *  end caps      arrowhead / T-bar / dot, faded in as the stroke arrives
  *
  * When p reaches 1 the dash styling is removed so the resting diagram is a
@@ -19,6 +20,19 @@ window.FD = window.FD || {};
 
   const HEAD = { length: 0.64, width: 0.5, notch: 0.8, trim: 0.34 };
   const TBAR = 0.95;
+  // Must match .a.is-dashed / .a.is-dotted in styles/play.css (yards).
+  const PATTERN = { dashed: [0.34, 0.3], dotted: [0.02, 0.36] };
+
+  /** Dash array that shows the pattern for the first `R` yards only. */
+  function partialPattern(pat, R, L) {
+    const [d, g] = pat;
+    const out = [];
+    let run = 0;
+    while (run + d + g <= R) { out.push(d, g); run += d + g; }
+    const rem = R - run;
+    out.push(Math.max(0, Math.min(d, rem)), L + 1);
+    return out.map(f).join(' ');
+  }
 
   function arrowPoints(tip, t) {
     const n = G.perp(t);
@@ -48,17 +62,8 @@ window.FD = window.FD || {};
       const measure = G.measure(drawPath);
       const L = Math.max(measure.length, 0.001);
 
-      let mask = null;
-      let revealer = line;
-      if (style !== 'solid') {
-        const mid = id('reveal');
-        mask = el('mask', { id: mid, maskUnits: 'userSpaceOnUse', x: -300, y: -300, width: 600, height: 600 }, o.defs);
-        revealer = el('path', {
-          d, fill: 'none', stroke: '#fff', 'stroke-width': 1.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round',
-        }, mask);
-        line.setAttribute('mask', `url(#${mid})`);
-        line.classList.add(`is-${style}`);
-      }
+      const pattern = PATTERN[style] || null;
+      if (pattern) line.classList.add(`is-${style}`);
 
       let cap = null;
       if (end !== 'none') {
@@ -86,18 +91,21 @@ window.FD = window.FD || {};
       function setDash(on) {
         if (on === dashed) return;
         dashed = on;
-        revealer.style.strokeDasharray = on ? `${f(L)} ${f(L + 1)}` : 'none';
+        if (!on) line.style.strokeDasharray = '';
+        if (!on) line.style.strokeDashoffset = '';
       }
 
       function setProgress(p) {
         if (p === last) return;
         last = p;
         if (p >= 1) {
-          setDash(false);
-          revealer.style.strokeDashoffset = '0';
+          setDash(false); // resting state: CSS pattern (dashed) or plain stroke (solid)
+        } else if (pattern) {
+          dashed = true;
+          line.style.strokeDasharray = partialPattern(pattern, L * p, L);
         } else {
-          setDash(true);
-          revealer.style.strokeDashoffset = f(L * (1 - p));
+          if (!dashed) { dashed = true; line.style.strokeDasharray = `${f(L)} ${f(L + 1)}`; }
+          line.style.strokeDashoffset = f(L * (1 - p));
         }
         if (cap) {
           const a = Math.max(0, Math.min(1, (p - 0.92) / 0.08));
@@ -114,7 +122,6 @@ window.FD = window.FD || {};
         setProgress,
         destroy() {
           g.remove();
-          if (mask) mask.remove();
         },
       };
     },

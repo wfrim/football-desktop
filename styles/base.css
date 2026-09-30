@@ -49,7 +49,11 @@ body {
   background: var(--texture), radial-gradient(120% 95% at 50% 56%, var(--bg-lift) 0%, var(--bg) 58%, var(--bg-deep) 100%);
 }
 
-#stage {
+#stage,
+#field-layer {
+  /* Separate compositing layers: repainting the play must not repaint the
+     field or the full-screen gradients underneath it (docs/ENERGY.md). */
+  will-change: transform;
   position: fixed;
   inset: 0;
   width: 100vw;

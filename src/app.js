@@ -53,6 +53,9 @@ window.FD = window.FD || {};
       cfg.settings = FD.Settings.get();
       FD.Theme.apply(cfg.settings.theme, true); // "auto" follows the clock
       if (!new URLSearchParams(location.search).has('speed')) animator.timeScale = parseFloat(cfg.settings.speed) || 1;
+      // Motion setting: Full 30 fps · Calm 20 fps · Still (finished diagrams, crossfaded).
+      if (!new URLSearchParams(location.search).has('fps')) animator.minFrameMs = 1000 / (cfg.settings.motion === 'calm' ? 20 : 30) - 1.5;
+      if (!new URLSearchParams(location.search).has('motion')) cfg.motion = cfg.settings.motion === 'still' ? 'static' : 'auto';
       // Field position (drive mode takes over in drive.js).
       const q = new URLSearchParams(location.search);
       let filter = null;

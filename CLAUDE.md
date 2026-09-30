@@ -73,6 +73,21 @@ unrecognizable, football correctness wins.
    real loop.
 5. `node tools/concepts-doc.mjs` after changing any play's football/sources.
 
+## Runtime features (settings panel: click the play counter; Plash needs Browsing Mode)
+- `src/settings.js` (defaults ← localStorage ← URL params; URL wins) + `src/settingsPanel.js`.
+- Themes: `styles/themes.css` token overrides only (`src/theme.js`); never hard-code colours.
+- Field position: `src/fieldPosition.js`, `fieldRenderer.update(spot)`; plays must fit
+  before the end line (`PlayRenderer.deepest`, DOM-free `PlayRenderer.layout`).
+- Faint defenses: `src/defense/align.js` generates a defense from the offense
+  (nickel/base, front by technique, Cover 1-4, man, run fits). Concepts carry
+  `defense: { coverage, key, front }`; key = the defender job the concept attacks.
+- Drive mode: `src/drive.js` (situational selection, results, field scroll).
+- `node tools/bundle-data.mjs` also cache-busts every asset URL in index.html:
+  Plash's WebView serves stale cached files otherwise. Always run it after edits,
+  then `open "plash:reload"`.
+- Energy rules: docs/ENERGY.md (no overlays above the drawing, no masks, static
+  field layer). Measure with `tools/energy.sh`.
+
 ## Status (see git log for detail)
 - 212 plays / 53 concepts / 12 formations; everything except Iso is a template.
 - Next: more concepts + variants (§8 of the contract notes), an RPO shape,

@@ -11,6 +11,13 @@ A minimalist, animated football play-art wallpaper for macOS, built to run in [P
 
 After editing any play or formation JSON, run `node tools/bundle-data.mjs` so `file://` loading sees the change (served over http, the JSON is read directly).
 
+## Settings
+
+Click the play counter (bottom right) to open the settings sheet: theme, faint
+defense, field position, hash, drive mode, motion and pace. Settings are saved on
+this Mac. In Plash, clicks only reach the page in **Browsing Mode** (Plash menu →
+Browsing Mode); turn it off again afterwards.
+
 ## Options (URL query)
 
 | Option | Values | Default |
@@ -19,7 +26,9 @@ After editing any play or formation JSON, run `node tools/bundle-data.mjs` so `f
 | `motion` | `auto`, `full`, `static` | `auto` (static if reduced motion is on) |
 | `speed` | `0.25` – `4` | `1` |
 | `labels` | `skill`, `all`, `none` | `skill` |
-| `fps` | `15` – `120` | `60` |
+| `fps` | `15` – `120` | `30` |
+| `theme`, `defense`, `field`, `hash`, `drive`, `motion` | pin a setting (see Settings) | saved setting |
+| `spot`, `at_hash` | review aid: snap the ball at a yard line / hash | — |
 | `order` | `mix`, `shuffle`, `sequential` | `mix` (alternates run / pass / screen) |
 | `list` | playlist filter: `run`, `pass`, `screen`, `zone`, `gap`, `quick`, `deep`, or a concept id | all |
 | `seed` | shuffle seed | new each launch |
