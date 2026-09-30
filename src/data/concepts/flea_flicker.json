@@ -1,0 +1,116 @@
+{
+ "conceptId": "flea_flicker",
+ "name": "Flea Flicker",
+ "family": "play_action",
+ "subfamily": "trick",
+ "side": "strength",
+ "tags": [
+  "trick",
+  "deep"
+ ],
+ "copy": {
+  "title": "FLEA FLICKER",
+  "situation": "TRICK \u00b7 SHOT PLAY",
+  "description": "Handoff, the back pitches it back to the quarterback, then the deep shot."
+ },
+ "assignments": {
+  "PST": {
+   "type": "base"
+  },
+  "PSG": {
+   "type": "base"
+  },
+  "C": {
+   "type": "base"
+  },
+  "BSG": {
+   "type": "base"
+  },
+  "BST": {
+   "type": "base"
+  },
+  "TE?": {
+   "type": "base"
+  },
+  "FB?": {
+   "type": "pass_set"
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    "mesh",
+    [
+     -0.3,
+     -4.4
+    ],
+    [
+     -0.2,
+     -7.6
+    ]
+   ],
+   "timing": {
+    "duration": 2.2
+   }
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    "mesh",
+    [
+     "a",
+     -1.4
+    ]
+   ]
+  },
+  "#1": {
+   "type": "go"
+  },
+  "bs#1": {
+   "type": "post"
+  }
+ },
+ "exchanges": [
+  {
+   "type": "handoff",
+   "to": "RB",
+   "at": "mesh"
+  },
+  {
+   "type": "pitch",
+   "from": "RB",
+   "to": "QB",
+   "at": [
+    -0.2,
+    -7.4
+   ]
+  },
+  {
+   "type": "pass",
+   "from": "QB",
+   "to": "#1"
+  }
+ ],
+ "primary": "#1",
+ "reads": [
+  "#1",
+  "bs#1"
+ ],
+ "presentations": [
+  {
+   "formation": "i_form_21"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "deep_middle"
+ },
+ "football": {
+  "read": "The safeties come up for the run; the pitch back gives the QB a clean deep throw."
+ },
+ "sources": [
+  "Flea flicker"
+ ]
+}

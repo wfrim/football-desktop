@@ -68,6 +68,26 @@
   },
   {
    "formation": "gun_trey_11"
+  },
+  {
+   "formation": "wildcat_11",
+   "roles": {
+    "RB": "H"
+   },
+   "copy": {
+    "title": "WILDCAT POWER",
+    "situation": "WILDCAT \u00b7 DIRECT SNAP"
+   }
+  },
+  {
+   "formation": "wildcat_21",
+   "roles": {
+    "RB": "F"
+   },
+   "copy": {
+    "title": "WILDCAT POWER",
+    "situation": "WILDCAT \u00b7 DIRECT SNAP"
+   }
   }
  ],
  "defaults": {

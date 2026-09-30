@@ -322,6 +322,44 @@ window.FD = window.FD || {};
         }, 'outCubic');
       }
 
+      // Ball chain (trick plays): ride the holder, fly each exchange, ride again.
+      if (scene.chain && scene.chain.length && qb) {
+        const legs = scene.chain;
+        const at = (pl, t) => (scene.live && scene.live.otracks && scene.live.otracks.get(pl.data.id) && t >= P.snap
+          ? pl.marker.position : FD.Live.playerPos(pl, t, scene.toSvg));
+        const ride = (pl, t0, t1) => {
+          if (t1 <= t0) return;
+          tl.track(t0, t1 - t0, (p, raw) => ball.setPos(at(pl, t0 + raw * (t1 - t0))), 'linear');
+        };
+        let tHave = P.snap + T.snapDuration;
+        legs.forEach((L, i) => {
+          if (i > 0) ride(L.from, tHave, L.release);
+          const fromKind = L.from.marker.kind;
+          const start = () => at(L.from, L.release);
+          tl.track(L.release, L.arrive - L.release, (p, raw) => {
+            if (raw > 0) {
+              if (fromKind === 'qb') L.from.marker.setHasBall(false);
+              ball.setVisible(true);
+              ball.setOpacity(1);
+            }
+            ball.setPos(G.lerp(start(), L.point, p));
+            ball.setScale(L.type === 'handoff' ? 1 : 1 + (L.type === 'pass' ? 0.4 : 0.2) * Math.sin(Math.PI * p));
+          }, L.type === 'handoff' ? 'inOutQuad' : 'outQuad');
+          if (L.type === 'pass') {
+            const trail = FD.RouteRenderer.create({ parent: scene.layers.ball, defs: scene.defs, kind: 'ball', cls: 'ball-trail', path: G.fromPoints([at(L.from, L.release), L.point], 0) });
+            scene.own(trail.destroy);
+            tl.track(L.release, L.arrive - L.release, (p) => trail.setProgress(p), 'outQuad');
+          }
+          if (!cfg.settings || cfg.settings.moments !== 'off') momentRing(scene, tl, L.point, L.arrive, L.type === 'pass');
+          if (sim) scene.possession.push({ t: L.release, holder: null }, { t: L.arrive + 0.05, holder: L.to });
+          tHave = L.arrive;
+        });
+        const last = legs[legs.length - 1];
+        if (last.incomplete) {
+          tl.track(last.arrive, 0.6, (p) => ball.setOpacity(1 - p), 'outQuad');
+        } else ride(last.to, last.arrive, END);
+      }
+
       // Live styles: defenders follow their simulated tracks; the run-after-catch.
       const LV = scene.live;
       if (LV && D) {

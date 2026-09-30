@@ -145,6 +145,22 @@
   },
   {
    "formation": "singleback_doubles_11"
+  },
+  {
+   "formation": "wildcat_11",
+   "roles": {
+    "JET": "H"
+   },
+   "side": "left",
+   "assignments": {
+    "Q": {
+     "type": "go"
+    }
+   },
+   "copy": {
+    "title": "WILDCAT JET",
+    "situation": "WILDCAT \u00b7 JET SWEEP"
+   }
   }
  ],
  "defense": {

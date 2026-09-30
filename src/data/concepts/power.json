@@ -143,6 +143,29 @@
    "copy": {
     "situation": "POWER O \u00b7 SHORT YARDAGE"
    }
+  },
+  {
+   "formation": "power_t_32",
+   "roles": {
+    "KICK": "F"
+   },
+   "tweaks": {
+    "BSG": {
+     "dip": -1.0,
+     "radius": 0.25
+    },
+    "KICK": {
+     "via": [
+      "d-0.3",
+      -1.8
+     ]
+    },
+    "QB": {
+     "through": [
+      "mesh"
+     ]
+    }
+   }
   }
  ],
  "defense": {

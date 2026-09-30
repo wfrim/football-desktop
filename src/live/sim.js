@@ -99,7 +99,8 @@ window.FD = window.FD || {};
         routeEnd: Math.max(0, ...pl.assignments.filter((a) => a.kind === 'route' && !a.yac).map((a) => a.start + a.duration)) });
     }
     const byOff = new Map(O.map((b) => [b.id, b]));
-    const qb = O.find((b) => b.role === 'QB') || null;
+    // The passer: the QB, or whoever throws at the end of a trick play's ball chain.
+    const qb = (ev0.thrower && O.find((b) => b.id === ev0.thrower)) || O.find((b) => b.role === 'QB') || null;
     const { pairs, unblocked } = FD.LivePairing.pair(scene, D);
     const latches = [];
 

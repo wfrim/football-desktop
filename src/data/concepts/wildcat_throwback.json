@@ -1,0 +1,93 @@
+{
+ "conceptId": "wildcat_throwback",
+ "name": "Wildcat Throwback",
+ "family": "play_action",
+ "subfamily": "trick",
+ "side": "strength",
+ "tags": [
+  "wildcat",
+  "trick"
+ ],
+ "copy": {
+  "title": "WILDCAT THROWBACK",
+  "situation": "TRICK \u00b7 WILDCAT",
+  "description": "The wildcat back sells power, pulls up, and throws back to the split-out quarterback."
+ },
+ "assignments": {
+  "PST": {
+   "type": "down"
+  },
+  "PSG": {
+   "type": "down"
+  },
+  "C": {
+   "type": "back"
+  },
+  "BST": {
+   "type": "hinge"
+  },
+  "TE?": {
+   "type": "down"
+  },
+  "BSG": {
+   "type": "pull",
+   "hole": "c",
+   "at": [
+    "c-0.8",
+    3.8
+   ]
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    [
+     0.5,
+     -4.4
+    ],
+    [
+     1.6,
+     -3.6
+    ]
+   ],
+   "timing": {
+    "duration": 1.1
+   }
+  },
+  "Q": {
+   "type": "go"
+  },
+  "#1": {
+   "type": "go"
+  }
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "ball": {
+  "to": "Q",
+  "at": 0.7
+ },
+ "reads": [
+  "Q"
+ ],
+ "presentations": [
+  {
+   "formation": "wildcat_11"
+  },
+  {
+   "formation": "wildcat_21"
+  }
+ ],
+ "defense": {
+  "coverage": "cover1",
+  "key": "end_ps"
+ },
+ "football": {
+  "read": "Everyone flows to the power look; nobody covers the quarterback who lined up as a receiver."
+ },
+ "sources": [
+  "Wildcat throwback pass"
+ ]
+}

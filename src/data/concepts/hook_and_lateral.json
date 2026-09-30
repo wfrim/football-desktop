@@ -1,0 +1,84 @@
+{
+ "conceptId": "hook_and_lateral",
+ "name": "Hook and Lateral",
+ "family": "dropback_pass",
+ "subfamily": "trick",
+ "side": "strength",
+ "tags": [
+  "trick"
+ ],
+ "copy": {
+  "title": "HOOK & LATERAL",
+  "situation": "TRICK \u00b7 LATE GAME",
+  "description": "The hook draws the tackle; the trailer takes the pitch at full speed."
+ },
+ "assignments": {
+  "#1": {
+   "type": "curl",
+   "depth": 10
+  },
+  "#2": {
+   "type": "runner_path",
+   "through": [
+    [
+     "#2",
+     3.5
+    ],
+    [
+     "#1+1.4",
+     8.9
+    ],
+    [
+     "#1+2.2",
+     22
+    ]
+   ],
+   "timing": {
+    "delay": 0.9
+   }
+  },
+  "bs#1": {
+   "type": "go"
+  },
+  "RB?": {
+   "type": "pass_set"
+  }
+ },
+ "exchanges": [
+  {
+   "type": "pass",
+   "to": "#1"
+  },
+  {
+   "type": "pitch",
+   "from": "#1",
+   "to": "#2",
+   "at": [
+    "#1+1.4",
+    8.9
+   ]
+  }
+ ],
+ "primary": "#2",
+ "reads": [
+  "#1"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "third_ps"
+ },
+ "football": {
+  "read": "Coverage drives on the curl; the pitch goes outside to the trailer with a head of steam."
+ },
+ "sources": [
+  "Hook and lateral"
+ ]
+}

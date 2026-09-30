@@ -1,0 +1,112 @@
+{
+ "conceptId": "hb_pass",
+ "name": "Halfback Pass",
+ "family": "play_action",
+ "subfamily": "trick",
+ "side": "strength",
+ "tags": [
+  "trick",
+  "deep"
+ ],
+ "copy": {
+  "title": "HALFBACK PASS",
+  "situation": "TRICK \u00b7 TOSS PASS",
+  "description": "Toss sweep look; the back pulls up and throws deep over the charging secondary."
+ },
+ "assignments": {
+  "PST": {
+   "type": "reach"
+  },
+  "PSG": {
+   "type": "reach"
+  },
+  "C": {
+   "type": "reach"
+  },
+  "BSG": {
+   "type": "scoop"
+  },
+  "BST": {
+   "type": "scoop"
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    [
+     0.6,
+     -2.4
+    ]
+   ],
+   "timing": {
+    "duration": 0.6
+   }
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    [
+     2.5,
+     -6.2
+    ],
+    [
+     5.8,
+     -5.4
+    ],
+    [
+     6.6,
+     -5.2
+    ]
+   ]
+  },
+  "FB?": {
+   "type": "lead",
+   "at": [
+    "d+1.5",
+    0.5
+   ]
+  },
+  "TE?": {
+   "type": "corner"
+  },
+  "#1": {
+   "type": "go"
+  },
+  "bs#1": {
+   "type": "post"
+  }
+ },
+ "exchanges": [
+  {
+   "type": "pitch",
+   "to": "RB",
+   "at": 0.3
+  },
+  {
+   "type": "pass",
+   "from": "RB",
+   "to": "#1"
+  }
+ ],
+ "primary": "#1",
+ "reads": [
+  "#1"
+ ],
+ "presentations": [
+  {
+   "formation": "i_form_21"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "third_ps"
+ },
+ "football": {
+  "read": "The corner sees toss and comes up to force; the flanker runs by him."
+ },
+ "sources": [
+  "Halfback option pass"
+ ]
+}

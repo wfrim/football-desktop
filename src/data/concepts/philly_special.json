@@ -1,0 +1,126 @@
+{
+ "conceptId": "philly_special",
+ "name": "Philly Special",
+ "family": "play_action",
+ "subfamily": "trick",
+ "side": "strength",
+ "tags": [
+  "trick",
+  "goalline"
+ ],
+ "copy": {
+  "title": "PHILLY SPECIAL",
+  "situation": "TRICK \u00b7 GOAL LINE",
+  "description": "The back takes it, pitches to the tight end on the reverse, who throws to the quarterback."
+ },
+ "assignments": {
+  "PST": {
+   "type": "base"
+  },
+  "PSG": {
+   "type": "base"
+  },
+  "C": {
+   "type": "base"
+  },
+  "BSG": {
+   "type": "base"
+  },
+  "BST": {
+   "type": "base"
+  },
+  "QB": {
+   "type": "runner_path",
+   "through": [
+    [
+     1.2,
+     -2.6
+    ],
+    [
+     5.5,
+     -1.2
+    ],
+    [
+     7.5,
+     3.0
+    ]
+   ]
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    [
+     1.6,
+     -5.4
+    ],
+    [
+     3.4,
+     -5.0
+    ]
+   ]
+  },
+  "Y": {
+   "type": "carry",
+   "through": [
+    [
+     3.4,
+     -1.8
+    ],
+    [
+     2.4,
+     -4.4
+    ],
+    [
+     -1.5,
+     -5.6
+    ],
+    [
+     -4.0,
+     -5.0
+    ]
+   ]
+  }
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "exchanges": [
+  {
+   "type": "handoff",
+   "to": "RB",
+   "at": 0.1
+  },
+  {
+   "type": "pitch",
+   "from": "RB",
+   "to": "Y",
+   "at": [
+    2.6,
+    -4.5
+   ]
+  },
+  {
+   "type": "pass",
+   "from": "Y",
+   "to": "QB"
+  }
+ ],
+ "primary": "QB",
+ "presentations": [
+  {
+   "formation": "ace_12"
+  }
+ ],
+ "defense": {
+  "coverage": "cover0",
+  "key": "end_ps"
+ },
+ "football": {
+  "read": "Nobody covers the quarterback after he hands it off; the tight end pulls up and throws it to him."
+ },
+ "sources": [
+  "Philly Special (Super Bowl LII)"
+ ]
+}

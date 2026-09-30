@@ -1,0 +1,97 @@
+{
+ "conceptId": "lead_iso",
+ "name": "Lead Iso",
+ "family": "run",
+ "subfamily": "gap",
+ "side": "strength",
+ "tags": [
+  "goalline",
+  "short"
+ ],
+ "copy": {
+  "title": "ISO",
+  "situation": "GOAL LINE \u00b7 LEAD",
+  "description": "Base blocks up front; the fullback isolates the linebacker in the B gap."
+ },
+ "assignments": {
+  "PST": {
+   "type": "base"
+  },
+  "PSG": {
+   "type": "base"
+  },
+  "C": {
+   "type": "base"
+  },
+  "BSG": {
+   "type": "base"
+  },
+  "BST": {
+   "type": "base"
+  },
+  "TE?": {
+   "type": "base"
+  },
+  "FB": {
+   "type": "lead",
+   "at": [
+    "b+0.5",
+    3.9
+   ]
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    "mesh"
+   ]
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    "mesh",
+    [
+     "b",
+     -1.2
+    ],
+    [
+     "b",
+     0.4
+    ],
+    [
+     "b-0.7",
+     5.5
+    ]
+   ]
+  }
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "handoff": {
+  "to": "RB",
+  "at": "mesh"
+ },
+ "relationships": [
+  {
+   "type": "kickout",
+   "blocker": "FB",
+   "runner": "RB"
+  }
+ ],
+ "presentations": [
+  {
+   "formation": "goal_line_23"
+  }
+ ],
+ "defense": {
+  "key": "lb_ps"
+ },
+ "football": {
+  "rules": "Man blocking on the line; the fullback leads through the B gap onto the play-side linebacker; the back reads his block."
+ },
+ "sources": [
+  "Lead / iso (I-formation)"
+ ]
+}

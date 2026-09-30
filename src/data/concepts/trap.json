@@ -94,6 +94,12 @@
   },
   {
    "formation": "singleback_doubles_11"
+  },
+  {
+   "formation": "wing_t_21"
+  },
+  {
+   "formation": "power_t_32"
   }
  ],
  "defaults": {

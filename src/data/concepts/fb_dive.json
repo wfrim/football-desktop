@@ -1,0 +1,123 @@
+{
+ "conceptId": "fb_dive",
+ "name": "Fullback Dive",
+ "family": "run",
+ "subfamily": "gap",
+ "side": "strength",
+ "tags": [
+  "short"
+ ],
+ "copy": {
+  "title": "FULLBACK DIVE",
+  "situation": "T FORMATION \u00b7 QUICK HITTER",
+  "description": "The fastest hole in football: the fullback hits the A gap off base blocks."
+ },
+ "assignments": {
+  "PST": {
+   "type": "base"
+  },
+  "PSG": {
+   "type": "base"
+  },
+  "C": {
+   "type": "base"
+  },
+  "BSG": {
+   "type": "base"
+  },
+  "BST": {
+   "type": "base"
+  },
+  "TE?": {
+   "type": "base"
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    [
+     0.35,
+     -2.5
+    ],
+    [
+     -0.6,
+     -3.4
+    ]
+   ]
+  },
+  "FB": {
+   "type": "carry",
+   "through": [
+    [
+     "a",
+     -2.6
+    ],
+    [
+     "a",
+     -0.2
+    ],
+    [
+     "a+0.2",
+     5.5
+    ]
+   ]
+  },
+  "FAKE": {
+   "type": "fake",
+   "through": [
+    [
+     -1.3,
+     -3.9
+    ],
+    [
+     "-c",
+     -1.5
+    ]
+   ]
+  }
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "handoff": {
+  "to": "FB",
+  "at": [
+   "a",
+   -2.6
+  ]
+ },
+ "primary": "FB",
+ "presentations": [
+  {
+   "formation": "power_t_32",
+   "roles": {
+    "FAKE": "LH"
+   },
+   "assignments": {
+    "RH": {
+     "type": "lead",
+     "at": [
+      "b+0.1",
+      3.8
+     ]
+    }
+   }
+  },
+  {
+   "formation": "wing_t_21",
+   "roles": {
+    "FAKE": "RB"
+   }
+  }
+ ],
+ "defense": {
+  "key": "nose"
+ },
+ "football": {
+  "rules": "Base blocks; the fullback takes a quick handoff and hits the A gap while the halfback fakes the other way."
+ },
+ "sources": [
+  "Fullback dive (T formation / Wing-T)"
+ ]
+}

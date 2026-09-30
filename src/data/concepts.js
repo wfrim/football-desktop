@@ -248,6 +248,14 @@ window.FD = window.FD || {};
     if (c.handoff) {
       play.handoff = { to: idOf(c.handoff.to), at: typeof c.handoff.at === 'number' ? c.handoff.at : L.point(c.handoff.at || 'mesh') };
     }
+    if (c.exchanges) {
+      // Ball chain (trick plays, direct snaps): who gets it from whom, and where.
+      play.exchanges = c.exchanges.map((e) => Object.assign({}, e, {
+        to: idOf(e.to),
+        from: e.from ? idOf(e.from) : undefined,
+        at: e.at === undefined || typeof e.at === 'number' ? e.at : L.point(e.at),
+      }));
+    }
     if (c.reads) play.reads = Array.from(new Set(c.reads.filter((r) => bind(r)).map(idOf)));
     if (c.primary) play.primary = idOf(c.primary);
     if (c.events) play.events = c.events.map((e) => Object.assign({}, e, { at: L.point(e.at) }));

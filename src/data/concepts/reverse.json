@@ -1,0 +1,133 @@
+{
+ "conceptId": "reverse",
+ "name": "Reverse",
+ "family": "run",
+ "subfamily": "trick",
+ "side": "weak",
+ "tags": [
+  "trick",
+  "perimeter"
+ ],
+ "copy": {
+  "title": "REVERSE",
+  "situation": "TRICK \u00b7 MISDIRECTION",
+  "description": "Flow one way with the back, hand it to the receiver coming back the other."
+ },
+ "assignments": {
+  "PST": {
+   "type": "reach"
+  },
+  "PSG": {
+   "type": "reach"
+  },
+  "C": {
+   "type": "reach"
+  },
+  "BSG": {
+   "type": "scoop"
+  },
+  "BST": {
+   "type": "scoop"
+  },
+  "QB": {
+   "type": "handoff",
+   "through": [
+    [
+     -0.6,
+     -3.6
+    ]
+   ]
+  },
+  "RB": {
+   "type": "carry",
+   "through": [
+    [
+     -1.0,
+     -5.0
+    ],
+    [
+     -2.7,
+     -5.1
+    ]
+   ]
+  },
+  "Z": {
+   "type": "carry",
+   "through": [
+    [
+     -8,
+     -3.4
+    ],
+    [
+     -3.2,
+     -5.8
+    ],
+    [
+     1.5,
+     -5.8
+    ],
+    [
+     "d+1.0",
+     -1.8
+    ],
+    [
+     "d+1.8",
+     0.6
+    ],
+    [
+     "d+2.2",
+     5.5
+    ]
+   ]
+  },
+  "FB?": {
+   "type": "lead",
+   "at": [
+    "d+0.6",
+    0.4
+   ]
+  }
+ },
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "exchanges": [
+  {
+   "type": "handoff",
+   "to": "RB",
+   "at": [
+    -0.9,
+    -5.0
+   ]
+  },
+  {
+   "type": "handoff",
+   "from": "RB",
+   "to": "Z",
+   "at": [
+    -2.9,
+    -5.6
+   ]
+  }
+ ],
+ "primary": "Z",
+ "presentations": [
+  {
+   "formation": "i_form_21"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "defense": {
+  "key": "end_ps"
+ },
+ "football": {
+  "rules": "The back runs a sweep look away; the flanker comes back behind him, takes the handoff and runs to the vacated side."
+ },
+ "sources": [
+  "Reverse / end-around"
+ ]
+}

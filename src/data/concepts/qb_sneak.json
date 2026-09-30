@@ -1,0 +1,86 @@
+{
+ "conceptId": "qb_sneak",
+ "name": "QB Sneak",
+ "family": "run",
+ "subfamily": "gap",
+ "side": "strength",
+ "tags": [
+  "goalline",
+  "short"
+ ],
+ "copy": {
+  "title": "QB SNEAK",
+  "situation": "SHORT YARDAGE \u00b7 GOAL LINE",
+  "description": "Wedge the A gap and fall forward behind the center."
+ },
+ "assignments": {
+  "PST": {
+   "type": "down"
+  },
+  "PSG": {
+   "type": "down"
+  },
+  "C": {
+   "type": "base"
+  },
+  "BSG": {
+   "type": "zone_step"
+  },
+  "BST": {
+   "type": "zone_step"
+  },
+  "TE?": {
+   "type": "down"
+  },
+  "QB": {
+   "type": "carry",
+   "through": [
+    [
+     "a",
+     -1.1
+    ],
+    [
+     "a",
+     1.8
+    ]
+   ]
+  }
+ },
+ "handoff": {
+  "to": "QB",
+  "at": 0.02
+ },
+ "primary": "QB",
+ "relationships": [
+  {
+   "type": "wall",
+   "participants": [
+    "PST",
+    "PSG"
+   ]
+  }
+ ],
+ "presentations": [
+  {
+   "formation": "goal_line_23"
+  },
+  {
+   "formation": "jumbo_13"
+  },
+  {
+   "formation": "power_t_32"
+  },
+  {
+   "formation": "i_form_21"
+  }
+ ],
+ "defense": {
+  "key": "tackle_ps"
+ },
+ "football": {
+  "rules": "Every lineman wedges toward the play-side A gap; the QB follows the center\u2019s hip and falls forward."
+ },
+ "sources": [
+  "QB sneak (wedge)"
+ ]
+}

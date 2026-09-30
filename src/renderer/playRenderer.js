@@ -176,7 +176,19 @@ window.FD = window.FD || {};
     const pass = scene.pass;
     let event = null;
     let exchangeT;
-    if (pass && pass.route) {
+    const chain = scene.chain;
+    if (chain && chain.length) {
+      const last = chain[chain.length - 1];
+      if (last.type === 'pass') {
+        const r = last.to.assignments.filter((a) => a.kind === 'route').pop();
+        event = { t: last.arrive, point: last.point, dir: r ? G.endTangent(r.path) : [0, -1], carrierId: last.to.data.id, kind: 'catch', screen: true, thrower: last.from.data.id };
+      } else {
+        const tr = last.to.assignments.filter((a) => a.kind === 'run').pop();
+        exchangeT = last.arrive;
+        event = tr ? { t: Math.max(last.arrive + 0.2, tr.start + tr.duration), point: G.endPoint(tr.path), dir: G.endTangent(tr.path), carrierId: last.to.data.id, kind: 'carry', carrier: last.to }
+          : { t: last.arrive + 0.2, point: last.point, dir: [0, -1], carrierId: last.to.data.id, kind: 'carry', carrier: last.to };
+      }
+    } else if (pass && pass.route) {
       const flight = P.arrive - P.release;
       const reach = FD.Relationships.timeAt(pass.route, 1);
       const t = Math.max(reach + 0.02, P.snap + 0.8 + flight);
@@ -220,6 +232,7 @@ window.FD = window.FD || {};
     }
     scene.live = { event: res.event || event, outcome: oc, tracks: res.tracks, otracks: res.otracks, game };
 
+    if (chain && chain.length && (oc.type === 'incomplete' || oc.type === 'interception')) chain[chain.length - 1].incomplete = true;
     // The throw the QB actually made (Competitive can go elsewhere, or nowhere).
     if (pass) {
       if (!res.pass) pass.sacked = oc.type === 'sack';
@@ -274,6 +287,47 @@ window.FD = window.FD || {};
       if (pl) pl.assignments.push(a);
       scene.live.yac = a;
     }
+  }
+
+  /*
+   * Ball chain (play.exchanges): trick plays and direct snaps. Each leg gets
+   * the moment and place the receiver actually gets there on his authored path
+   * (closest approach to the landmark), so timing follows the drawing.
+   */
+  function resolveChain(scene) {
+    const P = FD.Timing.phases;
+    const pos = (pl, t) => FD.Live.playerPos(pl, t, scene.toSvg);
+    let holder = scene.qb;
+    let t = P.snap + FD.Timing.snapDuration;
+    const legs = [];
+    for (const e of scene.play.exchanges) {
+      const from = e.from ? scene.players.get(e.from) : holder;
+      const to = scene.players.get(e.to);
+      if (!from || !to) break;
+      const moving = to.assignments.filter((a) => a.kind !== 'block' && a.kind !== 'motion');
+      let point;
+      if (Array.isArray(e.at)) point = scene.toSvg(C.fromData(e.at));
+      else {
+        const a = e.type === 'pass' ? moving.filter((q) => q.kind === 'route').pop() || moving[moving.length - 1]
+          : moving.find((q) => q.start + q.duration > t) || moving[moving.length - 1];
+        point = a ? a.measure.at(typeof e.at === 'number' ? e.at : e.type === 'pass' ? 1 : 0.25).point : pos(to, t);
+      }
+      // When is the receiver closest to that spot (after the giver has the ball)?
+      let tr = t + 0.3;
+      let best = Infinity;
+      for (let q = t + 0.15; q < t + 6; q += 0.05) {
+        const d = G.dist(pos(to, q), point);
+        if (d < best - 1e-3) { best = d; tr = q; }
+        if (d < 0.15) break;
+      }
+      const fromPt = pos(from, tr - 0.3);
+      const flight = e.type === 'pass' ? Math.max(0.4, Math.min(0.9, 0.3 + G.dist(fromPt, point) / 30)) : e.type === 'pitch' ? 0.38 : 0.25;
+      tr = Math.max(tr, t + 0.25 + flight);
+      legs.push({ type: e.type, from, to, point, release: tr - flight, arrive: tr });
+      holder = to;
+      t = tr;
+    }
+    return legs;
   }
 
   const COVER_LABEL = {
@@ -686,6 +740,7 @@ window.FD = window.FD || {};
 
       // Relationships: validation, timing constraints, concept emphasis.
       warnings.push(...FD.Relationships.apply(scene));
+      if (play.exchanges && qb) scene.chain = resolveChain(scene);
       if (live && FD.Live) runLive(scene, { defData, style, cfg, toSvg, ballX, stage, place, destroyers, layers, warnings });
       warnings.push(...collisions(players, assignments));
       if (warnings.length) console.warn(`[play ${play.id || '?'}]`, warnings);

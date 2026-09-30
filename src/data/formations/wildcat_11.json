@@ -1,0 +1,101 @@
+{
+ "_note": "Direct snap to the running back (he takes the QB's spot, 5 yd deep); the quarterback splits out wide. H in the slot for jet action.",
+ "id": "wildcat_11",
+ "name": "Wildcat",
+ "personnel": "11",
+ "players": [
+  {
+   "id": "LT",
+   "role": "LT",
+   "at": [
+    -2.6,
+    -0.55
+   ]
+  },
+  {
+   "id": "LG",
+   "role": "LG",
+   "at": [
+    -1.3,
+    -0.55
+   ]
+  },
+  {
+   "id": "C",
+   "role": "C",
+   "at": [
+    0,
+    -0.55
+   ]
+  },
+  {
+   "id": "RG",
+   "role": "RG",
+   "at": [
+    1.3,
+    -0.55
+   ]
+  },
+  {
+   "id": "RT",
+   "role": "RT",
+   "at": [
+    2.6,
+    -0.55
+   ]
+  },
+  {
+   "id": "RB",
+   "role": "QB",
+   "kind": "skill",
+   "label": "RB",
+   "at": [
+    0,
+    -5
+   ],
+   "pos": "RB"
+  },
+  {
+   "id": "Q",
+   "role": "H",
+   "label": "QB",
+   "at": [
+    -10.5,
+    -1.3
+   ],
+   "pos": "QB"
+  },
+  {
+   "id": "X",
+   "role": "X",
+   "at": [
+    -17,
+    -0.6
+   ]
+  },
+  {
+   "id": "Y",
+   "role": "Y",
+   "at": [
+    3.9,
+    -0.6
+   ]
+  },
+  {
+   "id": "H",
+   "role": "H",
+   "at": [
+    7.5,
+    -1.3
+   ]
+  },
+  {
+   "id": "Z",
+   "role": "Z",
+   "at": [
+    15,
+    -1.3
+   ]
+  }
+ ]
+}

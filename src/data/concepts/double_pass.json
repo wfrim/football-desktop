@@ -1,0 +1,72 @@
+{
+ "conceptId": "double_pass",
+ "name": "Double Pass",
+ "family": "dropback_pass",
+ "subfamily": "trick",
+ "side": "strength",
+ "tags": [
+  "trick",
+  "deep"
+ ],
+ "copy": {
+  "title": "DOUBLE PASS",
+  "situation": "TRICK \u00b7 LATERAL THEN SHOT",
+  "description": "A lateral screen to the outside receiver, who throws it back downfield."
+ },
+ "assignments": {
+  "#1": {
+   "type": "carry",
+   "through": [
+    [
+     "#1-0.6",
+     -2.8
+    ]
+   ]
+  },
+  "#2": {
+   "type": "go",
+   "timing": {
+    "delay": 0.5
+   }
+  },
+  "bs#1": {
+   "type": "post"
+  },
+  "RB?": {
+   "type": "pass_set"
+  }
+ },
+ "exchanges": [
+  {
+   "type": "pass",
+   "to": "#1"
+  },
+  {
+   "type": "pass",
+   "from": "#1",
+   "to": "#2"
+  }
+ ],
+ "primary": "#2",
+ "reads": [
+  "#2"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "defense": {
+  "coverage": "cover1",
+  "key": "corner_ps"
+ },
+ "football": {
+  "read": "The defense rallies to the lateral screen; the slot fakes a block and goes."
+ },
+ "sources": [
+  "Double pass (throwback)"
+ ]
+}

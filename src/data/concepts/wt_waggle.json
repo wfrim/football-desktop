@@ -1,0 +1,134 @@
+{
+ "conceptId": "wt_waggle",
+ "name": "Waggle",
+ "family": "play_action",
+ "subfamily": "boot",
+ "side": "strength",
+ "tags": [
+  "wingt"
+ ],
+ "copy": {
+  "title": "WAGGLE",
+  "situation": "WING-T \u00b7 BOOT",
+  "description": "Fake the buck sweep, boot the other way; the wingback crosses the field behind it."
+ },
+ "assignments": {
+  "PST": {
+   "type": "base"
+  },
+  "PSG": {
+   "type": "base"
+  },
+  "C": {
+   "type": "base"
+  },
+  "BST": {
+   "type": "base"
+  },
+  "BSG": {
+   "type": "lead",
+   "at": [
+    "-d-0.8",
+    -0.4
+   ]
+  },
+  "FB": {
+   "type": "fake",
+   "through": [
+    [
+     "a",
+     -2.4
+    ],
+    [
+     "a",
+     -0.3
+    ]
+   ]
+  },
+  "RB": {
+   "type": "fake",
+   "through": [
+    [
+     -0.8,
+     -5.7
+    ],
+    [
+     1.2,
+     -5.4
+    ],
+    [
+     3.4,
+     -3.8
+    ],
+    [
+     "d+1.9",
+     -1.2
+    ]
+   ]
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    [
+     1.5,
+     -3.6
+    ],
+    [
+     -2.5,
+     -5.5
+    ],
+    [
+     -6.0,
+     -4.2
+    ]
+   ],
+   "timing": {
+    "duration": 1.7
+   }
+  },
+  "W": {
+   "type": "cross",
+   "depth": 12,
+   "across": 22
+  },
+  "TE": {
+   "type": "cross",
+   "depth": 5,
+   "across": 12
+  },
+  "bs#1": {
+   "type": "go"
+  }
+ },
+ "ball": {
+  "to": "TE",
+  "at": 0.95
+ },
+ "reads": [
+  "TE",
+  "W",
+  "bs#1"
+ ],
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "W",
+   "low": "TE"
+  }
+ ],
+ "presentations": [
+  {
+   "formation": "wing_t_21"
+  }
+ ],
+ "defense": {
+  "coverage": "cover3",
+  "key": "flat_bs"
+ },
+ "football": {
+  "read": "Flow goes with the sweep fake; the QB boots back against it and reads the shallow crosser to the deep crosser."
+ },
+ "sources": [
+  "Wing-T waggle (bootleg)"
+ ]
+}

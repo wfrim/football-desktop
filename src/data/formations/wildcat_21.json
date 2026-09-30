@@ -1,0 +1,101 @@
+{
+ "_note": "Direct snap to the running back; a second back beside him as the sweeper / lead blocker. QB split wide left.",
+ "id": "wildcat_21",
+ "name": "Wildcat Heavy",
+ "personnel": "21",
+ "players": [
+  {
+   "id": "LT",
+   "role": "LT",
+   "at": [
+    -2.6,
+    -0.55
+   ]
+  },
+  {
+   "id": "LG",
+   "role": "LG",
+   "at": [
+    -1.3,
+    -0.55
+   ]
+  },
+  {
+   "id": "C",
+   "role": "C",
+   "at": [
+    0,
+    -0.55
+   ]
+  },
+  {
+   "id": "RG",
+   "role": "RG",
+   "at": [
+    1.3,
+    -0.55
+   ]
+  },
+  {
+   "id": "RT",
+   "role": "RT",
+   "at": [
+    2.6,
+    -0.55
+   ]
+  },
+  {
+   "id": "RB",
+   "role": "QB",
+   "kind": "skill",
+   "label": "RB",
+   "at": [
+    0,
+    -5
+   ],
+   "pos": "RB"
+  },
+  {
+   "id": "F",
+   "role": "F",
+   "at": [
+    -1.8,
+    -4.6
+   ]
+  },
+  {
+   "id": "Q",
+   "role": "H",
+   "label": "QB",
+   "at": [
+    -14,
+    -1.3
+   ],
+   "pos": "QB"
+  },
+  {
+   "id": "X",
+   "role": "X",
+   "at": [
+    -18,
+    -0.6
+   ]
+  },
+  {
+   "id": "Y",
+   "role": "Y",
+   "at": [
+    3.9,
+    -0.6
+   ]
+  },
+  {
+   "id": "Z",
+   "role": "Z",
+   "at": [
+    14,
+    -1.3
+   ]
+  }
+ ]
+}

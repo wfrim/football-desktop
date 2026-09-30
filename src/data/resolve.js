@@ -108,6 +108,15 @@ window.FD = window.FD || {};
     const ballTo = play.ball && (typeof play.ball.to === 'string' ? play.ball.to : play.ball.to && play.ball.to.player);
     if (ballTo && !byId.has(ballTo)) fatal.push(`ball target "${ballTo}" is not in the formation`);
 
+    const chain = play.exchanges || null;
+    if (chain) {
+      if (play.ball || play.handoff) fatal.push('a play with `exchanges` describes the whole ball chain (no `ball` / `handoff`)');
+      chain.forEach((e, i) => {
+        if (!['handoff', 'pitch', 'pass'].includes(e.type)) fatal.push(`exchange ${i}: unknown type "${e.type}"`);
+        if (!byId.has(e.to)) fatal.push(`exchange ${i}: "${e.to}" is not in the formation`);
+        if (e.from && !byId.has(e.from)) fatal.push(`exchange ${i}: "${e.from}" is not in the formation`);
+      });
+    }
     const ho = play.handoff;
     if (ho && !byId.has(ho.to)) fatal.push(`handoff target "${ho.to}" is not in the formation`);
     if (ho && play.ball) fatal.push('a play has either `ball` (pass) or `handoff`, not both');
@@ -127,6 +136,7 @@ window.FD = window.FD || {};
       side: play.side || 'right',
       primary: play.primary || (ho ? ho.to : undefined),
       handoff: ho || null,
+      exchanges: chain,
       defense: play.defense,
       frame: play.frame,
       _mock: play._mock,
