@@ -31,7 +31,18 @@ window.FD = window.FD || {};
     },
   };
 
+  /** Brightness / text density: attributes on <html>, pure CSS. */
+  Theme.look = (st) => {
+    const r = document.documentElement;
+    r.dataset.dim = st.brightness === 'dim' ? 'dim' : '';
+    r.dataset.text = st.text || 'full';
+  };
+
   FD.Theme = Theme;
   Theme.apply(FD.Settings.get().theme);
-  FD.Settings.onChange((k, v) => { if (k === 'theme') Theme.apply(v, true); });
+  Theme.look(FD.Settings.get());
+  FD.Settings.onChange((k, v, all) => {
+    if (k === 'theme') Theme.apply(v, true);
+    if (k === 'brightness' || k === 'text') Theme.look(all);
+  });
 })(window.FD);

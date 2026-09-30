@@ -27,7 +27,15 @@ window.FD = window.FD || {};
       panel.appendChild(title);
 
       const rows = {};
+      let group = null;
       for (const [key, def] of Object.entries(S.SCHEMA)) {
+        if (def.group && def.group !== group) {
+          group = def.group;
+          const h = document.createElement('p');
+          h.className = 'fd-group';
+          h.textContent = group;
+          panel.appendChild(h);
+        }
         const row = document.createElement('div');
         row.className = 'fd-row';
         const label = document.createElement('span');

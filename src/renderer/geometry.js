@@ -18,6 +18,35 @@ window.FD = window.FD || {};
   G.add = (a, b) => [a[0] + b[0], a[1] + b[1]];
   G.sub = (a, b) => [a[0] - b[0], a[1] - b[1]];
   G.mul = (a, k) => [a[0] * k, a[1] * k];
+
+  /**
+   * Hand-drawn look: subdivide each segment every ~`step` yards and nudge the
+   * new points sideways by up to `amp` yards (deterministic from `seed`).
+   * Endpoints stay put so arrowheads and blocks still land where they should.
+   */
+  G.wobble = (pts, seed, amp, step) => {
+    const A = amp === undefined ? 0.14 : amp;
+    const S = step || 2.2;
+    let h = 2166136261 >>> 0;
+    for (const ch of String(seed)) h = Math.imul(h ^ ch.charCodeAt(0), 16777619) >>> 0;
+    const rnd = () => { h = Math.imul(h ^ (h >>> 15), 2246822507) >>> 0; h = Math.imul(h ^ (h >>> 13), 3266489909) >>> 0; return ((h ^ (h >>> 16)) >>> 0) / 4294967296 * 2 - 1; };
+    const out = [pts[0]];
+    for (let i = 1; i < pts.length; i++) {
+      const a = pts[i - 1];
+      const b = pts[i];
+      const d = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      const n = Math.max(1, Math.round(d / S));
+      const nx = d ? -(b[1] - a[1]) / d : 0;
+      const ny = d ? (b[0] - a[0]) / d : 0;
+      for (let k = 1; k < n; k++) {
+        const t = k / n;
+        const w = A * rnd() * Math.sin(Math.PI * t);
+        out.push([a[0] + (b[0] - a[0]) * t + nx * w, a[1] + (b[1] - a[1]) * t + ny * w]);
+      }
+      out.push(b);
+    }
+    return out;
+  };
   G.len = (a) => Math.hypot(a[0], a[1]);
   G.dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
   G.lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];

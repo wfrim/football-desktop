@@ -94,7 +94,7 @@ window.FD = window.FD || {};
       const extra = Math.max(-1.8, cfg.holdExtra || 0);
       scene.holdExtra = extra;
       const EXIT = P.exit + extra;
-      const END = P.end + extra;
+      const END = P.end + extra + (cfg.transition === 'rewind' || cfg.exitShift ? 0.5 : 0);
       const tl = new FD.Timeline(END);
 
       tl.at(0.05, () => hud.enter());
@@ -187,6 +187,7 @@ window.FD = window.FD || {};
           cx: FD.svg.f(target[0]), cy: FD.svg.f(target[1]), r: 0.4, class: 'catch-ring', opacity: 0,
         }, pass.trailParent);
 
+        scene.trail = trail;
         tl.track(PT.release, PT.arrive - PT.release, (p, raw) => {
           if (raw > 0) {
             qb.marker.setHasBall(false);
@@ -249,7 +250,34 @@ window.FD = window.FD || {};
 
       // Exit.
       tl.at(EXIT, () => hud.exit());
-      tl.track(EXIT, END - EXIT, (p) => scene.setOpacity(1 - p), 'inCubic');
+      // Exit: fade (default), or rewind — every path retracts into its player.
+      // Drive flow "continuous" rewinds while the field and the play scroll by
+      // the yards gained, so the next play forms on a moving field, no blackout.
+      const shift = cfg.exitShift || 0;
+      if (cfg.transition === 'rewind' || shift) {
+        const views = scene.assignments.map((a) => a.view)
+          .concat(D ? D.moves.map((m) => m.view) : [])
+          .concat(scene.trail ? [scene.trail] : []);
+        const markers = Array.from(scene.players.values()).map((pl) => pl.marker);
+        const glyphs = D ? D.glyphs : [];
+        tl.track(EXIT, END - EXIT, (p) => {
+          const q = 1 - p;
+          for (const v of views) v.setProgress(q);
+          const fade = 1 - Math.max(0, (p - 0.45) / 0.55);
+          for (const m of markers) m.setAppear(fade);
+          for (const g of glyphs) g.setAppear(fade);
+          scene.ball.setOpacity(Math.max(0, 1 - p * 2.5));
+          if (scene.ltg) scene.ltg.setOpacity(fade);
+          for (const l of scene.los) l.setProgress(fade);
+          if (shift) {
+            const y = FD.svg.f(shift * p);
+            scene.root.setAttribute('transform', `translate(0 ${y})`);
+            scene.field.setAttribute('transform', `translate(0 ${y})`);
+          }
+        }, 'inOutCubic');
+      } else {
+        tl.track(EXIT, END - EXIT, (p) => scene.setOpacity(1 - p), 'inCubic');
+      }
 
       return tl;
     },

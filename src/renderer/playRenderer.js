@@ -181,7 +181,11 @@ window.FD = window.FD || {};
       for (const { spec, prim, fieldPts } of L.items) {
         const pl = players.get(spec.player);
         const prev = spec.chain ? pl.assignments[pl.assignments.length - 1] : null;
-        const path = G.fromPoints(fieldPts.map(toSvg), prim.radius);
+        const hand = cfg.settings && cfg.settings.lines === 'hand' && prim.kind !== 'block';
+        const svgPts = fieldPts.map(toSvg);
+        const path = hand
+          ? G.fromPoints(G.wobble(svgPts, `${play.id}:${spec.player}:${spec.type}`), Math.max(prim.radius, 0.9))
+          : G.fromPoints(svgPts, prim.radius);
 
         const view = FD.RouteRenderer.create({
           parent: layers.paths,
@@ -249,6 +253,7 @@ window.FD = window.FD || {};
       const reframed = stage.setFrame(frameKey, zoom);
       if (reframed) stage.field.setAttribute('opacity', 0);
       stage.field.update(place ? place.spot : null, Math.min(C.FIELD.halfWidth + 0.9, stage.frame.x1 - 0.6));
+      stage.field.removeAttribute('transform'); // a drive's continuous scroll ends here, seamlessly
 
       // ── Faint defense drawing ─────────────────────────────────────────────
       let defense = null;

@@ -16,17 +16,27 @@ window.FD = window.FD || {};
 
   // Order = display order in the panel. Values are what the renderer understands.
   const SCHEMA = {
-    theme:   { label: 'Theme',          choices: [['auto', 'Auto'], ['night', 'Night'], ['blueprint', 'Blueprint'], ['chalk', 'Chalk'], ['paper', 'Paper']], def: 'night' },
-    defense: { label: 'Defense',        choices: [['off', 'Off'], ['faint', 'Faint'], ['key', 'Faint + key']], def: 'faint' },
-    field:   { label: 'Field position', choices: [['classic', 'Classic'], ['random', 'Anywhere'], ['redzone', 'Red zone']], def: 'classic' },
-    hash:    { label: 'Hash',           choices: [['middle', 'Middle'], ['random', 'Varied']], def: 'middle' },
-    drive:   { label: 'Drive mode',     choices: [['off', 'Off'], ['on', 'On']], def: 'off' },
-    motion:  { label: 'Motion',         choices: [['full', 'Full'], ['calm', 'Calm'], ['still', 'Still']], def: 'full' },
-    speed:   { label: 'Pace',           choices: [['0.55', 'Extra slow'], ['0.8', 'Slow'], ['1', 'Normal'], ['1.25', 'Quick']], def: '1' },
-    length:  { label: 'Play length',    choices: [['7', '7 s'], ['9', '9 s'], ['12', '12 s'], ['16', '16 s'], ['24', '24 s']], def: '9' },
-    zoom:    { label: 'Zoom',           choices: [['close', 'Close'], ['standard', 'Standard'], ['wide', 'Wide']], def: 'standard' },
-    moments: { label: 'Moments',        choices: [['on', 'On'], ['off', 'Off']], def: 'on' },
+    // Look
+    theme:      { group: 'Look', label: 'Theme',       choices: [['auto', 'Auto'], ['night', 'Night'], ['blueprint', 'Blueprint'], ['chalk', 'Chalk'], ['paper', 'Paper']], def: 'night' },
+    brightness: { group: 'Look', label: 'Brightness',  choices: [['normal', 'Normal'], ['dim', 'Dim']], def: 'normal' },
+    text:       { group: 'Look', label: 'Text',        choices: [['full', 'Full'], ['title', 'Title only'], ['none', 'None']], def: 'full' },
+    lines:      { group: 'Look', label: 'Lines',       choices: [['precise', 'Precise'], ['hand', 'Hand-drawn']], def: 'precise' },
+    zoom:       { group: 'Look', label: 'Zoom',        choices: [['close', 'Close'], ['standard', 'Standard'], ['wide', 'Wide']], def: 'standard' },
+    // Football
+    library:    { group: 'Football', label: 'Library',    choices: [['all', 'Everything'], ['offense', 'Offense'], ['defense', 'Defense'], ['runs', 'Runs'], ['passes', 'Passes'], ['screens', 'Screens & RPO']], def: 'all' },
+    defense:    { group: 'Football', label: 'Defense',    choices: [['off', 'Off'], ['faint', 'Faint'], ['key', 'Faint + key']], def: 'faint' },
+    field:      { group: 'Football', label: 'Field',      choices: [['classic', 'Classic'], ['random', 'Anywhere'], ['redzone', 'Red zone']], def: 'classic' },
+    hash:       { group: 'Football', label: 'Hash',       choices: [['middle', 'Middle'], ['random', 'Varied']], def: 'middle' },
+    drive:      { group: 'Football', label: 'Drive mode', choices: [['off', 'Off'], ['on', 'On']], def: 'off' },
+    flow:       { group: 'Football', label: 'Drive flow', choices: [['continuous', 'Continuous'], ['fade', 'Fade']], def: 'continuous' },
+    // Motion
+    motion:     { group: 'Motion', label: 'Motion',      choices: [['full', 'Full'], ['calm', 'Calm'], ['still', 'Still']], def: 'full' },
+    speed:      { group: 'Motion', label: 'Pace',        choices: [['0.55', 'Extra slow'], ['0.8', 'Slow'], ['1', 'Normal'], ['1.25', 'Quick']], def: '1' },
+    length:     { group: 'Motion', label: 'Play length', choices: [['7', '7 s'], ['9', '9 s'], ['12', '12 s'], ['16', '16 s'], ['24', '24 s']], def: '9' },
+    transition: { group: 'Motion', label: 'Transition',  choices: [['fade', 'Fade'], ['rewind', 'Rewind']], def: 'fade' },
+    moments:    { group: 'Motion', label: 'Moments',     choices: [['on', 'On'], ['off', 'Off']], def: 'on' },
   };
+
 
   function load() {
     try {

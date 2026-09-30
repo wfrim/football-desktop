@@ -54,3 +54,16 @@ html[data-theme="paper"] {
 /* Theme swaps fade the whole page briefly (see theme.js). */
 body { transition: opacity 0.45s ease; }
 body.is-theming { opacity: 0; }
+
+/* Brightness: Dim (compositor opacity on the layers: cheap). */
+html[data-dim="dim"] #stage,
+html[data-dim="dim"] #field-layer,
+html[data-dim="dim"] .hud { opacity: 0.55; }
+
+/* Text density. The counter stays: it opens Settings. */
+html[data-text="title"] .hud-meta,
+html[data-text="title"] .hud-formation,
+html[data-text="title"] .hud-notes { display: none; }
+html[data-text="none"] .hud-title,
+html[data-text="none"] .hud-notes { display: none; }
+html[data-text="none"] .hud-counter { opacity: 0.35; }

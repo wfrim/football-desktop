@@ -66,11 +66,18 @@ window.FD = window.FD || {};
       // Field position (drive mode takes over in drive.js).
       const q = new URLSearchParams(location.search);
       let filter = null;
+      cfg.transition = cfg.settings.transition;
+      cfg.exitShift = 0;
+      cfg.frameLock = null;
       if (cfg.settings.drive === 'on') {
         // Drive mode owns field position and play selection.
         if (!drive) drive = FD.Drive.create();
         cfg.place = drive.place(cfg.settings.hash);
         filter = (p) => drive.eligible(p);
+        if (cfg.settings.flow !== 'fade') {
+          cfg.place.shift = 0;          // the scroll happens in the previous play's exit
+          cfg.frameLock = 'default';    // one camera for the whole drive: the field never fades
+        }
       } else {
         drive = null;
         const place = q.has('spot') // review aid: ?spot=92&at_hash=left
@@ -79,7 +86,16 @@ window.FD = window.FD || {};
         cfg.place = place;
         if (place && place.spot !== null) filter = (p) => FD.FieldPosition.fits(p, place.spot);
       }
-      const info = playlist.next(filter);
+      // Library setting narrows the rotation (falls back to everything if empty).
+      const LIB = {
+        offense: (p) => p.family !== 'defense',
+        defense: (p) => p.family === 'defense',
+        runs: (p) => p.family === 'run',
+        passes: (p) => ['dropback_pass', 'quick_pass', 'play_action'].includes(p.family),
+        screens: (p) => p.family === 'screen' || p.family === 'rpo',
+      }[cfg.settings.library];
+      const both = LIB && filter ? (p) => LIB(p) && filter(p) : LIB || filter;
+      const info = playlist.next(both && plays.some(both) ? both : filter);
       if (drive) info.drive = cfg.place;
       let scene = null;
       try {
@@ -87,13 +103,16 @@ window.FD = window.FD || {};
         hud.set(info.play, info, cfg);
 
         const profile = FD.Config.profile(cfg);
+        // Drive: decide the result first (it shapes the exit), show it during the hold.
+        const result = drive ? drive.advance(info.play) : null;
+        if (drive && cfg.settings.flow !== 'fade' && drive.state.shift > 0 && profile !== 'static') {
+          cfg.exitShift = drive.state.shift; // continuous: this play's exit scrolls by the gain
+        }
         const tl = profile === 'static'
           ? FD.Choreography.buildStatic(scene, hud, cfg)
           : FD.Choreography.build(scene, hud, cfg);
 
         if (drive) {
-          // The result appears while the finished diagram holds.
-          const result = drive.advance(info.play);
           const tr = profile === 'static' ? 1.2 : FD.Timing.phases.hold - 0.3;
           tl.at(tr, () => hud.result(result));
           if (cfg.settings.moments !== 'off' && profile !== 'static') {
