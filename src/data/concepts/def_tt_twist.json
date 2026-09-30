@@ -1,0 +1,49 @@
+{
+ "conceptId": "def_tt_twist",
+ "name": "T-T Twist",
+ "family": "defense",
+ "subfamily": "stunt",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "stunt"
+ ],
+ "copy": {
+  "title": "T-T TWIST",
+  "situation": "PASS RUSH GAME",
+  "description": "One tackle crosses the center; the other loops behind him."
+ },
+ "defense": {
+  "coverage": "cover3",
+  "moves": {
+   "T_ps": {
+    "stunt": [
+     "a_bs",
+     "a_bs"
+    ]
+   },
+   "T_bs": {
+    "stunt": [
+     "a_ps",
+     "a_ps"
+    ],
+    "delay": 0.3
+   }
+  },
+  "key": "stunt_a_ps"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Interior game: the penetrator crosses the center's face, the looper wraps into the vacated A gap."
+ },
+ "sources": [
+  "Tackle-tackle twist"
+ ]
+}

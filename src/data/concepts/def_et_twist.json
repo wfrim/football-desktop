@@ -1,0 +1,49 @@
+{
+ "conceptId": "def_et_twist",
+ "name": "E-T Twist",
+ "family": "defense",
+ "subfamily": "stunt",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "stunt"
+ ],
+ "copy": {
+  "title": "E-T TWIST",
+  "situation": "PASS RUSH GAME",
+  "description": "The end crashes inside; the tackle loops around him."
+ },
+ "defense": {
+  "coverage": "cover3",
+  "moves": {
+   "E_ps": {
+    "stunt": [
+     "b_ps",
+     "b_ps"
+    ]
+   },
+   "T_ps": {
+    "stunt": [
+     "c_ps",
+     "c_ps"
+    ],
+    "delay": 0.3
+   }
+  },
+  "key": "stunt_c_ps"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "football": {
+  "rules": "The end penetrates the B gap to pick the guard; the tackle loops outside to contain."
+ },
+ "sources": [
+  "E-T stunt"
+ ]
+}

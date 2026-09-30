@@ -1,0 +1,35 @@
+{
+ "conceptId": "def_rotate_3_4",
+ "name": "Single-High to Quarters",
+ "family": "defense",
+ "subfamily": "disguise",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "disguise"
+ ],
+ "copy": {
+  "title": "ROTATE: 3 TO 4",
+  "situation": "DISGUISE",
+  "description": "Show a single-high shell, bail to Quarters."
+ },
+ "defense": {
+  "coverage": "cover4",
+  "disguise": "cover3",
+  "key": "in_q"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Single-high look pre-snap; the apex safety bails to a deep quarter at the snap while the corners play off."
+ },
+ "sources": [
+  "Coverage rotation: single-high to quarters"
+ ]
+}

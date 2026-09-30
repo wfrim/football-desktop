@@ -1,0 +1,42 @@
+{
+ "conceptId": "def_overload",
+ "name": "Overload",
+ "family": "defense",
+ "subfamily": "pressure",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "pressure"
+ ],
+ "copy": {
+  "title": "OVERLOAD",
+  "situation": "FIELD PRESSURE",
+  "description": "Two blitzers from the same side outnumber the protection."
+ },
+ "defense": {
+  "coverage": "cover1",
+  "moves": {
+   "NB": {
+    "blitz": "d_ps"
+   },
+   "MIKE": {
+    "blitz": "b_ps"
+   }
+  },
+  "key": "blitz_d_ps"
+ },
+ "presentations": [
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_doubles_11"
+  }
+ ],
+ "football": {
+  "rules": "Overload the passing strength: nickel off the edge, Mike through the B gap \u2014 more rushers than blockers on that side."
+ },
+ "sources": [
+  "Overload blitz"
+ ]
+}

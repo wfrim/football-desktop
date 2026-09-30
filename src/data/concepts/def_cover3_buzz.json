@@ -1,0 +1,37 @@
+{
+ "conceptId": "def_cover3_buzz",
+ "name": "Cover 3 Buzz",
+ "family": "defense",
+ "subfamily": "coverage",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "coverage"
+ ],
+ "copy": {
+  "title": "COVER 3 BUZZ",
+  "situation": "SINGLE-HIGH \u00b7 ZONE",
+  "description": "The safety buzzes to the curl; the apex takes the flat."
+ },
+ "defense": {
+  "coverage": "buzz",
+  "key": "curl"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "football": {
+  "rules": "Three deep; the rotating safety drops to the curl/hook instead of the flat, taking away inside throws."
+ },
+ "sources": [
+  "Cover 3 Buzz: safety to curl/hook"
+ ]
+}

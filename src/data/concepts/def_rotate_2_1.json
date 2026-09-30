@@ -1,0 +1,35 @@
+{
+ "conceptId": "def_rotate_2_1",
+ "name": "Two-High to Robber",
+ "family": "defense",
+ "subfamily": "disguise",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "disguise"
+ ],
+ "copy": {
+  "title": "ROTATE: 2 TO 1",
+  "situation": "DISGUISE",
+  "description": "Show Cover 2, spin to a single-high robber at the snap."
+ },
+ "defense": {
+  "coverage": "robber",
+  "disguise": "cover2",
+  "key": "deep_robber"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Two-high shell pre-snap; at the snap one safety drops to the post, the other spins down to rob the middle."
+ },
+ "sources": [
+  "Coverage rotation: two-high to Cover 1 robber"
+ ]
+}

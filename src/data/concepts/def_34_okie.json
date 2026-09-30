@@ -1,0 +1,38 @@
+{
+ "conceptId": "def_34_okie",
+ "name": "3-4 Okie",
+ "family": "defense",
+ "subfamily": "front",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "front"
+ ],
+ "copy": {
+  "title": "3-4 OKIE",
+  "situation": "ODD FRONT",
+  "description": "Nose on the center, ends on the tackles, outside backers on the edges."
+ },
+ "defense": {
+  "package": "34",
+  "coverage": "cover3",
+  "key": "nose"
+ },
+ "presentations": [
+  {
+   "formation": "singleback_tight_12"
+  },
+  {
+   "formation": "i_form_21"
+  },
+  {
+   "formation": "gun_doubles_11"
+  }
+ ],
+ "football": {
+  "rules": "Okie: 0-technique nose, 5-technique ends, two standing outside linebackers as edge players; two inside linebackers behind."
+ },
+ "sources": [
+  "3-4 Okie front"
+ ]
+}

@@ -1,0 +1,34 @@
+{
+ "conceptId": "def_cover6",
+ "name": "Cover 6",
+ "family": "defense",
+ "subfamily": "coverage",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "coverage"
+ ],
+ "copy": {
+  "title": "COVER 6",
+  "situation": "QUARTER-QUARTER-HALF",
+  "description": "Quarters to the passing strength, Cover 2 to the boundary."
+ },
+ "defense": {
+  "coverage": "cover6",
+  "key": "half"
+ },
+ "presentations": [
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_doubles_11"
+  }
+ ],
+ "football": {
+  "rules": "Split-field coverage: the strong side plays Quarters, the weak side plays Cover 2 (corner in the flat, safety over the top)."
+ },
+ "sources": [
+  "Cover 6: split-field quarters / halves"
+ ]
+}

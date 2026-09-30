@@ -1,0 +1,37 @@
+{
+ "conceptId": "def_quarters",
+ "name": "Quarters",
+ "family": "defense",
+ "subfamily": "coverage",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "coverage"
+ ],
+ "copy": {
+  "title": "QUARTERS",
+  "situation": "COVER 4 \u00b7 MATCH",
+  "description": "Four deep defenders; the safeties read the slots and fit the run."
+ },
+ "defense": {
+  "coverage": "cover4",
+  "key": "in_q"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "football": {
+  "rules": "Corners and safeties each take a deep quarter; safeties read #2 \u2014 vertical, they carry him; out or run, they rob or fit."
+ },
+ "sources": [
+  "Cover 4 (Quarters): pattern-matching four-deep"
+ ]
+}

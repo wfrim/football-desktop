@@ -1,0 +1,50 @@
+{
+ "conceptId": "def_double_a",
+ "name": "Double A-Gap",
+ "family": "defense",
+ "subfamily": "pressure",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "pressure"
+ ],
+ "copy": {
+  "title": "DOUBLE A-GAP",
+  "situation": "MUG PRESSURE",
+  "description": "Both linebackers sugar the A gaps and come."
+ },
+ "defense": {
+  "coverage": "cover1",
+  "moves": {
+   "MIKE": {
+    "blitz": "a_ps",
+    "at": [
+     0.75,
+     1.4
+    ]
+   },
+   "WILL": {
+    "blitz": "a_bs",
+    "at": [
+     -0.75,
+     1.4
+    ]
+   }
+  },
+  "key": "blitz_a_ps"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Both inside linebackers walk up into the A gaps pre-snap and blitz, overloading the center and guards; man coverage behind with a free safety."
+ },
+ "sources": [
+  "Double A-gap (mug) pressure"
+ ]
+}

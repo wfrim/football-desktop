@@ -1,0 +1,34 @@
+{
+ "conceptId": "def_cover2_man",
+ "name": "2-Man",
+ "family": "defense",
+ "subfamily": "coverage",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "coverage"
+ ],
+ "copy": {
+  "title": "2-MAN",
+  "situation": "MAN UNDER \u00b7 TWO DEEP",
+  "description": "Trail technique underneath with two safeties over the top."
+ },
+ "defense": {
+  "coverage": "cover2man",
+  "key": "half"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Five defenders play man with inside/trail leverage; two safeties split the deep halves, so the man defenders can undercut."
+ },
+ "sources": [
+  "Cover 2 Man (2-Man)"
+ ]
+}

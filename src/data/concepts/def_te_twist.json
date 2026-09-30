@@ -1,0 +1,48 @@
+{
+ "conceptId": "def_te_twist",
+ "name": "T-E Twist",
+ "family": "defense",
+ "subfamily": "stunt",
+ "side": "strength",
+ "tags": [
+  "defense"
+ ],
+ "copy": {
+  "title": "T-E TWIST",
+  "situation": "PASS RUSH GAME",
+  "description": "The tackle crashes outside first; the end loops underneath him."
+ },
+ "defense": {
+  "coverage": "cover3",
+  "moves": {
+   "T_ps": {
+    "stunt": [
+     "c_ps",
+     "c_ps"
+    ]
+   },
+   "E_ps": {
+    "stunt": [
+     "b_ps",
+     "b_ps"
+    ],
+    "delay": 0.3
+   }
+  },
+  "key": "stunt_b_ps"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "football": {
+  "rules": "Tackle penetrates through the C gap to pick the tackle/guard; the end steps up then loops inside behind him into the B gap."
+ },
+ "sources": [
+  "T-E stunt: DT penetrator, DE looper"
+ ]
+}

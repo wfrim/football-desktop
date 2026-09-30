@@ -24,7 +24,7 @@ window.FD = window.FD || {};
     };
   }
 
-  const CATEGORY = { run: 'run', screen: 'screen', rpo: 'rpo' };
+  const CATEGORY = { run: 'run', screen: 'screen', rpo: 'rpo', defense: 'defense' };
   const category = (p) => CATEGORY[p.family] || 'pass';
   const tagsOf = (p) => new Set([p.family, p.subfamily, p.conceptId, category(p)].concat(p.tags || []).filter(Boolean));
 

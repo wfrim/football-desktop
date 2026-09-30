@@ -8,7 +8,233 @@ Where coaching systems differ, one presentation is chosen and the choice is writ
 concept's `football` block. Assumed defensive fronts are noted where blocking depends on
 them; defenders are never drawn.
 
-212 plays · 53 concepts · 12 formations
+284 plays · 85 concepts · 12 formations
+
+## defense
+
+### 2-Man
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** MAN UNDER · TWO DEEP — "Trail technique underneath with two safeties over the top."
+- **Rules:** Five defenders play man with inside/trail leverage; two safeties split the deep halves, so the man defenders can undercut.
+- **Sources:** Cover 2 Man (2-Man)
+
+### 3-3-5 Stack
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** ODD STACK — "Three down, three linebackers stacked behind them, five DBs."
+- **Rules:** Stack: three linebackers stacked behind the three down linemen, giving flexible pressure from every gap with five defensive backs.
+- **Sources:** 3-3-5 stack
+
+### 3-4 Okie
+
+- **Presentations:** Singleback Tight (12, right) · I-Formation (21, right) · Gun Doubles (11, right)
+- **Wallpaper:** ODD FRONT — "Nose on the center, ends on the tackles, outside backers on the edges."
+- **Rules:** Okie: 0-technique nose, 5-technique ends, two standing outside linebackers as edge players; two inside linebackers behind.
+- **Sources:** 3-4 Okie front
+
+### 4-3 Over
+
+- **Presentations:** Singleback Tight (12, right) · I-Formation (21, right) · Singleback Doubles (11, right)
+- **Wallpaper:** BASE FRONT — "The 3-technique sets to the strength of the formation."
+- **Rules:** 4-3 Over: 3-technique and 9/5 end to the strong side, 1-technique and 5 to the weak; Sam walks over the tight end.
+- **Sources:** 4-3 Over front
+
+### 4-3 Under
+
+- **Presentations:** Singleback Tight (12, right) · I-Formation (21, right)
+- **Wallpaper:** BASE FRONT — "The 3-technique goes to the weak side; the Sam walks up on the edge."
+- **Rules:** 4-3 Under: 1-technique strong, 3-technique weak, the strong-side linebacker on the line of scrimmage over the tight end.
+- **Sources:** 4-3 Under front
+
+### Bear Front
+
+- **Presentations:** I-Formation (21, right) · Singleback Tight (12, right)
+- **Wallpaper:** 46 · EIGHT IN THE BOX — "Three linemen cover the center and guards; nobody can reach anyone."
+- **Rules:** 46 / Bear: 3-0-3 covers both guards and the center, edges outside, safety in the box — eight defenders to stop the run.
+- **Sources:** 46 (Bear) front, Buddy Ryan
+
+### Cat Blitz
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** NICKEL PRESSURE — "The nickel comes off the edge from the slot."
+- **Rules:** Nickel pressure from the passing strength behind Cover 1; the slot is picked up by the rat/robber or the safety rotation.
+- **Sources:** Nickel (cat) blitz
+
+### Corner Blitz
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** BOUNDARY PRESSURE — "The corner comes from the boundary; the safety rotates over the top."
+- **Rules:** Boundary corner blitz; the weak safety rotates to the vacated deep third (Cover 3 behind it).
+- **Sources:** Corner (boundary) blitz with safety rotation
+
+### Cover 0
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** ALL-OUT PRESSURE · NO DEEP HELP — "Everyone is matched up and the safety comes: no one deep."
+- **Rules:** Pure man with no deep safety; the free safety and Mike add to the rush. The ball has to come out now.
+- **Sources:** Cover 0 pressure
+
+### Cover 1 Robber
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Singleback Tight (12, right)
+- **Wallpaper:** MAN · HOLE PLAYER — "Man across the board, with a robber lurking in the middle."
+- **Rules:** Man coverage with a single-high free safety; a linebacker/safety 'robs' the intermediate middle, jumping crossers and digs.
+- **Sources:** Cover 1 Robber (man-free with a hole player)
+
+### Cover 2
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Singleback Tight (12, right)
+- **Wallpaper:** TWO-HIGH · ZONE — "Corners squat in the flats; two safeties split the deep field."
+- **Rules:** Five underneath (corners in the flats, curls and hook), two deep halves. The corners jam and sink under outside routes.
+- **Sources:** Cover 2: 5 under, 2 deep
+
+### Cover 3 Buzz
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Singleback Tight (12, right)
+- **Wallpaper:** SINGLE-HIGH · ZONE — "The safety buzzes to the curl; the apex takes the flat."
+- **Rules:** Three deep; the rotating safety drops to the curl/hook instead of the flat, taking away inside throws.
+- **Sources:** Cover 3 Buzz: safety to curl/hook
+
+### Cover 3 Sky
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Singleback Tight (12, right)
+- **Wallpaper:** SINGLE-HIGH · ZONE — "Three deep, four under: the safety rotates down to the flat."
+- **Rules:** Corners and the free safety split the field into deep thirds; the strong safety (sky) and nickel/Sam take the flats, the linebackers the hooks.
+- **Sources:** Cover 3 Sky: safety-rotated three-deep zone
+
+### Cover 6
+
+- **Presentations:** Gun Trips (11, right) · Gun Doubles (11, right)
+- **Wallpaper:** QUARTER-QUARTER-HALF — "Quarters to the passing strength, Cover 2 to the boundary."
+- **Rules:** Split-field coverage: the strong side plays Quarters, the weak side plays Cover 2 (corner in the flat, safety over the top).
+- **Sources:** Cover 6: split-field quarters / halves
+
+### Dime
+
+- **Presentations:** Gun Empty (11, right) · Gun Trips (11, right)
+- **Wallpaper:** PASSING DOWN · 6 DBS — "Six defensive backs for third and long."
+- **Rules:** Dime personnel (4-1-6) versus spread passing downs: man underneath, two deep.
+- **Sources:** Dime (4-1-6) package
+
+### Double A-Gap
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** MUG PRESSURE — "Both linebackers sugar the A gaps and come."
+- **Rules:** Both inside linebackers walk up into the A gaps pre-snap and blitz, overloading the center and guards; man coverage behind with a free safety.
+- **Sources:** Double A-gap (mug) pressure
+
+### E-T Twist
+
+- **Presentations:** Gun Doubles (11, right) · Singleback Tight (12, right)
+- **Wallpaper:** PASS RUSH GAME — "The end crashes inside; the tackle loops around him."
+- **Rules:** The end penetrates the B gap to pick the guard; the tackle loops outside to contain.
+- **Sources:** E-T stunt
+
+### Fire Zone
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** 5-MAN PRESSURE · 3 DEEP 3 UNDER — "Two blitzers come while the end drops: five rush, six cover."
+- **Rules:** Zone pressure: the nickel and Mike blitz, the play-side end drops into the flat. Three deep (corners + free safety), three under (end, Will, strong safety).
+- **Sources:** Fire zone: 5-man zone pressure, 3 deep 3 under (Dick LeBeau lineage)
+
+### Overload
+
+- **Presentations:** Gun Trips (11, right) · Gun Doubles (11, right)
+- **Wallpaper:** FIELD PRESSURE — "Two blitzers from the same side outnumber the protection."
+- **Rules:** Overload the passing strength: nickel off the edge, Mike through the B gap — more rushers than blockers on that side.
+- **Sources:** Overload blitz
+
+### Pinch
+
+- **Presentations:** Singleback Tight (12, right) · I-Formation (21, right)
+- **Wallpaper:** RUN DOWN — "Both ends pinch inside; the linebackers scrape outside."
+- **Rules:** Run-down game: the ends slant inside to clog the B gaps; the linebackers scrape over the top to spill the ball outside.
+- **Sources:** Pinch front movement
+
+### Quarters
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Singleback Tight (12, right)
+- **Wallpaper:** COVER 4 · MATCH — "Four deep defenders; the safeties read the slots and fit the run."
+- **Rules:** Corners and safeties each take a deep quarter; safeties read #2 — vertical, they carry him; out or run, they rob or fit.
+- **Sources:** Cover 4 (Quarters): pattern-matching four-deep
+
+### Safety Blitz
+
+- **Presentations:** Gun Doubles (11, right) · Singleback Tight (12, right)
+- **Wallpaper:** SECONDARY PRESSURE — "The strong safety creeps down and hits the C gap."
+- **Rules:** Safety pressure behind man coverage; the free safety stays single-high.
+- **Sources:** Safety blitz
+
+### Simulated Pressure
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** 4-MAN RUSH · 7 COVER — "A linebacker comes, an end drops: still only four rush."
+- **Rules:** Creeper / simulated pressure: a second-level player rushes while a down lineman drops, confusing protection without sacrificing coverage.
+- **Sources:** Simulated (creeper) pressure
+
+### Single-High to Quarters
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** DISGUISE — "Show a single-high shell, bail to Quarters."
+- **Rules:** Single-high look pre-snap; the apex safety bails to a deep quarter at the snap while the corners play off.
+- **Sources:** Coverage rotation: single-high to quarters
+
+### Slant
+
+- **Presentations:** Singleback Tight (12, right) · Gun Doubles (11, right)
+- **Wallpaper:** LINE MOVEMENT — "The whole front slants one gap to the strength."
+- **Rules:** Every lineman slants one gap toward the strength at the snap, wrong-footing zone blocks and creating free runners.
+- **Sources:** Slant (line movement)
+
+### T-E Twist
+
+- **Presentations:** Gun Doubles (11, right) · Singleback Tight (12, right)
+- **Wallpaper:** PASS RUSH GAME — "The tackle crashes outside first; the end loops underneath him."
+- **Rules:** Tackle penetrates through the C gap to pick the tackle/guard; the end steps up then loops inside behind him into the B gap.
+- **Sources:** T-E stunt: DT penetrator, DE looper
+
+### T-T Twist
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** PASS RUSH GAME — "One tackle crosses the center; the other loops behind him."
+- **Rules:** Interior game: the penetrator crosses the center's face, the looper wraps into the vacated A gap.
+- **Sources:** Tackle-tackle twist
+
+### Tampa 2
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** TWO-HIGH · MIKE RUNS THE MIDDLE — "The Mike turns and runs the deep middle between the safeties."
+- **Rules:** Cover 2 with the middle linebacker carrying the seam to the deep middle, closing the hole between the halves.
+- **Sources:** Tampa 2 (Dungy/Kiffin): Cover 2 with a deep-middle Mike
+
+### Tite Front
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Singleback Tight (12, right)
+- **Wallpaper:** ODD FRONT · 4I-0-4I — "Three down linemen squeeze the interior; the edges stand up."
+- **Rules:** Tite: 4i-0-4i interior to take away inside zone and gap runs; standing edges set the perimeter. Popular versus spread offenses.
+- **Sources:** Tite (4i-0-4i) front
+
+### Two-High to Cover 3
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** DISGUISE — "Show two high, roll to three deep at the snap."
+- **Rules:** Both safeties show a two-high shell; at the snap one rotates down to the apex/flat and the other spins to the deep middle.
+- **Sources:** Coverage disguise: two-high shell rotating to single-high
+
+### Two-High to Robber
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** DISGUISE — "Show Cover 2, spin to a single-high robber at the snap."
+- **Rules:** Two-high shell pre-snap; at the snap one safety drops to the post, the other spins down to rob the middle.
+- **Sources:** Coverage rotation: two-high to Cover 1 robber
+
+### Zero Pressure
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** SIX-MAN RUSH — "Six come, five cover, no one deep."
+- **Rules:** Six-man pressure (four down plus two linebackers) with zero coverage behind; the free safety plays the back man or adds to the rush.
+- **Sources:** Zero (Cover 0) pressure
 
 ## Dropback pass
 

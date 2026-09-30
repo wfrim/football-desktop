@@ -1,0 +1,48 @@
+{
+ "conceptId": "def_43_over",
+ "name": "4-3 Over",
+ "family": "defense",
+ "subfamily": "front",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "front"
+ ],
+ "copy": {
+  "title": "4-3 OVER",
+  "situation": "BASE FRONT",
+  "description": "The 3-technique sets to the strength of the formation."
+ },
+ "defense": {
+  "package": "base",
+  "front": {
+   "play": [
+    3,
+    "9"
+   ],
+   "back": [
+    1,
+    5
+   ]
+  },
+  "coverage": "cover3",
+  "key": "tackle_ps"
+ },
+ "presentations": [
+  {
+   "formation": "singleback_tight_12"
+  },
+  {
+   "formation": "i_form_21"
+  },
+  {
+   "formation": "singleback_doubles_11"
+  }
+ ],
+ "football": {
+  "rules": "4-3 Over: 3-technique and 9/5 end to the strong side, 1-technique and 5 to the weak; Sam walks over the tight end."
+ },
+ "sources": [
+  "4-3 Over front"
+ ]
+}

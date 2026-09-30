@@ -1,0 +1,37 @@
+{
+ "conceptId": "def_cover1_robber",
+ "name": "Cover 1 Robber",
+ "family": "defense",
+ "subfamily": "coverage",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "coverage"
+ ],
+ "copy": {
+  "title": "COVER 1 ROBBER",
+  "situation": "MAN \u00b7 HOLE PLAYER",
+  "description": "Man across the board, with a robber lurking in the middle."
+ },
+ "defense": {
+  "coverage": "robber",
+  "key": "deep_robber"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "football": {
+  "rules": "Man coverage with a single-high free safety; a linebacker/safety 'robs' the intermediate middle, jumping crossers and digs."
+ },
+ "sources": [
+  "Cover 1 Robber (man-free with a hole player)"
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "conceptId": "def_dime",
+ "name": "Dime",
+ "family": "defense",
+ "subfamily": "coverage",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "coverage"
+ ],
+ "copy": {
+  "title": "DIME",
+  "situation": "PASSING DOWN \u00b7 6 DBS",
+  "description": "Six defensive backs for third and long."
+ },
+ "defense": {
+  "package": "dime",
+  "coverage": "cover2man",
+  "key": "half"
+ },
+ "presentations": [
+  {
+   "formation": "gun_empty_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Dime personnel (4-1-6) versus spread passing downs: man underneath, two deep."
+ },
+ "sources": [
+  "Dime (4-1-6) package"
+ ]
+}

@@ -1,0 +1,34 @@
+{
+ "conceptId": "def_tampa2",
+ "name": "Tampa 2",
+ "family": "defense",
+ "subfamily": "coverage",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "coverage"
+ ],
+ "copy": {
+  "title": "TAMPA 2",
+  "situation": "TWO-HIGH \u00b7 MIKE RUNS THE MIDDLE",
+  "description": "The Mike turns and runs the deep middle between the safeties."
+ },
+ "defense": {
+  "coverage": "tampa2",
+  "key": "deep_tampa"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Cover 2 with the middle linebacker carrying the seam to the deep middle, closing the hole between the halves."
+ },
+ "sources": [
+  "Tampa 2 (Dungy/Kiffin): Cover 2 with a deep-middle Mike"
+ ]
+}

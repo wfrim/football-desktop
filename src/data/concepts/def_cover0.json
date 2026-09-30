@@ -1,0 +1,39 @@
+{
+ "conceptId": "def_cover0",
+ "name": "Cover 0",
+ "family": "defense",
+ "subfamily": "pressure",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "pressure"
+ ],
+ "copy": {
+  "title": "COVER 0",
+  "situation": "ALL-OUT PRESSURE \u00b7 NO DEEP HELP",
+  "description": "Everyone is matched up and the safety comes: no one deep."
+ },
+ "defense": {
+  "coverage": "cover0",
+  "moves": {
+   "MIKE": {
+    "blitz": "a_ps"
+   }
+  },
+  "key": "blitz"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Pure man with no deep safety; the free safety and Mike add to the rush. The ball has to come out now."
+ },
+ "sources": [
+  "Cover 0 pressure"
+ ]
+}

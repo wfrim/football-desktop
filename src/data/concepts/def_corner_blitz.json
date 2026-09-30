@@ -1,0 +1,42 @@
+{
+ "conceptId": "def_corner_blitz",
+ "name": "Corner Blitz",
+ "family": "defense",
+ "subfamily": "pressure",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "pressure"
+ ],
+ "copy": {
+  "title": "CORNER BLITZ",
+  "situation": "BOUNDARY PRESSURE",
+  "description": "The corner comes from the boundary; the safety rotates over the top."
+ },
+ "defense": {
+  "coverage": "cover3",
+  "moves": {
+   "CB_bs": {
+    "blitz": "d_bs"
+   },
+   "SS": {
+    "drop": "third_bs"
+   }
+  },
+  "key": "blitz_d_bs"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Boundary corner blitz; the weak safety rotates to the vacated deep third (Cover 3 behind it)."
+ },
+ "sources": [
+  "Corner (boundary) blitz with safety rotation"
+ ]
+}

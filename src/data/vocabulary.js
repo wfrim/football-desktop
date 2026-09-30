@@ -192,6 +192,7 @@ window.FD = window.FD || {};
       run: {},                                  // every run assignment is explicit
       play_action: {},                          // run-action blocking is explicit
       rpo: {},                                  // run blocking + a throw: explicit
+      defense: { ol: { type: 'pass_set' }, qb: { type: 'qb_drop', drop: 2 } }, // defense-first: offense shows a dropback
     },
   };
 

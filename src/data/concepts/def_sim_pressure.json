@@ -1,0 +1,42 @@
+{
+ "conceptId": "def_sim_pressure",
+ "name": "Simulated Pressure",
+ "family": "defense",
+ "subfamily": "pressure",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "pressure"
+ ],
+ "copy": {
+  "title": "SIM PRESSURE",
+  "situation": "4-MAN RUSH \u00b7 7 COVER",
+  "description": "A linebacker comes, an end drops: still only four rush."
+ },
+ "defense": {
+  "coverage": "cover3",
+  "moves": {
+   "WILL": {
+    "blitz": "b_bs"
+   },
+   "E_bs": {
+    "drop": "hook_bs"
+   }
+  },
+  "key": "blitz_b_bs"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Creeper / simulated pressure: a second-level player rushes while a down lineman drops, confusing protection without sacrificing coverage."
+ },
+ "sources": [
+  "Simulated (creeper) pressure"
+ ]
+}

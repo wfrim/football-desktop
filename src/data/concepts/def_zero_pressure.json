@@ -1,0 +1,42 @@
+{
+ "conceptId": "def_zero_pressure",
+ "name": "Zero Pressure",
+ "family": "defense",
+ "subfamily": "pressure",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "pressure"
+ ],
+ "copy": {
+  "title": "ZERO PRESSURE",
+  "situation": "SIX-MAN RUSH",
+  "description": "Six come, five cover, no one deep."
+ },
+ "defense": {
+  "coverage": "cover0",
+  "moves": {
+   "MIKE": {
+    "blitz": "a_ps"
+   },
+   "WILL": {
+    "blitz": "b_bs"
+   }
+  },
+  "key": "blitz_a_ps"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Six-man pressure (four down plus two linebackers) with zero coverage behind; the free safety plays the back man or adds to the rush."
+ },
+ "sources": [
+  "Zero (Cover 0) pressure"
+ ]
+}

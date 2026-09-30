@@ -1,0 +1,48 @@
+{
+ "conceptId": "def_slant",
+ "name": "Slant",
+ "family": "defense",
+ "subfamily": "stunt",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "stunt"
+ ],
+ "copy": {
+  "title": "SLANT",
+  "situation": "LINE MOVEMENT",
+  "description": "The whole front slants one gap to the strength."
+ },
+ "defense": {
+  "coverage": "cover3",
+  "moves": {
+   "E_bs": {
+    "rush": "b_bs"
+   },
+   "T_bs": {
+    "rush": "a_ps"
+   },
+   "T_ps": {
+    "rush": "c_ps"
+   },
+   "E_ps": {
+    "rush": "d_ps"
+   }
+  },
+  "key": "tackle_ps"
+ },
+ "presentations": [
+  {
+   "formation": "singleback_tight_12"
+  },
+  {
+   "formation": "gun_doubles_11"
+  }
+ ],
+ "football": {
+  "rules": "Every lineman slants one gap toward the strength at the snap, wrong-footing zone blocks and creating free runners."
+ },
+ "sources": [
+  "Slant (line movement)"
+ ]
+}

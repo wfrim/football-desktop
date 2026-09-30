@@ -1,0 +1,39 @@
+{
+ "conceptId": "def_safety_blitz",
+ "name": "Safety Blitz",
+ "family": "defense",
+ "subfamily": "pressure",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "pressure"
+ ],
+ "copy": {
+  "title": "SAFETY BLITZ",
+  "situation": "SECONDARY PRESSURE",
+  "description": "The strong safety creeps down and hits the C gap."
+ },
+ "defense": {
+  "coverage": "cover1",
+  "moves": {
+   "SS": {
+    "blitz": "c_bs"
+   }
+  },
+  "key": "blitz_c_bs"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "football": {
+  "rules": "Safety pressure behind man coverage; the free safety stays single-high."
+ },
+ "sources": [
+  "Safety blitz"
+ ]
+}

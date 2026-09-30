@@ -1,0 +1,35 @@
+{
+ "conceptId": "def_bear",
+ "name": "Bear Front",
+ "family": "defense",
+ "subfamily": "front",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "front"
+ ],
+ "copy": {
+  "title": "BEAR",
+  "situation": "46 \u00b7 EIGHT IN THE BOX",
+  "description": "Three linemen cover the center and guards; nobody can reach anyone."
+ },
+ "defense": {
+  "package": "bear",
+  "coverage": "cover1",
+  "key": "nose"
+ },
+ "presentations": [
+  {
+   "formation": "i_form_21"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "football": {
+  "rules": "46 / Bear: 3-0-3 covers both guards and the center, edges outside, safety in the box \u2014 eight defenders to stop the run."
+ },
+ "sources": [
+  "46 (Bear) front, Buddy Ryan"
+ ]
+}

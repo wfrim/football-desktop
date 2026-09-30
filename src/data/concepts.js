@@ -42,8 +42,9 @@ window.FD = window.FD || {};
   const posOf = (p) => p.pos || POS[p.role] || (/^(RB|F|FB)$/.test(p.role) ? 'RB' : 'WR');
   const FAMILY_LABEL = {
     dropback_pass: 'PASS', quick_pass: 'QUICK GAME', play_action: 'PLAY-ACTION',
-    screen: 'SCREEN', run: 'RUN', rpo: 'RPO',
+    screen: 'SCREEN', run: 'RUN', rpo: 'RPO', defense: 'DEFENSE',
   };
+  const PACKAGE_LABEL = { nickel: 'NICKEL 4-2-5', base: 'BASE 4-3', '34': '3-4', dime: 'DIME 4-1-6', bear: 'BEAR 46', '335': '3-3-5 STACK' };
 
   function analyze(f) {
     const ps = f.players;
@@ -215,9 +216,12 @@ window.FD = window.FD || {};
     });
 
     const personnel = f.personnel;
+    const dpkg = c.family === 'defense'
+      ? ((c.defense && c.defense.package && c.defense.package !== 'auto') ? c.defense.package : (A.receivers.length >= 3 ? 'nickel' : 'base'))
+      : null;
     const copy = Object.assign({
-      meta: `${FAMILY_LABEL[c.family] || 'PASS'} · ${personnel} PERSONNEL`,
-      formation: f.name.toUpperCase(),
+      meta: dpkg ? `DEFENSE \u00B7 ${PACKAGE_LABEL[dpkg]}` : `${FAMILY_LABEL[c.family] || 'PASS'} · ${personnel} PERSONNEL`,
+      formation: dpkg ? `VS ${f.name.toUpperCase()}` : f.name.toUpperCase(),
     }, c.copy, pr.copy);
 
     const play = {

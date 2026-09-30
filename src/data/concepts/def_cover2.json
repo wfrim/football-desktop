@@ -1,0 +1,37 @@
+{
+ "conceptId": "def_cover2",
+ "name": "Cover 2",
+ "family": "defense",
+ "subfamily": "coverage",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "coverage"
+ ],
+ "copy": {
+  "title": "COVER 2",
+  "situation": "TWO-HIGH \u00b7 ZONE",
+  "description": "Corners squat in the flats; two safeties split the deep field."
+ },
+ "defense": {
+  "coverage": "cover2",
+  "key": "flat"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "football": {
+  "rules": "Five underneath (corners in the flats, curls and hook), two deep halves. The corners jam and sink under outside routes."
+ },
+ "sources": [
+  "Cover 2: 5 under, 2 deep"
+ ]
+}

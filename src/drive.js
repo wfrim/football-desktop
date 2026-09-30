@@ -40,6 +40,7 @@ window.FD = window.FD || {};
 
         /** Is `play` a sensible call right now (and does it fit on the field)? */
         eligible(play) {
+          if (play.family === 'defense') return false; // drives are the offense's story
           if (!FD.FieldPosition.fits(play, st.spot)) return false;
           const toGoal = 100 - st.spot;
           const long = st.distance >= 7 && st.down >= 3;

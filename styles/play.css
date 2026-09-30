@@ -268,3 +268,15 @@
 .def-ring { fill: none; stroke: var(--ink); stroke-width: var(--sw-block); }
 
 .moment-ring { fill: none; stroke: var(--ink); stroke-width: var(--sw-block); }
+
+/* Defense-first plays: the defense is the drawing, the offense recedes. */
+.def.is-bold { --def: 0.9; }
+.def.is-bold .def-mark { stroke-width: var(--sw-route); }
+.def.is-bold .a-def { stroke-width: var(--sw-route); stroke-opacity: 0.85; }
+.def.is-bold .a-wrap-def .a-head, .def.is-bold .a-wrap-def .a-settle { fill-opacity: 0.85; stroke-opacity: 0.85; }
+.a-wrap-def.is-rush .a-def { stroke-opacity: calc(var(--def) * 0.95); }
+.play.focus-defense .layer-players .pm { opacity: 0.4; }
+.play.focus-defense .layer-paths { opacity: 0.35; }
+
+.def-letter { font-family: var(--font-display); font-weight: 600; fill: var(--ink); fill-opacity: 0.95; letter-spacing: 0.02em; }
+.def-p.is-key .def-letter { fill: var(--ink); }

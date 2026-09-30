@@ -1,0 +1,44 @@
+{
+ "conceptId": "def_fire_zone",
+ "name": "Fire Zone",
+ "family": "defense",
+ "subfamily": "pressure",
+ "side": "strength",
+ "tags": [
+  "defense"
+ ],
+ "copy": {
+  "title": "FIRE ZONE",
+  "situation": "5-MAN PRESSURE \u00b7 3 DEEP 3 UNDER",
+  "description": "Two blitzers come while the end drops: five rush, six cover."
+ },
+ "defense": {
+  "coverage": "cover3",
+  "moves": {
+   "NB": {
+    "blitz": "d_ps"
+   },
+   "MIKE": {
+    "blitz": "b_ps"
+   },
+   "E_ps": {
+    "drop": "flat_ps"
+   }
+  },
+  "key": "blitz_d_ps"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Zone pressure: the nickel and Mike blitz, the play-side end drops into the flat. Three deep (corners + free safety), three under (end, Will, strong safety)."
+ },
+ "sources": [
+  "Fire zone: 5-man zone pressure, 3 deep 3 under (Dick LeBeau lineage)"
+ ]
+}

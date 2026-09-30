@@ -1,0 +1,36 @@
+{
+ "conceptId": "def_cover3_sky",
+ "name": "Cover 3 Sky",
+ "family": "defense",
+ "subfamily": "coverage",
+ "side": "strength",
+ "tags": [
+  "defense"
+ ],
+ "copy": {
+  "title": "COVER 3 SKY",
+  "situation": "SINGLE-HIGH \u00b7 ZONE",
+  "description": "Three deep, four under: the safety rotates down to the flat."
+ },
+ "defense": {
+  "coverage": "cover3",
+  "key": "flat"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "football": {
+  "rules": "Corners and the free safety split the field into deep thirds; the strong safety (sky) and nickel/Sam take the flats, the linebackers the hooks."
+ },
+ "sources": [
+  "Cover 3 Sky: safety-rotated three-deep zone"
+ ]
+}

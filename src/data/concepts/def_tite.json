@@ -1,0 +1,49 @@
+{
+ "conceptId": "def_tite",
+ "name": "Tite Front",
+ "family": "defense",
+ "subfamily": "front",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "front"
+ ],
+ "copy": {
+  "title": "TITE",
+  "situation": "ODD FRONT \u00b7 4I-0-4I",
+  "description": "Three down linemen squeeze the interior; the edges stand up."
+ },
+ "defense": {
+  "package": "34",
+  "front": {
+   "nose": "0",
+   "play": [
+    "4i",
+    "9o"
+   ],
+   "back": [
+    "4i",
+    "9o"
+   ]
+  },
+  "coverage": "cover4",
+  "key": "nose"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "football": {
+  "rules": "Tite: 4i-0-4i interior to take away inside zone and gap runs; standing edges set the perimeter. Popular versus spread offenses."
+ },
+ "sources": [
+  "Tite (4i-0-4i) front"
+ ]
+}

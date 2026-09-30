@@ -1,0 +1,34 @@
+{
+ "conceptId": "def_rotate_2_3",
+ "name": "Two-High to Cover 3",
+ "family": "defense",
+ "subfamily": "disguise",
+ "side": "strength",
+ "tags": [
+  "defense"
+ ],
+ "copy": {
+  "title": "ROTATE: 2 TO 3",
+  "situation": "DISGUISE",
+  "description": "Show two high, roll to three deep at the snap."
+ },
+ "defense": {
+  "coverage": "cover3",
+  "disguise": "cover2",
+  "key": "deep_middle"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Both safeties show a two-high shell; at the snap one rotates down to the apex/flat and the other spins to the deep middle."
+ },
+ "sources": [
+  "Coverage disguise: two-high shell rotating to single-high"
+ ]
+}

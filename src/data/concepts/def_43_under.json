@@ -1,0 +1,46 @@
+{
+ "conceptId": "def_43_under",
+ "name": "4-3 Under",
+ "family": "defense",
+ "subfamily": "front",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "front"
+ ],
+ "copy": {
+  "title": "4-3 UNDER",
+  "situation": "BASE FRONT",
+  "description": "The 3-technique goes to the weak side; the Sam walks up on the edge."
+ },
+ "defense": {
+  "package": "base",
+  "front": {
+   "play": [
+    1,
+    5,
+    "9o"
+   ],
+   "back": [
+    3,
+    5
+   ]
+  },
+  "coverage": "cover3",
+  "key": "tackle_bs"
+ },
+ "presentations": [
+  {
+   "formation": "singleback_tight_12"
+  },
+  {
+   "formation": "i_form_21"
+  }
+ ],
+ "football": {
+  "rules": "4-3 Under: 1-technique strong, 3-technique weak, the strong-side linebacker on the line of scrimmage over the tight end."
+ },
+ "sources": [
+  "4-3 Under front"
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "conceptId": "def_335",
+ "name": "3-3-5 Stack",
+ "family": "defense",
+ "subfamily": "front",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "front"
+ ],
+ "copy": {
+  "title": "3-3-5 STACK",
+  "situation": "ODD STACK",
+  "description": "Three down, three linebackers stacked behind them, five DBs."
+ },
+ "defense": {
+  "package": "335",
+  "coverage": "cover3",
+  "key": "nose"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Stack: three linebackers stacked behind the three down linemen, giving flexible pressure from every gap with five defensive backs."
+ },
+ "sources": [
+  "3-3-5 stack"
+ ]
+}

@@ -211,9 +211,20 @@ window.FD = window.FD || {};
 
       // ── Faint defense data (built before the camera so the frame fits it) ─
       let defData = null;
-      const defMode = cfg.settings ? cfg.settings.defense : 'off';
+      const defFocus = play.family === 'defense';
+      const defMode = defFocus ? 'key' : cfg.settings ? cfg.settings.defense : 'off';
+      if (defFocus) root.classList.add('focus-defense');
       if (defMode !== 'off' && FD.Defense && play.defense !== false) {
-        try { defData = FD.Defense.build(play, play.defense, ballX); } catch (err) { warnings.push(`defense: ${err.message}`); }
+        try {
+          defData = FD.Defense.build(play, Object.assign({}, play.defense, defFocus ? { rush: true } : null), ballX);
+          const n = defData.defenders.length;
+          if (n !== 11) warnings.push(`defense: ${n} defenders`);
+          for (const d of defData.defenders) {
+            for (const q of [d.at, d.pre]) if (q && q[1] < 0.4) warnings.push(`defense: ${d.id} offside`);
+          }
+          const rushers = defData.defenders.filter((d) => d.rushPath).length;
+          if (rushers > 8) warnings.push(`defense: ${rushers} rushers`);
+        } catch (err) { warnings.push(`defense: ${err.message}`); }
       }
 
       // ── Camera: tight when everything (offense, defense, drops) fits it ──

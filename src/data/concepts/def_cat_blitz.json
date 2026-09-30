@@ -1,0 +1,39 @@
+{
+ "conceptId": "def_cat_blitz",
+ "name": "Cat Blitz",
+ "family": "defense",
+ "subfamily": "pressure",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "pressure"
+ ],
+ "copy": {
+  "title": "CAT BLITZ",
+  "situation": "NICKEL PRESSURE",
+  "description": "The nickel comes off the edge from the slot."
+ },
+ "defense": {
+  "coverage": "cover1",
+  "moves": {
+   "NB": {
+    "blitz": "d_ps"
+   }
+  },
+  "key": "blitz_d_ps"
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ],
+ "football": {
+  "rules": "Nickel pressure from the passing strength behind Cover 1; the slot is picked up by the rat/robber or the safety rotation."
+ },
+ "sources": [
+  "Nickel (cat) blitz"
+ ]
+}

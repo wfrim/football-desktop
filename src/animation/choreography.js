@@ -126,8 +126,13 @@ window.FD = window.FD || {};
       if (D) {
         D.glyphs.forEach((d, i) => tl.track(0.75 + i * 0.03, T.markerEnter, (p) => d.setAppear(p), 'outCubic'));
         for (const m of D.moves) {
-          const t = FD.Timing.resolve('def', null, m.length);
+          // Rushers/blitzers go at the snap (stunt loopers wait); coverage drops just after.
+          const t = FD.Timing.resolve('def', m.rush ? { delay: 0.06 + (m.delay || 0) } : null, m.length);
           tl.track(t.start, t.duration, (p) => m.view.setProgress(p), t.ease);
+        }
+        // Disguise: the shell rotates into the real coverage right before the snap.
+        for (const r of D.rotations) {
+          tl.track(P.motion - 0.3, P.snap - P.motion + 0.25, (p) => { r.view.setProgress(p); r.setT(p); }, 'inOutSine');
         }
         if (D.key) tl.track(P.read, T.catchPulse * 1.2, (p) => D.key.pulse(p), 'outCubic');
       }

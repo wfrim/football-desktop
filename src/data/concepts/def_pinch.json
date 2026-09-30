@@ -1,0 +1,54 @@
+{
+ "conceptId": "def_pinch",
+ "name": "Pinch",
+ "family": "defense",
+ "subfamily": "stunt",
+ "side": "strength",
+ "tags": [
+  "defense",
+  "stunt"
+ ],
+ "copy": {
+  "title": "PINCH",
+  "situation": "RUN DOWN",
+  "description": "Both ends pinch inside; the linebackers scrape outside."
+ },
+ "defense": {
+  "coverage": "cover3",
+  "moves": {
+   "E_ps": {
+    "stunt": [
+     "c_ps",
+     "b_ps"
+    ]
+   },
+   "E_bs": {
+    "stunt": [
+     "c_bs",
+     "b_bs"
+    ]
+   },
+   "MIKE": {
+    "rush": "d_ps"
+   },
+   "WILL": {
+    "rush": "d_bs"
+   }
+  },
+  "key": "stunt_b_ps"
+ },
+ "presentations": [
+  {
+   "formation": "singleback_tight_12"
+  },
+  {
+   "formation": "i_form_21"
+  }
+ ],
+ "football": {
+  "rules": "Run-down game: the ends slant inside to clog the B gaps; the linebackers scrape over the top to spill the ball outside."
+ },
+ "sources": [
+  "Pinch front movement"
+ ]
+}
