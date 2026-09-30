@@ -127,7 +127,7 @@
   }
  },
  "football": {
-  "read": "Read the play-side linebacker / overhang: he triggers on the run \u2192 glance (skinny post) behind him; he drops \u2192 give.",
+  "read": "Read the play-side linebacker / overhang: he triggers on the run → glance (skinny post) behind him; he drops → give.",
   "rules": "Run-pass option: the line blocks inside zone (double teams stay at the line: no linemen downfield on a throw). The QB reads the conflict defender at the mesh; the dashed track is the give."
  },
  "sources": [
@@ -139,6 +139,15 @@
   },
   {
    "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_bunch_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
   }
  ]
 }

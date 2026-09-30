@@ -36,6 +36,11 @@ unrecognizable, football correctness wins.
   Syntax reference: header of `src/data/concepts.js`.
 - New variant of a concept → one line in its `presentations` (plus `roles` /
   `tweaks` if the formation needs them). Only add variants that make football sense.
+- Finding variants: `node tools/variants.mjs` lists every concept × formation
+  that expands and validates but isn't presented yet; `--add concept:formation …`
+  appends them. Candidates are LEGAL, not necessarily SENSIBLE: curate (no runs
+  from Empty, spread concepts on spread formations…), then `tools/check.sh` and
+  drop anything it flags rather than forcing it.
 - One-off play with literal coordinates → `src/data/plays/` (legacy format, still valid)
 - New formation → `src/data/formations/`, add to manifest
 - New football term → one row in `src/data/vocabulary.js`
@@ -69,6 +74,6 @@ unrecognizable, football correctness wins.
 5. `node tools/concepts-doc.mjs` after changing any play's football/sources.
 
 ## Status (see git log for detail)
-- 101 plays / 46 concepts / 9 formations; everything except Iso is a template.
+- 212 plays / 53 concepts / 12 formations; everything except Iso is a template.
 - Next: more concepts + variants (§8 of the contract notes), an RPO shape,
   pre-snap motion, then polish (pacing, typography, battery behaviour).

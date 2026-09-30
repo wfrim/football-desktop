@@ -45,6 +45,12 @@
  "presentations": [
   {
    "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "singleback_doubles_11"
   }
  ],
  "ball": {

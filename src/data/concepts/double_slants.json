@@ -1,0 +1,77 @@
+{
+ "conceptId": "double_slants",
+ "name": "Double Slants",
+ "family": "quick_pass",
+ "subfamily": "quick",
+ "side": "strength",
+ "copy": {
+  "title": "DOUBLE SLANTS",
+  "situation": "QUICK GAME \u00b7 MAN BEATER",
+  "description": "Two slants stacked inside each other, out on rhythm."
+ },
+ "assignments": {
+  "#1": {
+   "type": "slant"
+  },
+  "#2": {
+   "type": "slant"
+  },
+  "bs#1": {
+   "type": "hitch"
+  },
+  "bs#2?": {
+   "type": "sit",
+   "depth": 5
+  },
+  "#3?": {
+   "type": "flat",
+   "dir": "right",
+   "width": 6
+  },
+  "RB?": {
+   "type": "pass_set"
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "singleback_doubles_11"
+  }
+ ],
+ "tags": [
+  "quick"
+ ],
+ "relationships": [
+  {
+   "type": "lanes",
+   "participants": [
+    "#2",
+    "#1"
+   ],
+   "minGap": 3
+  }
+ ],
+ "ball": {
+  "to": "#2",
+  "at": 0.7
+ },
+ "reads": [
+  "#2",
+  "#1",
+  "bs#1"
+ ],
+ "football": {
+  "read": "Inside-out: the slot's slant clears the inside defender for the outside slant, or wins inside himself vs man."
+ },
+ "sources": [
+  "Double slants: #1 and #2 both run 3-step slants"
+ ]
+}

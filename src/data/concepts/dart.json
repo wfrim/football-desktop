@@ -6,7 +6,7 @@
  "side": "away_from_back",
  "copy": {
   "title": "DART",
-  "situation": "ZONE \u00b7 BACKSIDE PULL",
+  "situation": "ZONE · BACKSIDE PULL",
   "description": "Zone up front while the backside tackle pulls for the linebacker."
  },
  "assignments": {
@@ -78,6 +78,15 @@
   },
   {
    "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_bunch_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
   }
  ],
  "defaults": {

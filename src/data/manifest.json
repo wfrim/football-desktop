@@ -9,7 +9,10 @@
     "formations/gun_bunch_11.json",
     "formations/gun_empty_11.json",
     "formations/gun_trey_11.json",
-    "formations/ace_12.json"
+    "formations/ace_12.json",
+    "formations/pistol_doubles_11.json",
+    "formations/gun_y_off_11.json",
+    "formations/singleback_doubles_11.json"
   ],
   "plays": [
     "plays/iso_i_form_21.json"
@@ -59,6 +62,13 @@
     "concepts/hank.json",
     "concepts/pa_crossers.json",
     "concepts/middle_screen.json",
-    "concepts/te_screen.json"
+    "concepts/te_screen.json",
+    "concepts/double_slants.json",
+    "concepts/hoss.json",
+    "concepts/fade_out.json",
+    "concepts/stick_nod.json",
+    "concepts/out_and_up.json",
+    "concepts/qb_power.json",
+    "concepts/zone_read.json"
   ]
 }

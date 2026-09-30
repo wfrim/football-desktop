@@ -69,7 +69,7 @@
   "read": "Read the middle safety: throw the seam he doesn't take; outside go vs off-leverage corners; RB check-down."
  },
  "sources": [
-  "Project handoff #1 \u2014 canonical presentation, route depths and relationship",
+  "Project handoff #1 — canonical presentation, route depths and relationship",
   "Four Verts vs single-high: seams split the middle safety"
  ],
  "presentations": [
@@ -90,6 +90,12 @@
   },
   {
    "formation": "gun_empty_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "singleback_doubles_11"
   }
  ]
 }

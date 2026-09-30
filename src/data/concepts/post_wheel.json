@@ -6,7 +6,7 @@
  "side": "strength",
  "copy": {
   "title": "POST-WHEEL",
-  "situation": "SHOT PLAY \u00b7 COVER 3",
+  "situation": "SHOT PLAY · COVER 3",
   "description": "The post holds the corner; the wheel climbs the sideline behind him."
  },
  "assignments": {
@@ -41,6 +41,18 @@
   },
   {
    "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_bunch_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
   }
  ],
  "tags": [

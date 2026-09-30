@@ -6,7 +6,7 @@
  "side": "strength",
  "copy": {
   "title": "SMOKE",
-  "situation": "QUICK SCREEN \u00b7 OFF COVERAGE",
+  "situation": "QUICK SCREEN · OFF COVERAGE",
   "description": "Punish soft corners: catch it at the line and go."
  },
  "assignments": {
@@ -31,7 +31,7 @@
      ],
      [
       "#1-2.0",
-      6.0
+      6
      ]
     ]
    }
@@ -70,6 +70,18 @@
   },
   {
    "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "singleback_doubles_11"
   }
  ],
  "tags": [

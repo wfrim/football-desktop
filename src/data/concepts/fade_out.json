@@ -1,0 +1,73 @@
+{
+ "conceptId": "fade_out",
+ "name": "Fade-Out",
+ "family": "quick_pass",
+ "subfamily": "high_low",
+ "side": "strength",
+ "copy": {
+  "title": "FADE-OUT",
+  "situation": "RED ZONE",
+  "description": "A fade over the top, an out underneath: the corner can't cover both."
+ },
+ "assignments": {
+  "#1": {
+   "type": "fade"
+  },
+  "#2": {
+   "type": "quick_out",
+   "depth": 5,
+   "length": 4.5
+  },
+  "bs#1": {
+   "type": "slant"
+  },
+  "bs#2?": {
+   "type": "flat",
+   "dir": "left",
+   "width": 6
+  },
+  "#3?": {
+   "type": "sit",
+   "depth": 5
+  },
+  "RB?": {
+   "type": "pass_set"
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  }
+ ],
+ "tags": [
+  "quick"
+ ],
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "#1",
+   "low": "#2"
+  }
+ ],
+ "ball": {
+  "to": "#2",
+  "at": 1
+ },
+ "reads": [
+  "#1",
+  "#2",
+  "bs#1"
+ ],
+ "football": {
+  "read": "High-low on the corner: he sinks with the fade \u2192 out; he jumps the out \u2192 fade over him."
+ },
+ "sources": [
+  "Fade-out (hi-lo) red-zone concept"
+ ]
+}

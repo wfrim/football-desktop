@@ -8,10 +8,10 @@
   "description": "Creates a high-low read on the flat defender."
  },
  "football": {
-  "read": "High-low the flat defender: he sinks under the curl \u2192 flat; he widens to the flat \u2192 curl. Mirrored so the QB picks the better side pre-snap."
+  "read": "High-low the flat defender: he sinks under the curl → flat; he widens to the flat → curl. Mirrored so the QB picks the better side pre-snap."
  },
  "sources": [
-  "Project handoff #1 \u2014 canonical presentation, route depths and relationship",
+  "Project handoff #1 — canonical presentation, route depths and relationship",
   "Curl-flat: Cover 2 beater, mirrored both sides (most common 2x2 presentation)"
  ],
  "side": "strength",
@@ -67,6 +67,12 @@
   },
   {
    "formation": "gun_empty_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "singleback_doubles_11"
   }
  ]
 }

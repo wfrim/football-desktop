@@ -6,7 +6,7 @@
  "side": "to_back",
  "copy": {
   "title": "BUCK SWEEP",
-  "situation": "PERIMETER \u00b7 GAP RUN",
+  "situation": "PERIMETER · GAP RUN",
   "description": "Both guards pull: one kicks out the edge, one leads up the alley."
  },
  "assignments": {
@@ -23,7 +23,7 @@
    "hole": "d-0.2",
    "at": [
     "d-0.6",
-    4.0
+    4
    ]
   },
   "PST": {
@@ -69,6 +69,15 @@
  "presentations": [
   {
    "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
   }
  ],
  "defaults": {

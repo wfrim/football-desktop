@@ -1,0 +1,76 @@
+{
+ "conceptId": "hoss",
+ "name": "Hoss",
+ "family": "quick_pass",
+ "subfamily": "verticals",
+ "side": "strength",
+ "copy": {
+  "title": "HOSS",
+  "situation": "HITCH \u00b7 SEAM",
+  "description": "Hitches outside, seams inside: make the curl defender choose."
+ },
+ "assignments": {
+  "#1": {
+   "type": "hitch"
+  },
+  "#2": {
+   "type": "seam"
+  },
+  "bs#1": {
+   "type": "hitch"
+  },
+  "bs#2": {
+   "type": "seam"
+  },
+  "#3?": {
+   "type": "sit",
+   "depth": 6
+  },
+  "RB?": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "flat",
+    "width": 6
+   }
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  }
+ ],
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "#2",
+   "low": "#1"
+  },
+  {
+   "type": "high_low",
+   "high": "bs#2",
+   "low": "bs#1"
+  }
+ ],
+ "ball": {
+  "to": "#1",
+  "at": 1
+ },
+ "reads": [
+  "#2",
+  "#1",
+  "bs#2",
+  "bs#1"
+ ],
+ "football": {
+  "read": "Seams vs a single-high safety; if the curl defender carries the seam, the hitch is open outside him."
+ },
+ "sources": [
+  "Hoss (hitch-seam), Air Raid quick game"
+ ]
+}

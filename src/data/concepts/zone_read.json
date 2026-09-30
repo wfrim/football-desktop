@@ -1,0 +1,159 @@
+{
+ "conceptId": "zone_read",
+ "name": "Zone Read",
+ "family": "run",
+ "subfamily": "zone",
+ "side": "away_from_back",
+ "copy": {
+  "title": "ZONE READ",
+  "situation": "QB KEEP \u00b7 OPTION",
+  "description": "The end crashes on the back; the quarterback keeps it."
+ },
+ "assignments": {
+  "PST": {
+   "type": "zone_step"
+  },
+  "PSG": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ],
+   "climb": [
+    "PST+0.3",
+    4.6
+   ]
+  },
+  "C": {
+   "type": "combo",
+   "target": [
+    "PSG+0.5",
+    0.75
+   ]
+  },
+  "BSG": {
+   "type": "combo",
+   "target": [
+    "-a+0.1",
+    0.7
+   ]
+  },
+  "BST": {
+   "type": "combo",
+   "target": [
+    "-a+0.1",
+    0.7
+   ],
+   "climb": [
+    "BSG",
+    4.6
+   ]
+  },
+  "RB": {
+   "type": "fake",
+   "through": [
+    "mesh",
+    [
+     "a+0.25",
+     -1.6
+    ],
+    [
+     "a",
+     -0.2
+    ],
+    [
+     "a",
+     4.5
+    ]
+   ]
+  },
+  "QB": {
+   "type": "carry",
+   "through": [
+    [
+     -0.35,
+     -4.6
+    ],
+    [
+     "-d",
+     -2.4
+    ],
+    [
+     "-d-0.4",
+     0.3
+    ],
+    [
+     "-d-0.6",
+     5.5
+    ]
+   ]
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  }
+ ],
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "handoff": {
+  "to": "QB",
+  "at": 0.02
+ },
+ "primary": "QB",
+ "events": [
+  {
+   "type": "mesh",
+   "at": "mesh",
+   "timing": {
+    "phase": "snap",
+    "delay": 0.45
+   }
+  }
+ ],
+ "relationships": [
+  {
+   "type": "zone",
+   "participants": [
+    "PST",
+    "PSG",
+    "C",
+    "BSG",
+    "BST"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "C",
+    "PSG"
+   ]
+  },
+  {
+   "type": "combo",
+   "participants": [
+    "BSG",
+    "BST"
+   ]
+  }
+ ],
+ "football": {
+  "read": "Inside zone with the backside end unblocked. He squeezes on the back \u2192 the QB pulls and runs where he vacated; he stays wide \u2192 give (dashed).",
+  "rules": "Zone front side; the backside tackle combos inside, leaving the end as the read."
+ },
+ "sources": [
+  "Zone read: inside zone with the backside end as the QB's read"
+ ]
+}

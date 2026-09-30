@@ -6,7 +6,7 @@
  "side": "to_back",
  "copy": {
   "title": "DRAW",
-  "situation": "PASS-RUSH ANSWER \u00b7 RUN",
+  "situation": "PASS-RUSH ANSWER · RUN",
   "description": "Show pass, then hand it off behind the rush."
  },
  "assignments": {
@@ -76,6 +76,15 @@
   },
   {
    "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_bunch_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
   }
  ],
  "defaults": {

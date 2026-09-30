@@ -6,7 +6,7 @@
  "side": "strength",
  "copy": {
   "title": "TRAP",
-  "situation": "QUICK HITTER \u00b7 GAP RUN",
+  "situation": "QUICK HITTER · GAP RUN",
   "description": "The 3-technique is left unblocked, then trapped from the backside."
  },
  "assignments": {
@@ -33,7 +33,7 @@
   },
   "BSG": {
    "type": "pull",
-   "dip": -1.0,
+   "dip": -1,
    "radius": 0.25,
    "hole": "b",
    "at": [
@@ -82,6 +82,18 @@
  "presentations": [
   {
    "formation": "i_form_21"
+  },
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "singleback_doubles_11"
   }
  ],
  "defaults": {

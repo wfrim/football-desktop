@@ -75,6 +75,12 @@
     "CROSS": "#3",
     "SIT": "#2"
    }
+  },
+  {
+   "formation": "gun_empty_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
   }
  ]
 }

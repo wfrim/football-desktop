@@ -45,7 +45,7 @@
     "through": [
      [
       "#1-8.7",
-      1.0
+      1
      ],
      [
       "#1-9.1",
@@ -92,6 +92,9 @@
   },
   "RB?": {
    "type": "pass_set"
+  },
+  "bs#3?": {
+   "type": "hitch"
   }
  },
  "relationships": [
@@ -112,6 +115,12 @@
  "presentations": [
   {
    "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
   }
  ]
 }

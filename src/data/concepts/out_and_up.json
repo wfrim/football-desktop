@@ -1,0 +1,76 @@
+{
+ "conceptId": "out_and_up",
+ "name": "Out-and-Up",
+ "family": "dropback_pass",
+ "subfamily": "shot",
+ "side": "strength",
+ "copy": {
+  "title": "OUT-AND-UP",
+  "situation": "SHOT PLAY",
+  "description": "Sell the out, then turn it upfield."
+ },
+ "assignments": {
+  "#1": {
+   "type": "double_move",
+   "stem": 6,
+   "fake": {
+    "dir": "out",
+    "length": 2,
+    "angle": 90
+   },
+   "then": {
+    "angle": 0,
+    "length": 12
+   }
+  },
+  "#2": {
+   "type": "sit",
+   "depth": 6
+  },
+  "bs#1": {
+   "type": "curl"
+  },
+  "bs#2?": {
+   "type": "seam"
+  },
+  "RB?": {
+   "type": "pass_set"
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "singleback_doubles_11"
+  }
+ ],
+ "tags": [
+  "deep"
+ ],
+ "relationships": [
+  {
+   "type": "feature",
+   "participants": [
+    "#1"
+   ]
+  }
+ ],
+ "ball": {
+  "to": "#1",
+  "at": 0.92
+ },
+ "reads": [
+  "#1",
+  "#2"
+ ],
+ "football": {
+  "read": "Double move against a corner squatting on the out; the slot's sit holds the flat defender."
+ },
+ "sources": [
+  "Out-and-up double move"
+ ]
+}

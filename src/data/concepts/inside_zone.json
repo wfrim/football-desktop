@@ -6,7 +6,7 @@
  "side": "away_from_back",
  "copy": {
   "title": "INSIDE ZONE",
-  "situation": "EARLY DOWN \u00b7 INTERIOR RUN",
+  "situation": "EARLY DOWN · INTERIOR RUN",
   "description": "Press the interior and hit the first clean crease."
  },
  "situation": {
@@ -155,7 +155,7 @@
  },
  "sources": [
   "Zone run (Wikipedia): coordinated play-side zone steps and double teams",
-  "Tomahawk Nation \u2014 RB reads in a zone offense (aiming point, bang/bounce/bend)"
+  "Tomahawk Nation — RB reads in a zone offense (aiming point, bang/bounce/bend)"
  ],
  "presentations": [
   {
@@ -189,6 +189,15 @@
    "roles": {
     "CUTOFF": "U"
    }
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "singleback_doubles_11"
   }
  ]
 }

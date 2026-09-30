@@ -6,7 +6,7 @@
  "side": "strength",
  "copy": {
   "title": "SNAG",
-  "situation": "RED ZONE \u00b7 ZONE BEATER",
+  "situation": "RED ZONE · ZONE BEATER",
   "description": "A triangle of corner, snag and flat."
  },
  "assignments": {
@@ -66,6 +66,9 @@
   },
   {
    "formation": "gun_trey_11"
+  },
+  {
+   "formation": "gun_empty_11"
   }
  ],
  "roles": {

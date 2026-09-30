@@ -6,7 +6,7 @@
  "side": "strength",
  "copy": {
   "title": "SPACING",
-  "situation": "ZONE BEATER \u00b7 QUICK",
+  "situation": "ZONE BEATER · QUICK",
   "description": "Receivers settle in every underneath window at five yards."
  },
  "assignments": {
@@ -40,6 +40,12 @@
   },
   {
    "formation": "gun_empty_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "singleback_doubles_11"
   }
  ],
  "tags": [

@@ -49,6 +49,18 @@
   },
   {
    "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_empty_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  },
+  {
+   "formation": "pistol_doubles_11"
+  },
+  {
+   "formation": "singleback_doubles_11"
   }
  ],
  "tags": [

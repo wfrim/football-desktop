@@ -1,0 +1,109 @@
+{
+ "conceptId": "qb_power",
+ "name": "QB Power",
+ "family": "run",
+ "subfamily": "gap",
+ "side": "to_back",
+ "copy": {
+  "title": "QB POWER",
+  "situation": "GAP RUN \u00b7 QB KEEP",
+  "description": "The back kicks out the end, the guard wraps, the quarterback keeps it."
+ },
+ "assignments": {
+  "PST": {
+   "type": "down"
+  },
+  "PSG": {
+   "type": "down"
+  },
+  "C": {
+   "type": "back"
+  },
+  "BST": {
+   "type": "hinge"
+  },
+  "BSG": {
+   "type": "pull",
+   "hole": "c",
+   "at": [
+    "c-0.8",
+    3.8
+   ]
+  },
+  "RB": {
+   "type": "lead",
+   "at": [
+    "d+0.3",
+    0.2
+   ]
+  },
+  "QB": {
+   "type": "carry",
+   "through": [
+    [
+     0.5,
+     -4.4
+    ],
+    [
+     "c",
+     -1.9
+    ],
+    [
+     "c",
+     0.4
+    ],
+    [
+     "c+0.4",
+     5.5
+    ]
+   ]
+  }
+ },
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "gun_trey_11"
+  }
+ ],
+ "defaults": {
+  "receivers": {
+   "type": "stalk"
+  }
+ },
+ "handoff": {
+  "to": "QB",
+  "at": 0.02
+ },
+ "primary": "QB",
+ "relationships": [
+  {
+   "type": "wall",
+   "participants": [
+    "PST",
+    "PSG",
+    "C"
+   ]
+  },
+  {
+   "type": "pull",
+   "puller": "BSG",
+   "runner": "QB"
+  },
+  {
+   "type": "kickout",
+   "blocker": "RB",
+   "runner": "QB"
+  }
+ ],
+ "football": {
+  "rules": "Power blocking with the back as the kick-out player: PST, PSG down, C back, BSG pulls and wraps to the LB. The QB is the runner, giving the offense an extra blocker."
+ },
+ "sources": [
+  "QB power (gun): RB kicks out, backside guard wraps, QB carries"
+ ]
+}
