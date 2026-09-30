@@ -139,8 +139,14 @@ window.FD = window.FD || {};
         passes: (p) => ['dropback_pass', 'quick_pass', 'play_action'].includes(p.family),
         screens: (p) => p.family === 'screen' || p.family === 'rpo',
       }[cfg.settings.library];
-      const both = LIB && filter ? (p) => LIB(p) && filter(p) : LIB || filter;
-      const info = playlist.next(both && plays.some(both) ? both : filter);
+      const BOOK = FD.Playbooks.filter(cfg.settings.playbook);
+      const parts = [BOOK, LIB, filter].filter(Boolean);
+      const all = parts.length ? (p) => parts.every((fn) => fn(p)) : null;
+      // Fall back gracefully: playbook × library × field, then playbook × field, then field.
+      const bookField = BOOK && filter ? (p) => BOOK(p) && filter(p) : BOOK || filter;
+      const pick = [all, bookField, filter].find((fn) => !fn || plays.some(fn));
+      if (drive) drive.playbook = cfg.settings.playbook;
+      const info = playlist.next(pick || null);
       if (drive) info.drive = cfg.place;
       let scene = null;
       try {

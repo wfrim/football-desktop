@@ -344,6 +344,9 @@ window.FD = window.FD || {};
     const run = play.family === 'run';
     const long = place && place.situation && /^3RD|^4TH/.test(place.situation) && place.distance >= 7;
     const W = run ? { coverage: 1, pressure: 3, stunt: 2, front: 4 } : { coverage: 5.5, disguise: 2, pressure: long ? 6 : 3, stunt: 1, front: 0.5 };
+    // Goal-line packages near the goal line (or vs heavy personnel), rarely elsewhere.
+    const heavy = /^(goal_line|jumbo|power_t)/.test(play.formation && play.formation.id);
+    W.goal_line = (place && place.spot >= 94) || heavy ? 12 : 0.1;
     let total = 0;
     const w = book.map((c) => { const v = W[c.sub] || 1; total += v; return v; });
     let r = Math.random() * total;

@@ -1,0 +1,50 @@
+{
+ "conceptId": "def_mug",
+ "name": "Mug Cover 1",
+ "family": "defense",
+ "subfamily": "pressure",
+ "side": "strength",
+ "copy": {
+  "title": "MUG",
+  "situation": "SIM PRESSURE \u00b7 COVER 1",
+  "description": "Both linebackers mug the A gaps; one comes, one drops."
+ },
+ "assignments": {},
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  },
+  {
+   "formation": "singleback_tight_12"
+  }
+ ],
+ "defense": {
+  "coverage": "cover1",
+  "moves": {
+   "MIKE": {
+    "at": [
+     0.8,
+     1.4
+    ],
+    "drop": "hook_ps"
+   },
+   "WILL": {
+    "at": [
+     -0.8,
+     1.4
+    ],
+    "blitz": "a_bs"
+   }
+  },
+  "key": "blitz_a_bs"
+ },
+ "football": {
+  "rules": "Two linebackers stand in the A gaps to stress the protection; at the snap one blitzes and one drops to the hook."
+ },
+ "sources": [
+  "Mug Cover 1"
+ ]
+}

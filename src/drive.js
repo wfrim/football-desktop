@@ -36,7 +36,7 @@ window.FD = window.FD || {};
 
   const Drive = {
     create() {
-      const st = { spot: startSpot(), down: 1, distance: 10, number: 1, play: 0, shift: 0 };
+      const st = { spot: startSpot(), down: 1, distance: 10, number: 1, play: 0, shift: 0, tricks: 0 };
 
       const drive = {
         state: st,
@@ -44,6 +44,9 @@ window.FD = window.FD || {};
         /** Is `play` a sensible call right now (and does it fit on the field)? */
         eligible(play) {
           if (play.family === 'defense') return false; // drives are the offense's story
+          // Goal-line calls only near the goal or on short yardage; one trick play a drive.
+          if (tagged(play, 'goalline') && 100 - st.spot > 5 && st.distance > 2 && drive.playbook !== 'goalline') return false;
+          if (tagged(play, 'trick') && st.tricks >= 1 && drive.playbook !== 'trick') return false;
           if (!FD.FieldPosition.fits(play, st.spot)) return false;
           const toGoal = 100 - st.spot;
           const long = st.distance >= 7 && st.down >= 3;
@@ -72,6 +75,7 @@ window.FD = window.FD || {};
         /** Apply the result of `play`; returns the line shown during the hold. */
         advance(play, outcome) {
           st.play += 1;
+          if (tagged(play, 'trick')) st.tricks += 1;
           const toGoal = 100 - st.spot;
           // Live game: what happened on screen decides the drive.
           if (outcome && outcome.type === 'interception') return next('INTERCEPTED', 0, false);
@@ -113,6 +117,7 @@ window.FD = window.FD || {};
       function next(label, gain, td) {
         st.number += 1;
         st.play = 0;
+        st.tricks = 0;
         st.spot = startSpot();
         st.down = 1;
         st.distance = 10;

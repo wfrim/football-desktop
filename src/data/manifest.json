@@ -127,6 +127,9 @@
   "concepts/hb_pass.json",
   "concepts/double_pass.json",
   "concepts/philly_special.json",
-  "concepts/hook_and_lateral.json"
+  "concepts/hook_and_lateral.json",
+  "concepts/def_goal_line_65.json",
+  "concepts/def_goal_line_53.json",
+  "concepts/def_mug.json"
  ]
 }

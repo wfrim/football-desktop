@@ -1,0 +1,35 @@
+{
+ "conceptId": "def_goal_line_65",
+ "name": "Goal Line 6-5",
+ "family": "defense",
+ "subfamily": "goal_line",
+ "side": "strength",
+ "copy": {
+  "title": "GOAL LINE 6-5",
+  "situation": "SHORT YARDAGE \u00b7 ALL GAPS",
+  "description": "Six down linemen fill every gap; man coverage behind them."
+ },
+ "assignments": {},
+ "presentations": [
+  {
+   "formation": "goal_line_23"
+  },
+  {
+   "formation": "jumbo_13"
+  },
+  {
+   "formation": "i_form_21"
+  }
+ ],
+ "defense": {
+  "package": "gl65",
+  "coverage": "cover0",
+  "key": "lb_middle"
+ },
+ "football": {
+  "rules": "Six linemen take a gap each and penetrate; three linebackers fill downhill; the corners play man."
+ },
+ "sources": [
+  "Goal Line 6-5"
+ ]
+}

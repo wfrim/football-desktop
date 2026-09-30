@@ -34,12 +34,14 @@ window.FD = window.FD || {};
   };
   const CB_DEPTH = { cover0: 1.2, cover1: 1.6, robber: 1.6, cover2: 5, tampa2: 5, cover2man: 1.6, cover3: 7, buzz: 7, cover4: 8, cover6: 7 };
   const TWO_HIGH = new Set(['cover2', 'tampa2', 'cover2man', 'cover4', 'cover6']);
-  const PACKAGE_DB = { nickel: 5, base: 4, '34': 4, dime: 6, bear: 4, '335': 5 };
-  const PACKAGE_LABEL = { nickel: 'NICKEL 4-2-5', base: 'BASE 4-3', '34': '3-4', dime: 'DIME 4-1-6', bear: 'BEAR 46', '335': '3-3-5 STACK' };
+  const PACKAGE_DB = { nickel: 5, base: 4, '34': 4, dime: 6, bear: 4, '335': 5, gl65: 2, gl53: 3 };
+  const PACKAGE_LABEL = { nickel: 'NICKEL 4-2-5', base: 'BASE 4-3', '34': '3-4', dime: 'DIME 4-1-6', bear: 'BEAR 46', '335': '3-3-5 STACK', gl65: 'GOAL LINE 6-5', gl53: 'GOAL LINE 5-3' };
   const PACKAGE_FRONT = {
     '34': { nose: '0', play: ['5', '9o'], back: ['5', '9o'] },
     bear: { nose: '0', play: ['3', '9'], back: ['3', '7o'] },
     '335': { nose: '0', play: ['5'], back: ['5'] },
+    gl65: { play: ['2i', '5', '9'], back: ['2i', '5', '9'] },
+    gl53: { nose: '0', play: ['4i', '9'], back: ['4i', '9'] },
   };
 
   const DEFAULTS = {
@@ -143,7 +145,10 @@ window.FD = window.FD || {};
       add(`CB_${side(s)}`, 'db', [x, cbDepth], 'corner_' + side(s), { man: man && one ? one.id : null });
     }
     const twoHigh = TWO_HIGH.has(cov);
-    if (cov === 'cover0') {
+    if (nDB <= 3) {
+      // Goal line: corners plus (5-3) one safety sitting shallow in the middle.
+      if (nDB === 3) add('FS', 'db', fieldToBall([0, 5.5]), 'safety_middle');
+    } else if (cov === 'cover0') {
       add('FS', 'db', [apexX(strong) * 0.4, 7], 'safety_middle');
       add('SS', 'db', [apexX(weak), 6], 'apex_' + side(weak));
     } else if (twoHigh) {
@@ -173,6 +178,7 @@ window.FD = window.FD || {};
       add(sp[0], 'lb', sp[1], sp[2]);
     }
     if (pkg === '335') for (const d of out) if (d.glyph === 'lb') d.at = [d.at[0] * 0.8, 4.4]; // stacked behind the three
+    if (/^gl/.test(pkg)) for (const d of out) if (d.glyph === 'lb') d.at = [d.at[0], 2.8];     // goal line: downhill, tight
 
     // ── Post-snap: zone drops, man, run fits ──────────────────────────────
     const by = (id) => out.find((d) => d.id === id);

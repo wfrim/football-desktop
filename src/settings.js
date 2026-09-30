@@ -28,6 +28,7 @@ window.FD = window.FD || {};
     call:       { group: 'Football', label: 'Defense call', choices: [['coop', 'Cooperative'], ['comp', 'Competitive']], def: 'coop' },
     pursuit:    { group: 'Football', label: 'Pursuit',    choices: [['calm', 'Calm'], ['aggressive', 'Aggressive']], def: 'calm' },
     options:    { group: 'Football', label: 'Option routes', choices: [['both', 'Both'], ['decide', 'Decide']], def: 'both' },
+    playbook:   { group: 'Football', label: 'Playbook',   choices: [['all', 'Everything'], ['pro', 'Pro'], ['spread', 'Spread'], ['wildcat', 'Wildcat'], ['powert', 'Power T'], ['wingt', 'Wing-T'], ['goalline', 'Goal line'], ['trick', 'Trick plays'], ['defense', 'Defense']], def: 'all' },
     library:    { group: 'Football', label: 'Library',    choices: [['all', 'Everything'], ['offense', 'Offense'], ['defense', 'Defense'], ['runs', 'Runs'], ['passes', 'Passes'], ['screens', 'Screens & RPO']], def: 'all' },
     defense:    { group: 'Football', label: 'Defense',    choices: [['off', 'Off'], ['faint', 'Faint'], ['key', 'Faint + key'], ['bold', 'Bold']], def: 'faint' },
     defink:     { group: 'Football', label: 'Defense ink', choices: [['faint', 'Faint'], ['medium', 'Medium'], ['full', 'Same as offense']], def: 'faint' },

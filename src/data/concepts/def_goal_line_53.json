@@ -1,0 +1,35 @@
+{
+ "conceptId": "def_goal_line_53",
+ "name": "Goal Line 5-3",
+ "family": "defense",
+ "subfamily": "goal_line",
+ "side": "strength",
+ "copy": {
+  "title": "GOAL LINE 5-3",
+  "situation": "SHORT YARDAGE \u00b7 MAN FREE",
+  "description": "Five up front, three linebackers, a safety in the middle of the end zone."
+ },
+ "assignments": {},
+ "presentations": [
+  {
+   "formation": "goal_line_23"
+  },
+  {
+   "formation": "jumbo_13"
+  },
+  {
+   "formation": "i_form_21"
+  }
+ ],
+ "defense": {
+  "package": "gl53",
+  "coverage": "cover1",
+  "key": "safety_middle"
+ },
+ "football": {
+  "rules": "A nose and four linemen, three linebackers at 3 yards, corners in man and one safety free."
+ },
+ "sources": [
+  "Goal Line 5-3"
+ ]
+}
