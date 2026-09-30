@@ -24,6 +24,7 @@ window.FD = window.FD || {};
     zoom:       { group: 'Look', label: 'Zoom',        choices: [['close', 'Close'], ['standard', 'Standard'], ['wide', 'Wide']], def: 'standard' },
     // Football
     style:      { group: 'Football', label: 'Play style', choices: [['diagram', 'Diagram'], ['lead', 'Lead'], ['live', 'Live offense'], ['game', 'Live game']], def: 'diagram' },
+    playout:    { group: 'Football', label: 'Play out', choices: [['standard', 'Standard'], ['extended', 'To the whistle']], def: 'standard' },
     call:       { group: 'Football', label: 'Defense call', choices: [['coop', 'Cooperative'], ['comp', 'Competitive']], def: 'coop' },
     pursuit:    { group: 'Football', label: 'Pursuit',    choices: [['calm', 'Calm'], ['aggressive', 'Aggressive']], def: 'calm' },
     options:    { group: 'Football', label: 'Option routes', choices: [['both', 'Both'], ['decide', 'Decide']], def: 'both' },

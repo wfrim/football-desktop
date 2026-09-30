@@ -211,7 +211,8 @@ window.FD = window.FD || {};
       pursuit: x.cfg.settings && x.cfg.settings.pursuit, call: x.cfg.settings && x.cfg.settings.call,
       event, exchangeT,
       topY: x.stage.frame.y0, goalY: x.place && x.place.spot !== null && x.place.spot !== undefined ? -(100 - x.place.spot) : null,
-      endT: P.exit + (x.cfg.holdExtra || 0) - 0.4, seed: `${scene.play.id}:${x.place ? x.place.spot : ''}`,
+      extended: x.cfg.settings && x.cfg.settings.playout === 'extended',
+      endT: x.cfg.settings && x.cfg.settings.playout === 'extended' ? P.snap + 11 : P.exit + (x.cfg.holdExtra || 0) - 0.4, seed: `${scene.play.id}:${x.place ? x.place.spot : ''}`,
     });
     const oc = res.outcome;
     if (/simdebug/.test(location.search)) {
@@ -672,6 +673,7 @@ window.FD = window.FD || {};
         // Live game: "VS COVER 3 SKY · NICKEL" under the offensive call.
         matchup: defData && style === 'game' && !defFocus && defData.callName ? `vs ${defData.callName}${defData.label ? ` \u00B7 ${defData.label}` : ''}` : '',
         field: stage.field,
+        frame: stage.frame,
         setOpacity(o) { root.setAttribute('opacity', f(o)); },
         /** Add a drawable created later (e.g. by choreography) to teardown. */
         own(destroy) { destroyers.push(destroy); },

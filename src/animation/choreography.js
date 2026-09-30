@@ -100,7 +100,11 @@ window.FD = window.FD || {};
       const P = T.phases;
       const sim = cfg.mode === 'simulation';
       // Play length: extra (or less) hold on the finished diagram; drawing speed unchanged.
-      const extra = Math.max(-1.8, cfg.holdExtra || 0);
+      let extra = Math.max(-1.8, cfg.holdExtra || 0);
+      // Play out "to the whistle": the hold starts after the play is over.
+      const whistle = scene.live && scene.live.outcome && scene.live.outcome.t;
+      if (cfg.settings && cfg.settings.playout === 'extended' && whistle) extra = Math.max(extra, whistle + 2.2 - P.exit);
+      scene.resultAt = whistle ? Math.max(P.hold - 0.3, whistle + 0.3) : P.hold - 0.3;
       scene.holdExtra = extra;
       const EXIT = P.exit + extra;
       const END = P.end + extra + (cfg.transition === 'rewind' || cfg.exitShift ? 0.5 : 0);
@@ -336,6 +340,27 @@ window.FD = window.FD || {};
         void Pn;
       }
 
+      // Camera follow (Play out: to the whistle): the field and the play slide
+      // down so the ball carrier never leaves the top of the frame.
+      scene.camY = 0;
+      if (LV && LV.yac && cfg.settings && cfg.settings.playout === 'extended' && scene.frame) {
+        const margin = scene.frame.y0 + (scene.frame.y1 - scene.frame.y0) * 0.34;
+        const y = LV.yac;
+        const offAt = (p) => Math.max(0, margin - y.measure.at(p).point[1]);
+        const final = offAt(1);
+        if (final > 0.5) {
+          scene.camY = final;
+          let cur = 0;
+          tl.track(y.start, y.duration + 0.8, (p, raw) => {
+            const want = offAt(Math.min(1, raw * (y.duration + 0.8) / y.duration));
+            cur = Math.max(cur, cur + (want - cur) * 0.35); // ease in, never back
+            const tr = `translate(0 ${FD.svg.f(cur)})`;
+            scene.root.setAttribute('transform', tr);
+            scene.field.setAttribute('transform', tr);
+          }, 'linear');
+        }
+      }
+
       // Moments: one structural pulse per play (settings → Moments).
       if (!cfg.settings || cfg.settings.moments !== 'off') structuralMoment(scene, tl);
 
@@ -360,8 +385,8 @@ window.FD = window.FD || {};
           scene.ball.setOpacity(Math.max(0, 1 - p * 2.5));
           if (scene.ltg) scene.ltg.setOpacity(fade);
           for (const l of scene.los) l.setProgress(fade);
-          if (shift) {
-            const y = FD.svg.f(shift * p);
+          if (shift || scene.camY) {
+            const y = FD.svg.f(scene.camY + ((shift || scene.camY) - scene.camY) * p);
             scene.root.setAttribute('transform', `translate(0 ${y})`);
             scene.field.setAttribute('transform', `translate(0 ${y})`);
           }

@@ -365,8 +365,10 @@ window.FD = window.FD || {};
           }
         }
         const scored = o.goalY !== null && o.goalY !== undefined && carrier.pos[1] <= o.goalY;
-        if (tk || scored || carrier.pos[1] <= o.topY + 1 || k >= 70) {
+        const oob = o.extended && Math.abs(carrier.pos[0]) >= 25;
+        if (tk || scored || oob || (!o.extended && carrier.pos[1] <= o.topY + 1) || k >= (o.extended ? 120 : 70)) {
           outcome.type = scored ? 'score' : tk ? 'tackle' : event.kind === 'catch' ? 'complete' : 'run';
+          if (oob && !scored && !tk) outcome.why.oob = true;
           outcome.by = tk ? tk.d.id : null;
           // Falls forward through contact.
           if (tk && dir[1] < 0) { carrier.pos = G.add(carrier.pos, G.mul(dir, 0.9)); pts.push(carrier.pos.slice()); }

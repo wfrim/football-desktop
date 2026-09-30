@@ -164,7 +164,7 @@ window.FD = window.FD || {};
           : FD.Choreography.build(scene, hud, cfg);
 
         if (result) {
-          const tr = profile === 'static' ? 1.2 : FD.Timing.phases.hold - 0.3;
+          const tr = profile === 'static' ? 1.2 : scene.resultAt || FD.Timing.phases.hold - 0.3;
           tl.at(tr, () => hud.result(result));
           if (cfg.settings.moments !== 'off' && profile !== 'static') {
             if (/TOUCHDOWN/.test(result)) {
