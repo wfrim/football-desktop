@@ -67,8 +67,12 @@ window.FD = window.FD || {};
       const q = new URLSearchParams(location.search);
       let filter = null;
       cfg.transition = cfg.settings.transition;
+      // Play style: Live styles move the players (simulation mode) on one camera.
+      cfg.style = new URLSearchParams(location.search).get('style') || cfg.settings.style;
+      const liveStyle = cfg.style === 'live' || cfg.style === 'game';
+      cfg.mode = liveStyle ? 'simulation' : (new URLSearchParams(location.search).get('mode') || 'diagram');
       cfg.exitShift = 0;
-      cfg.frameLock = null;
+      cfg.frameLock = liveStyle ? 'default' : null;
       if (cfg.settings.drive === 'on') {
         // Drive mode owns field position and play selection.
         if (!drive) drive = FD.Drive.create();
@@ -103,8 +107,12 @@ window.FD = window.FD || {};
         hud.set(info.play, info, cfg);
 
         const profile = FD.Config.profile(cfg);
+        // Live game: the simulation's outcome is the result (and drives follow it).
+        const oc = scene.live && scene.live.game ? scene.live.outcome : null;
+        const ocText = !oc ? null : oc.type === 'incomplete' ? 'INCOMPLETE'
+          : oc.type === 'score' ? 'TOUCHDOWN' : oc.gain < 0 ? `TACKLE FOR LOSS \u00B7 ${oc.gain}` : oc.gain === 0 ? 'NO GAIN' : `+${oc.gain}`;
         // Drive: decide the result first (it shapes the exit), show it during the hold.
-        const result = drive ? drive.advance(info.play) : null;
+        const result = drive ? drive.advance(info.play, oc) : ocText;
         if (drive && cfg.settings.flow !== 'fade' && drive.state.shift > 0 && profile !== 'static') {
           cfg.exitShift = drive.state.shift; // continuous: this play's exit scrolls by the gain
         }
@@ -112,7 +120,7 @@ window.FD = window.FD || {};
           ? FD.Choreography.buildStatic(scene, hud, cfg)
           : FD.Choreography.build(scene, hud, cfg);
 
-        if (drive) {
+        if (result) {
           const tr = profile === 'static' ? 1.2 : FD.Timing.phases.hold - 0.3;
           tl.at(tr, () => hud.result(result));
           if (cfg.settings.moments !== 'off' && profile !== 'static') {

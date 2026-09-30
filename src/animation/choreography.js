@@ -212,7 +212,11 @@ window.FD = window.FD || {};
           ring.setAttribute('opacity', FD.svg.f(0.9 * (1 - p)));
         }, 'outCubic');
 
-        if (sim && pass.receiver) {
+        if (pass.incomplete) {
+          // Broken up: the ball carries on past the spot and dies.
+          const beyond = G.add(target, G.mul(dir, 2.2));
+          tl.track(PT.arrive, 0.6, (p) => { ball.setPos(G.lerp(target, beyond, p)); ball.setOpacity(1 - p); }, 'outQuad');
+        } else if (sim && pass.receiver) {
           tl.at(PT.arrive, () => {
             ball.setVisible(false);
             pass.receiver.marker.setHasBall(true);
@@ -250,6 +254,29 @@ window.FD = window.FD || {};
           ring.setAttribute('r', FD.svg.f(0.4 + 0.9 * p));
           ring.setAttribute('opacity', FD.svg.f(0.7 * (1 - p)));
         }, 'outCubic');
+      }
+
+      // Live styles: defenders follow their simulated tracks; the run-after-catch.
+      const LV = scene.live;
+      if (LV && D) {
+        const Pn = T.phases;
+        for (const g of D.glyphs) {
+          const tr = LV.tracks.get(g.id);
+          if (!tr || tr.length < 2) continue;
+          const t0 = tr[0][0];
+          const t1 = tr[tr.length - 1][0];
+          tl.track(t0, t1 - t0, (p) => g.setPos(FD.Live.trackAt(tr, t0 + p * (t1 - t0))), 'linear');
+        }
+        if (LV.yac && scene.handoff) {
+          const y = LV.yac;
+          tl.track(y.start, y.duration, (p) => ball.setPos(y.measure.at(p).point), 'linear');
+        }
+        const oc = LV.outcome;
+        if (LV.game && (oc.type === 'tackle' || oc.type === 'score') && LV.yac && (!cfg.settings || cfg.settings.moments !== 'off')) {
+          const end = LV.yac.start + LV.yac.duration;
+          momentRing(scene, tl, LV.yac.measure.at(1).point, end, oc.type === 'score');
+        }
+        void Pn;
       }
 
       // Moments: one structural pulse per play (settings → Moments).

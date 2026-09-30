@@ -141,6 +141,94 @@ window.FD = window.FD || {};
     return play._deepest;
   }
 
+  /*
+   * Live styles: find the ball event (catch or end of the designed carry),
+   * simulate, then add the run-after-catch path and the defenders' tracks.
+   */
+  function runLive(scene, x) {
+    const P = FD.Timing.phases;
+    const pass = scene.pass;
+    let event = null;
+    if (pass && pass.route) {
+      const flight = P.arrive - P.release;
+      const reach = FD.Relationships.timeAt(pass.route, 1);
+      const t = Math.max(reach + 0.02, P.snap + 0.8 + flight);
+      event = { t, point: G.endPoint(pass.route.path), dir: G.endTangent(pass.route.path), carrierId: pass.route.player, kind: 'catch' };
+      // Screens already draw a designed run after the catch: continue from its end.
+      const pl = scene.players.get(pass.route.player);
+      const after = pl ? pl.assignments.filter((a) => a.kind === 'run' && a.start >= pass.route.start && !a.alt).pop() : null;
+      if (after) event = Object.assign(event, { t: after.start + after.duration, point: G.endPoint(after.path), dir: G.endTangent(after.path) });
+    } else if (scene.handoff) {
+      const tr = scene.handoff.track;
+      if (x.style === 'game') {
+        // Live game: the designed carry hands over to the simulation just past the line.
+        const pts = tr.measure.points;
+        let run = 0;
+        let frac = -1;
+        for (let i = 1; i < pts.length && frac < 0; i++) {
+          const a0 = pts[i - 1];
+          const b0 = pts[i];
+          const seg = G.dist(a0, b0);
+          if (-a0[1] < 1.2 && -b0[1] >= 1.2) frac = (run + seg * ((1.2 + a0[1]) / ((a0[1] - b0[1]) || 1))) / tr.measure.length;
+          run += seg;
+        }
+        if (frac > 0.05 && frac < 0.95) {
+          const cut = G.cutAt(tr.path, frac);
+          const np = G.fromPoints(cut.head, 0);
+          tr.view.destroy();
+          const nv = FD.RouteRenderer.create({ parent: x.layers.paths, defs: x.stage.defs, path: np, kind: 'run', style: 'solid', end: 'none' });
+          x.destroyers.push(nv.destroy);
+          tr.duration *= Math.max(0.3, nv.length / (tr.view.length || nv.length));
+          Object.assign(tr, { view: nv, path: np, measure: nv.measure });
+        }
+      }
+      event = { t: tr.start + tr.duration, point: G.endPoint(tr.path), dir: G.endTangent(tr.path), carrierId: tr.player, kind: 'carry', carrier: scene.players.get(tr.player) };
+    }
+    if (!event || !x.defData) return;
+    const game = x.style === 'game';
+    const hold = x.cfg.settings && x.cfg.settings.pursuit === 'aggressive' ? 0.9 : 1.4;
+    // Who is blocked, and until when: re-targeted perimeter blocks, and any
+    // defender sitting on a lineman's block point.
+    const engaged = new Map();
+    for (const a of scene.assignments) {
+      if (a.engages) engaged.set(a.engages, a.start + a.duration + hold);
+      if (a.kind === 'block' || a.kind === 'pull' || (a.kind === 'lead' && !a.engages)) {
+        const end = a.fieldEnd;
+        for (const d of x.defData.defenders) {
+          const q = C.fromData(d.at);
+          if (!engaged.has(d.id) && G.dist(q, end) < (d.glyph === 'lb' ? 2.6 : 1.6)) engaged.set(d.id, a.start + a.duration + hold + 0.4);
+        }
+      }
+    }
+    const obstacles = scene.assignments
+      .filter((a) => (a.kind === 'block' || a.kind === 'lead' || a.kind === 'pull') && a.spec.end !== 'none' && a.player !== event.carrierId)
+      .map((a) => G.endPoint(a.path));
+    const res = FD.Live.simulate({
+      obstacles,
+      scene, defenders: x.defData.defenders, toSvg: x.toSvg, fromData: C.fromData, game,
+      pursuit: x.cfg.settings && x.cfg.settings.pursuit, call: x.cfg.settings && x.cfg.settings.call,
+      event, engaged,
+      topY: x.stage.frame.y0, goalY: x.place && x.place.spot !== null && x.place.spot !== undefined ? -(100 - x.place.spot) : null,
+      endT: P.exit + (x.cfg.holdExtra || 0) - 0.4, seed: `${scene.play.id}:${x.place ? x.place.spot : ''}`,
+    });
+    scene.live = { event, outcome: res.outcome, tracks: res.tracks, game };
+    if (res.outcome.type === 'incomplete' && pass) pass.incomplete = true;
+    if (res.yac && res.yac.pts.length > 2) {
+      const pl = scene.players.get(event.carrierId);
+      const view = FD.RouteRenderer.create({ parent: x.layers.paths, defs: x.stage.defs, path: G.fromPoints(res.yac.pts, 0.6), kind: 'run', style: 'solid', end: 'arrow' });
+      x.destroyers.push(view.destroy);
+      const a = {
+        spec: { type: 'yac', player: event.carrierId }, player: event.carrierId, kind: 'run', alt: false, path: view.measure && G.fromPoints(res.yac.pts, 0.6), view,
+        ballX: x.ballX, fieldPts: res.yac.pts.map((q) => [q[0] - x.ballX, -q[1]]), measure: view.measure,
+        fieldEnd: [res.yac.pts[res.yac.pts.length - 1][0] - x.ballX, -res.yac.pts[res.yac.pts.length - 1][1]],
+        start: res.yac.t0 + 0.05, duration: Math.max(0.4, res.yac.t1 - res.yac.t0), ease: 'linear', yac: true,
+      };
+      scene.assignments.push(a);
+      if (pl) pl.assignments.push(a);
+      scene.live.yac = a;
+    }
+  }
+
   const PlayRenderer = {
     layout,
     deepest,
@@ -178,6 +266,34 @@ window.FD = window.FD || {};
       const primaryId = play.primary || readOrder[0];
       const assignments = [];
 
+      // ── Faint defense data (built before the camera so the frame fits it) ─
+      let defData = null;
+      const defFocus = play.family === 'defense';
+      const defMode = defFocus ? 'key' : cfg.settings ? cfg.settings.defense : 'off';
+      if (defFocus) root.classList.add('focus-defense');
+      if (defMode !== 'off' && FD.Defense && play.defense !== false) {
+        try {
+          // Live game + Competitive: the defense makes its own call instead of the one the concept beats.
+          let look = play.defense;
+          const st = cfg.style || (cfg.settings && cfg.settings.style);
+          if (st === 'game' && cfg.settings && cfg.settings.call === 'comp' && !defFocus) {
+            const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+            look = { coverage: pick(['cover1', 'robber', 'cover2', 'tampa2', 'cover2man', 'cover3', 'buzz', 'cover4', 'cover6']) };
+            if (play.family === 'run') look.front = pick([{ play: [3, 5], back: [1, 5] }, { play: [1, 5], back: [3, 5] }, { play: [3, 5], back: [3, 5] }]);
+            if (Math.random() < 0.15) look = { coverage: 'cover0', moves: { MIKE: { blitz: 'a_ps' } } };
+          }
+          defData = FD.Defense.build(play, Object.assign({}, look, defFocus ? { rush: true } : null), ballX);
+          defData.call = look;
+          const n = defData.defenders.length;
+          if (n !== 11) warnings.push(`defense: ${n} defenders`);
+          for (const d of defData.defenders) {
+            for (const q of [d.at, d.pre]) if (q && q[1] < 0.4) warnings.push(`defense: ${d.id} offside`);
+          }
+          const rushers = defData.defenders.filter((d) => d.rushPath).length;
+          if (rushers > 8) warnings.push(`defense: ${rushers} rushers`);
+        } catch (err) { warnings.push(`defense: ${err.message}`); }
+      }
+
       // Play style: Lead / Live — the targeted route stops where the ball meets
       // the receiver in stride (the play's ball.at); the rest becomes a ghost.
       const style = cfg.style || (cfg.settings && cfg.settings.style) || 'diagram';
@@ -187,9 +303,42 @@ window.FD = window.FD || {};
         L.items.forEach((it, i) => { if (it.spec.player === bt.player && it.prim.kind === 'route' && !it.spec.alt) leadIdx = i; });
       }
 
+      // Live styles: receivers' perimeter blocks go to real defenders (nearest
+      // unclaimed DB / linebacker), so the convoy fits the defense on the field.
+      const live = style === 'live' || style === 'game';
+      const blockOn = new Map(); // item index → defender
+      if (live && defData) {
+        const lastBlock = new Map();
+        L.items.forEach((it, i) => {
+          const role = (players.get(it.spec.player) || {}).data;
+          if (!role || /^(LT|LG|C|RG|RT|QB|RB|F|FB)$/.test(role.role)) return;
+          if (/^(stalk|crack|lead)$/.test(it.spec.type) && !it.spec.alt) lastBlock.set(it.spec.player, i);
+        });
+        const taken = new Set();
+        for (const [pid, i] of lastBlock) {
+          const from = players.get(pid).align;
+          let best = null;
+          let bestD = Infinity;
+          for (const d of defData.defenders) {
+            if (d.glyph === 'dl' || d.rushPath || taken.has(d.id)) continue;
+            const q = C.fromData(d.drop ? [d.at[0] + 0.35 * (d.drop[0] - d.at[0]), d.at[1] + 0.35 * (d.drop[1] - d.at[1])] : d.at);
+            const dist = G.dist(from, q);
+            if (dist < bestD) { bestD = dist; best = { d, q }; }
+          }
+          if (best && bestD < 14) { taken.add(best.d.id); blockOn.set(i, best); }
+        }
+      }
+
       for (let idx = 0; idx < L.items.length; idx++) {
         const { spec } = L.items[idx];
         let { prim, fieldPts } = L.items[idx];
+        if (blockOn.has(idx)) {
+          const { q } = blockOn.get(idx);
+          const o0 = fieldPts[0];
+          const v = G.sub(q, o0);
+          const len = Math.hypot(v[0], v[1]) || 1;
+          fieldPts = [o0, G.add(o0, G.mul(v, Math.max(0.3, (len - 0.8) / len)))];
+        }
         const pl = players.get(spec.player);
         const prev = spec.chain ? pl.assignments[pl.assignments.length - 1] : null;
         const hand = cfg.settings && cfg.settings.lines === 'hand' && prim.kind !== 'block';
@@ -199,7 +348,7 @@ window.FD = window.FD || {};
           const cut = G.cutAt(G.fromPoints(svgPts, prim.radius), bt.at);
           svgPts = cut.head;
           ghost = cut.tail;
-          fieldPts = svgPts.map((q) => [q[0] - ballX, -q[1]]);
+          // fieldPts stay the designed route: relationship checks measure the concept, not the catch.
           prim = Object.assign({}, prim, { end: 'settle', radius: 0 });
         }
         const path = hand
@@ -229,6 +378,7 @@ window.FD = window.FD || {};
         };
         assignments.push(a);
         if (!a.alt) pl.assignments.push(a);
+        if (blockOn.has(idx)) a.engages = blockOn.get(idx).d.id;
         if (prim.kind === 'motion') pl.snap = a.fieldEnd;
         if (ghost && ghost.length > 1) {
           // The route the receiver would have finished: faint, dotted, after the catch.
@@ -239,24 +389,6 @@ window.FD = window.FD || {};
             fieldPts: ghost.map((q) => [q[0] - ballX, -q[1]]), measure: gv.measure, fieldEnd: [ghost[ghost.length - 1][0] - ballX, -ghost[ghost.length - 1][1]],
             start: a.start + a.duration + 0.15, duration: 0.7, ease: 'outCubic', ghost: true });
         }
-      }
-
-      // ── Faint defense data (built before the camera so the frame fits it) ─
-      let defData = null;
-      const defFocus = play.family === 'defense';
-      const defMode = defFocus ? 'key' : cfg.settings ? cfg.settings.defense : 'off';
-      if (defFocus) root.classList.add('focus-defense');
-      if (defMode !== 'off' && FD.Defense && play.defense !== false) {
-        try {
-          defData = FD.Defense.build(play, Object.assign({}, play.defense, defFocus ? { rush: true } : null), ballX);
-          const n = defData.defenders.length;
-          if (n !== 11) warnings.push(`defense: ${n} defenders`);
-          for (const d of defData.defenders) {
-            for (const q of [d.at, d.pre]) if (q && q[1] < 0.4) warnings.push(`defense: ${d.id} offside`);
-          }
-          const rushers = defData.defenders.filter((d) => d.rushPath).length;
-          if (rushers > 8) warnings.push(`defense: ${rushers} rushers`);
-        } catch (err) { warnings.push(`defense: ${err.message}`); }
       }
 
       // ── Camera: tight when everything (offense, defense, drops) fits it ──
@@ -443,6 +575,7 @@ window.FD = window.FD || {};
 
       // Relationships: validation, timing constraints, concept emphasis.
       warnings.push(...FD.Relationships.apply(scene));
+      if (live && FD.Live) runLive(scene, { defData, style, cfg, toSvg, ballX, stage, place, destroyers, layers, warnings });
       warnings.push(...collisions(players, assignments));
       if (warnings.length) console.warn(`[play ${play.id || '?'}]`, warnings);
       return scene;

@@ -67,13 +67,22 @@ window.FD = window.FD || {};
         },
 
         /** Apply the result of `play`; returns the line shown during the hold. */
-        advance(play) {
+        advance(play, outcome) {
           st.play += 1;
           const toGoal = 100 - st.spot;
-          let gain = Math.min(gainFor(play), toGoal);
+          // Live game: what happened on screen decides the drive.
+          if (outcome && outcome.type === 'incomplete') {
+            st.shift = 0;
+            st.down += 1;
+            if (st.down > 4) return next('TURNOVER ON DOWNS', 0, false);
+            if (st.down === 4 && st.distance > 2) return st.spot >= 63 ? next('FIELD GOAL', 0, false) : next('PUNT', 0, false);
+            return 'INCOMPLETE';
+          }
+          let gain = outcome ? Math.max(-6, Math.min(outcome.type === 'score' ? toGoal : outcome.gain, toGoal)) : Math.min(gainFor(play), toGoal);
           if (gain >= toGoal) return next('TOUCHDOWN', gain, true);
           st.spot += gain;
           st.shift = gain;
+          if (gain < 0) { st.distance -= gain; st.down += 1; return `TACKLE FOR LOSS \u00B7 ${gain}`; }
           if (gain >= st.distance) {
             st.down = 1;
             st.distance = 10;

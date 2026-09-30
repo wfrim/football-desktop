@@ -61,7 +61,11 @@ window.FD = window.FD || {};
           const s = d.glyph === 'lb' ? 0.36 : 0.3;
           el('path', { d: `M${f(-s)} ${f(-s * 0.62)}L0 ${f(s * 0.62)}L${f(s)} ${f(-s * 0.62)}`, class: 'def-mark' }, w);
         }
-        glyphs.push({ setAppear: (p) => w.setAttribute('opacity', f(p)) });
+        glyphs.push({
+          id: d.id,
+          setAppear: (p) => w.setAttribute('opacity', f(p)),
+          setPos: (q) => w.setAttribute('transform', `translate(${f(q[0])} ${f(q[1])})`),
+        });
 
         // Post-snap movement: zone drop, man leverage or run fit.
         let pts = null;
