@@ -78,6 +78,12 @@ window.FD = window.FD || {};
       }
     },
 
+    /** Lateral ball position for a hash name (left | middle | right). */
+    hashX(hash) {
+      const h = FIELD.hashes.nfl;
+      return hash === 'left' ? -h : hash === 'right' ? h : 0;
+    },
+
     /** Field space (relative to ball) → SVG space. */
     toSvg(p, ballX) {
       return [ballX + p[0], -p[1]];

@@ -52,7 +52,13 @@ window.FD = window.FD || {};
       cfg.settings = FD.Settings.get();
       FD.Theme.apply(cfg.settings.theme, true); // "auto" follows the clock
       if (!new URLSearchParams(location.search).has('speed')) animator.timeScale = parseFloat(cfg.settings.speed) || 1;
-      const info = playlist.next();
+      // Field position (drive mode takes over in drive.js).
+      const q = new URLSearchParams(location.search);
+      const place = q.has('spot') // review aid: ?spot=92&at_hash=left
+        ? { spot: Math.max(1, Math.min(99, parseInt(q.get('spot'), 10) || 50)), hash: q.get('at_hash') || 'middle' }
+        : FD.FieldPosition.pick(cfg.settings);
+      cfg.place = place && place.spot !== null ? place : place ? { spot: null, hash: place.hash } : null;
+      const info = playlist.next(cfg.place && cfg.place.spot !== null ? (p) => FD.FieldPosition.fits(p, cfg.place.spot) : null);
       let scene = null;
       try {
         scene = FD.PlayRenderer.build(info.play, stage, cfg);

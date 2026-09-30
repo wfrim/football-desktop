@@ -21,6 +21,9 @@
 .field-yard { stroke-opacity: calc(0.055 * var(--field-k)); }
 .field-hash { stroke-opacity: calc(0.075 * var(--field-k)); }
 .field-side { stroke-opacity: calc(0.12 * var(--field-k)); }
+.field-goal { stroke-opacity: calc(0.2 * var(--field-k)); }
+.field-endzone { fill: var(--ink); fill-opacity: calc(0.025 * var(--field-k)); }
+.field-number { font-weight: 600; }
 
 .field-cross {
   fill: none;

@@ -90,14 +90,67 @@ window.FD = window.FD || {};
     return Array.from(new Set(out));
   }
 
+  /*
+   * Pure geometry for a play: every assignment's waypoints in field space
+   * (yards, LOS-relative), in drawing order. No DOM, no timing. Used by the
+   * renderer and by field-position fitting (how deep does this play go?).
+   */
+  function layout(play) {
+    const warnings = [];
+    const players = new Map();
+    for (const p of play.players || []) players.set(p.id, { data: p, align: C.fromData(p.at || [0, 0]) });
+    const snap = new Map(Array.from(players, ([id, p]) => [id, p.align]));
+    const lastEnd = new Map();
+    const specs = play.assignments || [];
+    const ordered = specs
+      .filter((a) => FD.Primitives.kindOf(a.type) === 'motion')
+      .concat(specs.filter((a) => FD.Primitives.kindOf(a.type) !== 'motion'));
+    const items = [];
+    let deepest = 0;
+    for (const spec of ordered) {
+      if (!players.has(spec.player)) { warnings.push(`assignment for unknown player "${spec.player}"`); continue; }
+      if (!FD.Primitives.has(spec.type)) { warnings.push(`unknown primitive "${spec.type}"`); continue; }
+      const origin = spec.chain && lastEnd.has(spec.player) ? lastEnd.get(spec.player) : snap.get(spec.player);
+      const outward = sign(origin[0]);
+      const ctx = {
+        origin,
+        outward,
+        inward: -outward,
+        lateral: 1,
+        playside: play.side === 'left' ? -1 : 1,
+        abs: (q) => G.sub(C.fromData(q), origin),
+        u: (n) => C.scalar(n),
+        v: (q) => C.fromData(q),
+        dy: (depth) => C.scalar(depth) - origin[1],
+      };
+      const prim = FD.Primitives.build(spec, ctx);
+      const fieldPts = prim.points.map((r) => G.add(origin, r));
+      const end = fieldPts[fieldPts.length - 1];
+      for (const q of fieldPts) deepest = Math.max(deepest, q[1]);
+      if (!spec.alt) lastEnd.set(spec.player, end);
+      if (prim.kind === 'motion') snap.set(spec.player, end);
+      items.push({ spec, prim, fieldPts });
+    }
+    return { players, items, deepest, warnings };
+  }
+
+  /** Deepest point (yards past the LOS) any path of `play` reaches. Memoised. */
+  function deepest(play) {
+    if (play._deepest === undefined) play._deepest = layout(play).deepest;
+    return play._deepest;
+  }
+
   const PlayRenderer = {
+    layout,
+    deepest,
     collisions,
     /**
      * Build a scene for `play` inside stage.playLayer.
      * cfg: { labels, mode }
      */
     build(play, stage, cfg) {
-      const ballX = C.ballX(play);
+      const place = cfg.place || null; // { spot, hash } from field position / drive mode
+      const ballX = place ? C.hashX(place.hash) : C.ballX(play);
       const toSvg = (p) => C.toSvg(p, ballX);
       const warnings = [];
 
@@ -111,47 +164,21 @@ window.FD = window.FD || {};
       };
       const destroyers = [];
 
-      // ── Players ────────────────────────────────────────────────────────
+      // ── Geometry (DOM-free; shared with field-position fitting) ─────────
+      const L = layout(play);
+      warnings.push(...L.warnings);
       const players = new Map();
-      for (const p of play.players || []) {
-        const align = C.fromData(p.at || [0, 0]);
-        players.set(p.id, { data: p, align, snap: align, cursor: null, marker: null, assignments: [] });
+      for (const [id, p] of L.players) {
+        players.set(id, { data: p.data, align: p.align, snap: p.align, cursor: null, marker: null, assignments: [] });
       }
-
-      // ── Assignments (motion first, since it moves the snap position) ─────
-      const specs = play.assignments || [];
-      const ordered = specs
-        .filter((a) => FD.Primitives.kindOf(a.type) === 'motion')
-        .concat(specs.filter((a) => FD.Primitives.kindOf(a.type) !== 'motion'));
 
       const readOrder = (play.reads || []).map((r) => (typeof r === 'string' ? r : r.player));
       const primaryId = play.primary || readOrder[0];
       const assignments = [];
 
-      for (const spec of ordered) {
+      for (const { spec, prim, fieldPts } of L.items) {
         const pl = players.get(spec.player);
-        if (!pl) { warnings.push(`assignment for unknown player "${spec.player}"`); continue; }
-        if (!FD.Primitives.has(spec.type)) { warnings.push(`unknown primitive "${spec.type}"`); continue; }
-
-        // Sequenced steps (check-then-release, combo-then-climb…) start where
-        // the previous step of the same player ended.
         const prev = spec.chain ? pl.assignments[pl.assignments.length - 1] : null;
-        const origin = prev ? prev.fieldEnd : pl.snap;
-        const outward = sign(origin[0]);
-        const ctx = {
-          origin,
-          outward,
-          inward: -outward,
-          lateral: 1,
-          playside: play.side === 'left' ? -1 : 1,
-          abs: (q) => G.sub(C.fromData(q), origin),
-          u: (n) => C.scalar(n),
-          v: (q) => C.fromData(q),
-          dy: (depth) => C.scalar(depth) - origin[1],
-        };
-
-        const prim = FD.Primitives.build(spec, ctx);
-        const fieldPts = prim.points.map((r) => G.add(origin, r));
         const path = G.fromPoints(fieldPts.map(toSvg), prim.radius);
 
         const view = FD.RouteRenderer.create({
@@ -181,10 +208,10 @@ window.FD = window.FD || {};
       }
 
       // ── Camera: tight for plays that live near the line ──────────────────
-      let deepest = 0;
-      for (const a of assignments) for (const q of a.fieldPts) deepest = Math.max(deepest, q[1]);
+      const deepest = L.deepest;
       const frameKey = play.frame || (deepest <= C.TIGHT_MAX_DEPTH ? 'tight' : 'default');
       const reframed = stage.setFrame(frameKey);
+      stage.field.update(place ? place.spot : null, Math.min(C.FIELD.halfWidth + 0.9, stage.frame.x1 - 0.6));
       if (reframed) stage.field.setAttribute('opacity', 0);
 
       // ── Markers (after paths so they sit on top; placed at alignment) ────
@@ -204,7 +231,8 @@ window.FD = window.FD || {};
       los.forEach((d) => destroyers.push(d.destroy));
 
       let ltg = null;
-      const dist = play.situation && Number(play.situation.distance);
+      let dist = place && place.distance !== undefined ? place.distance : play.situation && Number(play.situation.distance);
+      if (place && dist > 0) dist = Math.min(dist, 100 - place.spot); // "& goal": the goal line is the line to gain
       if (dist > 0 && dist < 30) {
         // Drawn as short "chain" marks at each sideline rather than a full
         // line, so it never competes with routes run at the sticks.

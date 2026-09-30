@@ -84,15 +84,31 @@ window.FD = window.FD || {};
       return out;
     }
 
-    next() {
-      let index;
-      if (this.startIndex >= 0 && this.order !== 'sequential') {
+    /**
+     * Next play. `filter(play)` (optional) restricts eligibility — e.g. plays
+     * that fit before the end line, or plays for the drive situation. The mix
+     * order is kept: the first eligible play in the queue is taken.
+     */
+    next(filter) {
+      const ok = (i) => !filter || filter(this.items[i]);
+      let index = -1;
+      if (this.startIndex >= 0) {
         index = this.startIndex;
         this.startIndex = -1;
       } else if (this.order !== 'sequential') {
-        if (!this.queue.length) this._refill();
-        index = this.queue.shift();
+        for (let pass = 0; pass < 2 && index < 0; pass++) {
+          if (!this.queue.length || pass === 1) this._refill();
+          const k = this.queue.findIndex(ok);
+          if (k >= 0) index = this.queue.splice(k, 1)[0];
+        }
       } else {
+        for (let n = 0; n < this.items.length && index < 0; n++) {
+          this.cursor = (this.cursor + 1) % this.items.length;
+          if (ok(this.cursor)) index = this.cursor;
+        }
+      }
+      if (index < 0) {
+        // Nothing eligible (shouldn't happen): fall back to any play.
         this.cursor = (this.cursor + 1) % this.items.length;
         index = this.cursor;
       }
