@@ -1,0 +1,110 @@
+{
+ "conceptId": "pa_crossers",
+ "name": "PA Crossers",
+ "family": "play_action",
+ "subfamily": "crossers",
+ "side": "strength",
+ "copy": {
+  "title": "PA CROSSERS",
+  "situation": "PLAY-ACTION \u00b7 MIDDLE OF THE FIELD",
+  "description": "A hard run fake pulls the linebackers up; two crossers pass behind them."
+ },
+ "assignments": {
+  "PST": {
+   "type": "base"
+  },
+  "PSG": {
+   "type": "base"
+  },
+  "C": {
+   "type": "base"
+  },
+  "BSG": {
+   "type": "base"
+  },
+  "BST": {
+   "type": "base"
+  },
+  "CUTOFF?": {
+   "type": "pass_set"
+  },
+  "FB?": {
+   "type": "pass_set"
+  },
+  "RB": {
+   "type": "fake",
+   "through": [
+    "mesh",
+    [
+     "a",
+     -1.0
+    ]
+   ]
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    "mesh",
+    [
+     0.2,
+     -6.3
+    ]
+   ],
+   "timing": {
+    "duration": 1.4
+   }
+  },
+  "TE": {
+   "type": "cross",
+   "depth": 11,
+   "across": 22
+  },
+  "bs#1": {
+   "type": "dig",
+   "depth": 16,
+   "length": 20
+  },
+  "#1": {
+   "type": "go"
+  }
+ },
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "bs#1",
+   "low": "TE"
+  }
+ ],
+ "ball": {
+  "to": "TE",
+  "at": 0.8
+ },
+ "reads": [
+  "TE",
+  "bs#1",
+  "#1"
+ ],
+ "football": {
+  "rules": "Inside-zone action; the line shows run (base blocks), backs protect. The TE crosses at 11 under the backside receiver's deep dig at 16, both behind the linebackers who bit on the fake; the go clears the corner."
+ },
+ "sources": [
+  "Play-action crossers: run fake + TE cross under a deep dig"
+ ],
+ "presentations": [
+  {
+   "formation": "singleback_tight_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
+  },
+  {
+   "formation": "ace_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
+  },
+  {
+   "formation": "i_form_21"
+  }
+ ]
+}

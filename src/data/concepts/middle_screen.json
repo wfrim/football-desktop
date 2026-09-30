@@ -1,0 +1,111 @@
+{
+ "conceptId": "middle_screen",
+ "name": "Middle Screen",
+ "family": "screen",
+ "subfamily": "slow_screen",
+ "side": "strength",
+ "copy": {
+  "title": "MIDDLE SCREEN",
+  "situation": "PASS-RUSH ANSWER",
+  "description": "The interior line releases; the back slips in behind them."
+ },
+ "assignments": {
+  "PST": {
+   "type": "pass_set"
+  },
+  "BST": {
+   "type": "pass_set"
+  },
+  "PSG": {
+   "type": "screen_release",
+   "at": [
+    "b+0.3",
+    2.4
+   ]
+  },
+  "C": {
+   "type": "screen_release",
+   "at": [
+    "-a",
+    3.4
+   ]
+  },
+  "BSG": {
+   "type": "screen_release",
+   "at": [
+    "-b-0.3",
+    2.4
+   ]
+  },
+  "QB": {
+   "type": "qb_drop",
+   "drop": 3.2
+  },
+  "RB": [
+   {
+    "type": "pass_set_then_release",
+    "release": {
+     "type": "path",
+     "through": [
+      [
+       "a",
+       -2.5
+      ]
+     ],
+     "end": "settle",
+     "delay": 1.0
+    }
+   },
+   {
+    "type": "carry",
+    "delay": 0.5,
+    "through": [
+     [
+      "a",
+      0.8
+     ],
+     [
+      "a+0.2",
+      6.0
+     ]
+    ]
+   }
+  ]
+ },
+ "defaults": {
+  "receivers": {
+   "type": "go",
+   "depth": 9
+  }
+ },
+ "relationships": [
+  {
+   "type": "convoy",
+   "blockers": [
+    "PSG",
+    "C",
+    "BSG"
+   ],
+   "runner": "RB"
+  }
+ ],
+ "ball": {
+  "to": "RB",
+  "at": 1
+ },
+ "primary": "RB",
+ "football": {
+  "rules": "Everyone sells dropback. The tackles ride the ends past the QB; the guards and center hold a count, then release to the second level. The back slips into the vacated middle behind them."
+ },
+ "sources": [
+  "Middle screen: interior OL release, RB slips between the tackles"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ]
+}

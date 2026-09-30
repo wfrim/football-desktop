@@ -69,6 +69,6 @@ unrecognizable, football correctness wins.
 5. `node tools/concepts-doc.mjs` after changing any play's football/sources.
 
 ## Status (see git log for detail)
-- 91 plays / 42 concepts / 9 formations; everything except Iso is a template.
+- 101 plays / 46 concepts / 9 formations; everything except Iso is a template.
 - Next: more concepts + variants (§8 of the contract notes), an RPO shape,
   pre-snap motion, then polish (pacing, typography, battery behaviour).

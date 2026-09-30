@@ -1,0 +1,131 @@
+{
+ "conceptId": "te_screen",
+ "name": "TE Screen",
+ "family": "screen",
+ "subfamily": "slow_screen",
+ "side": "strength",
+ "copy": {
+  "title": "TE SCREEN",
+  "situation": "PASS-RUSH ANSWER",
+  "description": "The tight end chips, drifts out, and follows two linemen to the edge."
+ },
+ "assignments": {
+  "TE": [
+   {
+    "type": "block",
+    "to": [
+     -0.3,
+     0.6
+    ],
+    "end": "none"
+   },
+   {
+    "type": "path",
+    "delay": 0.8,
+    "through": [
+     [
+      "TE+1.6",
+      -2.2
+     ]
+    ],
+    "end": "settle"
+   },
+   {
+    "type": "carry",
+    "delay": 0.5,
+    "through": [
+     [
+      "TE+2.6",
+      0.4
+     ],
+     [
+      "TE+3.2",
+      6.0
+     ]
+    ]
+   }
+  ],
+  "PST": {
+   "type": "screen_release",
+   "at": [
+    "TE+5.0",
+    1.6
+   ]
+  },
+  "PSG": {
+   "type": "screen_release",
+   "at": [
+    "TE+1.4",
+    3.0
+   ]
+  },
+  "C": {
+   "type": "pass_set"
+  },
+  "BSG": {
+   "type": "pass_set"
+  },
+  "BST": {
+   "type": "pass_set"
+  },
+  "CUTOFF?": {
+   "type": "pass_set"
+  },
+  "QB": {
+   "type": "qbPath",
+   "through": [
+    [
+     0,
+     -5.8
+    ]
+   ],
+   "timing": {
+    "duration": 1.0
+   }
+  },
+  "RB": {
+   "type": "pass_set"
+  }
+ },
+ "defaults": {
+  "receivers": {
+   "type": "go",
+   "depth": 9
+  }
+ },
+ "relationships": [
+  {
+   "type": "convoy",
+   "blockers": [
+    "PST",
+    "PSG"
+   ],
+   "runner": "TE"
+  }
+ ],
+ "ball": {
+  "to": "TE",
+  "at": 1
+ },
+ "primary": "TE",
+ "football": {
+  "rules": "The TE chips the end as if blocking, then drifts to the flat behind the line; the play-side tackle and guard release outside to lead. Receivers clear vertically."
+ },
+ "sources": [
+  "TE screen: chip-and-release TE with PST/PSG leading"
+ ],
+ "presentations": [
+  {
+   "formation": "singleback_tight_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
+  },
+  {
+   "formation": "ace_12",
+   "roles": {
+    "CUTOFF": "U"
+   }
+  }
+ ]
+}

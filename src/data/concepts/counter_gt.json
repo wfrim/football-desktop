@@ -112,6 +112,38 @@
   },
   {
    "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "pistol_strong_11",
+   "side": "weak",
+   "assignments": {
+    "Y": {
+     "type": "lead",
+     "at": [
+      "-c",
+      0.3
+     ]
+    }
+   },
+   "tweaks": {
+    "RB": {
+     "through": [
+      [
+       -0.8,
+       -7.1
+      ]
+     ]
+    },
+    "QB": {
+     "through": [
+      "mesh",
+      [
+       -1.4,
+       -5.6
+      ]
+     ]
+    }
+   }
   }
  ]
 }

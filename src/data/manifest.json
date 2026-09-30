@@ -55,6 +55,10 @@
     "concepts/counter_gt.json",
     "concepts/duo.json",
     "concepts/split_zone.json",
-    "concepts/pin_pull.json"
+    "concepts/pin_pull.json",
+    "concepts/hank.json",
+    "concepts/pa_crossers.json",
+    "concepts/middle_screen.json",
+    "concepts/te_screen.json"
   ]
 }

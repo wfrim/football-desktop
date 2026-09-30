@@ -36,6 +36,10 @@
     "type": "sit",
     "depth": 3.5
    }
+  },
+  "#3?": {
+   "type": "sit",
+   "depth": 7
   }
  },
  "relationships": [
@@ -83,6 +87,9 @@
    "roles": {
     "IN2": "#3"
    }
+  },
+  {
+   "formation": "gun_empty_11"
   }
  ]
 }

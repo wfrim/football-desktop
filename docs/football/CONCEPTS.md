@@ -8,7 +8,7 @@ Where coaching systems differ, one presentation is chosen and the choice is writ
 concept's `football` block. Assumed defensive fronts are noted where blocking depends on
 them; defenders are never drawn.
 
-91 plays · 42 concepts · 9 formations
+101 plays · 46 concepts · 9 formations
 
 ## Dropback pass
 
@@ -30,7 +30,7 @@ them; defenders are never drawn.
 
 ### Four Verticals
 
-- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Gun Trey (11, right)
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right) · Gun Trey (11, right) · Gun Empty (11, right)
 - **Wallpaper:** "Stretches the defense across all four deep lanes."
 - **Defining relationship:** lanes
 - **Read:** Read the middle safety: throw the seam he doesn't take; outside go vs off-leverage corners; RB check-down.
@@ -126,6 +126,14 @@ them; defenders are never drawn.
 - **Read:** High-low the flat defender: he sinks under the curl → flat; he widens to the flat → curl. Mirrored so the QB picks the better side pre-snap.
 - **Sources:** Project handoff #1 — canonical presentation, route depths and relationship; Curl-flat: Cover 2 beater, mirrored both sides (most common 2x2 presentation)
 
+### Hank
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** ZONE BEATER — "Curls outside, hooks inside: sit down in the holes of the zone."
+- **Defining relationship:** high_low
+- **Read:** Four receivers settle in the seams of the zone (curls at 10, hooks at 6); the back is the flat outlet. Throw to whichever hole the underneath defenders vacate.
+- **Sources:** Hank (curl-hook) concept: outside curls, inside hooks, RB flat
+
 ### Slant-Flat
 
 - **Presentations:** Gun Doubles (11, right) · Gun Empty (11, right)
@@ -175,6 +183,14 @@ them; defenders are never drawn.
 - **Defining relationship:** levels
 - **Rules:** Line and RB sell outside zone right; QB fakes and boots left (naked). X clears, Z deep over, Y drag, U flat: a three-level flood in front of the QB.
 - **Sources:** Outside zone boot: over / drag / flat flood off wide-zone action
+
+### PA Crossers
+
+- **Presentations:** Singleback Tight (12, right) · Ace (12, right) · I-Formation (21, right)
+- **Wallpaper:** PLAY-ACTION · MIDDLE OF THE FIELD — "A hard run fake pulls the linebackers up; two crossers pass behind them."
+- **Defining relationship:** high_low
+- **Rules:** Inside-zone action; the line shows run (base blocks), backs protect. The TE crosses at 11 under the backside receiver's deep dig at 16, both behind the linebackers who bit on the fake; the go clears the corner.
+- **Sources:** Play-action crossers: run fake + TE cross under a deep dig
 
 ### Yankee
 
@@ -232,6 +248,14 @@ them; defenders are never drawn.
 - **Rb:** Check-block, slip out behind the LOS, catch, get behind the convoy.
 - **Sources:** OpenPlay Football — Halfback Screen (pass-rush manipulation); Standard slow-screen timing: OL sell pass for ~1 count, then release
 
+### Middle Screen
+
+- **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
+- **Wallpaper:** PASS-RUSH ANSWER — "The interior line releases; the back slips in behind them."
+- **Defining relationship:** convoy
+- **Rules:** Everyone sells dropback. The tackles ride the ends past the QB; the guards and center hold a count, then release to the second level. The back slips into the vacated middle behind them.
+- **Sources:** Middle screen: interior OL release, RB slips between the tackles
+
 ### Smoke Screen
 
 - **Presentations:** Gun Doubles (11, right) · Gun Trips (11, right)
@@ -240,9 +264,17 @@ them; defenders are never drawn.
 - **Rules:** Vs off coverage: the outside receiver takes one step back and catches it immediately; #2 blocks the corner, #3 the next defender inside.
 - **Sources:** Smoke / now screen: quick throw to #1, #2 blocks the corner
 
+### TE Screen
+
+- **Presentations:** Singleback Tight (12, right) · Ace (12, right)
+- **Wallpaper:** PASS-RUSH ANSWER — "The tight end chips, drifts out, and follows two linemen to the edge."
+- **Defining relationship:** convoy
+- **Rules:** The TE chips the end as if blocking, then drifts to the flat behind the line; the play-side tackle and guard release outside to lead. Receivers clear vertically.
+- **Sources:** TE screen: chip-and-release TE with PST/PSG leading
+
 ### Tunnel Screen
 
-- **Presentations:** Gun Doubles (11, left) · Gun Trips (11, right)
+- **Presentations:** Gun Doubles (11, left)
 - **Wallpaper:** PRESSURE ANSWER — "The receiver comes back inside behind a wall of linemen."
 - **Defining relationship:** convoy
 - **Rules:** X sells two steps upfield and comes back under the slot, behind the LOS; H kicks out the corner; LT releases outside and LG inside to build the tunnel. C, RG, RT hold protection.
@@ -268,7 +300,7 @@ them; defenders are never drawn.
 
 ### Counter GT
 
-- **Presentations:** Gun Trips (11, right) · Gun Doubles (11, left)
+- **Presentations:** Gun Trips (11, right) · Gun Doubles (11, left) · Pistol Strong (11, left)
 - **Wallpaper:** MISDIRECTION · GAP RUN — "Backfield action flows one way before two pullers lead the run back."
 - **Defining relationship:** wall, pull
 - **Rules:** RT, RG down; C back. LG pulls flat and kicks out the end man; LT pulls deeper behind him and wraps through the hole to the play-side LB. Backside DE is left: the QB's carry-out holds him.

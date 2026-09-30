@@ -1,0 +1,72 @@
+{
+ "conceptId": "hank",
+ "name": "Hank",
+ "family": "quick_pass",
+ "subfamily": "hooks",
+ "side": "strength",
+ "copy": {
+  "title": "HANK",
+  "situation": "ZONE BEATER",
+  "description": "Curls outside, hooks inside: sit down in the holes of the zone."
+ },
+ "assignments": {
+  "#1": {
+   "type": "curl",
+   "depth": 10
+  },
+  "#2": {
+   "type": "sit",
+   "depth": 6
+  },
+  "bs#1": {
+   "type": "curl",
+   "depth": 10
+  },
+  "bs#2?": {
+   "type": "sit",
+   "depth": 6
+  },
+  "#3?": {
+   "type": "flat",
+   "dir": "right",
+   "width": 7
+  },
+  "RB?": {
+   "type": "pass_set_then_release",
+   "release": {
+    "type": "flat",
+    "width": 7
+   }
+  }
+ },
+ "relationships": [
+  {
+   "type": "high_low",
+   "high": "#1",
+   "low": "#2"
+  }
+ ],
+ "ball": {
+  "to": "#2",
+  "at": 1
+ },
+ "reads": [
+  "#2",
+  "#1",
+  "RB"
+ ],
+ "football": {
+  "read": "Four receivers settle in the seams of the zone (curls at 10, hooks at 6); the back is the flat outlet. Throw to whichever hole the underneath defenders vacate."
+ },
+ "sources": [
+  "Hank (curl-hook) concept: outside curls, inside hooks, RB flat"
+ ],
+ "presentations": [
+  {
+   "formation": "gun_doubles_11"
+  },
+  {
+   "formation": "gun_trips_11"
+  }
+ ]
+}
