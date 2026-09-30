@@ -51,6 +51,19 @@ html[data-theme="paper"] {
   --field-k: 1.8;
 }
 
+/* Stadium: a real field at night — turf green, bright white paint, marked end zones. */
+html[data-theme="stadium"] {
+  --bg: #0e2418;
+  --bg-lift: #143020;
+  --bg-deep: #0a1b12;
+  --ink: #f5f8f3;
+  --ink-2: rgba(245, 248, 243, 0.7);
+  --ink-3: rgba(245, 248, 243, 0.42);
+  --accent: #ffd34d;
+  --vignette: rgba(2, 10, 5, 0.45);
+  --field-k: 2.2;
+}
+
 /* Theme swaps fade the whole page briefly (see theme.js). */
 body { transition: opacity 0.45s ease; }
 body.is-theming { opacity: 0; }

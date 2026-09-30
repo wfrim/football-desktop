@@ -292,3 +292,17 @@
 .def.ink-medium { --def: 0.55; }
 .def.ink-full { --def: 0.9; }
 .def.ink-full .def-mark, .def.ink-full .a-def { stroke-width: var(--sw-route); }
+
+/* ── Stadium field (Theme → Stadium). Hidden elsewhere; the field layer is static. ── */
+.field-stripe, .field-endzone-hatch, .field-post, .field-paint, .field-side { display: none; }
+html[data-theme="stadium"] .field-stripe { display: inline; fill: #fff; fill-opacity: 0.018; }
+html[data-theme="stadium"] .field-side { display: inline; stroke-opacity: 0.85; stroke-width: calc(var(--sw-field) * 3); }
+html[data-theme="stadium"] .field-yard { stroke-opacity: 0.42; stroke-width: calc(var(--sw-field) * 1.6); }
+html[data-theme="stadium"] .field-hash { stroke-opacity: 0.55; stroke-width: calc(var(--sw-field) * 1.4); }
+html[data-theme="stadium"] .field-goal { stroke-opacity: 0.95; stroke-width: calc(var(--sw-field) * 2.4); }
+html[data-theme="stadium"] .field-endzone { fill-opacity: 0.05; }
+html[data-theme="stadium"] .field-endzone-hatch { display: inline; }
+html[data-theme="stadium"] .field-hatch { stroke: #fff; stroke-opacity: 0.16; stroke-width: 0.25; }
+html[data-theme="stadium"] .field-post { display: inline; fill: none; stroke: var(--accent); stroke-opacity: 0.8; stroke-width: calc(var(--sw-field) * 2.5); }
+html[data-theme="stadium"] .field-paint { display: inline; fill: #fff; fill-opacity: 0.22; font-family: var(--font-display); font-weight: 600; }
+html[data-theme="stadium"] .field-cross { stroke-opacity: 0.12; }

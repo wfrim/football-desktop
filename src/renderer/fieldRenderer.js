@@ -33,6 +33,9 @@ window.FD = window.FD || {};
       el('rect', { x: -150, y: -150, width: 300, height: 300, fill: 'url(#fd-grid)' }, g);
 
       el('rect', { x: f(-hw), y: Y0, width: f(hw * 2), height: Y1 - Y0, class: 'field-surface' }, g);
+      // Stadium look (theme): end-zone slashes. Hidden by CSS in the other themes.
+      const hatch = el('pattern', { id: 'fd-hatch', patternUnits: 'userSpaceOnUse', width: 2.2, height: 2.2, patternTransform: 'rotate(45)' }, defs);
+      el('path', { d: 'M0 0V2.2', class: 'field-hatch' }, hatch);
 
       // Markings that depend on field position live in their own group and
       // are rebuilt only when the spot changes (a handful of paths).
@@ -65,6 +68,7 @@ window.FD = window.FD || {};
         let yard = '';
         let ticks = '';
         let goals = '';
+        let stripes = '';
         for (let d = Y0; d <= Y1; d++) {
           const Y = spot === null ? d : spot + d;         // yard line index (own goal = 0)
           if (spot !== null && (Y < -10 || Y > 110)) continue;
@@ -74,6 +78,7 @@ window.FD = window.FD || {};
             if (Y === -10 || Y === 110) goals += `M${f(-hw)} ${y}H${f(hw)}`;
             continue;
           }
+          if (Y % 10 === 0 && d < Y1) stripes += `M${f(-hw)} ${y}h${f(hw * 2)}v-5h${f(-hw * 2)}z`;
           if (Y % 5 === 0) {
             yard += `M${f(-hw)} ${y}H${f(hw)}`;
           } else {
@@ -81,8 +86,10 @@ window.FD = window.FD || {};
             ticks += `M${f(-hw)} ${y}h0.5M${f(hw)} ${y}h-0.5`;
           }
         }
+        el('path', { d: stripes, class: 'field-stripe' }, dyn);
         el('path', { d: yard, class: 'field-line field-yard' }, dyn);
         el('path', { d: ticks, class: 'field-line field-hash' }, dyn);
+        el('path', { d: `M${f(-hw)} ${-Y1}V${-Y0}M${f(hw)} ${-Y1}V${-Y0}`, class: 'field-line field-side' }, dyn);
 
         if (spot === null) {
           // Architectural depth annotations (classic, LOS-relative).
@@ -96,6 +103,27 @@ window.FD = window.FD || {};
           const d1 = to - spot;
           if (d1 < Y0 || d0 > Y1) continue;
           el('rect', { x: f(-hw), y: -d1, width: f(hw * 2), height: 10, class: 'field-endzone' }, dyn);
+        }
+        // Stadium: slashes across each end zone, goal posts on the end lines,
+        // yard numbers painted on the field (turned to face the sidelines).
+        for (const [from, to] of [[100, 110], [-10, 0]]) {
+          const d0 = from - spot;
+          const d1 = to - spot;
+          if (d1 < Y0 || d0 > Y1) continue;
+          el('rect', { x: f(-hw), y: -d1, width: f(hw * 2), height: 10, class: 'field-endzone-hatch', fill: 'url(#fd-hatch)' }, dyn);
+          const endY = -(from === 100 ? d1 : d0);
+          el('path', { d: `M${f(-3.08)} ${f(endY)}H3.08M${f(-3.08)} ${f(endY)}v${from === 100 ? -1.2 : 1.2}M3.08 ${f(endY)}v${from === 100 ? -1.2 : 1.2}`, class: 'field-post' }, dyn);
+        }
+        for (let Y = 10; Y <= 90; Y += 10) {
+          const d = Y - spot;
+          if (d < -12 || d > 24) continue;
+          for (const sgn of [-1, 1]) {
+            const t = el('text', {
+              x: 0, y: 0, 'font-size': 2, class: 'field-paint', 'text-anchor': 'middle', 'dominant-baseline': 'central',
+              transform: `translate(${f(sgn * (hw - 7))} ${f(-d)}) rotate(${sgn * 90})`,
+            }, dyn);
+            t.textContent = String(Y <= 50 ? Y : 100 - Y);
+          }
         }
         // Yard numbers every ten, goal lines marked G.
         for (let Y = 0; Y <= 100; Y += 10) {

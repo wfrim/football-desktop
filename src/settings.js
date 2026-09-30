@@ -17,7 +17,7 @@ window.FD = window.FD || {};
   // Order = display order in the panel. Values are what the renderer understands.
   const SCHEMA = {
     // Look
-    theme:      { group: 'Look', label: 'Theme',       choices: [['auto', 'Auto'], ['night', 'Night'], ['blueprint', 'Blueprint'], ['chalk', 'Chalk'], ['paper', 'Paper']], def: 'night' },
+    theme:      { group: 'Look', label: 'Theme',       choices: [['auto', 'Auto'], ['night', 'Night'], ['blueprint', 'Blueprint'], ['chalk', 'Chalk'], ['paper', 'Paper'], ['stadium', 'Stadium']], def: 'night' },
     brightness: { group: 'Look', label: 'Brightness',  choices: [['normal', 'Normal'], ['dim', 'Dim']], def: 'normal' },
     text:       { group: 'Look', label: 'Text',        choices: [['full', 'Full'], ['title', 'Title only'], ['none', 'None']], def: 'full' },
     lines:      { group: 'Look', label: 'Lines',       choices: [['precise', 'Precise'], ['hand', 'Hand-drawn']], def: 'precise' },
