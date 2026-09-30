@@ -137,6 +137,11 @@ window.FD = window.FD || {};
     // ── After the ball: carrier turns upfield; defenders pursue (game) ─────
     // Defensive backs read and react a beat after the ball comes out.
     if (game) for (const x of D) if (x.d.glyph === 'db') x.release = Math.max(x.release, ev.t + 0.35);
+    // Cooperative: the offense wins the play, gains a few yards after the catch or
+    // the line, then the defense closes and makes the stop.
+    const coopStop = game && o.call !== 'comp';
+    const budget = 4 + Math.floor(hash01(`${o.seed}:yac`) * 9);
+    let travelled = 0;
     let pos = ev.point.slice();
     let dir = norm(ev.dir || [0, -1]);
     const pts = [pos.slice()];
@@ -166,16 +171,27 @@ window.FD = window.FD || {};
       if (Math.abs(ang) > lim) heading = [Math.sin(Math.sign(ang) * lim), -Math.cos(lim)];
       dir = heading;
       const tired = k * DT > 1.5 ? 0.82 : 1; // carriers slow after a burst
-      pos = G.add(pos, G.mul(heading, vRun * tired * DT));
+      const stepLen = vRun * tired * DT;
+      pos = G.add(pos, G.mul(heading, stepLen));
       pos[0] = Math.max(-26 + 1, Math.min(26 - 1, pos[0]));
+      travelled += stepLen;
       pts.push(pos.slice());
 
       for (const x of D) {
-        if (game && t >= x.release) step(x, G.add(pos, G.mul(heading, vRun * 0.6)), vDef * (x.d.glyph === 'db' ? 1.08 : 1));
-        else if (!game) phaseA(x, t);
-        else phaseA(x, t);
+        const react = ev.t + (x.d.glyph === 'db' ? 0.35 : 0.2);
+        const pursuing = !x.dl || x.release !== Infinity ? t >= Math.max(x.release, react) : false;
+        if (pursuing) {
+          // Pursuit angle: aim where the carrier will be when we get there.
+          const d = G.dist(x.pos, pos);
+          let v = vDef * (x.d.glyph === 'db' ? 1.08 : 1);
+          if (coopStop && travelled >= budget) v *= 1.7;   // the stop arrives
+          if (!game) v *= 0.85;                            // Live offense: chase, don't catch
+          const tau = Math.min(1.2, d / v);
+          step(x, G.add(pos, G.mul(heading, vRun * tired * tau)), v);
+        } else phaseA(x, t);
         x.track.push([t + DT, x.pos[0], x.pos[1]]);
-        if (game && t >= x.release && G.dist(x.pos, pos) < 1.15 && !tackled) tackled = x.d.id;
+        const canTackle = game && pursuing && (!coopStop || travelled >= budget * 0.8);
+        if (canTackle && G.dist(x.pos, pos) < 1.15 && !tackled) tackled = x.d.id;
       }
       if (tackled) break;
       if (o.goalY !== null && o.goalY !== undefined && pos[1] <= o.goalY) { scored = true; break; }
