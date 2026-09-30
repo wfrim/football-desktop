@@ -45,6 +45,8 @@ window.FD = window.FD || {};
           if (parts.result) { parts.result.textContent = ''; parts.result.classList.remove('is-shown'); }
           setText('flag', play._mock && cfg.mockTag ? 'Mock data' : '');
         },
+        /** Live game: the defensive call this play runs into. */
+        matchup(text) { setText('matchup', text); },
         /** Drive mode: the play's result, shown during the hold. */
         result(text) {
           if (!parts.result) return;

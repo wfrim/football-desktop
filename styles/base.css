@@ -112,6 +112,17 @@ body {
   margin-top: 1.35em !important;
 }
 
+/* Live game: the defensive call, under the offensive one. */
+.hud-matchup {
+  margin-top: 0.4em !important;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(15px, 1.35vw, 26px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
 .hud-formation {
   margin-top: 0.45em !important;
   color: var(--ink-3);

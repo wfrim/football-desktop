@@ -287,3 +287,8 @@
 /* Option routes as a route tree (Settings → Option routes: Decide). */
 .a-wrap.is-tree .a { stroke-opacity: 0.5; }
 .a-wrap.is-tree .a-head { fill-opacity: 0.45; }
+
+/* Settings → Defense ink: the faint defense at a heavier weight, up to the offense's. */
+.def.ink-medium { --def: 0.55; }
+.def.ink-full { --def: 0.9; }
+.def.ink-full .def-mark, .def.ink-full .a-def { stroke-width: var(--sw-route); }

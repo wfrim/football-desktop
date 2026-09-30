@@ -21,6 +21,11 @@ window.FD = window.FD || {};
       return;
     }
 
+    // The defensive playbook: one call per defensive concept (Live game, Competitive).
+    const seenCall = new Set();
+    cfg.defBook = plays.filter((p) => p.family === 'defense' && p.defense && !seenCall.has(p.conceptId) && seenCall.add(p.conceptId))
+      .map((p) => ({ id: p.conceptId, name: (p.copy && p.copy.title) || p.name, sub: p.subfamily, look: p.defense }));
+
     // ?check=1: build every play once, collect warnings, stop. Results land on
     // <html data-check> so headless Chrome (--dump-dom) can read them: tools/check.sh
     if (cfg.check) {
@@ -141,6 +146,7 @@ window.FD = window.FD || {};
       try {
         scene = FD.PlayRenderer.build(info.play, stage, cfg);
         hud.set(info.play, info, cfg);
+        hud.matchup(cfg.settings.matchup !== 'off' ? scene.matchup : '');
 
         const profile = FD.Config.profile(cfg);
         // Live game: the simulation's outcome is the result (and drives follow it).

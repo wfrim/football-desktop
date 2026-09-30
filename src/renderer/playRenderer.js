@@ -275,6 +275,27 @@ window.FD = window.FD || {};
     }
   }
 
+  const COVER_LABEL = {
+    cover0: 'COVER 0', cover1: 'COVER 1', robber: 'COVER 1 ROBBER', cover2: 'COVER 2', tampa2: 'TAMPA 2',
+    cover2man: '2-MAN', cover3: 'COVER 3', buzz: 'COVER 3 BUZZ', cover4: 'QUARTERS', cover6: 'COVER 6',
+  };
+
+  /**
+   * Competitive: a defensive call from the playbook (def_* concepts), weighted
+   * by what the offense shows — coverage vs the pass, fronts and pressure vs
+   * the run, more pressure on third and long.
+   */
+  function pickCall(book, play, place) {
+    const run = play.family === 'run';
+    const long = place && place.situation && /^3RD|^4TH/.test(place.situation) && place.distance >= 7;
+    const W = run ? { coverage: 1, pressure: 3, stunt: 2, front: 4 } : { coverage: 5.5, disguise: 2, pressure: long ? 6 : 3, stunt: 1, front: 0.5 };
+    let total = 0;
+    const w = book.map((c) => { const v = W[c.sub] || 1; total += v; return v; });
+    let r = Math.random() * total;
+    for (let i = 0; i < book.length; i++) { r -= w[i]; if (r <= 0) return book[i]; }
+    return book[book.length - 1];
+  }
+
   const PlayRenderer = {
     layout,
     deepest,
@@ -319,17 +340,20 @@ window.FD = window.FD || {};
       if (defFocus) root.classList.add('focus-defense');
       if (defMode !== 'off' && FD.Defense && play.defense !== false) {
         try {
-          // Live game + Competitive: the defense makes its own call instead of the one the concept beats.
+          // Live game + Competitive: the defense calls a play from the defensive
+          // playbook instead of the look the concept is built to beat.
           let look = play.defense;
+          let callName = null;
           const st = cfg.style || (cfg.settings && cfg.settings.style);
-          if (st === 'game' && cfg.settings && cfg.settings.call === 'comp' && !defFocus) {
-            const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-            look = { coverage: pick(['cover1', 'robber', 'cover2', 'tampa2', 'cover2man', 'cover3', 'buzz', 'cover4', 'cover6']) };
-            if (play.family === 'run') look.front = pick([{ play: [3, 5], back: [1, 5] }, { play: [1, 5], back: [3, 5] }, { play: [3, 5], back: [3, 5] }]);
-            if (Math.random() < 0.15) look = { coverage: 'cover0', moves: { MIKE: { blitz: 'a_ps' } } };
+          if (st === 'game' && cfg.settings && cfg.settings.call === 'comp' && !defFocus && cfg.defBook && cfg.defBook.length) {
+            const call = pickCall(cfg.defBook, play, place);
+            look = Object.assign({}, call.look);
+            callName = call.name;
           }
           defData = FD.Defense.build(play, Object.assign({}, look, defFocus ? { rush: true } : null), ballX);
           defData.call = look;
+          const cov = COVER_LABEL[(look && look.coverage) || defData.look.coverage] || '';
+          defData.callName = callName || cov;
           const n = defData.defenders.length;
           if (n !== 11) warnings.push(`defense: ${n} defenders`);
           for (const d of defData.defenders) {
@@ -503,7 +527,8 @@ window.FD = window.FD || {};
         const k = FD.Defense.keyOf(defData.defenders, defData.look.key);
         defense = FD.DefenseRenderer.create({
           parent: layers.defense, defs: stage.defs, defenders: defData.defenders, toSvg, players,
-          keyId: k ? k.id : null, showKey: defMode === 'key', bold: play.family === 'defense',
+          keyId: k ? k.id : null, showKey: defMode === 'key', bold: play.family === 'defense' || defMode === 'bold',
+          ink: cfg.settings ? cfg.settings.defink : 'faint',
         });
         destroyers.push(defense.destroy);
       }
@@ -644,6 +669,8 @@ window.FD = window.FD || {};
         warnings,
         reframed,
         fieldShift: place && place.shift && !reframed ? place.shift : 0,
+        // Live game: "VS COVER 3 SKY · NICKEL" under the offensive call.
+        matchup: defData && style === 'game' && !defFocus && defData.callName ? `vs ${defData.callName}${defData.label ? ` \u00B7 ${defData.label}` : ''}` : '',
         field: stage.field,
         setOpacity(o) { root.setAttribute('opacity', f(o)); },
         /** Add a drawable created later (e.g. by choreography) to teardown. */

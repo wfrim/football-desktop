@@ -32,7 +32,7 @@ window.FD = window.FD || {};
      * Returns { glyphs:[{setAppear}], moves:[{view, length, rush, delay}], rotations, key, destroy }.
      */
     create(o) {
-      const g = el('g', { class: `def${o.bold ? ' is-bold' : ''}` }, o.parent);
+      const g = el('g', { class: `def${o.bold ? ' is-bold' : ''}${o.ink && o.ink !== 'faint' ? ` ink-${o.ink}` : ''}` }, o.parent);
       const rotations = [];
       const destroyers = [() => g.remove()];
       const glyphs = [];
@@ -91,7 +91,8 @@ window.FD = window.FD || {};
           if (isKey) view.el.classList.add('is-key');
           if (rush) view.el.classList.add('is-rush');
           destroyers.push(view.destroy);
-          moves.push({ view, length: view.length, id: d.id, rush, delay: d.delay || 0 });
+          moves.push({ view, length: view.length, id: d.id, rush, delay: d.delay || 0, at,
+            blitz: rush && (d.glyph !== 'dl' || /^stunt/.test(d.job || '')) });
         }
         if (isKey) {
           const ring = el('circle', { cx: f(at[0]), cy: f(at[1]), r: 0.5, class: 'def-ring', opacity: 0 }, g);

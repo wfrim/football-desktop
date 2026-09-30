@@ -151,6 +151,10 @@ window.FD = window.FD || {};
           tl.track(P.motion - 0.3, P.snap - P.motion + 0.25, (p) => { r.view.setProgress(p); r.setT(p); }, 'inOutSine');
         }
         if (D.key) tl.track(P.read, T.catchPulse * 1.2, (p) => D.key.pulse(p), 'outCubic');
+        // Blitz tell (Settings): one ripple on every blitzer / stunter right before the snap.
+        if (cfg.settings && cfg.settings.blitz === 'on') {
+          D.moves.filter((m) => m.blitz).forEach((m, i) => momentRing(scene, tl, m.at, P.snap - 0.65 + i * 0.06, false));
+        }
       }
 
       // Option routes shown as a route tree: every branch dots out with the
