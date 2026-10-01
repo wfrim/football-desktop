@@ -4,7 +4,7 @@
 
 A minimalist, animated football play-art wallpaper for macOS, built to run in [Plash](https://sindresorhus.com/plash). Plain HTML/CSS/JS and SVG; no dependencies, no network, no build step.
 
-> 25 plays across dropback, quick game, play-action, runs (zone, gap, iso, toss) and screens. Full list: `docs/football/CONCEPTS.md`.
+> 354 plays across offense (spread, pro, Wing-T, Power T, Wildcat, goal line, trick plays) and a full defensive playbook. Full list: `docs/football/CONCEPTS.md`.
 
 ## Run it
 
