@@ -46,6 +46,7 @@ window.FD = window.FD || {};
     speed:      { group: 'Motion', label: 'Pace',        choices: [['0.55', 'Extra slow'], ['0.8', 'Slow'], ['1', 'Normal'], ['1.25', 'Quick']], def: '1' },
     length:     { group: 'Motion', label: 'Play length', choices: [['7', '7 s'], ['9', '9 s'], ['12', '12 s'], ['16', '16 s'], ['24', '24 s']], def: '9' },
     transition: { group: 'Motion', label: 'Transition',  choices: [['fade', 'Fade'], ['rewind', 'Rewind']], def: 'fade' },
+    pause:      { group: 'Motion', label: 'Click to pause', choices: [['on', 'On'], ['off', 'Off']], def: 'on' },
     moments:    { group: 'Motion', label: 'Moments',     choices: [['on', 'On'], ['off', 'Off']], def: 'on' },
   };
 

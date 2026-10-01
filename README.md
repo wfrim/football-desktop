@@ -22,7 +22,8 @@ Click the play counter (bottom right) to open the settings sheet:
   wing-T / goal line / trick plays / defense), library (everything / offense / defense /
   runs / passes / screens), defense (off / faint / faint + key / bold), defense ink,
   blitz tell, matchup label, field position, hash, drive mode, drive flow
-- Motion: motion (full / calm / still), pace, play length, transition, moments Settings are saved on
+- Motion: motion (full / calm / still), pace, play length, transition, click to pause, moments
+- Click the wallpaper to pause; ←/→ step through the play, drag the scrubber, click or Space to resume Settings are saved on
 this Mac. In Plash, clicks only reach the page in **Browsing Mode** (Plash menu →
 Browsing Mode); turn it off again afterwards.
 

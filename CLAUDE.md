@@ -116,6 +116,9 @@ unrecognizable, football correctness wins.
   `kind`/`label` keep his RB look). QA: check mode flags a ball > 0.6 yd off its holder.
 - Playbooks: `src/data/playbooks.js` (formations / concepts / tags / families filters).
   Drive mode: goal-line tags only inside the 5 or short yardage; one trick play per drive.
+- Click to pause (`src/pauseView.js`, Animator pause/resume/seek): click the wallpaper to
+  freeze; ←/→ step 0.1 s (Shift 1 s), scrub bar, click/Space resumes. Timeline events don't
+  rewind when scrubbing back (HUD text may lag); nothing animates while paused.
 - Other settings: Library, Text, Brightness, Lines (hand-drawn), Transition (rewind),
   Zoom, Play length, Pace (extra slow), Moments (one ring pulse per play).
 - `node tools/bundle-data.mjs` also cache-busts every asset URL in index.html:

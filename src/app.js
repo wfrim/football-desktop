@@ -123,6 +123,7 @@ window.FD = window.FD || {};
     FD.app = { cfg, stage, animator, playlist }; // handy from the console
 
     if (FD.SettingsPanel) FD.SettingsPanel.create(document.querySelector('.hud-counter'));
+    if (FD.PauseView) FD.PauseView.create(animator);
 
     let drive = null;
     let failures = 0;

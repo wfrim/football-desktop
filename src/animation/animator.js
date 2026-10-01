@@ -39,9 +39,40 @@ window.FD = window.FD || {};
         this._tl = timeline;
         this._resolve = resolve;
         this._t0 = performance.now();
+        this._userPaused = false;
         this._pausedAt = document.hidden ? this._t0 : 0;
         if (!document.hidden) this._requestFrame();
       });
+    }
+
+    // ── Click-to-pause (pauseView.js) ─────────────────────────────────────
+    get paused() { return !!this._userPaused; }
+    get duration() { return this._tl ? this._tl.duration : 0; }
+    /** Current play time (seconds of timeline). */
+    now() {
+      if (!this._tl) return 0;
+      return this._time(this._pausedAt || performance.now());
+    }
+    pause() {
+      if (!this._tl || this._userPaused) return;
+      this._userPaused = true;
+      if (!this._pausedAt) this._pausedAt = performance.now();
+      this._cancel();
+    }
+    resume() {
+      if (!this._userPaused) return;
+      this._userPaused = false;
+      if (document.hidden || !this._tl) return;
+      this._t0 += performance.now() - this._pausedAt;
+      this._pausedAt = 0;
+      this._requestFrame();
+    }
+    /** While paused: show the play at time t (seconds) and continue from there on resume. */
+    seek(t) {
+      if (!this._tl || !this._pausedAt) return;
+      const tt = Math.max(0, Math.min(this._tl.duration - 0.02, t));
+      this._t0 = this._pausedAt - (tt / this.timeScale) * 1000;
+      this._tl.evaluate(tt);
     }
 
     destroy() {
@@ -120,7 +151,7 @@ window.FD = window.FD || {};
       if (document.hidden) {
         if (!this._pausedAt) this._pausedAt = performance.now();
         this._cancel();
-      } else if (this._pausedAt) {
+      } else if (this._pausedAt && !this._userPaused) {
         // Shift the origin so the play resumes exactly where it left off.
         this._t0 += performance.now() - this._pausedAt;
         this._pausedAt = 0;
