@@ -2,6 +2,8 @@
 
 **New here? Start with [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)**: install Plash, set it as your wallpaper, and a tour of every setting.
 
+WIP! 
+
 A minimalist, animated football play-art wallpaper for macOS, built to run in [Plash](https://sindresorhus.com/plash). Plain HTML/CSS/JS and SVG; no dependencies, no network, no build step.
 
 > 354 plays across offense (spread, pro, Wing-T, Power T, Wildcat, goal line, trick plays) and a full defensive playbook. Full list: `docs/football/CONCEPTS.md`.
