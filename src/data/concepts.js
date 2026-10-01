@@ -44,7 +44,7 @@ window.FD = window.FD || {};
     dropback_pass: 'PASS', quick_pass: 'QUICK GAME', play_action: 'PLAY-ACTION',
     screen: 'SCREEN', run: 'RUN', rpo: 'RPO', defense: 'DEFENSE',
   };
-  const PACKAGE_LABEL = { nickel: 'NICKEL 4-2-5', base: 'BASE 4-3', '34': '3-4', dime: 'DIME 4-1-6', bear: 'BEAR 46', '335': '3-3-5 STACK' };
+  const PACKAGE_LABEL = { nickel: 'NICKEL 4-2-5', base: 'BASE 4-3', '34': '3-4', dime: 'DIME 4-1-6', bear: 'BEAR 46', '335': '3-3-5 STACK', gl65: 'GOAL LINE 6-5', gl53: 'GOAL LINE 5-3' };
 
   function analyze(f) {
     const ps = f.players;

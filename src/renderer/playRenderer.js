@@ -467,7 +467,7 @@ window.FD = window.FD || {};
 
       // ── Faint defense data (built before the camera so the frame fits it) ─
       let defData = null;
-      const defFocus = play.family === 'defense';
+      const defFocus = play.family === 'defense' || !!play._defFocus; // defense-first (also live: a defensive call vs a real offense)
       const defMode = defFocus ? 'key' : cfg.settings ? cfg.settings.defense : 'off';
       if (defFocus) root.classList.add('focus-defense');
       if (defMode !== 'off' && FD.Defense && play.defense !== false) {
@@ -482,7 +482,7 @@ window.FD = window.FD || {};
             look = Object.assign({}, call.look);
             callName = call.name;
           }
-          defData = FD.Defense.build(play, Object.assign({}, look, defFocus ? { rush: true } : null), ballX);
+          defData = FD.Defense.build(play, Object.assign({}, look, defFocus && play.family !== 'run' ? { rush: true } : null), ballX);
           defData.call = look;
           const cov = COVER_LABEL[(look && look.coverage) || defData.look.coverage] || '';
           defData.callName = callName || cov;
@@ -659,7 +659,7 @@ window.FD = window.FD || {};
         const k = FD.Defense.keyOf(defData.defenders, defData.look.key);
         defense = FD.DefenseRenderer.create({
           parent: layers.defense, defs: stage.defs, defenders: defData.defenders, toSvg, players,
-          keyId: k ? k.id : null, showKey: defMode === 'key', bold: play.family === 'defense' || defMode === 'bold',
+          keyId: k ? k.id : null, showKey: defMode === 'key', bold: defFocus || defMode === 'bold',
           ink: cfg.settings ? cfg.settings.defink : 'faint',
         });
         destroyers.push(defense.destroy);
@@ -802,7 +802,7 @@ window.FD = window.FD || {};
         reframed,
         fieldShift: place && place.shift && !reframed ? place.shift : 0,
         // Live game: "VS COVER 3 SKY · NICKEL" under the offensive call.
-        matchup: defData && style === 'game' && !defFocus && defData.callName ? `vs ${defData.callName}${defData.label ? ` \u00B7 ${defData.label}` : ''}` : '',
+        matchup: play._defFocus ? `vs ${play._offenseTitle}` : defData && style === 'game' && !defFocus && defData.callName ? `vs ${defData.callName}${defData.label ? ` \u00B7 ${defData.label}` : ''}` : '',
         field: stage.field,
         frame: stage.frame,
         setOpacity(o) { root.setAttribute('opacity', f(o)); },

@@ -187,8 +187,25 @@ window.FD = window.FD || {};
       const info = playlist.next(pick || null);
       if (drive) info.drive = cfg.place;
       let scene = null;
+      // Live styles + a defensive call: run it against a real offensive play from
+      // the same formation (runs vs fronts / goal line, passes vs coverage and pressure).
+      let buildPlay = info.play;
+      if (info.play.family === 'defense' && liveStyle && cfg.settings.livedef !== 'off') {
+        const vsRun = /^(front|goal_line)$/.test(info.play.subfamily);
+        const fits = (p) => p.family !== 'defense' && !p.exchanges && (vsRun ? p.family === 'run' : p.family !== 'run' && !!p.ball);
+        const same = plays.filter((p) => fits(p) && p.formation.id === info.play.formation.id);
+        const pool = same.length ? same : plays.filter(fits);
+        const off = pool[Math.floor(Math.random() * pool.length)];
+        if (off) {
+          buildPlay = Object.assign({}, off, {
+            _defFocus: true, _offenseTitle: (off.copy && off.copy.title) || off.name,
+            defense: info.play.defense, copy: info.play.copy, situation: info.play.situation,
+          });
+          delete buildPlay._deepest;
+        }
+      }
       try {
-        scene = FD.PlayRenderer.build(info.play, stage, cfg);
+        scene = FD.PlayRenderer.build(buildPlay, stage, cfg);
         hud.set(info.play, info, cfg);
         hud.matchup(cfg.settings.matchup !== 'off' ? scene.matchup : '');
 

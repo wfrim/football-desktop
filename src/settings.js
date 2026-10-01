@@ -26,6 +26,7 @@ window.FD = window.FD || {};
     style:      { group: 'Football', label: 'Play style', choices: [['diagram', 'Diagram'], ['lead', 'Lead'], ['live', 'Live offense'], ['game', 'Live game']], def: 'diagram' },
     playout:    { group: 'Football', label: 'Play out', choices: [['standard', 'Standard'], ['extended', 'To the whistle']], def: 'standard' },
     note:       { group: 'Football', label: "Coach's note", choices: [['on', 'On'], ['off', 'Off']], def: 'on' },
+    livedef:    { group: 'Football', label: 'Live defense', choices: [['on', 'Vs real offense'], ['off', 'Diagram only']], def: 'on' },
     call:       { group: 'Football', label: 'Defense call', choices: [['coop', 'Cooperative'], ['comp', 'Competitive']], def: 'coop' },
     pursuit:    { group: 'Football', label: 'Pursuit',    choices: [['calm', 'Calm'], ['aggressive', 'Aggressive']], def: 'calm' },
     runout:     { group: 'Football', label: 'Run out', choices: [['on', 'On'], ['off', 'Off']], def: 'on' },
