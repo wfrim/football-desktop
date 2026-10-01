@@ -6,7 +6,7 @@
  "side": "strength",
  "copy": {
   "title": "YANKEE",
-  "situation": "PLAY-ACTION \u00b7 SHOT",
+  "situation": "PLAY-ACTION · SHOT",
   "description": "A deep over and a post off a hard run fake."
  },
  "assignments": {
@@ -81,6 +81,12 @@
   },
   {
    "formation": "singleback_doubles_11"
+  },
+  {
+   "formation": "power_t_32"
+  },
+  {
+   "formation": "wing_t_21"
   }
  ],
  "tags": [

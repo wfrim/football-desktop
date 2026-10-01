@@ -5,7 +5,7 @@
  "subfamily": "gap",
  "copy": {
   "title": "DUO",
-  "situation": "DOWNHILL · NO PULLERS",
+  "situation": "DOWNHILL \u00b7 NO PULLERS",
   "description": "Two double teams drive the front; the back reads the Mike."
  },
  "football": {
@@ -14,7 +14,7 @@
   "rb": "Downhill to the B gap; bounce or bang off the Mike's fit."
  },
  "sources": [
-  "Duo: 'power without a puller' — two vertical double teams, RB reads Mike"
+  "Duo: 'power without a puller' \u2014 two vertical double teams, RB reads Mike"
  ],
  "side": "strength",
  "assignments": {
