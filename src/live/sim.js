@@ -32,6 +32,8 @@ window.FD = window.FD || {};
   const norm = (v) => { const l = Math.hypot(v[0], v[1]) || 1; return [v[0] / l, v[1] / l]; };
   const OL = /^(LT|LG|C|RG|RT)$/;
   const DEEP = /^(deep_|half_|third_|out_q|in_q)/;
+  const CONTACT = 0.95; // carrier marker + defender glyph: touching
+  const SHADOW = 1.45;  // how close a defender who may not tackle yet gets
 
   /** Position of an offensive player (scene player) at clock time t, on his authored paths. */
   function playerPos(pl, t, toSvg) {
@@ -139,12 +141,14 @@ window.FD = window.FD || {};
       return Math.max(snap + 0.9, P.read - 0.3) + i * 0.55;
     };
     let deadT = null;
+    let curT = snap;
 
     // Run-after-catch steering state.
     let dir = null;
     let k = 0;
     let travelled = 0;
     const pts = [];
+    const tpts = []; // time of each run-after-catch point (the line draws in step with the runner)
     const budget = 4 + Math.floor(rnd('yac') * 9);
     const coopStop = game && coop;
 
@@ -157,6 +161,8 @@ window.FD = window.FD || {};
     let t = snap;
     for (; t < o.endT; t += DT) {
       const tn = t + DT;
+      for (const x of D) x.prev = x.pos.slice();
+      for (const b of O) b.prev = b.pos.slice();
 
       // ── The QB's decision (pass plays) ────────────────────────────────────
       if (passPlay && phase === 'pre' && qb) {
@@ -264,13 +270,20 @@ window.FD = window.FD || {};
         const r = rnd('catch');
         let result = 'complete';
         if (thrown.away) result = 'away';
-        else if (!game || coop) result = sep > 0.45 || r < 0.85 ? 'complete' : 'pbu';
-        else if (sep < 1.0) result = r < 0.1 ? 'int' : r < 0.6 ? 'pbu' : 'complete';
-        else if (sep < 2.2) result = r < 0.32 ? 'pbu' : 'complete';
-        else if (r < 0.1) result = 'miss'; // overthrown / dropped
+        // Only a defender who can get a hand on the ball can break it up; open = caught.
+        else if (!game || coop) result = sep > 0.8 || r < 0.85 ? 'complete' : 'pbu';
+        else if (sep < 1.2) result = r < 0.1 ? 'int' : r < 0.55 ? 'pbu' : 'complete';
+        else if (sep < 1.8) result = r < 0.15 ? 'pbu' : 'complete';
         outcome.sep = sep;
         outcome.why.cover = cov ? { id: cov.d.id, job: cov.d.job, sep } : null;
         outcome.why.target = thrown.to;
+        if ((result === 'pbu' || result === 'int') && cov) {
+          // He gets there: hand on the ball at the catch point.
+          const v = G.sub(cov.pos, pt);
+          const d = Math.hypot(v[0], v[1]) || 1;
+          cov.pos = G.add(pt, G.mul(v, Math.min(d, result === 'int' ? 0.3 : 0.75) / d));
+          cov.track[cov.track.length - 1] = [tn, cov.pos[0], cov.pos[1]];
+        }
         if (result !== 'complete') {
           outcome.type = result === 'int' ? 'interception' : 'incomplete';
           outcome.why.result = result;
@@ -282,6 +295,7 @@ window.FD = window.FD || {};
           carrier = byOff.get(thrown.to);
           carrier.pos = pt.slice();
           event = { t: tn, point: pt.slice(), dir: norm(G.sub(pt, playerPos(carrier.pl, tn - 0.25, o.toSvg))), carrierId: carrier.id, kind: 'catch' };
+          tpts[0] = tn;
           startYac();
         }
       }
@@ -290,20 +304,22 @@ window.FD = window.FD || {};
         carrier = byOff.get(ev0.carrierId);
         if (carrier) {
           carrier.pos = ev0.point.slice();
-          event = Object.assign({}, ev0);
+          event = Object.assign({}, ev0, { t: tn });
           startYac();
         }
       }
 
       // ── Ball carrier after the catch / line ─────────────────────────────
-      if (phase === 'yac') steerCarrier();
+      curT = tn;
+      // (On the hand-over step he is exactly at the event point; he runs from the next.)
+      if (phase === 'yac' && event.t < tn - 1e-6) steerCarrier();
 
       // ── Defense ───────────────────────────────────────────────────────────
       for (const x of D) {
         if (x.heldBy.length && phase !== 'dead') { x.track.push([tn, x.pos[0], x.pos[1]]); continue; }
         if (phase === 'dead') {
-          // Whistle: everyone eases toward the ball.
-          if (outcome.point && tn < deadT + 1) step(x, outcome.point, 2.2 * (1 - (tn - deadT)));
+          // Whistle: everyone eases toward the ball, stopping when they reach the pile.
+          if (outcome.point && tn < deadT + 1 && G.dist(x.pos, outcome.point) > CONTACT * 1.2) step(x, outcome.point, 2.2 * (1 - (tn - deadT)));
         } else if (phase === 'yac' && tn >= Math.max(x.release, event.t + (x.d.glyph === 'db' ? 0.35 : 0.2))) {
           // Pursuit angle: aim where the carrier will be when we get there.
           const d = G.dist(x.pos, carrier.pos);
@@ -317,10 +333,52 @@ window.FD = window.FD || {};
         } else {
           defend(x, tn);
         }
+        // Nobody overlaps the ball carrier: a defender who may not make the
+        // stop yet shadows him at arm's length instead of running through him.
+        const bc = ballCarrier(tn);
+        if (bc && !x.heldBy.length && phase !== 'dead' && !mayTackle(x, tn)) {
+          const d = G.dist(x.pos, bc.pos);
+          if (d < SHADOW || touchAt(bc, x) !== null) {
+            // Stay on the side he was on at the start of the step (never cross through him).
+            const side = G.sub(x.prev || x.pos, bc.prev || bc.pos);
+            const l = Math.hypot(side[0], side[1]);
+            x.pos = G.add(bc.pos, G.mul(l > 1e-6 ? G.mul(side, 1 / l) : [0, -1], SHADOW));
+          }
+        }
         x.track.push([tn, x.pos[0], x.pos[1]]);
       }
 
-      // ── Whistles: sack, tackle, touchdown ─────────────────────────────────
+      // ── Contact: when the ball carrier touches a defender, it resolves ────
+      // (tackle, broken tackle, or he slides off a blocked man) — never a pass-through.
+      if ((phase === 'yac' || phase === 'pre') && !passPlayPre()) {
+        const bc = ballCarrier(tn);
+        const tk = bc ? contact(bc, tn) : null;
+        if (tk) {
+          if (phase === 'pre') {
+            carrier = bc;
+            event = { t: tn, point: bc.pos.slice(), dir: [0, -1], carrierId: bc.id, kind: 'carry', stuffed: true };
+          } else {
+            // Falls forward a half step if he was hit from the side or behind.
+            const ahead = G.sub(tk.pos, carrier.pos);
+            if (dir && dir[1] < 0 && ahead[0] * dir[0] + ahead[1] * dir[1] < 0.2) {
+              // …and the tackler goes down with him.
+              const fwd = G.mul(dir, 0.35);
+              carrier.pos = G.add(carrier.pos, fwd);
+              tk.pos = G.add(tk.pos, fwd);
+              tk.track[tk.track.length - 1] = [tn, tk.pos[0], tk.pos[1]];
+              pts[pts.length - 1] = carrier.pos.slice();
+            }
+          }
+          phase = 'dead';
+          deadT = tn;
+          outcome.type = 'tackle';
+          outcome.by = tk.d.id;
+          outcome.point = bc.pos.slice();
+          outcome.why.tackler = { id: tk.d.id, job: tk.d.job, unblocked: !tk.shedFrom && !tk.releasedBy && !tk.heldBy.length, shedFrom: tk.shedFrom || tk.releasedBy || (tk.heldBy[0] && tk.heldBy[0].id), backfield: !event || event.stuffed || bc.pos[1] > -0.5 };
+        }
+      }
+
+      // ── Whistles: sack, touchdown, sideline ───────────────────────────────
       if (phase === 'pre' && passPlay && qb && game && !coop && scene.play.family !== 'screen' && !ev0.screen) {
         const sacker = D.find((x) => x.rusher && isFree(x, tn) && G.dist(x.pos, qb.pos) < 0.95);
         if (sacker) {
@@ -332,49 +390,13 @@ window.FD = window.FD || {};
           outcome.why.rusher = { id: sacker.d.id, job: sacker.d.job, unblocked: !sacker.shedFrom && !sacker.releasedBy, shedFrom: sacker.shedFrom || sacker.releasedBy, blitz: sacker.blitz };
         }
       }
-      if (phase === 'pre' && !passPlay && game && !coop && o.exchangeT !== undefined && tn > o.exchangeT + 0.1) {
-        // Run stopped in the backfield by a free defender.
-        const c = byOff.get(ev0.carrierId);
-        let tk = null;
-        for (const x of (c ? D : [])) {
-          if (!isFree(x, tn) || x.missed || G.dist(x.pos, c.pos) >= 1.0) continue;
-          if (rnd(`bmiss:${x.d.id}`) < 0.3) { x.missed = true; x.release = tn + 0.6; continue; }
-          tk = x;
-          break;
-        }
-        if (tk) {
-          carrier = c;
-          phase = 'dead';
-          deadT = tn;
-          outcome.type = 'tackle';
-          outcome.by = tk.d.id;
-          outcome.point = c.pos.slice();
-          outcome.why.tackler = { id: tk.d.id, job: tk.d.job, unblocked: !tk.shedFrom && !tk.releasedBy, shedFrom: tk.shedFrom || tk.releasedBy, backfield: true };
-          event = { t: tn, point: c.pos.slice(), dir: [0, -1], carrierId: c.id, kind: 'carry', stuffed: true };
-        }
-      }
       if (phase === 'yac') {
-        const canTackle = game && (!coopStop || travelled >= budget * 0.8);
-        let tk = null;
-        if (canTackle) {
-          for (const x of D) {
-            if (!isFree(x, tn) || tn < event.t + 0.2 || G.dist(x.pos, carrier.pos) >= 1.15 || x.missed) continue;
-            // One try each: sometimes the carrier breaks it (Competitive).
-            if (!coop && rnd(`miss:${x.d.id}`) < (x.d.glyph === 'db' ? 0.25 : 0.18)) { x.missed = true; x.release = tn + 0.7; outcome.why.broken = (outcome.why.broken || 0) + 1; continue; }
-            tk = x;
-            break;
-          }
-        }
         const scored = o.goalY !== null && o.goalY !== undefined && carrier.pos[1] <= o.goalY;
         const oob = o.extended && Math.abs(carrier.pos[0]) >= 25;
-        if (tk || scored || oob || (!o.extended && carrier.pos[1] <= o.topY + 1) || k >= (o.extended ? 120 : 70)) {
-          outcome.type = scored ? 'score' : tk ? 'tackle' : event.kind === 'catch' ? 'complete' : 'run';
-          if (oob && !scored && !tk) outcome.why.oob = true;
-          outcome.by = tk ? tk.d.id : null;
-          // Falls forward through contact.
-          if (tk && dir[1] < 0) { carrier.pos = G.add(carrier.pos, G.mul(dir, 0.9)); pts.push(carrier.pos.slice()); }
+        if (scored || oob || (!o.extended && carrier.pos[1] <= o.topY + 1) || k >= (o.extended ? 120 : 70)) {
+          outcome.type = scored ? 'score' : event.kind === 'catch' ? 'complete' : 'run';
+          if (oob && !scored) outcome.why.oob = true;
           outcome.point = carrier.pos.slice();
-          if (tk) outcome.why.tackler = { id: tk.d.id, job: tk.d.job, unblocked: !tk.shedFrom && !tk.releasedBy, shedFrom: tk.shedFrom || tk.releasedBy };
           phase = 'dead';
           deadT = tn;
         }
@@ -394,15 +416,135 @@ window.FD = window.FD || {};
     if (outcome.type === 'incomplete' || outcome.type === 'interception') outcome.gain = 0;
     const tracks = new Map(D.map((x) => [x.d.id, x.track]));
     const otracks = new Map(O.map((b) => [b.id, b.track]));
-    const yac = event && pts.length > 1 ? { pts: pts.slice(), t0: event.t, t1: deadT !== null ? deadT : t } : null;
+    const yac = event && pts.length > 1 ? { pts: pts.slice(), times: tpts.slice(), t0: event.t, t1: deadT !== null ? deadT : t } : null;
     return { tracks, otracks, yac, outcome, pass: thrown, latches, event, unblocked: unblocked.map((x) => x.d.id),
       pairs: Array.from(pairs).map(([a, x]) => [a.player, x.d.id]) };
 
     // ── helpers (hoisted) ───────────────────────────────────────────────────
+    function passPlayPre() { return passPlay && phase === 'pre'; }
+    /** Who has the ball and is running with it right now (null while the QB holds it / in the air). */
+    function ballCarrier(tn) {
+      if (phase === 'yac') return carrier;
+      if (phase === 'pre' && !passPlay && o.exchangeT !== undefined && tn > o.exchangeT + 0.05) return byOff.get(ev0.carrierId) || null;
+      return null;
+    }
+    /** May this defender bring the carrier down right now? */
+    function mayTackle(x, tn) {
+      if (!game) return false;                                   // Live offense: the offense wins
+      if (phase === 'pre' && coop) return false;                 // Cooperative: the play gets past the line
+      if (phase === 'yac' && coop && travelled < budget * 0.8) return false; // …and gains its yards first
+      if (x.stunnedUntil && tn < x.stunnedUntil) return false;   // just bounced off
+      return true;
+    }
+    /**
+     * The carrier and a defender are touching (marker + glyph). Free defender →
+     * tackle attempt (Competitive: sometimes broken — the carrier bounces off and
+     * the defender is knocked back). Blocked defender → an arm tackle now and then,
+     * otherwise the carrier slides off him. Returns the tackler or null.
+     */
+    /**
+     * Swept contact: did c and x touch at any moment of this step (not just at
+     * its end)? Players close ~1.4 yd a step head-on, more than a contact
+     * width, so checking end positions alone lets them pass through each other.
+     * Returns the first touching fraction u of the step, or null.
+     */
+    function touchAt(c, x) {
+      const r0 = G.sub(c.prev || c.pos, x.prev || x.pos);
+      const r1 = G.sub(c.pos, x.pos);
+      if (Math.hypot(r0[0], r0[1]) < CONTACT) return 0;
+      const dv = G.sub(r1, r0);
+      const a = dv[0] * dv[0] + dv[1] * dv[1];
+      if (a < 1e-9) return null;
+      const b = 2 * (r0[0] * dv[0] + r0[1] * dv[1]);
+      const cc = r0[0] * r0[0] + r0[1] * r0[1] - CONTACT * CONTACT;
+      const disc = b * b - 4 * a * cc;
+      if (disc < 0) return null;
+      const u = (-b - Math.sqrt(disc)) / (2 * a);
+      return u >= 0 && u <= 1 ? u : null;
+    }
+    function contact(c, tn) {
+      const tk = contactRaw(c, tn);
+      if (tk) {
+        // The tackle is made at arm's length: touching, not on top of him.
+        const v = G.sub(tk.pos, c.pos);
+        const l = Math.hypot(v[0], v[1]);
+        if (l < CONTACT * 0.98) {
+          tk.pos = G.add(c.pos, G.mul(l > 1e-6 ? G.mul(v, 1 / l) : [0, -1], CONTACT * 0.98));
+          tk.track[tk.track.length - 1] = [tn, tk.pos[0], tk.pos[1]];
+        }
+      }
+      return tk;
+    }
+    function contactRaw(c, tn) {
+      // A few passes: sliding off one man can put him on another (a crowd).
+      for (let pass = 0; pass < 4; pass++) {
+        const hits = pass === 0 ? D.map((x) => [x, touchAt(c, x)]).filter((q) => q[1] !== null).sort((a, b) => a[1] - b[1])
+          : D.filter((x) => G.dist(x.pos, c.pos) < CONTACT * 0.99).map((x) => [x, 0]);
+        if (!hits.length) break;
+        const tk = resolve(c, tn, hits);
+        if (tk) return tk;
+      }
+      // Still overlapping after the passes: he's wedged between defenders with
+      // nowhere to slide. In a live game that's a wrap-up; in Live offense they give way.
+      const wedged = D.filter((x) => G.dist(x.pos, c.pos) < CONTACT * 0.9).sort((a, b) => G.dist(a.pos, c.pos) - G.dist(b.pos, c.pos));
+      if (wedged.length) {
+        if (game && phase === 'yac') return wedged[0];
+        for (const x of wedged) {
+          const v = G.sub(x.pos, c.pos);
+          const l = Math.hypot(v[0], v[1]) || 1;
+          const shift = G.sub(G.add(c.pos, G.mul(v, CONTACT / l)), x.pos);
+          x.pos = G.add(x.pos, shift);
+          for (const b of x.heldBy) b.pos = G.add(b.pos, shift);
+          x.track[x.track.length - 1] = [tn, x.pos[0], x.pos[1]];
+        }
+      }
+      return null;
+    }
+    function resolve(c, tn, hits) {
+      for (const [x, u] of hits) {
+        // Put both where they met (the carrier only once he's off his designed path).
+        if (u > 0) {
+          x.pos = G.lerp(x.prev, x.pos, u);
+          if (phase === 'yac') c.pos = G.lerp(c.prev, c.pos, u);
+          x.track[x.track.length - 1] = [tn, x.pos[0], x.pos[1]];
+          if (phase === 'yac' && pts.length) pts[pts.length - 1] = c.pos.slice();
+        }
+        let d = G.dist(x.pos, c.pos); // re-measured: an earlier bounce may have moved him
+        if (d >= CONTACT * 1.01) continue;
+        if (d < 1e-6) d = 1e-6;
+        const away = G.mul(G.sub(c.pos, x.pos), 1 / d);
+        const held = x.heldBy.length > 0;
+        const tries = mayTackle(x, tn) && (!held || (!coop && rnd(`arm:${x.d.id}:${Math.round(tn * 2)}`) < 0.1));
+        if (tries) {
+          const pMiss = coop || !game ? 0 : held ? 0.6 : phase === 'pre' ? 0.35 : x.d.glyph === 'db' ? 0.3 : 0.25;
+          if (rnd(`miss:${x.d.id}:${Math.round(tn * 10)}`) >= pMiss) return x;
+          // Broken tackle: both bounce apart; he's out of the play for a beat.
+          outcome.why.broken = (outcome.why.broken || 0) + 1;
+          x.stunnedUntil = tn + 0.9;
+          if (!held) {
+            x.pos = G.sub(x.pos, G.mul(away, 0.7));
+            x.track[x.track.length - 1] = [tn, x.pos[0], x.pos[1]];
+          }
+        }
+        // No tackle: the carrier slides off (he can't if he's still on his
+        // designed path behind the line — then the defender gives ground).
+        if (phase === 'yac') {
+          c.pos = G.add(x.pos, G.mul(away, CONTACT));
+          if (pts.length) { pts[pts.length - 1] = c.pos.slice(); }
+        } else {
+          // Behind the line he's on his designed path: the defender (and his blocker) give ground.
+          const shift = G.sub(G.sub(c.pos, G.mul(away, CONTACT)), x.pos);
+          x.pos = G.add(x.pos, shift);
+          for (const b of x.heldBy) b.pos = G.add(b.pos, shift);
+          x.track[x.track.length - 1] = [tn, x.pos[0], x.pos[1]];
+        }
+      }
+      return null;
+    }
     function latch(b, a, x, tn) {
       const pro = FD.LivePairing.isPassPro(a);
       const kind = pro ? 'pro' : a.spec.type === 'doubleTeam' ? 'double' : a.kind;
-      const base = { pro: 2.6, double: 2.6, block: 1.3, pull: 1.3, lead: 1.1 }[kind] || 1.8;
+      const base = { pro: 2.6, double: 2.8, block: 1.6, pull: 1.5, lead: 1.3 }[kind] || 1.8;
       const hold = (coop || !game) ? 6 : base * (0.55 + 0.9 * rnd(`hold:${b.id}:${x.d.id}`)) * (aggressive ? 0.8 : 1);
       const e = G.endPoint(a.path);
       const s = a.measure.at(0).point;
@@ -484,7 +626,9 @@ window.FD = window.FD || {};
       k = 0;
       travelled = 0;
       pts.length = 0;
+      tpts.length = 0;
       pts.push(carrier.pos.slice());
+      tpts.push(event.t);
       // Defensive backs read and react a beat after the ball comes out.
       if (game) for (const x of D) if (x.d.glyph === 'db') x.release = Math.max(x.release, event.t + 0.35);
     }
@@ -497,7 +641,7 @@ window.FD = window.FD || {};
         const v = G.sub(carrier.pos, x.pos);
         const dist = Math.hypot(v[0], v[1]);
         if (dist > 5 || x.pos[1] > carrier.pos[1] + 1) continue; // only defenders ahead
-        push += Math.sign(v[0] || 1) * (5 - dist) / 5 * (x.heldBy.length ? 0.4 : 1);
+        push += Math.sign(v[0] || 1) * (5 - dist) / 5 * (x.heldBy.length ? 0.7 : 1) * (dist < 2 ? 1.6 : 1);
       }
       let heading = norm([dir[0] + 0.32 * push, dir[1]]);
       const ang = Math.atan2(heading[0], -heading[1]);
@@ -511,6 +655,7 @@ window.FD = window.FD || {};
       travelled += len;
       k += 1;
       pts.push(carrier.pos.slice());
+      tpts.push(curT);
     }
   }
 

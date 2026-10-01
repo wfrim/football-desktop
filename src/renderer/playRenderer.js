@@ -156,6 +156,31 @@ window.FD = window.FD || {};
     Object.assign(a, { view: nv, path, measure: nv.measure });
   }
 
+  /**
+   * Draw a simulated run in step with the runner: maps the share of the run's
+   * TIME elapsed to the share of its LENGTH covered (he slows, cuts, stops).
+   */
+  function lockstep(run) {
+    const { pts, times } = run;
+    if (!times || times.length !== pts.length) return 'linear';
+    const L = [0];
+    for (let i = 1; i < pts.length; i++) L.push(L[i - 1] + G.dist(pts[i - 1], pts[i]));
+    const total = L[L.length - 1] || 1;
+    const t0 = run.t0;
+    const span = Math.max(0.2, run.t1 - run.t0);
+    return (raw) => {
+      const t = t0 + raw * span;
+      if (t <= times[0]) return 0;
+      for (let i = 1; i < times.length; i++) {
+        if (times[i] >= t) {
+          const u = (t - times[i - 1]) / ((times[i] - times[i - 1]) || 1);
+          return (L[i - 1] + u * (L[i] - L[i - 1])) / total;
+        }
+      }
+      return 1;
+    };
+  }
+
   /** Cut a carry at fraction `frac` of its length (the simulation takes over there). */
   function cutCarry(tr, frac, x) {
     if (!(frac > 0.05 && frac < 0.97)) return;
@@ -163,6 +188,7 @@ window.FD = window.FD || {};
     const len0 = tr.view.length || 1;
     redraw(tr, cut.head, x, 'none');
     tr.duration *= Math.max(0.3, tr.view.length / len0);
+    tr.ease = 'inSine'; // he's still running when the simulation takes over: no stop at the cut
   }
 
   /*
@@ -275,13 +301,13 @@ window.FD = window.FD || {};
     if (res.yac && res.yac.pts.length > 2) {
       const carrierId = res.event.carrierId;
       const pl = scene.players.get(carrierId);
-      const view = FD.RouteRenderer.create({ parent: x.layers.paths, defs: x.stage.defs, path: G.fromPoints(res.yac.pts, 0.6), kind: 'run', style: 'solid', end: 'arrow' });
+      const view = FD.RouteRenderer.create({ parent: x.layers.paths, defs: x.stage.defs, path: G.fromPoints(res.yac.pts, 0), kind: 'run', style: 'solid', end: 'arrow' });
       x.destroyers.push(view.destroy);
       const a = {
-        spec: { type: 'yac', player: carrierId }, player: carrierId, kind: 'run', alt: false, path: G.fromPoints(res.yac.pts, 0.6), view,
+        spec: { type: 'yac', player: carrierId }, player: carrierId, kind: 'run', alt: false, path: G.fromPoints(res.yac.pts, 0), view,
         ballX: x.ballX, fieldPts: res.yac.pts.map((q) => [q[0] - x.ballX, -q[1]]), measure: view.measure,
         fieldEnd: [res.yac.pts[res.yac.pts.length - 1][0] - x.ballX, -res.yac.pts[res.yac.pts.length - 1][1]],
-        start: res.yac.t0 + 0.05, duration: Math.max(0.4, res.yac.t1 - res.yac.t0), ease: 'linear', yac: true,
+        start: res.yac.t0, duration: Math.max(0.2, res.yac.t1 - res.yac.t0), ease: lockstep(res.yac), yac: true,
       };
       scene.assignments.push(a);
       if (pl) pl.assignments.push(a);

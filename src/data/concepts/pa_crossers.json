@@ -6,7 +6,7 @@
  "side": "strength",
  "copy": {
   "title": "PA CROSSERS",
-  "situation": "PLAY-ACTION \u00b7 MIDDLE OF THE FIELD",
+  "situation": "PLAY-ACTION · MIDDLE OF THE FIELD",
   "description": "A hard run fake pulls the linebackers up; two crossers pass behind them."
  },
  "assignments": {
@@ -108,6 +108,12 @@
   },
   {
    "formation": "gun_trey_11"
+  },
+  {
+   "formation": "wing_t_21"
+  },
+  {
+   "formation": "power_t_32"
   }
  ],
  "defense": {

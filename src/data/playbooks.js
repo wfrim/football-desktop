@@ -1,8 +1,9 @@
 /*
  * playbooks.js — Settings → Playbook. Each playbook is a filter over the
  * library: a play belongs if it matches ANY listed formation, concept, tag or
- * family. Library (runs / passes / …) and field position narrow it further;
- * if nothing is left the rotation falls back to everything.
+ * family. Library (runs / passes / …) and field position / drive situation
+ * narrow it further; if nothing is left, the playbook alone wins (the rotation
+ * never leaves the chosen playbook).
  */
 window.FD = window.FD || {};
 (function (FD) {
@@ -12,9 +13,10 @@ window.FD = window.FD || {};
     all: null,
     pro: { formations: ['i_form_21', 'singleback_tight_12', 'ace_12', 'singleback_doubles_11', 'pistol_strong_11'] },
     spread: { formations: ['gun_doubles_11', 'gun_trips_11', 'gun_bunch_11', 'gun_empty_11', 'gun_trey_11', 'gun_y_off_11', 'pistol_doubles_11'] },
-    wildcat: { formations: ['wildcat_11', 'wildcat_21'], tags: ['wildcat'], concepts: ['jet_sweep'] },
-    powert: { formations: ['power_t_32', 'i_form_21'], concepts: ['qb_sneak', 'fb_dive'] },
-    wingt: { formations: ['wing_t_21'], concepts: ['buck_sweep', 'trap', 'counter_gt', 'wt_buck_sweep', 'wt_waggle', 'fb_dive', 'jet_sweep'] },
+    // Formation playbooks are strict: only plays drawn from those formations.
+    wildcat: { formations: ['wildcat_11', 'wildcat_21'] },
+    powert: { formations: ['power_t_32'] },
+    wingt: { formations: ['wing_t_21'] },
     goalline: { formations: ['goal_line_23', 'jumbo_13'], tags: ['goalline'] },
     trick: { tags: ['trick'] },
     defense: { families: ['defense'] },

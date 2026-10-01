@@ -102,6 +102,14 @@ unrecognizable, football correctness wins.
   Competitive call = a weighted pick from the def_* playbook (`pickCall`), shown as the
   matchup line under the title. Tune with `tools/check.sh "style=game&call=comp&why=1"`
   (outcome mix, run medians, who makes stops); `simdebug=1` prints pairs/latches per play.
+- Contact (sim.js `contact`): the ball carrier and a defender TOUCH at 0.95 yd (marker +
+  glyph), tested along the whole 0.1 s step (swept), never just at its end. Contact always
+  resolves: tackle (made at arm's length), broken tackle (both bounce, defender stunned),
+  or the carrier slides off; wedged between two = wrap-up. Defenders who may not tackle yet
+  (Live offense; Cooperative before the yardage budget) shadow at 1.45 yd on their own
+  side. Pass breakups need a defender within reach of the ball (≤ 1.8 yd); open = caught.
+  The run line draws in lockstep with the runner (time→length ease). check.sh flags
+  overlaps, tackles from > 1 yd, and a run line > 0.6 yd off the runner.
 - Ball chain: `exchanges: [{type: handoff|pitch|pass, from?, to, at?}]` (trick plays).
   The ball rides its holder between legs; timing = when the receiver's authored path is
   closest to `at`. Direct snap = give the snap-taker `role: "QB"` (wildcat formations,
@@ -117,7 +125,7 @@ unrecognizable, football correctness wins.
   field layer). Measure with `tools/energy.sh`.
 
 ## Status (see git log for detail)
-- 348 plays / 108 concepts (73 offense + 35 defense) / 18 formations
+- 354 plays / 108 concepts (73 offense + 35 defense) / 18 formations
   (+ Wildcat 11/21, Goal Line 23, Jumbo 13, Power T 32, Wing-T 21).
 - Next: more concepts + variants (§8 of the contract notes), an RPO shape,
   pre-snap motion, then polish (pacing, typography, battery behaviour).

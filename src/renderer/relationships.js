@@ -70,7 +70,7 @@ window.FD = window.FD || {};
   }
 
   function invEase(name, y) {
-    const e = FD.Ease[name] || FD.Ease.linear;
+    const e = typeof name === 'function' ? name : FD.Ease[name] || FD.Ease.linear;
     let lo = 0;
     let hi = 1;
     for (let i = 0; i < 30; i++) {

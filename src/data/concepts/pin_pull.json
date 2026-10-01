@@ -8,11 +8,11 @@
  ],
  "copy": {
   "title": "PIN AND PULL",
-  "situation": "PERIMETER \u00b7 TOSS",
+  "situation": "PERIMETER · TOSS",
   "description": "Covered linemen pin inside; uncovered linemen pull and lead the toss."
  },
  "football": {
-  "rules": "Front: 6-tech on Y, 1-tech on C's play-side shade. Covered players (Y, C) pin inside; uncovered RT and RG pull \u2014 RT to the force/corner, RG up the alley. Z cracks the support defender. Toss to the back.",
+  "rules": "Front: 6-tech on Y, 1-tech on C's play-side shade. Covered players (Y, C) pin inside; uncovered RT and RG pull — RT to the force/corner, RG up the alley. Z cracks the support defender. Toss to the back.",
   "rb": "Catch the pitch, stay on the pullers' outside hip."
  },
  "sources": [
@@ -136,6 +136,9 @@
    "roles": {
     "CUTOFF": "U"
    }
+  },
+  {
+   "formation": "power_t_32"
   }
  ],
  "defense": {}

@@ -47,6 +47,42 @@ window.FD = window.FD || {};
           if (h && h.marker && scene.ball.isShown()) worst = Math.max(worst, FD.Geometry.dist(scene.ball.getPos(), h.marker.position));
         }
         if (worst > 0.6) scene.warnings.push(`ball ${worst.toFixed(1)} yd off its carrier`);
+        if (scene.live && scene.live.otracks) {
+          // Contact QA: tackles happen touching; nobody passes through the carrier; the line stays on him.
+          const LV = scene.live;
+          const oc = LV.outcome;
+          const cid = oc.event && oc.event.carrierId;
+          const ct = cid && LV.otracks.get(cid);
+          if (ct) {
+            const end = oc.t || ct[ct.length - 1][0];
+            let overlap = 0;
+            let ow = '';
+            for (let t = (oc.event.t || 0) + 0.05; t < end - 0.05; t += 0.1) {
+              const c = FD.Live.trackAt(ct, t);
+              for (const [id, tr] of LV.tracks) {
+                const o = 0.8 - FD.Geometry.dist(c, FD.Live.trackAt(tr, t));
+                if (o > overlap) { overlap = o; ow = `${id}@${t.toFixed(2)} (ev ${oc.event.t.toFixed(2)}, end ${end.toFixed(2)}, ${oc.type}) d ${JSON.stringify(tr.filter((q) => Math.abs(q[0] - t) < 0.12).map((q) => q.map((v) => +v.toFixed(2))))} c ${JSON.stringify(ct.filter((q) => Math.abs(q[0] - t) < 0.12).map((q) => q.map((v) => +v.toFixed(2))))}`; }
+              }
+            }
+            if (overlap > 0.05) scene.warnings.push(`carrier overlapped a defender by ${overlap.toFixed(2)} yd${/lagdebug/.test(location.search) ? ' ' + ow : ''}`);
+            if (oc.type === 'tackle' && LV.tracks.get(oc.by)) {
+              const gap = FD.Geometry.dist(FD.Live.trackAt(ct, oc.t), FD.Live.trackAt(LV.tracks.get(oc.by), oc.t));
+              if (gap > 1.0) scene.warnings.push(`tackled from ${gap.toFixed(2)} yd away${/lagdebug/.test(location.search) ? ` t=${oc.t.toFixed(2)} ev=${oc.event.t.toFixed(2)} ${JSON.stringify(oc.why.tackler)} broken=${oc.why.broken || 0} gaps ${[-0.2, -0.1, -0.05, 0, 0.1, 0.5].map((dt) => FD.Geometry.dist(FD.Live.trackAt(ct, oc.t + dt), FD.Live.trackAt(LV.tracks.get(oc.by), oc.t + dt)).toFixed(2)).join(',')} trk ${JSON.stringify(LV.tracks.get(oc.by).filter((q) => Math.abs(q[0] - oc.t) < 0.25).map((q) => q.map((v) => +v.toFixed(2))))} ctrk ${JSON.stringify(ct.filter((q) => Math.abs(q[0] - oc.t) < 0.25).map((q) => q.map((v) => +v.toFixed(2))))}` : ''}`);
+            }
+            if (LV.yac) {
+              let lag = 0;
+              let at = 0;
+              const y = LV.yac;
+              for (let r = 0; r <= 1; r += 0.05) {
+                const tip = y.measure.at(y.ease(r)).point;
+                const d = FD.Geometry.dist(tip, FD.Live.trackAt(ct, y.start + r * y.duration));
+                if (d > lag) { lag = d; at = r; }
+              }
+              if (/lagdebug/.test(location.search) && lag > 0.6) scene.warnings.push(`lag at r=${at.toFixed(2)} dur=${y.duration.toFixed(2)} start=${y.start.toFixed(2)} ev=${oc.event.t.toFixed(2)}`);
+              if (lag > 0.6) scene.warnings.push(`run line ${lag.toFixed(2)} yd off the runner`);
+            }
+          }
+        }
         if (scene.live && scene.live.game) {
           const oc = scene.live.outcome;
           if (/notes/.test(location.search)) scene.warnings.push(`${oc.type} ${oc.gain}: ${FD.CoachNote.note(oc, p)}`);
@@ -145,7 +181,8 @@ window.FD = window.FD || {};
       const all = parts.length ? (p) => parts.every((fn) => fn(p)) : null;
       // Fall back gracefully: playbook × library × field, then playbook × field, then field.
       const bookField = BOOK && filter ? (p) => BOOK(p) && filter(p) : BOOK || filter;
-      const pick = [all, bookField, filter].find((fn) => !fn || plays.some(fn));
+      // Never leave the chosen playbook: drop the situational filters before the playbook.
+      const pick = [all, bookField, BOOK, filter].find((fn) => !fn || plays.some(fn));
       if (drive) drive.playbook = cfg.settings.playbook;
       const info = playlist.next(pick || null);
       if (drive) info.drive = cfg.place;
